@@ -1,0 +1,15 @@
+import '../repositories/device_repository.dart';
+
+final class DeleteDeviceUseCase {
+  const DeleteDeviceUseCase(this._repository);
+
+  final DeviceRepository _repository;
+
+  Future<void> call({
+    required String deviceId,
+  }) {
+    return _repository.removeDevice(
+      deviceId: deviceId,
+    );
+  }
+}

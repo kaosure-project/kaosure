@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/theme/app_colors.dart';
-import '../../../app/theme/app_spacing.dart';
-import '../../../app/theme/app_text_styles.dart';
+import '../../design_system/colors/app_colors.dart';
+import '../../design_system/spacing/app_spacing.dart';
+import '../../design_system/typography/app_text_styles.dart';
 
 enum AppTextButtonSize {
   small,

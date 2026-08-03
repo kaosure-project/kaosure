@@ -1,0 +1,156 @@
+warning: in the working copy of 'lib/shared/widgets/app_bar/app_app_bar.dart', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'lib/shared/widgets/cards/app_card.dart', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'lib/shared/widgets/loading/app_loading.dart', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'linux/flutter/generated_plugin_registrant.cc', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'linux/flutter/generated_plugins.cmake', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'macos/Flutter/GeneratedPluginRegistrant.swift', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'pubspec.lock', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'windows/flutter/generated_plugin_registrant.cc', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'windows/flutter/generated_plugins.cmake', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/lib/app/providers.dart b/lib/app/providers.dart[m
+[1mindex 58d2531..fcf2c13 100644[m
+[1m--- a/lib/app/providers.dart[m
+[1m+++ b/lib/app/providers.dart[m
+[36m@@ -1,10 +1,9 @@[m
+ import 'package:flutter_riverpod/flutter_riverpod.dart';[m
+ [m
+[31m-import '../features/kao_id/application/providers/auth_dependencies.dart';[m
+[31m-import '../features/kao_id/application/providers/auth_provider.dart';[m
+[32m+[m[32mimport '../features/kao_id/auth/application/providers/auth_provider.dart';[m
+ [m
+[31m-export '../features/kao_id/application/providers/auth_dependencies.dart';[m
+[31m-export '../features/kao_id/application/providers/auth_provider.dart';[m
+[32m+[m[32mexport '../features/kao_id/auth/application/providers/auth_dependencies.dart';[m
+[32m+[m[32mexport '../features/kao_id/auth/application/providers/auth_provider.dart';[m
+ [m
+ final appAuthProvider = Provider((ref) {[m
+   return ref.watch(authProvider);[m
+[1mdiff --git a/lib/app/router.dart b/lib/app/router.dart[m
+[1mindex 3e0c186..a9e9092 100644[m
+[1m--- a/lib/app/router.dart[m
+[1m+++ b/lib/app/router.dart[m
+[36m@@ -1,10 +1,13 @@[m
+ import 'package:flutter/material.dart';[m
+ [m
+[31m-import '../features/kao_id/presentation/auth/guards/auth_guard.dart';[m
+[31m-import '../features/kao_id/presentation/auth/screens/forgot_password_screen.dart';[m
+[31m-import '../features/kao_id/presentation/auth/screens/login_screen.dart';[m
+[31m-import '../features/kao_id/presentation/auth/screens/register_screen.dart';[m
+[31m-import '../features/kao_id/presentation/auth/screens/verify_email_screen.dart';[m
+[32m+[m[32mimport '../features/kao_id/auth/presentation/guards/auth_guard.dart';[m
+[32m+[m[32mimport '../features/kao_id/auth/presentation/screens/forgot_password_screen.dart';[m
+[32m+[m[32mimport '../features/kao_id/auth/presentation/screens/login_screen.dart';[m
+[32m+[m[32mimport '../features/kao_id/auth/presentation/screens/register_screen.dart';[m
+[32m+[m[32mimport '../features/kao_id/auth/presentation/screens/verify_email_screen.dart';[m
+[32m+[m[32mimport '../features/kao_id/dashboard/screens/dashboard_screen.dart';[m
+[32m+[m[32mimport '../features/kao_id/bootstrap/screens/kao_id_bootstrap_screen.dart';[m
+[32m+[m[32mimport '../features/kao_id/account/presentation/screens/complete_profile_screen.dart';[m
+ import '../features/secondhand/presentation/screens/landing_screen.dart';[m
+ import '../features/secondhand/presentation/screens/secondhand_home_screen.dart';[m
+ [m
+[36m@@ -21,14 +24,6 @@[m [mfinal class AppRouter {[m
+           builder: (_) => const LandingScreen(),[m
+         );[m
+ [m
+[31m-      case '/home':[m
+[31m-        return MaterialPageRoute([m
+[31m-          settings: settings,[m
+[31m-          builder: (_) => const AuthGuard([m
+[31m-            authenticatedChild: SecondhandHomeScreen(),[m
+[31m-          ),[m
+[31m-        );[m
+[31m-[m
+       case '/login':[m
+         return MaterialPageRoute([m
+           settings: settings,[m
+[36m@@ -53,6 +48,36 @@[m [mfinal class AppRouter {[m
+           builder: (_) => const ForgotPasswordScreen(),[m
+         );[m
+ [m
+[32m+[m[32m      case '/bootstrap':[m
+[32m+[m[32m        return MaterialPageRoute([m
+[32m+[m[32m          settings: settings,[m
+[32m+[m[32m          builder: (_) => const KaoIdBootstrapScreen(),[m
+[32m+[m[32m        );[m
+[32m+[m
+[32m+[m[32m      case '/complete-profile':[m
+[32m+[m[32m        return MaterialPageRoute([m
+[32m+[m[32m          settings: settings,[m
+[32m+[m[32m          builder: (_) => const AuthGuard([m
+[32m+[m[32m            authenticatedChild: CompleteProfileScreen(),[m
+[32m+[m[32m          ),[m
+[32m+[m[32m        );[m
+[32m+[m
+[32m+[m[32m      case '/dashboard':[m
+[32m+[m[32m        return MaterialPageRoute([m
+[32m+[m[32m          settings: settings,[m
+[32m+[m[32m          builder: (_) => const AuthGuard([m
+[32m+[m[32m            authenticatedChild: DashboardScreen(),[m
+[32m+[m[32m          ),[m
+[32m+[m[32m        );[m
+[32m+[m
+[32m+[m[32m      case '/home':[m
+[32m+[m[32m        return MaterialPageRoute([m
+[32m+[m[32m          settings: settings,[m
+[32m+[m[32m          builder: (_) => const AuthGuard([m
+[32m+[m[32m            authenticatedChild: SecondhandHomeScreen(),[m
+[32m+[m[32m          ),[m
+[32m+[m[32m        );[m
+[32m+[m
+       default:[m
+         return MaterialPageRoute([m
+           settings: settings,[m
+[1mdiff --git a/lib/app/theme/app_colors.dart b/lib/app/theme/app_colors.dart[m
+[1mdeleted file mode 100644[m
+[1mindex c97d5ca..0000000[m
+[1m--- a/lib/app/theme/app_colors.dart[m
+[1m+++ /dev/null[m
+[36m@@ -1,82 +0,0 @@[m
+[31m-import 'package:flutter/material.dart';[m
+[31m-[m
+[31m-/// KaoSure Design System V1[m
+[31m-/// Centralized color palette[m
+[31m-class AppColors {[m
+[31m-  AppColors._();[m
+[31m-[m
+[31m-  // ==========================================================================[m
+[31m-  // Brand[m
+[31m-  // ==========================================================================[m
+[31m-[m
+[31m-  static const Color primary = Color(0xFF58C84D);[m
+[31m-  static const Color primaryDark = Color(0xFF45B53A);[m
+[31m-  static const Color primaryLight = Color(0xFF8BE27F);[m
+[31m-[m
+[31m-  static const Color accent = Color(0xFFD62828);[m
+[31m-[m
+[31m-  static const Color onPrimary = Colors.white;[m
+[31m-  static const Color onAccent = Colors.white;[m
+[31m-[m
+[31m-  // ==========================================================================[m
+[31m-  // Status[m
+[31m-  // ==========================================================================[m
+[31m-[m
+[31m-  static const Color success = Color(0xFF16A34A);[m
+[31m-  static const Color warning = Color(0xFFF59E0B);[m
+[31m-  static const Color error = Color(0xFFDC2626);[m
+[31m-  static const Color info = Color(0xFF2563EB);[m
+[31m-[m
+[31m-  // ==========================================================================[m
+[31m-  // Background[m
+[31m-  // ==========================================================================[m
+[31m-[m
+[31m-  static const Color background = Color(0xFFF8F9FB);[m
+[31m-  static const Color surface = Color(0xFFFFFFFF);[m
+[31m-  static const Color surfaceVariant = Color(0xFFF3F4F6);[m
+[31m-[m
+[31m-  // ==========================================================================[m
+[31m-  // Border / Divider[m
+[31m-  // ==========================================================================[m
+[31m-[m
+[31m-  static const Color divider = Color(0xFFE5E7EB);[m
+[31m-  static const Color border = Color(0xFFD1D5DB);[m
+[31m-  static const Color outline = Color(0xFFCBD5E1);[m
+[31m-[m
+[31m-  // ==========================================================================[m
+[31m-  // Text[m
+[31m-  // =========================================

@@ -1,42 +1,32 @@
 import '../../models/identity_document_model.dart';
+import '../../models/verification_model.dart';
 
-/// Remote Data Source สำหรับเชื่อมต่อ Supabase
-///
-/// ทำหน้าที่รับส่งข้อมูลกับ Backend เท่านั้น
-/// ไม่มี Business Logic
 abstract interface class IdentityRemoteDataSource {
-  /// ดึงเอกสารทั้งหมดของผู้ใช้
-  Future<List<IdentityDocumentModel>> getDocuments({
-    required String userId,
-  });
+  Future<List<IdentityDocumentModel>> getDocuments();
 
-  /// ดึงเอกสารตามรหัส
-  Future<IdentityDocumentModel?> getDocumentById({
-    required String documentId,
-  });
-
-  /// สร้างเอกสารใหม่
-  Future<void> createDocument(
-    IdentityDocumentModel document,
+  Future<IdentityDocumentModel?> getDocumentById(
+    String documentId,
   );
 
-  /// อัปเดตเอกสาร
-  Future<void> updateDocument(
-    IdentityDocumentModel document,
+  Future<IdentityDocumentModel> uploadDocument({
+    required IdentityDocumentModel document,
+  });
+
+  Future<IdentityDocumentModel> updateDocument({
+    required IdentityDocumentModel document,
+  });
+
+  Future<void> deleteDocument(
+    String documentId,
   );
 
-  /// ลบเอกสาร
-  Future<void> deleteDocument({
-    required String documentId,
-  });
+  Future<VerificationModel> submitVerification();
 
-  /// ส่งเอกสารเข้าสู่กระบวนการตรวจสอบ
-  Future<void> submitVerification({
-    required String documentId,
-  });
+  Future<VerificationModel?> getVerification();
 
-  /// ต่ออายุเอกสาร
-  Future<void> renewDocument({
-    required String documentId,
-  });
+  Future<VerificationModel?> refreshVerification();
+
+  Future<void> cancelVerification();
+
+  Future<bool> hasCompletedRequiredDocuments();
 }

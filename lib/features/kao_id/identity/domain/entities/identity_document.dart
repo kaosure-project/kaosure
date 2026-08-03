@@ -1,18 +1,14 @@
 import 'package:equatable/equatable.dart';
 
 import '../enums/document_status.dart';
+import '../enums/document_type_enum.dart';
 import '../value_objects/document_number.dart';
 import '../value_objects/issued_date.dart';
 import '../value_objects/expiry_date.dart';
 
 import 'document_file.dart';
-import 'document_type.dart';
 import 'verification.dart';
 
-/// Aggregate Root ของ Identity Document
-///
-/// เป็น Entity หลักของโดเมน Identity
-/// ใช้รวมข้อมูลเอกสารทั้งหมดไว้ในที่เดียว
 final class IdentityDocument extends Equatable {
   const IdentityDocument({
     required this.id,
@@ -28,37 +24,19 @@ final class IdentityDocument extends Equatable {
     this.expiryDate,
   });
 
-  /// รหัสเอกสาร
   final String id;
-
-  /// เจ้าของเอกสาร (User ID)
   final String ownerId;
 
-  /// ประเภทเอกสาร
-  final DocumentType documentType;
+  /// เปลี่ยนจาก DocumentType เป็น DocumentTypeEnum
+  final DocumentTypeEnum documentType;
 
-  /// หมายเลขเอกสาร
   final DocumentNumber documentNumber;
-
-  /// วันที่ออกเอกสาร
   final IssuedDate? issuedDate;
-
-  /// วันหมดอายุ
   final ExpiryDate? expiryDate;
-
-  /// สถานะเอกสาร
   final DocumentStatus status;
-
-  /// ไฟล์เอกสาร
   final List<DocumentFile> files;
-
-  /// ข้อมูลการตรวจสอบ
   final Verification verification;
-
-  /// วันที่สร้าง
   final DateTime createdAt;
-
-  /// วันที่แก้ไขล่าสุด
   final DateTime updatedAt;
 
   @override
@@ -79,7 +57,7 @@ final class IdentityDocument extends Equatable {
   IdentityDocument copyWith({
     String? id,
     String? ownerId,
-    DocumentType? documentType,
+    DocumentTypeEnum? documentType,
     DocumentNumber? documentNumber,
     IssuedDate? issuedDate,
     ExpiryDate? expiryDate,

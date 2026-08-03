@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../kao_id/presentation/auth/screens/login_screen.dart';
-import '../../../kao_id/presentation/auth/screens/register_screen.dart';
+import '../../../kao_id/auth/presentation/screens/login_screen.dart';
+import '../../../kao_id/auth/presentation/screens/register_screen.dart';
 
 class LandingScreen extends StatelessWidget {
   static const String routeName = '/';

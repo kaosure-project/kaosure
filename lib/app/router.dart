@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../features/kao_id/presentation/auth/guards/auth_guard.dart';
-import '../features/kao_id/presentation/auth/screens/forgot_password_screen.dart';
-import '../features/kao_id/presentation/auth/screens/login_screen.dart';
-import '../features/kao_id/presentation/auth/screens/register_screen.dart';
-import '../features/kao_id/presentation/auth/screens/verify_email_screen.dart';
+import '../features/kao_id/auth/presentation/guards/auth_guard.dart';
+import '../features/kao_id/auth/presentation/screens/forgot_password_screen.dart';
+import '../features/kao_id/auth/presentation/screens/login_screen.dart';
+import '../features/kao_id/auth/presentation/screens/register_screen.dart';
+import '../features/kao_id/auth/presentation/screens/verify_email_screen.dart';
+import '../features/kao_id/dashboard/screens/dashboard_screen.dart';
+import '../features/kao_id/bootstrap/screens/kao_id_bootstrap_screen.dart';
+import '../features/kao_id/account/presentation/screens/complete_profile_screen.dart';
 import '../features/secondhand/presentation/screens/landing_screen.dart';
 import '../features/secondhand/presentation/screens/secondhand_home_screen.dart';
 
@@ -19,14 +22,6 @@ final class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => const LandingScreen(),
-        );
-
-      case '/home':
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (_) => const AuthGuard(
-            authenticatedChild: SecondhandHomeScreen(),
-          ),
         );
 
       case '/login':
@@ -51,6 +46,36 @@ final class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => const ForgotPasswordScreen(),
+        );
+
+      case '/bootstrap':
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const KaoIdBootstrapScreen(),
+        );
+
+      case '/complete-profile':
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AuthGuard(
+            authenticatedChild: CompleteProfileScreen(),
+          ),
+        );
+
+      case '/dashboard':
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AuthGuard(
+            authenticatedChild: DashboardScreen(),
+          ),
+        );
+
+      case '/home':
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AuthGuard(
+            authenticatedChild: SecondhandHomeScreen(),
+          ),
         );
 
       default:

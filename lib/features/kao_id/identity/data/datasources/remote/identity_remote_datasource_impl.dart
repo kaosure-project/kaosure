@@ -1,65 +1,144 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../models/identity_document_model.dart';
+import '../../models/verification_model.dart';
 import 'identity_remote_datasource.dart';
 
-/// Supabase Implementation ของ IdentityRemoteDataSource
 final class IdentityRemoteDataSourceImpl
     implements IdentityRemoteDataSource {
-  IdentityRemoteDataSourceImpl({
-    required SupabaseClient supabase,
-  }) : _supabase = supabase;
+  IdentityRemoteDataSourceImpl(
+    this._supabase,
+  );
 
   final SupabaseClient _supabase;
 
-  static const _table = 'identity_documents';
+  static const _documentsTable = 'identity_documents';
+  static const _verificationTable = 'verification_requests';
 
   @override
-  Future<List<IdentityDocumentModel>> getDocuments({
-    required String userId,
-  }) async {
-    throw UnimplementedError();
+  Future<List<IdentityDocumentModel>> getDocuments() async {
+    final response = await _supabase
+        .from(_documentsTable)
+        .select()
+        .order('created_at');
+
+    return response
+        .map<IdentityDocumentModel>(
+          (json) => IdentityDocumentModel.fromMap(json),
+        )
+        .toList();
   }
 
   @override
-  Future<IdentityDocumentModel?> getDocumentById({
-    required String documentId,
-  }) async {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> createDocument(
-    IdentityDocumentModel document,
+  Future<IdentityDocumentModel?> getDocumentById(
+    String documentId,
   ) async {
-    throw UnimplementedError();
+    final response = await _supabase
+        .from(_documentsTable)
+        .select()
+        .eq('id', documentId)
+        .maybeSingle();
+
+    if (response == null) {
+      return null;
+    }
+
+    return IdentityDocumentModel.fromMap(response);
   }
 
   @override
-  Future<void> updateDocument(
-    IdentityDocumentModel document,
+  Future<IdentityDocumentModel> uploadDocument({
+    required IdentityDocumentModel document,
+  }) async {
+    final response = await _supabase
+        .from(_documentsTable)
+        .upsert(document.toMap())
+        .select()
+        .single();
+
+    return IdentityDocumentModel.fromMap(response);
+  }
+
+  @override
+  Future<IdentityDocumentModel> updateDocument({
+    required IdentityDocumentModel document,
+  }) async {
+    final response = await _supabase
+        .from(_documentsTable)
+        .update(document.toMap())
+        .eq('id', document.id)
+        .select()
+        .single();
+
+    return IdentityDocumentModel.fromMap(response);
+  }
+
+  @override
+  Future<void> deleteDocument(
+    String documentId,
   ) async {
-    throw UnimplementedError();
+    await _supabase
+        .from(_documentsTable)
+        .delete()
+        .eq('id', documentId);
   }
 
   @override
-  Future<void> deleteDocument({
-    required String documentId,
-  }) async {
-    throw UnimplementedError();
+  Future<VerificationModel> submitVerification() async {
+    final response = await _supabase
+        .from(_verificationTable)
+        .insert({
+          'status': 'submitted',
+        })
+        .select()
+        .single();
+
+    return VerificationModel.fromMap(response);
   }
 
   @override
-  Future<void> submitVerification({
-    required String documentId,
-  }) async {
-    throw UnimplementedError();
+  Future<VerificationModel?> getVerification() async {
+    final response = await _supabase
+        .from(_verificationTable)
+        .select()
+        .order('created_at', ascending: false)
+        .limit(1)
+        .maybeSingle();
+
+    if (response == null) {
+      return null;
+    }
+
+    return VerificationModel.fromMap(response);
   }
 
   @override
-  Future<void> renewDocument({
-    required String documentId,
-  }) async {
-    throw UnimplementedError();
+  Future<VerificationModel?> refreshVerification() {
+    return getVerification();
+  }
+
+  @override
+  Future<void> cancelVerification() async {
+    final verification = await getVerification();
+
+    if (verification == null) {
+      return;
+    }
+
+    await _supabase
+        .from(_verificationTable)
+        .update({
+          'status': 'cancelled',
+        })
+        .eq('id', verification.id);
+  }
+
+  @override
+  Future<bool> hasCompletedRequiredDocuments() async {
+    final response = await _supabase
+        .from(_documentsTable)
+        .select('id');
+
+    return response.isNotEmpty;
   }
 }

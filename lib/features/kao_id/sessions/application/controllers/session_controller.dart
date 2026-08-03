@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/providers/session_repository_provider.dart';
+
 import '../../domain/entities/session.dart';
 import '../../domain/usecases/create_session.dart';
 import '../../domain/usecases/exists_session.dart';

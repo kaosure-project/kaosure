@@ -23,6 +23,6 @@ SELECT EXISTS (
     SELECT 1
     FROM public.profiles
     WHERE id = auth.uid()
-      AND role IN ('admin','super_admin')
+      AND seller_level = 'admin'
 );
 $$;

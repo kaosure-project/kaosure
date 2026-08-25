@@ -5,8 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../models/profile_model.dart';
 import 'profile_remote_datasource.dart';
 
-final class ProfileRemoteDataSourceImpl
-    implements ProfileRemoteDataSource {
+final class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   ProfileRemoteDataSourceImpl(this._supabase);
 
   final SupabaseClient _supabase;
@@ -15,57 +14,40 @@ final class ProfileRemoteDataSourceImpl
   static const _bucket = 'avatars';
 
   @override
-  Future<ProfileModel> getProfile({
-    required String profileId,
-  }) async {
+  Future<ProfileModel> getProfile({required String profileId}) async {
     final json = await _supabase
         .from(_table)
         .select()
         .eq('id', profileId)
         .single();
 
-    print('PROFILE JSON: $json');
-
     return ProfileModel.fromJson(json);
   }
 
   @override
-  Future<void> createProfile({
-    required ProfileModel profile,
-  }) async {
-    await _supabase
-        .from(_table)
-        .insert(profile.toJson());
+  Future<void> createProfile({required ProfileModel profile}) async {
+    await _supabase.from(_table).insert(profile.toJson());
   }
 
   @override
-  Future<void> updateProfile({
-    required ProfileModel profile,
-  }) async {
-    print('========== UPDATE PROFILE ==========');
-print('avatar_url = ${profile.avatarUrl}');
-print('displayName = ${profile.displayName}');
-print('====================================');
-    await _supabase
-        .from(_table)
-        .update(profile.toJson())
-        .eq('id', profile.id);
+  Future<void> updateProfile({required ProfileModel profile}) async {
+    final data = <String, dynamic>{
+      'display_name': profile.displayName,
+      'avatar_url': profile.avatarUrl,
+      'bio': profile.bio,
+      'language_code': profile.languageCode,
+    };
+
+    await _supabase.from(_table).update(data).eq('id', profile.id);
   }
 
   @override
-  Future<void> deleteProfile({
-    required String profileId,
-  }) async {
-    await _supabase
-        .from(_table)
-        .delete()
-        .eq('id', profileId);
+  Future<void> deleteProfile({required String profileId}) async {
+    await _supabase.from(_table).delete().eq('id', profileId);
   }
 
   @override
-  Future<bool> exists({
-    required String profileId,
-  }) async {
+  Future<bool> exists({required String profileId}) async {
     final result = await _supabase
         .from(_table)
         .select('id')
@@ -80,68 +62,93 @@ print('====================================');
     required String userId,
     required Uint8List imageBytes,
   }) async {
-    // โหลด URL รูปเดิมจากฐานข้อมูล
     final profile = await _supabase
         .from(_table)
         .select('avatar_url')
         .eq('id', userId)
         .single();
 
-    final String? oldAvatarUrl =
-        profile['avatar_url'] as String?;
+    final oldAvatarUrl = profile['avatar_url'] as String?;
 
-    // สร้างชื่อไฟล์ใหม่ทุกครั้ง
-    final fileName =
-        'avatar_${DateTime.now().millisecondsSinceEpoch}.jpg';
+    final fileName = 'avatar_${DateTime.now().millisecondsSinceEpoch}.jpg';
 
     final path = '$userId/$fileName';
 
-    // อัปโหลดรูปใหม่
     await _supabase.storage
         .from(_bucket)
         .uploadBinary(
           path,
           imageBytes,
+          fileOptions: const FileOptions(
+            upsert: true,
+            cacheControl: '0',
+            contentType: 'image/jpeg',
+          ),
         );
 
-    // สร้าง URL ใหม่
-    final avatarUrl = _supabase.storage
-        .from(_bucket)
-        .getPublicUrl(path);
+    final avatarUrl = _supabase.storage.from(_bucket).getPublicUrl(path);
 
-    // อัปเดตฐานข้อมูล
-    await _supabase
-        .from(_table)
-        .update({
-          'avatar_url': avatarUrl,
-        })
-        .eq('id', userId);
-
-    // ลบรูปเก่า (ถ้ามี)
-    if (oldAvatarUrl != null &&
-        oldAvatarUrl.isNotEmpty) {
+    if (oldAvatarUrl != null && oldAvatarUrl.isNotEmpty) {
       try {
         final uri = Uri.parse(oldAvatarUrl);
 
-        final objectPath = uri.pathSegments
-            .skipWhile(
-              (segment) => segment != 'avatars',
-            )
+        final oldPath = uri.pathSegments
+            .skipWhile((segment) => segment != _bucket)
             .skip(1)
             .join('/');
 
-        if (objectPath.isNotEmpty) {
-          await _supabase.storage
-              .from(_bucket)
-              .remove([
-            objectPath,
-          ]);
+        if (oldPath.isNotEmpty) {
+          await _supabase.storage.from(_bucket).remove([oldPath]);
         }
       } catch (_) {
-        // ถ้าลบไม่ได้ ไม่ให้กระทบการอัปโหลด
+        // ไม่ให้การลบรูปเก่าทำให้การอัปโหลดล้มเหลว
       }
     }
 
     return avatarUrl;
+  }
+
+  @override
+  Future<bool> isUsernameAvailable({required String username}) async {
+    final result = await _supabase
+        .from(_table)
+        .select('id')
+        .eq('username', username)
+        .maybeSingle();
+
+    return result == null;
+  }
+
+  @override
+  Future<void> setUsername({
+    required String profileId,
+    required String username,
+  }) async {
+    final existing = await _supabase
+        .from(_table)
+        .select('username')
+        .eq('id', profileId)
+        .maybeSingle();
+
+    if (existing == null) {
+      throw Exception('Profile not found.');
+    }
+
+    final currentUsername = existing['username'] as String?;
+
+    if (currentUsername != null && currentUsername.trim().isNotEmpty) {
+      throw Exception('Username has already been set and cannot be changed.');
+    }
+
+    final available = await isUsernameAvailable(username: username);
+
+    if (!available) {
+      throw Exception('Username นี้ถูกใช้งานแล้ว');
+    }
+
+    await _supabase
+        .from(_table)
+        .update({'username': username})
+        .eq('id', profileId);
   }
 }

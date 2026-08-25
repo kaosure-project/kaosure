@@ -6,11 +6,7 @@ final class GetProfileUseCase {
 
   final ProfileRepository _repository;
 
-  Future<Profile> call({
-    required String profileId,
-  }) {
-    return _repository.getProfile(
-      profileId: profileId,
-    );
+  Future<Profile> call({required String profileId}) {
+    return _repository.getProfile(profileId: profileId);
   }
 }

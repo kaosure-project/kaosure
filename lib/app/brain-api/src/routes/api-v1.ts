@@ -1,6 +1,7 @@
 import type { FastifyInstance } from "fastify";
 
 import { pool } from "../db/postgres.js";
+import { requireAuth } from "../middleware/require-auth.js";
 
 import {
   successResponse,
@@ -65,21 +66,21 @@ const brainContextAssembler =
     organizationalConsistencyChecker,
   );
 
-const pudtanReasoningService =
+export const pudtanReasoningService =
   new PudtanReasoningService(
     brainContextAssembler,
   );
 
-const pudtanMemoryService =
+export const pudtanMemoryService =
   new PudtanMemoryService();
 
-const pudtanContextService =
+export const pudtanContextService =
   new PudtanContextService(
     pudtanMemoryService,
     brainContextAssembler,
   );
 
-const pudtanContinuityService =
+export const pudtanContinuityService =
   new PudtanContinuityService();
 interface CreateMemoryBody {
   content: string;
@@ -196,6 +197,9 @@ export async function registerApiV1Routes(
    */
   app.post<{ Body: CreateMemoryBody }>(
     "/api/v1/memories",
+    {
+      preHandler: requireAuth,
+    },
     async (request, reply) => {
       try {
         const body = request.body;
@@ -352,6 +356,9 @@ export async function registerApiV1Routes(
    */
   app.get<{ Querystring: MemorySearchQuery }>(
     "/api/v1/memories/search",
+    {
+      preHandler: requireAuth,
+    },
     async (request, reply) => {
       try {
         const projectId = request.query.project_id?.trim();
@@ -438,6 +445,9 @@ export async function registerApiV1Routes(
    */
   app.get<{ Querystring: MemorySearchQuery }>(
     "/api/v1/memories/context",
+    {
+      preHandler: requireAuth,
+    },
     async (request, reply) => {
       try {
         const projectId = request.query.project_id?.trim();
@@ -531,6 +541,9 @@ export async function registerApiV1Routes(
    */
   app.post<{ Body: PudtanAskBody }>(
     "/api/v1/pudtan/ask",
+    {
+      preHandler: requireAuth,
+    },
     async (request, reply) => {
       try {
         const body = request.body;
@@ -645,6 +658,9 @@ export async function registerApiV1Routes(
    */
   app.post<{ Body: MemoryRecallBody }>(
     "/api/v1/recall",
+    {
+      preHandler: requireAuth,
+    },
     async (request, reply) => {
       try {
         const body = request.body;
@@ -743,6 +759,9 @@ export async function registerApiV1Routes(
    */
   app.get<{ Querystring: MemoryListQuery }>(
     "/api/v1/memories",
+    {
+      preHandler: requireAuth,
+    },
     async (request, reply) => {
       try {
         const projectId = request.query.project_id?.trim();
@@ -788,6 +807,9 @@ export async function registerApiV1Routes(
    */
   app.get<{ Params: { id: string } }>(
     "/api/v1/memories/:id",
+    {
+      preHandler: requireAuth,
+    },
     async (request, reply) => {
       try {
         const memory = await memoryRepository.getById(
@@ -835,6 +857,9 @@ export async function registerApiV1Routes(
 
   app.post<{ Body: PudtanMemoryBody }>(
     "/api/v1/pudtan/memory",
+    {
+      preHandler: requireAuth,
+    },
     async (request, reply) => {
       try {
         const body = request.body;
@@ -999,6 +1024,9 @@ export async function registerApiV1Routes(
     Querystring: PudtanMemoryListQuery;
   }>(
     "/api/v1/pudtan/memory/latest",
+    {
+      preHandler: requireAuth,
+    },
     async (request, reply) => {
       try {
         let limit = 20;
@@ -1061,6 +1089,9 @@ export async function registerApiV1Routes(
     Querystring: PudtanMemorySearchQuery;
   }>(
     "/api/v1/pudtan/memory/search",
+    {
+      preHandler: requireAuth,
+    },
     async (request, reply) => {
       try {
         const query = request.query.q?.trim();
@@ -1140,6 +1171,9 @@ export async function registerApiV1Routes(
     Querystring: PudtanContinuityQuery;
   }>(
     "/api/v1/pudtan/continuity",
+    {
+      preHandler: requireAuth,
+    },
     async (request, reply) => {
       try {
         const projectId =
@@ -1235,6 +1269,9 @@ export async function registerApiV1Routes(
     Querystring: PudtanContextQuery;
   }>(
     "/api/v1/pudtan/context",
+    {
+      preHandler: requireAuth,
+    },
     async (request, reply) => {
       try {
         const projectId =

@@ -7,10 +7,7 @@ import 'header/profile_action.dart';
 import 'header/title.dart';
 
 final class KaoIdProfileHeader extends StatelessWidget {
-  const KaoIdProfileHeader({
-    super.key,
-    required this.profile,
-  });
+  const KaoIdProfileHeader({super.key, required this.profile});
 
   final Profile profile;
 
@@ -25,9 +22,7 @@ final class KaoIdProfileHeader extends StatelessWidget {
 
           const SizedBox(height: 24),
 
-          HeaderContent(
-            profile: profile,
-          ),
+          HeaderContent(profile: profile),
 
           const SizedBox(height: 20),
 
@@ -35,9 +30,7 @@ final class KaoIdProfileHeader extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          ProfileAction(
-            profile: profile,
-          ),
+          ProfileAction(profile: profile),
         ],
       ),
     );

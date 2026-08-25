@@ -11,61 +11,38 @@ import '../../domain/usecases/exists_profile.dart';
 import '../../domain/usecases/get_profile.dart';
 import '../../domain/usecases/update_profile.dart';
 import '../../domain/usecases/upload_avatar.dart';
+
 final supabaseClientProvider = Provider<SupabaseClient>(
   (ref) => Supabase.instance.client,
 );
 
-final profileRemoteDataSourceProvider =
-    Provider<ProfileRemoteDataSource>(
-  (ref) => ProfileRemoteDataSourceImpl(
-    ref.watch(supabaseClientProvider),
-  ),
+final profileRemoteDataSourceProvider = Provider<ProfileRemoteDataSource>(
+  (ref) => ProfileRemoteDataSourceImpl(ref.watch(supabaseClientProvider)),
 );
 
-final profileRepositoryProvider =
-    Provider<ProfileRepository>(
-  (ref) => ProfileRepositoryImpl(
-    ref.watch(profileRemoteDataSourceProvider),
-  ),
+final profileRepositoryProvider = Provider<ProfileRepository>(
+  (ref) => ProfileRepositoryImpl(ref.watch(profileRemoteDataSourceProvider)),
 );
 
-final getProfileUseCaseProvider =
-    Provider<GetProfileUseCase>(
-  (ref) => GetProfileUseCase(
-    ref.watch(profileRepositoryProvider),
-  ),
+final getProfileUseCaseProvider = Provider<GetProfileUseCase>(
+  (ref) => GetProfileUseCase(ref.watch(profileRepositoryProvider)),
 );
 
-final createProfileUseCaseProvider =
-    Provider<CreateProfileUseCase>(
-  (ref) => CreateProfileUseCase(
-    ref.watch(profileRepositoryProvider),
-  ),
+final createProfileUseCaseProvider = Provider<CreateProfileUseCase>(
+  (ref) => CreateProfileUseCase(ref.watch(profileRepositoryProvider)),
 );
 
-final updateProfileUseCaseProvider =
-    Provider<UpdateProfileUseCase>(
-  (ref) => UpdateProfileUseCase(
-    ref.watch(profileRepositoryProvider),
-  ),
+final updateProfileUseCaseProvider = Provider<UpdateProfileUseCase>(
+  (ref) => UpdateProfileUseCase(ref.watch(profileRepositoryProvider)),
 );
 
-final deleteProfileUseCaseProvider =
-    Provider<DeleteProfileUseCase>(
-  (ref) => DeleteProfileUseCase(
-    ref.watch(profileRepositoryProvider),
-  ),
+final deleteProfileUseCaseProvider = Provider<DeleteProfileUseCase>(
+  (ref) => DeleteProfileUseCase(ref.watch(profileRepositoryProvider)),
 );
 
-final existsProfileUseCaseProvider =
-    Provider<ExistsProfileUseCase>(
-  (ref) => ExistsProfileUseCase(
-    ref.watch(profileRepositoryProvider),
-  ),
+final existsProfileUseCaseProvider = Provider<ExistsProfileUseCase>(
+  (ref) => ExistsProfileUseCase(ref.watch(profileRepositoryProvider)),
 );
-final uploadAvatarUseCaseProvider =
-    Provider<UploadAvatarUseCase>(
-  (ref) => UploadAvatarUseCase(
-    ref.watch(profileRepositoryProvider),
-  ),
+final uploadAvatarUseCaseProvider = Provider<UploadAvatarUseCase>(
+  (ref) => UploadAvatarUseCase(ref.watch(profileRepositoryProvider)),
 );

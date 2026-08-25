@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/profile.dart';
+
 import 'header.dart';
 
 final class KaoIdProfileCard extends StatelessWidget {

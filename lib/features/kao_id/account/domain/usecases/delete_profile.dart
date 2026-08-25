@@ -5,11 +5,7 @@ final class DeleteProfileUseCase {
 
   final ProfileRepository _repository;
 
-  Future<void> call({
-    required String profileId,
-  }) {
-    return _repository.deleteProfile(
-      profileId: profileId,
-    );
+  Future<void> call({required String profileId}) {
+    return _repository.deleteProfile(profileId: profileId);
   }
 }

@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 import '../../../../domain/entities/profile.dart';
-import '../../../screens/edit_profile_screen.dart';
+import '../../../pages/edit_profile_page.dart';
 
 final class ProfileAction extends StatelessWidget {
   const ProfileAction({
@@ -19,7 +19,7 @@ final class ProfileAction extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (_) => EditProfileScreen(
+              builder: (_) => EditProfilePage(
                 profile: profile,
               ),
             ),

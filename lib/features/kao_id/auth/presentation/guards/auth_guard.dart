@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/providers/auth_provider.dart';
-import '../screens/login_screen.dart';
+import '../pages/login_page.dart';
 
 class AuthGuard extends ConsumerWidget {
   final Widget authenticatedChild;
@@ -22,10 +22,10 @@ class AuthGuard extends ConsumerWidget {
           child: CircularProgressIndicator(),
         ),
       ),
-      error: (_, _) => const LoginScreen(),
+      error: (_, _) => const LoginPage(),
       data: (user) {
         if (user == null) {
-          return const LoginScreen();
+          return const LoginPage();
         }
 
         return authenticatedChild;

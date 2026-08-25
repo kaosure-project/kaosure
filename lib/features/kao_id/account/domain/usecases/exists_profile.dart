@@ -5,11 +5,7 @@ final class ExistsProfileUseCase {
 
   final ProfileRepository _repository;
 
-  Future<bool> call({
-    required String profileId,
-  }) {
-    return _repository.exists(
-      profileId: profileId,
-    );
+  Future<bool> call({required String profileId}) {
+    return _repository.exists(profileId: profileId);
   }
 }

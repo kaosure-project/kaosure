@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../domain/entities/profile.dart';
 
 final class ProfileInformation extends StatelessWidget {
-  const ProfileInformation({
-    super.key,
-    required this.profile,
-  });
+  const ProfileInformation({super.key, required this.profile});
 
   final Profile profile;
 
@@ -65,11 +62,7 @@ final class ProfileInformation extends StatelessWidget {
         const SizedBox(height: 8),
 
         Chip(
-          avatar: Icon(
-            Icons.verified,
-            color: _badgeColor,
-            size: 18,
-          ),
+          avatar: Icon(Icons.verified, color: _badgeColor, size: 18),
           label: Text(_accountLevel),
         ),
       ],

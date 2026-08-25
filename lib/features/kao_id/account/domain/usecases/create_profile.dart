@@ -6,11 +6,7 @@ final class CreateProfileUseCase {
 
   final ProfileRepository _repository;
 
-  Future<void> call({
-    required Profile profile,
-  }) {
-    return _repository.createProfile(
-      profile: profile,
-    );
+  Future<void> call({required Profile profile}) {
+    return _repository.createProfile(profile: profile);
   }
 }

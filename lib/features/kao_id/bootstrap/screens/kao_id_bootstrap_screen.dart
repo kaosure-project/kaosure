@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../auth/presentation/screens/landing_screen.dart';
-import '../../account/presentation/screens/complete_profile_screen.dart';
-import '../../dashboard/screens/dashboard_screen.dart';
+import '../../auth/presentation/pages/landing_page.dart';
+import '../../account/presentation/pages/complete_profile_page.dart';
+import '../../dashboard/presentation/screens/dashboard_screen.dart';
 
 import '../providers/bootstrap_provider.dart';
 import '../states/bootstrap_state.dart';
@@ -37,7 +37,7 @@ final class _KaoIdBootstrapScreenState
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (_) => const LandingScreen(),
+                builder: (_) => const LandingPage(),
               ),
             );
             break;
@@ -46,7 +46,7 @@ final class _KaoIdBootstrapScreenState
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (_) => const CompleteProfileScreen(),
+                builder: (_) => const CompleteProfilePage(),
               ),
             );
             break;
@@ -74,3 +74,5 @@ final class _KaoIdBootstrapScreenState
     );
   }
 }
+
+

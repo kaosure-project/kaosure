@@ -6,11 +6,7 @@ final class UpdateProfileUseCase {
 
   final ProfileRepository _repository;
 
-  Future<void> call({
-    required Profile profile,
-  }) {
-    return _repository.updateProfile(
-      profile: profile,
-    );
+  Future<void> call({required Profile profile}) {
+    return _repository.updateProfile(profile: profile);
   }
 }

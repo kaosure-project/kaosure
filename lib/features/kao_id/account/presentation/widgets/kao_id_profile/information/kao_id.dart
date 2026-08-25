@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../domain/entities/profile.dart';
 
 final class ProfileKaoId extends StatelessWidget {
-  const ProfileKaoId({
-    super.key,
-    required this.profile,
-  });
+  const ProfileKaoId({super.key, required this.profile});
 
   final Profile profile;
 
@@ -24,9 +21,9 @@ final class ProfileKaoId extends StatelessWidget {
       padding: const EdgeInsets.only(top: 8),
       child: Text(
         'Kao ID : ${profile.username}',
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+        style: Theme.of(
+          context,
+        ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
       ),
     );
   }

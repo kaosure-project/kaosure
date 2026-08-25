@@ -90,21 +90,21 @@ final class Profile extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        username,
-        displayName,
-        firstName,
-        lastName,
-        avatarUrl,
-        bio,
-        languageCode,
-        accountLevel,
-        accountStatus,
-        role,
-        position,
-        createdAt,
-        updatedAt,
-      ];
+    id,
+    username,
+    displayName,
+    firstName,
+    lastName,
+    avatarUrl,
+    bio,
+    languageCode,
+    accountLevel,
+    accountStatus,
+    role,
+    position,
+    createdAt,
+    updatedAt,
+  ];
 
   Profile copyWith({
     String? id,

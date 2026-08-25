@@ -17,5 +17,14 @@ abstract class AuthRemoteDataSource {
     required String email,
   });
 
+  /// ส่งอีเมลยืนยันใหม่
+  Future<void> resendEmailVerification();
+
+  /// รีโหลดข้อมูลผู้ใช้จาก Supabase
+  Future<UserModel?> refreshCurrentUser();
+
+  /// ตรวจสอบว่าอีเมลยืนยันแล้วหรือยัง
+  Future<bool> isEmailVerified();
+
   Future<void> logout();
 }

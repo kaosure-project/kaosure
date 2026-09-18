@@ -422,13 +422,9 @@ class _StatusConfig {
     required this.title,
     required this.description,
     required this.icon,
-    this.backgroundColor,
-    this.foregroundColor,
   });
 
   final String title;
   final String description;
   final IconData icon;
-  final Color? backgroundColor;
-  final Color? foregroundColor;
 }

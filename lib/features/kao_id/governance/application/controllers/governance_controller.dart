@@ -40,7 +40,13 @@ final class GovernanceController
 
       final List<GovernanceRole> roles =
           access.canAssignAdmin
-              ? await _repository.getRoles()
+              ? (await _repository.getRoles())
+                  .where(
+                    (role) =>
+                        access.isOwner ||
+                        role.code != 'super_admin',
+                  )
+                  .toList(growable: false)
               : const [];
 
       final List<GovernanceAssignment> assignments =

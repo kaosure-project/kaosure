@@ -20,7 +20,9 @@ abstract interface class KycRemoteDataSource {
   Future<VerificationRequestModel?>
       getVerificationRequest();
 
-  Future<void> submitVerificationRequest();
+  Future<void> submitVerificationRequest({
+    required String documentId,
+  });
 
   // ===========================================================================
   // Documents

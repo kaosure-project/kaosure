@@ -49,8 +49,9 @@ final class FakeKycRepository
   }
 
   @override
-  Future<void>
-      submitVerificationRequest() async {}
+  Future<void> submitVerificationRequest({
+    required String documentId,
+  }) async {}
 
   @override
   Future<IdentityCard?>

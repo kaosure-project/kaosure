@@ -50,10 +50,13 @@ final class SupabaseKycRepository
   }
 
   @override
-  Future<void>
-      submitVerificationRequest() {
+  Future<void> submitVerificationRequest({
+    required String documentId,
+  }) {
     return _remoteDataSource
-        .submitVerificationRequest();
+        .submitVerificationRequest(
+      documentId: documentId,
+    );
   }
 
   // ===========================================================================

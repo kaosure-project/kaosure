@@ -86,13 +86,35 @@ final class SupabaseKycRemoteDataSource
   }
 
   @override
-  Future<void>
-      submitVerificationRequest() async {
+  Future<void> submitVerificationRequest({
+    required String documentId,
+  }) async {
     final user = _requireUser();
+
+    final document = await _client
+        .from('identity_documents')
+        .select('id')
+        .eq('id', documentId)
+        .eq('owner_id', user.id)
+        .maybeSingle();
+
+    if (document == null) {
+      throw StateError(
+        'Identity document not found for the authenticated user.',
+      );
+    }
+
+    await _client.rpc(
+      'initialize_verification',
+      params: {
+        'p_profile_id': user.id,
+      },
+    );
 
     await _client
         .from('verification_requests')
         .insert({
+      'document_id': documentId,
       'requested_by': user.id,
       'status': 'pending',
     });

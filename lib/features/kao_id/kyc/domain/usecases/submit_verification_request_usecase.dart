@@ -7,7 +7,11 @@ final class SubmitVerificationRequestUseCase {
 
   final KycRepository _repository;
 
-  Future<void> call() {
-    return _repository.submitVerificationRequest();
+  Future<void> call({
+    required String documentId,
+  }) {
+    return _repository.submitVerificationRequest(
+      documentId: documentId,
+    );
   }
 }

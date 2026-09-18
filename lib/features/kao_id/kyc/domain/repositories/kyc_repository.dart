@@ -20,7 +20,9 @@ abstract interface class KycRepository {
   Future<VerificationRequest?>
       getVerificationRequest();
 
-  Future<void> submitVerificationRequest();
+  Future<void> submitVerificationRequest({
+    required String documentId,
+  });
 
   // ===========================================================================
   // Documents

@@ -153,8 +153,9 @@ final class KycController
   // VERIFICATION REQUEST
   // ===========================================================================
 
-  Future<void>
-      submitVerificationRequest() async {
+  Future<void> submitVerificationRequest({
+    required String documentId,
+  }) async {
     if (!state.canSubmitVerificationRequest) {
       return;
     }
@@ -165,7 +166,9 @@ final class KycController
     );
 
     try {
-      await _submitVerificationRequestUseCase();
+      await _submitVerificationRequestUseCase(
+        documentId: documentId,
+      );
 
       await load();
     } catch (error) {

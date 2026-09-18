@@ -6,8 +6,8 @@ import '../models/business_registration_model.dart';
 final class BusinessRegistrationRepositoryImpl
     implements BusinessRegistrationRepository {
   const BusinessRegistrationRepositoryImpl({
-    required BusinessRegistrationRemoteDataSource remoteDataSource,
-  }) : _remoteDataSource = remoteDataSource;
+    required this._remoteDataSource,
+  });
 
   final BusinessRegistrationRemoteDataSource _remoteDataSource;
 

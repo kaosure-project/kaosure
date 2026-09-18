@@ -7,7 +7,6 @@ import '../value_objects/issued_date.dart';
 import '../value_objects/expiry_date.dart';
 
 import 'document_file.dart';
-import 'verification.dart';
 
 final class IdentityDocument extends Equatable {
   const IdentityDocument({
@@ -17,7 +16,6 @@ final class IdentityDocument extends Equatable {
     required this.documentNumber,
     required this.status,
     required this.files,
-    this.verification,
     required this.createdAt,
     required this.updatedAt,
     this.issuedDate,
@@ -35,7 +33,6 @@ final class IdentityDocument extends Equatable {
   final ExpiryDate? expiryDate;
   final DocumentStatus status;
   final List<DocumentFile> files;
-  final Verification? verification;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -49,7 +46,6 @@ final class IdentityDocument extends Equatable {
         expiryDate,
         status,
         files,
-        verification,
         createdAt,
         updatedAt,
       ];
@@ -63,7 +59,6 @@ final class IdentityDocument extends Equatable {
     ExpiryDate? expiryDate,
     DocumentStatus? status,
     List<DocumentFile>? files,
-    Verification? verification,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -76,7 +71,6 @@ final class IdentityDocument extends Equatable {
       expiryDate: expiryDate ?? this.expiryDate,
       status: status ?? this.status,
       files: files ?? this.files,
-      verification: verification ?? this.verification,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

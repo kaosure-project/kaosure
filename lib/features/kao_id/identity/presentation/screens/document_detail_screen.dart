@@ -175,15 +175,6 @@ extends StatelessWidget {
 ),
           ],
         ),
-        trailing: IconButton(
-          icon: const Icon(
-            Icons.visibility_outlined,
-          ),
-          onPressed: () {
-            // TODO:
-            // Preview document
-          },
-        ),
       ),
     );
   }

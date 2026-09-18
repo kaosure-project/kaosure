@@ -44,7 +44,4 @@ abstract interface class KycRemoteDataSource {
       getVerificationHistory();
 
 
-  Future<void> submitBankVerification(
-    BankVerificationModel model,
-  );
 }

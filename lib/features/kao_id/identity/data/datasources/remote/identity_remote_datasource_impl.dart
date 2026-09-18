@@ -18,20 +18,16 @@ final class IdentityRemoteDataSourceImpl
   Future<List<IdentityDocumentModel>> getDocuments() async {
     final response = await _supabase
         .from(_documentsTable)
-        .select()
-        .order('created_at');
+        .select('*, document_files(*)')
+        .order('created_at', ascending: false);
 
-    final documents = <IdentityDocumentModel>[];
-
-    for (final json in response) {
-      documents.add(
-        await _buildDocumentModel(
-          Map<String, dynamic>.from(json),
-        ),
-      );
-    }
-
-    return documents;
+    return response
+        .map(
+          (json) => _buildDocumentModel(
+            Map<String, dynamic>.from(json),
+          ),
+        )
+        .toList();
   }
 
   @override
@@ -40,7 +36,7 @@ final class IdentityRemoteDataSourceImpl
   ) async {
     final response = await _supabase
         .from(_documentsTable)
-        .select()
+        .select('*, document_files(*)')
         .eq('id', documentId)
         .maybeSingle();
 
@@ -48,41 +44,41 @@ final class IdentityRemoteDataSourceImpl
       return null;
     }
 
-    return _buildDocumentModel(
-      Map<String, dynamic>.from(response),
-    );
+    final saved = await getDocumentById(document.id);
+    if (saved == null) {
+      throw StateError('Identity document was not persisted.');
+    }
+    return saved;
   }
 
   @override
   Future<IdentityDocumentModel> uploadDocument({
     required IdentityDocumentModel document,
   }) async {
-    final response = await _supabase
+    await _supabase
         .from(_documentsTable)
-        .upsert(document.toMap())
-        .select()
-        .single();
+        .upsert(document.toMap());
 
     await _syncDocumentFiles(
       documentId: document.id,
       files: document.files,
     );
 
-    return _buildDocumentModel(
-      Map<String, dynamic>.from(response),
-    );
+    final saved = await getDocumentById(document.id);
+    if (saved == null) {
+      throw StateError('Identity document was not persisted.');
+    }
+    return saved;
   }
 
   @override
   Future<IdentityDocumentModel> updateDocument({
     required IdentityDocumentModel document,
   }) async {
-    final response = await _supabase
+    await _supabase
         .from(_documentsTable)
         .update(document.toMap())
-        .eq('id', document.id)
-        .select()
-        .single();
+        .eq('id', document.id);
 
     await _syncDocumentFiles(
       documentId: document.id,
@@ -113,36 +109,12 @@ final class IdentityRemoteDataSourceImpl
     return response.isNotEmpty;
   }
 
-  Future<IdentityDocumentModel> _buildDocumentModel(
+  IdentityDocumentModel _buildDocumentModel(
     Map<String, dynamic> documentMap,
-  ) async {
-    final documentId = documentMap['id'] as String;
-
-    final files = await _getDocumentFiles(
-      documentId,
-    );
-
-    documentMap['files'] = files;
-
-    return IdentityDocumentModel.fromMap(
-      documentMap,
-    );
-  }
-
-  Future<List<Map<String, dynamic>>> _getDocumentFiles(
-    String documentId,
-  ) async {
-    final response = await _supabase
-        .from(_documentFilesTable)
-        .select()
-        .eq('document_id', documentId)
-        .order('uploaded_at');
-
-    return response
-        .map(
-          (json) => Map<String, dynamic>.from(json),
-        )
-        .toList();
+  ) {
+    final nestedFiles = documentMap.remove('document_files');
+    documentMap['files'] = nestedFiles is List ? nestedFiles : const [];
+    return IdentityDocumentModel.fromMap(documentMap);
   }
 
   Future<void> _syncDocumentFiles({

@@ -54,6 +54,51 @@ DO UPDATE SET
     updated_at = now();
 
 ---------------------------------------------------------------
+-- 1.1 Built-in role permission mapping
+---------------------------------------------------------------
+
+INSERT INTO public.role_permissions (
+    role_id,
+    permission_id
+)
+SELECT ar.id, p.id
+FROM public.admin_roles ar
+JOIN public.permissions p
+  ON p.is_active = true
+WHERE ar.code = 'super_admin'
+ON CONFLICT (role_id, permission_id)
+DO NOTHING;
+
+INSERT INTO public.role_permissions (
+    role_id,
+    permission_id
+)
+SELECT ar.id, p.id
+FROM public.admin_roles ar
+JOIN public.permissions p
+  ON p.code IN (
+      'admin.dashboard.view',
+      'admin.roles.view',
+      'admin.permissions.view',
+      'admin.assignments.view'
+  )
+WHERE ar.code = 'admin'
+ON CONFLICT (role_id, permission_id)
+DO NOTHING;
+
+INSERT INTO public.role_permissions (
+    role_id,
+    permission_id
+)
+SELECT ar.id, p.id
+FROM public.admin_roles ar
+JOIN public.permissions p
+  ON p.code = 'admin.dashboard.view'
+WHERE ar.code IN ('kyc_officer', 'support')
+ON CONFLICT (role_id, permission_id)
+DO NOTHING;
+
+---------------------------------------------------------------
 -- 2. Harden Company Owner identity
 --
 -- Owner is not a special Kao ID.
@@ -120,6 +165,60 @@ ALTER FUNCTION public.is_company_owner()
 OWNER TO postgres;
 
 ---------------------------------------------------------------
+-- 2.1 Harden active administrator identity
+---------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION public.is_active_admin()
+RETURNS boolean
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $
+DECLARE
+    v_user_id uuid := auth.uid();
+BEGIN
+    IF v_user_id IS NULL THEN
+        RETURN false;
+    END IF;
+
+    RETURN EXISTS (
+        SELECT 1
+        FROM public.admin_assignments aa
+        JOIN public.profiles p
+          ON p.id = aa.profile_id
+         AND p.account_status = 'active'
+        JOIN public.verifications v
+          ON v.profile_id = aa.profile_id
+         AND v.status = 'approved'
+        JOIN public.kao_id_identities k
+          ON k.profile_id = aa.profile_id
+         AND k.status = 'active'
+        JOIN public.admin_roles ar
+          ON ar.id = aa.role_id
+         AND ar.is_active = true
+        WHERE aa.profile_id = v_user_id
+          AND aa.is_active = true
+          AND aa.starts_at <= now()
+          AND (
+              aa.expires_at IS NULL
+              OR aa.expires_at >= now()
+          )
+    );
+END;
+$;
+
+REVOKE ALL
+ON FUNCTION public.is_active_admin()
+FROM PUBLIC;
+
+GRANT EXECUTE
+ON FUNCTION public.is_active_admin()
+TO authenticated;
+
+ALTER FUNCTION public.is_active_admin()
+OWNER TO postgres;
+
+---------------------------------------------------------------
 -- 3. Governance access summary
 ---------------------------------------------------------------
 
@@ -169,6 +268,21 @@ BEGIN
         'is_owner', v_is_owner,
         'is_admin', v_is_admin,
         'can_access_admin', (v_is_owner OR v_is_admin),
+        'can_view_assignments',
+            (
+                v_is_owner
+                OR public.has_permission('admin.assignments.view')
+            ),
+        'can_assign_admin',
+            (
+                v_is_owner
+                OR public.has_permission('admin.assignments.create')
+            ),
+        'can_revoke_admin',
+            (
+                v_is_owner
+                OR public.has_permission('admin.assignments.update')
+            ),
         'roles', v_roles
     );
 END;

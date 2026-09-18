@@ -6,6 +6,7 @@ import '../../domain/entities/governance_assignment.dart';
 import '../widgets/assign_governance_role_dialog.dart';
 import '../widgets/governance_access_card.dart';
 import '../widgets/governance_assignments_section.dart';
+import '../widgets/governance_summary_cards.dart';
 
 final class GovernancePage
     extends ConsumerStatefulWidget {
@@ -149,28 +150,10 @@ final class _GovernancePageState
                       CrossAxisAlignment
                           .stretch,
                   children: [
-                    Text(
-                      'ศูนย์บริหาร Kao ID',
-                      style: theme
-                          .textTheme
-                          .headlineSmall
-                          ?.copyWith(
-                        fontWeight:
-                            FontWeight.w900,
-                      ),
+                    _GovernanceHeader(
+                      isBusy: state.isSubmitting,
                     ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Text(
-                      'Owner และผู้ดูแลระบบใช้ Kao ID เดียวกัน โดยแยก Identity ออกจาก Role และ Permission',
-                      style: theme
-                          .textTheme
-                          .bodyMedium,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     if (state.isLoading &&
                         state.access == null)
                       const Center(
@@ -194,13 +177,15 @@ final class _GovernancePageState
                         .canAccess)
                       const _AccessDeniedCard()
                     else ...[
+                      GovernanceSummaryCards(
+                        access: state.access!,
+                        assignments: state.assignments,
+                      ),
+                      const SizedBox(height: 20),
                       GovernanceAccessCard(
-                        access:
-                            state.access!,
+                        access: state.access!,
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
                       if (state
                               .errorMessage !=
                           null) ...[
@@ -299,6 +284,80 @@ final class _ErrorCard
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+
+final class _GovernanceHeader extends StatelessWidget {
+  const _GovernanceHeader({
+    required this.isBusy,
+  });
+
+  final bool isBusy;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
+
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: colors.primaryContainer,
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 54,
+            height: 54,
+            decoration: BoxDecoration(
+              color: colors.surface,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            alignment: Alignment.center,
+            child: Icon(
+              Icons.admin_panel_settings_outlined,
+              color: colors.primary,
+              size: 30,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'ศูนย์บริหาร Kao ID',
+                  style: theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.w900,
+                    color: colors.onPrimaryContainer,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  'Identity ยังคงเป็น Kao ID เดิม ส่วนสิทธิ์ Owner, Admin และ KYC Officer จัดการผ่าน Governance แยกจากตัวตน',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: colors.onPrimaryContainer,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (isBusy) ...[
+            const SizedBox(width: 16),
+            const SizedBox(
+              width: 22,
+              height: 22,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }

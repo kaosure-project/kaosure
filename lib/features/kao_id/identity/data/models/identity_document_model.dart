@@ -16,7 +16,7 @@ final class IdentityDocumentModel {
     required this.documentNumber,
     required this.status,
     required this.files,
-    required this.verification,
+    this.verification,
     required this.createdAt,
     required this.updatedAt,
     this.issuedDate,
@@ -38,7 +38,7 @@ final class IdentityDocumentModel {
 
   final List<DocumentFileModel> files;
 
-  final VerificationModel verification;
+  final VerificationModel? verification;
 
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -83,11 +83,13 @@ final class IdentityDocumentModel {
           )
           .toList(),
 
-      verification: VerificationModel.fromMap(
-        (map['verification']
-                as Map<String, dynamic>?) ??
-            <String, dynamic>{},
-      ),
+      verification: map['verification'] == null
+          ? null
+          : VerificationModel.fromMap(
+              Map<String, dynamic>.from(
+                map['verification'] as Map,
+              ),
+            ),
 
       createdAt: DateTime.parse(
         map['created_at'] as String,
@@ -116,10 +118,11 @@ final class IdentityDocumentModel {
       files: entity.files
           .map(DocumentFileModel.fromEntity)
           .toList(),
-      verification:
-          VerificationModel.fromEntity(
-        entity.verification,
-      ),
+      verification: entity.verification == null
+          ? null
+          : VerificationModel.fromEntity(
+              entity.verification!,
+            ),
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     );
@@ -143,7 +146,7 @@ final class IdentityDocumentModel {
           .map((e) => e.toEntity())
           .toList(),
       verification:
-          verification.toEntity(),
+          verification?.toEntity(),
       createdAt: createdAt,
       updatedAt: updatedAt,
     );

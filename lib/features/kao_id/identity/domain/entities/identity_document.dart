@@ -17,7 +17,7 @@ final class IdentityDocument extends Equatable {
     required this.documentNumber,
     required this.status,
     required this.files,
-    required this.verification,
+    this.verification,
     required this.createdAt,
     required this.updatedAt,
     this.issuedDate,
@@ -35,7 +35,7 @@ final class IdentityDocument extends Equatable {
   final ExpiryDate? expiryDate;
   final DocumentStatus status;
   final List<DocumentFile> files;
-  final Verification verification;
+  final Verification? verification;
   final DateTime createdAt;
   final DateTime updatedAt;
 

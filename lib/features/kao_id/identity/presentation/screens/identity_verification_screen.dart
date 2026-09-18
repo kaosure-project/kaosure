@@ -74,7 +74,8 @@ final class _IdentityVerificationScreenState
                 VerificationStatusCard(
                   status: state.documents.isEmpty
                       ? VerificationStatus.notSubmitted
-                      : state.documents.first.verification.status,
+                      : state.documents.first.verification?.status ??
+                          VerificationStatus.notSubmitted,
                 ),
 
                 const SizedBox(height: 24),

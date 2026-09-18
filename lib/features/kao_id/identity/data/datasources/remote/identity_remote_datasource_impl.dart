@@ -1,7 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../models/identity_document_model.dart';
-import '../../models/verification_model.dart';
 import 'identity_remote_datasource.dart';
 
 final class IdentityRemoteDataSourceImpl
@@ -14,7 +13,6 @@ final class IdentityRemoteDataSourceImpl
 
   static const _documentsTable = 'identity_documents';
   static const _documentFilesTable = 'document_files';
-  static const _verificationTable = 'verification_requests';
 
   @override
   Future<List<IdentityDocumentModel>> getDocuments() async {
@@ -124,12 +122,7 @@ final class IdentityRemoteDataSourceImpl
       documentId,
     );
 
-    final verification = await _getDocumentVerification(
-      documentId,
-    );
-
     documentMap['files'] = files;
-    documentMap['verification'] = verification;
 
     return IdentityDocumentModel.fromMap(
       documentMap,
@@ -150,24 +143,6 @@ final class IdentityRemoteDataSourceImpl
           (json) => Map<String, dynamic>.from(json),
         )
         .toList();
-  }
-
-  Future<Map<String, dynamic>?> _getDocumentVerification(
-    String documentId,
-  ) async {
-    final response = await _supabase
-        .from(_verificationTable)
-        .select()
-        .eq('document_id', documentId)
-        .order('created_at', ascending: false)
-        .limit(1)
-        .maybeSingle();
-
-    if (response == null) {
-      return null;
-    }
-
-    return Map<String, dynamic>.from(response);
   }
 
   Future<void> _syncDocumentFiles({

@@ -31,12 +31,11 @@ final class BusinessRegistrationController
   BusinessRegistrationController({
     required this.loadCurrentRegistration,
     required this.saveDraft,
-    required UpdateBusinessRegistration updateDraft,
+    required this._updateDraft,
     required this.attachDocument,
     required this.submitRegistration,
     required this.cancelRegistration,
-  })  : _updateDraft = updateDraft,
-        super(const BusinessRegistrationState());
+  }) : super(const BusinessRegistrationState());
 
   final LoadCurrentBusinessRegistration loadCurrentRegistration;
   final SaveBusinessRegistration saveDraft;

@@ -11,6 +11,7 @@ final class KaoIdRoutes {
   static const String bootstrap = '/bootstrap';
 
   static const String dashboard = '/dashboard';
+  static const String governance = '/governance';
 
   static const String profile = '/profile';
   static const String editProfile = '/profile/edit';

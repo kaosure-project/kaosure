@@ -9,6 +9,7 @@ import '../features/kao_id/auth/presentation/pages/verify_email_page.dart';
 import '../features/kao_id/bootstrap/screens/kao_id_bootstrap_screen.dart';
 import '../features/kao_id/dashboard/presentation/screens/dashboard_screen.dart';
 import '../features/kao_id/kyc/presentation/screens/kyc_page.dart';
+import '../features/kao_id/governance/presentation/pages/governance_page.dart';
 
 import '../features/kao_id/business/presentation/pages/business_registration_page.dart';
 import '../features/kao_id/business/presentation/pages/business_information_page.dart';
@@ -169,6 +170,17 @@ final class AppRouter {
             authenticatedChild: BusinessCompletedPage(
               businessInformation: arguments,
             ),
+          ),
+        );
+
+      // -----------------------------------------------------------------------
+      // Kao ID Governance
+      // -----------------------------------------------------------------------
+      case '/governance':
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AuthGuard(
+            authenticatedChild: GovernancePage(),
           ),
         );
 

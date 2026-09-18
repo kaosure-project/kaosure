@@ -7,7 +7,6 @@ import '../../domain/usecases/get_kyc_identity_documents_usecase.dart';
 import '../../domain/usecases/get_verification_history_usecase.dart';
 import '../../domain/usecases/get_verification_request_usecase.dart';
 import '../../domain/usecases/get_verification_usecase.dart';
-import '../../domain/usecases/submit_bank_verification_usecase.dart';
 import '../../domain/usecases/submit_verification_request_usecase.dart';
 
 import '../states/kyc_state.dart';
@@ -18,7 +17,6 @@ final class KycController
     required this._getVerificationUseCase,
     required this._getIdentityDocumentsUseCase,
     required this._getBankVerificationUseCase,
-    required this._submitBankVerificationUseCase,
     required this._getVerificationHistoryUseCase,
     required this._getVerificationRequestUseCase,
     required this._submitVerificationRequestUseCase,
@@ -33,8 +31,6 @@ final class KycController
   final GetBankVerificationUseCase
       _getBankVerificationUseCase;
 
-  final SubmitBankVerificationUseCase
-      _submitBankVerificationUseCase;
 
   final GetVerificationHistoryUseCase
       _getVerificationHistoryUseCase;
@@ -80,45 +76,6 @@ final class KycController
             identityDocuments,
         bankVerification:
             bankVerification,
-        verificationHistory:
-            verificationHistory,
-        clearError: true,
-      );
-    } catch (error) {
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: error.toString(),
-      );
-    }
-  }
-
-  // ===========================================================================
-  // BANK VERIFICATION
-  // ===========================================================================
-
-  Future<void> submitBankVerification(
-    BankVerification bankVerification,
-  ) async {
-    state = state.copyWith(
-      isLoading: true,
-      clearError: true,
-    );
-
-    try {
-      await _submitBankVerificationUseCase(
-        bankVerification,
-      );
-
-      final updatedBankVerification =
-          await _getBankVerificationUseCase();
-
-      final verificationHistory =
-          await _getVerificationHistoryUseCase();
-
-      state = state.copyWith(
-        isLoading: false,
-        bankVerification:
-            updatedBankVerification,
         verificationHistory:
             verificationHistory,
         clearError: true,

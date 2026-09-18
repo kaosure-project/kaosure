@@ -11,7 +11,6 @@ import '../../domain/usecases/get_kyc_identity_documents_usecase.dart';
 import '../../domain/usecases/get_verification_history_usecase.dart';
 import '../../domain/usecases/get_verification_request_usecase.dart';
 import '../../domain/usecases/get_verification_usecase.dart';
-import '../../domain/usecases/submit_bank_verification_usecase.dart';
 import '../../domain/usecases/submit_verification_request_usecase.dart';
 
 import '../controllers/kyc_controller.dart';
@@ -75,15 +74,6 @@ final getBankVerificationUseCaseProvider =
   ),
 );
 
-final submitBankVerificationUseCaseProvider =
-    Provider<SubmitBankVerificationUseCase>(
-  (ref) => SubmitBankVerificationUseCase(
-    ref.watch(
-      kycRepositoryProvider,
-    ),
-  ),
-);
-
 final getVerificationHistoryUseCaseProvider =
     Provider<GetVerificationHistoryUseCase>(
   (ref) => GetVerificationHistoryUseCase(
@@ -119,10 +109,6 @@ final kycControllerProvider =
       getBankVerificationUseCase:
           ref.watch(
         getBankVerificationUseCaseProvider,
-      ),
-      submitBankVerificationUseCase:
-          ref.watch(
-        submitBankVerificationUseCaseProvider,
       ),
       getVerificationHistoryUseCase:
           ref.watch(

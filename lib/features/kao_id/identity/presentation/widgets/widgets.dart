@@ -35,8 +35,6 @@ export 'identity_requirement_card.dart';
 export 'identity_requirement_section.dart';
 export 'identity_security_notice_card.dart';
 export 'identity_security_section.dart';
-export 'identity_status_banner.dart';
-export 'identity_status_overview_section.dart';
 export 'identity_support_card.dart';
 export 'identity_support_section.dart';
 

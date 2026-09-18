@@ -7,7 +7,6 @@ import '../../domain/repositories/kyc_repository.dart';
 
 import '../datasources/kyc_remote_datasource.dart';
 
-import '../models/bank_verification_model.dart';
 
 final class SupabaseKycRepository
     implements KycRepository {
@@ -106,16 +105,4 @@ final class SupabaseKycRepository
   // Bank Verification
   // ===========================================================================
 
-  @override
-  Future<void> submitBankVerification(
-    BankVerification bankVerification,
-  ) {
-    final model =
-        BankVerificationModel.fromEntity(
-      bankVerification,
-    );
-
-    return _remoteDataSource
-        .submitBankVerification(model);
-  }
 }

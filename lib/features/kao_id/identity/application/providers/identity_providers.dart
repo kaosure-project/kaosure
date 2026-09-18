@@ -69,11 +69,3 @@ final deleteDocumentProvider =
   },
 );
 
-final submitVerificationProvider =
-    Provider<SubmitVerification>(
-  (ref) {
-    return SubmitVerification(
-      ref.read(identityRepositoryProvider),
-    );
-  },
-);

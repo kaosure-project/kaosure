@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/identity_document.dart';
 import '../../domain/usecases/delete_document.dart';
 import '../../domain/usecases/get_documents.dart';
-import '../../domain/usecases/submit_verification.dart';
 import '../../domain/usecases/upload_document.dart';
 
 import '../states/identity_state.dart';
@@ -11,17 +10,14 @@ import '../states/identity_state.dart';
 final class IdentityController extends StateNotifier<IdentityState> {
   IdentityController({
     required GetDocuments getDocuments,
-    required SubmitVerification submitVerification,
     required DeleteDocument deleteDocument,
     required UploadDocument uploadDocument,
   })  : _getDocuments = getDocuments,
-        _submitVerification = submitVerification,
         _deleteDocument = deleteDocument,
         _uploadDocument = uploadDocument,
         super(IdentityState.initial());
 
   final GetDocuments _getDocuments;
-  final SubmitVerification _submitVerification;
   final DeleteDocument _deleteDocument;
   final UploadDocument _uploadDocument;
 
@@ -62,24 +58,6 @@ final class IdentityController extends StateNotifier<IdentityState> {
       await _uploadDocument(
         document: document,
       );
-
-      await loadDocuments();
-    } catch (e) {
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: e.toString(),
-      );
-    }
-  }
-
-  Future<void> submitVerification() async {
-    state = state.copyWith(
-      isLoading: true,
-      errorMessage: null,
-    );
-
-    try {
-      await _submitVerification();
 
       await loadDocuments();
     } catch (e) {

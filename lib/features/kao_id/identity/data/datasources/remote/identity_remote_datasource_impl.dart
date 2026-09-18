@@ -107,60 +107,6 @@ final class IdentityRemoteDataSourceImpl
   }
 
   @override
-  Future<VerificationModel> submitVerification() async {
-    final response = await _supabase
-        .from(_verificationTable)
-        .insert({
-          'status': 'submitted',
-        })
-        .select()
-        .single();
-
-    return VerificationModel.fromMap(
-      Map<String, dynamic>.from(response),
-    );
-  }
-
-  @override
-  Future<VerificationModel?> getVerification() async {
-    final response = await _supabase
-        .from(_verificationTable)
-        .select()
-        .order('created_at', ascending: false)
-        .limit(1)
-        .maybeSingle();
-
-    if (response == null) {
-      return null;
-    }
-
-    return VerificationModel.fromMap(
-      Map<String, dynamic>.from(response),
-    );
-  }
-
-  @override
-  Future<VerificationModel?> refreshVerification() {
-    return getVerification();
-  }
-
-  @override
-  Future<void> cancelVerification() async {
-    final verification = await getVerification();
-
-    if (verification == null) {
-      return;
-    }
-
-    await _supabase
-        .from(_verificationTable)
-        .update({
-          'status': 'cancelled',
-        })
-        .eq('id', verification.id);
-  }
-
-  @override
   Future<bool> hasCompletedRequiredDocuments() async {
     final response = await _supabase
         .from(_documentsTable)

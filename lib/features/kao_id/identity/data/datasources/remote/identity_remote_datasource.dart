@@ -1,5 +1,4 @@
 import '../../models/identity_document_model.dart';
-import '../../models/verification_model.dart';
 
 abstract interface class IdentityRemoteDataSource {
   /// ดึงเอกสาร Identity ทั้งหมดของผู้ใช้ปัจจุบัน
@@ -35,17 +34,6 @@ abstract interface class IdentityRemoteDataSource {
     String documentId,
   );
 
-  /// ส่งคำขอตรวจสอบ Identity
-  Future<VerificationModel> submitVerification();
-
-  /// ดึงคำขอตรวจสอบล่าสุด
-  Future<VerificationModel?> getVerification();
-
-  /// ตรวจสอบสถานะการยืนยันล่าสุด
-  Future<VerificationModel?> refreshVerification();
-
-  /// ยกเลิกคำขอตรวจสอบ
-  Future<void> cancelVerification();
 
   /// ตรวจสอบว่าผู้ใช้มีเอกสารที่จำเป็นแล้วหรือไม่
   Future<bool> hasCompletedRequiredDocuments();

@@ -10,7 +10,6 @@ import '../../domain/repositories/identity_repository.dart';
 
 import '../../domain/usecases/delete_document.dart';
 import '../../domain/usecases/get_documents.dart';
-import '../../domain/usecases/submit_verification.dart';
 import '../../domain/usecases/upload_document.dart';
 
 /// ---------------------------------------------------------------------------

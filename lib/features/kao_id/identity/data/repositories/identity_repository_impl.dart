@@ -1,9 +1,7 @@
 import '../../domain/entities/identity_document.dart';
-import '../../domain/entities/verification.dart';
 import '../../domain/repositories/identity_repository.dart';
 import '../datasources/remote/identity_remote_datasource.dart';
 import '../mappers/identity_document_mapper.dart';
-import '../mappers/verification_mapper.dart';
 
 final class IdentityRepositoryImpl
     implements IdentityRepository {
@@ -66,35 +64,6 @@ final class IdentityRepositoryImpl
     return _remoteDataSource.deleteDocument(
       documentId,
     );
-  }
-
-  @override
-  Future<Verification> submitVerification() async {
-    final verification =
-        await _remoteDataSource.submitVerification();
-
-    return verification.toDomain();
-  }
-
-  @override
-  Future<Verification?> getVerification() async {
-    final verification =
-        await _remoteDataSource.getVerification();
-
-    return verification?.toDomain();
-  }
-
-  @override
-  Future<Verification?> refreshVerification() async {
-    final verification =
-        await _remoteDataSource.refreshVerification();
-
-    return verification?.toDomain();
-  }
-
-  @override
-  Future<void> cancelVerification() {
-    return _remoteDataSource.cancelVerification();
   }
 
   @override

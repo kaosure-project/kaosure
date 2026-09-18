@@ -13,9 +13,6 @@ final identityControllerProvider =
       getDocuments: ref.watch(
         getDocumentsProvider,
       ),
-      submitVerification: ref.watch(
-        submitVerificationProvider,
-      ),
       deleteDocument: ref.watch(
         deleteDocumentProvider,
       ),

@@ -176,20 +176,15 @@ final class _KycPageState
 
                             VerificationSection(
                               verification:
-                                  kycState
-                                      .verification,
+                                  kycState.verification,
                               identityCard:
-                                  kycState
-                                      .identityCard,
+                                  kycState.identityCard,
                               passport:
-                                  kycState
-                                      .passport,
+                                  kycState.passport,
                               residencePermit:
-                                  kycState
-                                      .residencePermit,
+                                  kycState.residencePermit,
                               bankVerification:
-                                  kycState
-                                      .bankVerification,
+                                  kycState.bankVerification,
                             ),
 
                             const SizedBox(

@@ -4,6 +4,7 @@ import 'about_tile.dart';
 import 'general_settings_tile.dart';
 import 'notifications_tile.dart';
 import 'privacy_tile.dart';
+import '../../../../governance/presentation/widgets/governance_dashboard_tile.dart';
 
 final class DashboardSettingsSection extends StatelessWidget {
   const DashboardSettingsSection({
@@ -37,6 +38,8 @@ final class DashboardSettingsSection extends StatelessWidget {
           const NotificationsTile(),
 
           const PrivacyTile(),
+
+          const GovernanceDashboardTile(),
 
           const AboutTile(),
         ],

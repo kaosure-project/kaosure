@@ -1,9 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/bank_verification_model.dart';
-import '../models/identity_card_model.dart';
-import '../models/passport_model.dart';
-import '../models/residence_permit_model.dart';
+import '../models/kyc_identity_document_model.dart';
 import '../models/verification_history_model.dart';
 import '../models/verification_model.dart';
 import '../models/verification_request_model.dart';
@@ -121,77 +119,35 @@ final class SupabaseKycRemoteDataSource
   }
 
   // ===========================================================================
-  // Identity Card
+  // Canonical Identity Documents
   // ===========================================================================
 
   @override
-  Future<IdentityCardModel?>
-      getIdentityCard() async {
+  Future<List<KycIdentityDocumentModel>>
+      getIdentityDocuments() async {
     final user = _requireUser();
 
     final response = await _client
-        .from('identity_cards')
-        .select()
+        .from('identity_documents')
+        .select(
+          'id, owner_id, document_type, document_number, '
+          'status, issued_date, expiry_date, '
+          'created_at, updated_at',
+        )
         .eq('owner_id', user.id)
-        .isFilter('deleted_at', null)
-        .maybeSingle();
+        .order(
+          'created_at',
+          ascending: false,
+        );
 
-    if (response == null) {
-      return null;
-    }
-
-    return IdentityCardModel.fromJson(
-      response,
-    );
-  }
-
-  // ===========================================================================
-  // Passport
-  // ===========================================================================
-
-  @override
-  Future<PassportModel?> getPassport() async {
-    final user = _requireUser();
-
-    final response = await _client
-        .from('passports')
-        .select()
-        .eq('owner_id', user.id)
-        .isFilter('deleted_at', null)
-        .maybeSingle();
-
-    if (response == null) {
-      return null;
-    }
-
-    return PassportModel.fromJson(
-      response,
-    );
-  }
-
-  // ===========================================================================
-  // Residence Permit
-  // ===========================================================================
-
-  @override
-  Future<ResidencePermitModel?>
-      getResidencePermit() async {
-    final user = _requireUser();
-
-    final response = await _client
-        .from('residence_permits')
-        .select()
-        .eq('owner_id', user.id)
-        .isFilter('deleted_at', null)
-        .maybeSingle();
-
-    if (response == null) {
-      return null;
-    }
-
-    return ResidencePermitModel.fromJson(
-      response,
-    );
+    return response
+        .map(
+          (row) =>
+              KycIdentityDocumentModel.fromJson(
+            Map<String, dynamic>.from(row),
+          ),
+        )
+        .toList();
   }
 
   // ===========================================================================

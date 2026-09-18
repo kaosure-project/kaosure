@@ -1,7 +1,5 @@
 import '../../domain/entities/bank_verification.dart';
-import '../../domain/entities/identity_card.dart';
-import '../../domain/entities/passport.dart';
-import '../../domain/entities/residence_permit.dart';
+import '../../domain/entities/kyc_identity_document.dart';
 import '../../domain/entities/verification.dart';
 import '../../domain/entities/verification_history.dart';
 import '../../domain/entities/verification_request.dart';
@@ -60,44 +58,19 @@ final class SupabaseKycRepository
   }
 
   // ===========================================================================
-  // Identity Card
+  // Canonical Identity Documents
   // ===========================================================================
 
   @override
-  Future<IdentityCard?>
-      getIdentityCard() async {
-    final model =
+  Future<List<KycIdentityDocument>>
+      getIdentityDocuments() async {
+    final models =
         await _remoteDataSource
-            .getIdentityCard();
+            .getIdentityDocuments();
 
-    return model?.toEntity();
-  }
-
-  // ===========================================================================
-  // Passport
-  // ===========================================================================
-
-  @override
-  Future<Passport?> getPassport() async {
-    final model =
-        await _remoteDataSource
-            .getPassport();
-
-    return model?.toEntity();
-  }
-
-  // ===========================================================================
-  // Residence Permit
-  // ===========================================================================
-
-  @override
-  Future<ResidencePermit?>
-      getResidencePermit() async {
-    final model =
-        await _remoteDataSource
-            .getResidencePermit();
-
-    return model?.toEntity();
+    return models
+        .map((model) => model.toEntity())
+        .toList();
   }
 
   // ===========================================================================

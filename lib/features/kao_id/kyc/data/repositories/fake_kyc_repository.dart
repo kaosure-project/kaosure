@@ -2,6 +2,7 @@ import '../../domain/entities/bank_verification.dart';
 import '../../domain/entities/identity_card.dart';
 import '../../domain/entities/passport.dart';
 import '../../domain/entities/residence_permit.dart';
+import '../../domain/entities/kyc_identity_document.dart';
 import '../../domain/entities/verification.dart';
 import '../../domain/entities/verification_history.dart';
 import '../../domain/entities/verification_request.dart';
@@ -54,103 +55,43 @@ final class FakeKycRepository
   }) async {}
 
   @override
-  Future<IdentityCard?>
-      getIdentityCard() async {
-    return IdentityCard(
-      id: 'identity-001',
-      ownerId: 'profile-001',
-      documentType: 'identity_card',
-      cardNumber: '1234567890123',
-      fullName: 'Kao ID User',
-      countryCode: 'TH',
-      status:
-          VerificationStatus.approved.value,
-      issuedDate:
-          DateTime(2021, 3, 25),
-      expiryDate:
-          DateTime(2031, 3, 25),
-      verificationMethod: 'manual',
-      verifiedAt: DateTime.now(),
-      verifiedBy: 'admin-001',
-      rejectedReason: null,
-      deletedAt: null,
-      filePath:
-          'profile-001/identity_card/identity_card.jpg',
-      fileUrl:
-          'https://example.com/identity_card.jpg',
-      fileName: 'identity_card.jpg',
-      fileSize: 245678,
-      mimeType: 'image/jpeg',
-      uploadedAt: DateTime.now(),
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
-  }
-
-  @override
-  Future<Passport?> getPassport() async {
-    return Passport(
-      id: 'passport-001',
-      ownerId: 'profile-001',
-      documentType: 'passport',
-      passportNumber: 'AA1234567',
-      fullName: 'Kao ID User',
-      countryCode: 'TH',
-      status:
-          VerificationStatus.notStarted.value,
-      issuedDate:
-          DateTime(2023, 1, 1),
-      expiryDate:
-          DateTime(2033, 1, 1),
-      verificationMethod: null,
-      verifiedAt: null,
-      verifiedBy: null,
-      rejectedReason: null,
-      deletedAt: null,
-      filePath: null,
-      fileUrl: null,
-      fileName: null,
-      fileSize: null,
-      mimeType: null,
-      uploadedAt: null,
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
-  }
-
-  @override
-  Future<ResidencePermit?>
-      getResidencePermit() async {
-    return ResidencePermit(
-      id: 'residence-001',
-      ownerId: 'profile-001',
-      documentType:
-          'residence_permit',
-      permitNumber: 'RP-000001',
-      fullName: 'Kao ID User',
-      countryCode: 'JP',
-      status:
-          VerificationStatus.approved.value,
-      issuedDate:
-          DateTime(2024, 1, 1),
-      expiryDate:
-          DateTime(2029, 1, 15),
-      verificationMethod: 'manual',
-      verifiedAt: DateTime.now(),
-      verifiedBy: 'admin-001',
-      rejectedReason: null,
-      deletedAt: null,
-      filePath:
-          'profile-001/residence_permit/residence.jpg',
-      fileUrl:
-          'https://example.com/residence.jpg',
-      fileName: 'residence.jpg',
-      fileSize: 234567,
-      mimeType: 'image/jpeg',
-      uploadedAt: DateTime.now(),
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
+  Future<List<KycIdentityDocument>>
+      getIdentityDocuments() async {
+    return [
+      KycIdentityDocument(
+        id: 'identity-001',
+        ownerId: 'profile-001',
+        documentType: 'thai_national_id',
+        documentNumber: '1234567890123',
+        status: VerificationStatus.approved.value,
+        issuedDate: DateTime(2021, 3, 25),
+        expiryDate: DateTime(2031, 3, 25),
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      ),
+      KycIdentityDocument(
+        id: 'passport-001',
+        ownerId: 'profile-001',
+        documentType: 'passport',
+        documentNumber: 'AA1234567',
+        status: VerificationStatus.notStarted.value,
+        issuedDate: DateTime(2023, 1, 1),
+        expiryDate: DateTime(2033, 1, 1),
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      ),
+      KycIdentityDocument(
+        id: 'residence-001',
+        ownerId: 'profile-001',
+        documentType: 'residence_card',
+        documentNumber: 'RP-000001',
+        status: VerificationStatus.approved.value,
+        issuedDate: DateTime(2024, 1, 1),
+        expiryDate: DateTime(2029, 1, 15),
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      ),
+    ];
   }
 
   @override

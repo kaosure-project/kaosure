@@ -1,6 +1,6 @@
 import '../../domain/entities/device.dart';
 
-class DeviceState {
+final class DeviceState {
   const DeviceState({
     this.isLoading = false,
     this.devices = const [],
@@ -18,12 +18,18 @@ class DeviceState {
     List<Device>? devices,
     Device? selectedDevice,
     String? errorMessage,
+    bool clearSelectedDevice = false,
+    bool clearError = false,
   }) {
     return DeviceState(
       isLoading: isLoading ?? this.isLoading,
       devices: devices ?? this.devices,
-      selectedDevice: selectedDevice ?? this.selectedDevice,
-      errorMessage: errorMessage ?? this.errorMessage,
+      selectedDevice: clearSelectedDevice
+          ? null
+          : selectedDevice ?? this.selectedDevice,
+      errorMessage: clearError
+          ? null
+          : errorMessage ?? this.errorMessage,
     );
   }
 }

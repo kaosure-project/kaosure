@@ -1,42 +1,43 @@
 import '../entities/identity_document.dart';
+import '../entities/verification.dart';
 
-/// Repository Contract สำหรับ Identity
-///
-/// Domain Layer จะรู้จักเฉพาะ Interface นี้
-/// ส่วนการเชื่อมต่อ Supabase จะอยู่ใน Data Layer
 abstract interface class IdentityRepository {
-  /// ดึงเอกสารทั้งหมดของผู้ใช้
-  Future<List<IdentityDocument>> getDocuments({
-    required String userId,
-  });
+  /// Returns all identity documents of the current user.
+  Future<List<IdentityDocument>> getDocuments();
 
-  /// ดึงเอกสารตามรหัสเอกสาร
-  Future<IdentityDocument?> getDocumentById({
-    required String documentId,
-  });
-
-  /// สร้างเอกสารใหม่
-  Future<void> createDocument(
-    IdentityDocument document,
+  /// Returns a single identity document.
+  Future<IdentityDocument?> getDocumentById(
+    String documentId,
   );
 
-  /// อัปเดตข้อมูลเอกสาร
-  Future<void> updateDocument(
-    IdentityDocument document,
+  /// Uploads or replaces an identity document.
+  Future<IdentityDocument> uploadDocument({
+    required IdentityDocument document,
+  });
+
+  /// Updates document information.
+  Future<IdentityDocument> updateDocument({
+    required IdentityDocument document,
+  });
+
+  /// Deletes an identity document.
+  Future<void> deleteDocument(
+    String documentId,
   );
 
-  /// ลบเอกสาร
-  Future<void> deleteDocument({
-    required String documentId,
-  });
+  /// Submits identity verification.
+  Future<Verification> submitVerification();
 
-  /// ส่งเอกสารเข้าสู่กระบวนการตรวจสอบ
-  Future<void> submitVerification({
-    required String documentId,
-  });
+  /// Returns the latest verification status.
+  Future<Verification?> getVerification();
 
-  /// ต่ออายุเอกสาร
-  Future<void> renewDocument({
-    required String documentId,
-  });
+  /// Refreshes verification from remote source.
+  Future<Verification?> refreshVerification();
+
+  /// Cancels current verification request.
+  Future<void> cancelVerification();
+
+  /// Returns true when every required document
+  /// has been uploaded.
+  Future<bool> hasCompletedRequiredDocuments();
 }

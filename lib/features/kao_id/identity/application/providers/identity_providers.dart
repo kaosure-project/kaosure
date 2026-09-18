@@ -1,79 +1,80 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../../../app/providers.dart';
 
 import '../../data/datasources/remote/identity_remote_datasource.dart';
 import '../../data/datasources/remote/identity_remote_datasource_impl.dart';
 import '../../data/repositories/identity_repository_impl.dart';
+
 import '../../domain/repositories/identity_repository.dart';
+
 import '../../domain/usecases/delete_document.dart';
 import '../../domain/usecases/get_documents.dart';
-import '../../domain/usecases/renew_document.dart';
 import '../../domain/usecases/submit_verification.dart';
 import '../../domain/usecases/upload_document.dart';
 
-final supabaseClientProvider = Provider<SupabaseClient>(
-  (ref) => Supabase.instance.client,
-);
+/// ---------------------------------------------------------------------------
+/// Remote Data Source
+/// ---------------------------------------------------------------------------
 
 final identityRemoteDataSourceProvider =
     Provider<IdentityRemoteDataSource>(
   (ref) {
     return IdentityRemoteDataSourceImpl(
-      supabase: ref.watch(supabaseClientProvider),
+      ref.read(supabaseClientProvider),
     );
   },
 );
 
-final identityRepositoryProvider = Provider<IdentityRepository>(
+/// ---------------------------------------------------------------------------
+/// Repository
+/// ---------------------------------------------------------------------------
+
+final identityRepositoryProvider =
+    Provider<IdentityRepository>(
   (ref) {
     return IdentityRepositoryImpl(
-      remoteDataSource:
-          ref.watch(identityRemoteDataSourceProvider),
+      ref.read(identityRemoteDataSourceProvider),
     );
   },
 );
 
-final uploadDocumentUseCaseProvider =
-    Provider<UploadDocumentUseCase>(
+/// ---------------------------------------------------------------------------
+/// Use Cases
+/// ---------------------------------------------------------------------------
+
+final getDocumentsProvider =
+    Provider<GetDocuments>(
   (ref) {
-    return UploadDocumentUseCase(
-      ref.watch(identityRepositoryProvider),
+    return GetDocuments(
+      ref.read(identityRepositoryProvider),
     );
   },
 );
 
-final getDocumentsUseCaseProvider =
-    Provider<GetDocumentsUseCase>(
+final uploadDocumentProvider =
+    Provider<UploadDocument>(
   (ref) {
-    return GetDocumentsUseCase(
-      ref.watch(identityRepositoryProvider),
+    return UploadDocument(
+      ref.read(identityRepositoryProvider),
     );
   },
 );
 
-final submitVerificationUseCaseProvider =
-    Provider<SubmitVerificationUseCase>(
+final deleteDocumentProvider =
+    Provider<DeleteDocument>(
   (ref) {
-    return SubmitVerificationUseCase(
-      ref.watch(identityRepositoryProvider),
+    return DeleteDocument(
+      ref.read(identityRepositoryProvider),
     );
   },
 );
 
-final renewDocumentUseCaseProvider =
-    Provider<RenewDocumentUseCase>(
+final submitVerificationProvider =
+    Provider<SubmitVerification>(
   (ref) {
-    return RenewDocumentUseCase(
-      ref.watch(identityRepositoryProvider),
-    );
-  },
-);
-
-final deleteDocumentUseCaseProvider =
-    Provider<DeleteDocumentUseCase>(
-  (ref) {
-    return DeleteDocumentUseCase(
-      ref.watch(identityRepositoryProvider),
+    return SubmitVerification(
+      ref.read(identityRepositoryProvider),
     );
   },
 );

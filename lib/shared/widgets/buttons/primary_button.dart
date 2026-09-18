@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/theme/app_colors.dart';
-import '../../../app/theme/app_radius.dart';
-import '../../../app/theme/app_spacing.dart';
-import '../../../app/theme/app_text_styles.dart';
+import '../../design_system/colors/app_colors.dart';
+import '../../design_system/radius/app_radius.dart';
+import '../../design_system/spacing/app_spacing.dart';
+import '../../design_system/typography/app_text_styles.dart';
 
 enum PrimaryButtonSize {
   small,
@@ -11,7 +11,17 @@ enum PrimaryButtonSize {
   large,
 }
 
-class PrimaryButton extends StatelessWidget {
+/// Primary button used across Kao Ecosystem.
+///
+/// Features:
+/// - Material 3
+/// - Loading
+/// - Disabled
+/// - Icon
+/// - Full width / Wrap content
+/// - Responsive
+/// - Hover support
+final class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
     super.key,
     required this.text,
@@ -27,10 +37,12 @@ class PrimaryButton extends StatelessWidget {
 
   final String text;
   final VoidCallback? onPressed;
+
   final IconData? icon;
 
   final bool isLoading;
   final bool isEnabled;
+
   final bool expand;
 
   final PrimaryButtonSize size;
@@ -40,7 +52,7 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final buttonHeight = switch (size) {
+    final height = switch (size) {
       PrimaryButtonSize.small => 44.0,
       PrimaryButtonSize.medium => 52.0,
       PrimaryButtonSize.large => 60.0,
@@ -52,28 +64,60 @@ class PrimaryButton extends StatelessWidget {
       PrimaryButtonSize.large => AppTextStyles.buttonLarge,
     };
 
-    final child = ElevatedButton(
+    final child = FilledButton(
       onPressed: (!isEnabled || isLoading) ? null : onPressed,
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        backgroundColor: backgroundColor ?? AppColors.primary,
-        foregroundColor: foregroundColor ?? AppColors.onPrimary,
-        disabledBackgroundColor: AppColors.disabled,
-        disabledForegroundColor: AppColors.disabledForeground,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.button),
+      style: ButtonStyle(
+        elevation: const WidgetStatePropertyAll(0),
+        animationDuration: const Duration(
+          milliseconds: 180,
+        ),
+        mouseCursor: WidgetStateProperty.resolveWith(
+          (states) {
+            if (states.contains(WidgetState.disabled)) {
+              return SystemMouseCursors.forbidden;
+            }
+
+            return SystemMouseCursors.click;
+          },
+        ),
+        backgroundColor: WidgetStateProperty.resolveWith(
+          (states) {
+            if (states.contains(WidgetState.disabled)) {
+              return AppColors.disabled;
+            }
+
+            return backgroundColor ?? AppColors.primary;
+          },
+        ),
+        foregroundColor: WidgetStateProperty.resolveWith(
+          (states) {
+            if (states.contains(WidgetState.disabled)) {
+              return AppColors.disabledForeground;
+            }
+
+            return foregroundColor ?? AppColors.onPrimary;
+          },
+        ),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              AppRadius.button,
+            ),
+          ),
         ),
       ),
       child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 200),
+        duration: const Duration(
+          milliseconds: 200,
+        ),
         child: isLoading
             ? SizedBox(
                 key: const ValueKey('loading'),
                 width: 22,
                 height: 22,
                 child: CircularProgressIndicator(
-                  strokeWidth: 2.5,
-                  valueColor: AlwaysStoppedAnimation<Color>(
+                  strokeWidth: 2.4,
+                  valueColor: AlwaysStoppedAnimation(
                     foregroundColor ?? AppColors.onPrimary,
                   ),
                 ),
@@ -81,10 +125,16 @@ class PrimaryButton extends StatelessWidget {
             : Row(
                 key: const ValueKey('content'),
                 mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (icon != null) ...[
-                    Icon(icon, size: 20),
-                    const SizedBox(width: AppSpacing.sm),
+                    Icon(
+                      icon,
+                      size: 20,
+                    ),
+                    const SizedBox(
+                      width: AppSpacing.sm,
+                    ),
                   ],
                   Text(
                     text,
@@ -97,16 +147,9 @@ class PrimaryButton extends StatelessWidget {
       ),
     );
 
-    if (expand) {
-      return SizedBox(
-        width: double.infinity,
-        height: buttonHeight,
-        child: child,
-      );
-    }
-
     return SizedBox(
-      height: buttonHeight,
+      width: expand ? double.infinity : null,
+      height: height,
       child: child,
     );
   }

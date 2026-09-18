@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/providers/session_repository_provider.dart';
 import '../../domain/entities/session.dart';
 import '../../domain/usecases/create_session.dart';
 import '../../domain/usecases/exists_session.dart';
@@ -13,21 +12,14 @@ import '../states/session_state.dart';
 
 final class SessionController extends StateNotifier<SessionState> {
   SessionController({
-    required GetSessionsUseCase getSessions,
-    required GetSessionUseCase getSession,
-    required CreateSessionUseCase createSession,
-    required UpdateSessionUseCase updateSession,
-    required RevokeSessionUseCase revokeSession,
-    required RevokeAllSessionsUseCase revokeAllSessions,
-    required ExistsSessionUseCase existsSession,
-  })  : _getSessions = getSessions,
-        _getSession = getSession,
-        _createSession = createSession,
-        _updateSession = updateSession,
-        _revokeSession = revokeSession,
-        _revokeAllSessions = revokeAllSessions,
-        _existsSession = existsSession,
-        super(const SessionState());
+    required this._getSessions,
+    required this._getSession,
+    required this._createSession,
+    required this._updateSession,
+    required this._revokeSession,
+    required this._revokeAllSessions,
+    required this._existsSession,
+  }) : super(const SessionState());
 
   final GetSessionsUseCase _getSessions;
   final GetSessionUseCase _getSession;

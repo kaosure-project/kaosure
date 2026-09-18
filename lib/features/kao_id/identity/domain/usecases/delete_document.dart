@@ -1,16 +1,15 @@
 import '../repositories/identity_repository.dart';
 
-/// Use Case สำหรับลบเอกสาร
-final class DeleteDocumentUseCase {
-  const DeleteDocumentUseCase(this._repository);
+final class DeleteDocument {
+  const DeleteDocument(this._repository);
 
   final IdentityRepository _repository;
 
-  Future<void> call({
-    required String documentId,
-  }) {
+  Future<void> call(
+    String documentId,
+  ) {
     return _repository.deleteDocument(
-      documentId: documentId,
+      documentId,
     );
   }
 }

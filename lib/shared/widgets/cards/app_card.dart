@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/theme/app_colors.dart';
-import '../../../app/theme/app_radius.dart';
-import '../../../app/theme/app_shadows.dart';
-import '../../../app/theme/app_spacing.dart';
+import '../../design_system/colors/app_colors.dart';
+import '../../design_system/radius/app_radius.dart';
+import '../../design_system/shadows/app_shadows.dart';
+import '../../design_system/spacing/app_spacing.dart';
 
-class AppCard extends StatelessWidget {
+/// Standard card used across Kao Ecosystem.
+///
+/// Supports:
+/// - Clickable
+/// - Custom padding
+/// - Custom border
+/// - Custom radius
+/// - Custom shadow
+/// - Animated state changes
+final class AppCard extends StatelessWidget {
   const AppCard({
     super.key,
     required this.child,
-    this.padding = const EdgeInsets.all(AppSpacing.cardPadding),
+    this.padding = const EdgeInsets.all(
+      AppSpacing.cardPadding,
+    ),
     this.margin = EdgeInsets.zero,
     this.onTap,
     this.backgroundColor,
@@ -34,16 +45,24 @@ class AppCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final card = Container(
+    final radius = BorderRadius.circular(
+      borderRadius ?? AppRadius.card,
+    );
+
+    final card = AnimatedContainer(
+      duration: const Duration(
+        milliseconds: 180,
+      ),
+      curve: Curves.easeOut,
       margin: margin,
       padding: padding,
       decoration: BoxDecoration(
-        color: backgroundColor ?? AppColors.surface,
-        borderRadius: BorderRadius.circular(
-          borderRadius ?? AppRadius.card,
-        ),
+        color: backgroundColor ??
+            AppColors.surface,
+        borderRadius: radius,
         border: Border.all(
-          color: borderColor ?? AppColors.border,
+          color: borderColor ??
+              AppColors.border,
         ),
         boxShadow: shadow,
       ),
@@ -56,10 +75,9 @@ class AppCard extends StatelessWidget {
 
     return Material(
       color: Colors.transparent,
+      borderRadius: radius,
       child: InkWell(
-        borderRadius: BorderRadius.circular(
-          borderRadius ?? AppRadius.card,
-        ),
+        borderRadius: radius,
         onTap: onTap,
         child: card,
       ),

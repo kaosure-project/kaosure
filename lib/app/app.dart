@@ -8,13 +8,15 @@ final class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final initialRoute = Uri.base.path.isEmpty
+        ? AppRouter.initialRoute
+        : Uri.base.path;
+
     return MaterialApp(
       title: 'Kao ID',
       debugShowCheckedModeBanner: false,
-
       theme: AppTheme.light,
-
-      initialRoute: AppRouter.initialRoute,
+      initialRoute: initialRoute,
       onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }

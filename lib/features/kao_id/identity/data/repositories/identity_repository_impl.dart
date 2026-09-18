@@ -1,89 +1,105 @@
 import '../../domain/entities/identity_document.dart';
+import '../../domain/entities/verification.dart';
 import '../../domain/repositories/identity_repository.dart';
 import '../datasources/remote/identity_remote_datasource.dart';
 import '../mappers/identity_document_mapper.dart';
-import '../models/identity_document_model.dart';
+import '../mappers/verification_mapper.dart';
 
-/// Implementation ของ IdentityRepository
-final class IdentityRepositoryImpl implements IdentityRepository {
-  const IdentityRepositoryImpl({
-    required IdentityRemoteDataSource remoteDataSource,
-  }) : _remoteDataSource = remoteDataSource;
+final class IdentityRepositoryImpl
+    implements IdentityRepository {
+  const IdentityRepositoryImpl(
+    this._remoteDataSource,
+  );
 
   final IdentityRemoteDataSource _remoteDataSource;
 
   @override
-  Future<List<IdentityDocument>> getDocuments({
-    required String userId,
-  }) async {
-    final models = await _remoteDataSource.getDocuments(
-      userId: userId,
-    );
+  Future<List<IdentityDocument>> getDocuments() async {
+    final documents =
+        await _remoteDataSource.getDocuments();
 
-    return models
-        .map(IdentityDocumentMapper.toEntity)
+    return documents
+        .map((e) => e.toDomain())
         .toList();
   }
 
   @override
-  Future<IdentityDocument?> getDocumentById({
-    required String documentId,
+  Future<IdentityDocument?> getDocumentById(
+    String documentId,
+  ) async {
+    final document =
+        await _remoteDataSource.getDocumentById(
+      documentId,
+    );
+
+    return document?.toDomain();
+  }
+
+  @override
+  Future<IdentityDocument> uploadDocument({
+    required IdentityDocument document,
   }) async {
-    final model = await _remoteDataSource.getDocumentById(
-      documentId: documentId,
+    final result =
+        await _remoteDataSource.uploadDocument(
+      document: document.toModel(),
     );
 
-    if (model == null) {
-      return null;
-    }
-
-    return IdentityDocumentMapper.toEntity(model);
+    return result.toDomain();
   }
 
   @override
-  Future<void> createDocument(
-    IdentityDocument document,
-  ) async {
-    final IdentityDocumentModel model =
-        IdentityDocumentMapper.toModel(document);
+  Future<IdentityDocument> updateDocument({
+    required IdentityDocument document,
+  }) async {
+    final result =
+        await _remoteDataSource.updateDocument(
+      document: document.toModel(),
+    );
 
-    await _remoteDataSource.createDocument(model);
+    return result.toDomain();
   }
 
   @override
-  Future<void> updateDocument(
-    IdentityDocument document,
-  ) async {
-    final IdentityDocumentModel model =
-        IdentityDocumentMapper.toModel(document);
-
-    await _remoteDataSource.updateDocument(model);
-  }
-
-  @override
-  Future<void> deleteDocument({
-    required String documentId,
-  }) {
+  Future<void> deleteDocument(
+    String documentId,
+  ) {
     return _remoteDataSource.deleteDocument(
-      documentId: documentId,
+      documentId,
     );
   }
 
   @override
-  Future<void> submitVerification({
-    required String documentId,
-  }) {
-    return _remoteDataSource.submitVerification(
-      documentId: documentId,
-    );
+  Future<Verification> submitVerification() async {
+    final verification =
+        await _remoteDataSource.submitVerification();
+
+    return verification.toDomain();
   }
 
   @override
-  Future<void> renewDocument({
-    required String documentId,
-  }) {
-    return _remoteDataSource.renewDocument(
-      documentId: documentId,
-    );
+  Future<Verification?> getVerification() async {
+    final verification =
+        await _remoteDataSource.getVerification();
+
+    return verification?.toDomain();
+  }
+
+  @override
+  Future<Verification?> refreshVerification() async {
+    final verification =
+        await _remoteDataSource.refreshVerification();
+
+    return verification?.toDomain();
+  }
+
+  @override
+  Future<void> cancelVerification() {
+    return _remoteDataSource.cancelVerification();
+  }
+
+  @override
+  Future<bool> hasCompletedRequiredDocuments() {
+    return _remoteDataSource
+        .hasCompletedRequiredDocuments();
   }
 }

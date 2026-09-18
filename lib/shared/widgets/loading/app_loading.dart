@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/theme/app_colors.dart';
-import '../../../app/theme/app_spacing.dart';
+import '../../design_system/colors/app_colors.dart';
+import '../../design_system/spacing/app_spacing.dart';
 
 class AppLoading extends StatelessWidget {
   const AppLoading({

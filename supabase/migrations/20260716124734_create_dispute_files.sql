@@ -69,7 +69,7 @@ USING (
         SELECT 1
         FROM public.profiles p
         WHERE p.id = auth.uid()
-          AND p.role = 'admin'
+          AND p.seller_level = 'admin'
     )
 );
 

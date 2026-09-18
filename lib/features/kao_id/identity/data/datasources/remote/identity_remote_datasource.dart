@@ -1,42 +1,52 @@
 import '../../models/identity_document_model.dart';
+import '../../models/verification_model.dart';
 
-/// Remote Data Source สำหรับเชื่อมต่อ Supabase
-///
-/// ทำหน้าที่รับส่งข้อมูลกับ Backend เท่านั้น
-/// ไม่มี Business Logic
 abstract interface class IdentityRemoteDataSource {
-  /// ดึงเอกสารทั้งหมดของผู้ใช้
-  Future<List<IdentityDocumentModel>> getDocuments({
-    required String userId,
-  });
+  /// ดึงเอกสาร Identity ทั้งหมดของผู้ใช้ปัจจุบัน
+  Future<List<IdentityDocumentModel>> getDocuments();
 
-  /// ดึงเอกสารตามรหัส
-  Future<IdentityDocumentModel?> getDocumentById({
-    required String documentId,
-  });
-
-  /// สร้างเอกสารใหม่
-  Future<void> createDocument(
-    IdentityDocumentModel document,
+  /// ดึงเอกสาร Identity ตาม ID
+  Future<IdentityDocumentModel?> getDocumentById(
+    String documentId,
   );
 
-  /// อัปเดตเอกสาร
-  Future<void> updateDocument(
-    IdentityDocumentModel document,
+  /// สร้างหรือบันทึกเอกสาร Identity
+  ///
+  /// ไฟล์ใน [document.files] จะถูกจัดการโดย
+  /// Remote DataSource implementation
+  /// และบันทึกลง `document_files`
+  Future<IdentityDocumentModel> uploadDocument({
+    required IdentityDocumentModel document,
+  });
+
+  /// อัปเดตเอกสาร Identity
+  ///
+  /// ข้อมูลหลักถูกบันทึกลง `identity_documents`
+  /// และรายการไฟล์จะถูก sync กับ `document_files`
+  Future<IdentityDocumentModel> updateDocument({
+    required IdentityDocumentModel document,
+  });
+
+  /// ลบเอกสาร Identity
+  ///
+  /// `document_files` จะถูกลบตาม foreign key
+  /// ของ `identity_documents`
+  Future<void> deleteDocument(
+    String documentId,
   );
 
-  /// ลบเอกสาร
-  Future<void> deleteDocument({
-    required String documentId,
-  });
+  /// ส่งคำขอตรวจสอบ Identity
+  Future<VerificationModel> submitVerification();
 
-  /// ส่งเอกสารเข้าสู่กระบวนการตรวจสอบ
-  Future<void> submitVerification({
-    required String documentId,
-  });
+  /// ดึงคำขอตรวจสอบล่าสุด
+  Future<VerificationModel?> getVerification();
 
-  /// ต่ออายุเอกสาร
-  Future<void> renewDocument({
-    required String documentId,
-  });
+  /// ตรวจสอบสถานะการยืนยันล่าสุด
+  Future<VerificationModel?> refreshVerification();
+
+  /// ยกเลิกคำขอตรวจสอบ
+  Future<void> cancelVerification();
+
+  /// ตรวจสอบว่าผู้ใช้มีเอกสารที่จำเป็นแล้วหรือไม่
+  Future<bool> hasCompletedRequiredDocuments();
 }

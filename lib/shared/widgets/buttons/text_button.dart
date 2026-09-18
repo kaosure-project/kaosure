@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/theme/app_colors.dart';
-import '../../../app/theme/app_spacing.dart';
-import '../../../app/theme/app_text_styles.dart';
+import '../../design_system/colors/app_colors.dart';
+import '../../design_system/spacing/app_spacing.dart';
+import '../../design_system/typography/app_text_styles.dart';
 
 enum AppTextButtonSize {
   small,
@@ -10,7 +10,17 @@ enum AppTextButtonSize {
   large,
 }
 
-class AppTextButton extends StatelessWidget {
+/// Standard text button used across Kao Ecosystem.
+///
+/// Features:
+/// - Material 3
+/// - Loading
+/// - Disabled
+/// - Icon
+/// - Full width / Wrap content
+/// - Responsive
+/// - Hover support
+final class AppTextButton extends StatelessWidget {
   const AppTextButton({
     super.key,
     required this.text,
@@ -25,10 +35,12 @@ class AppTextButton extends StatelessWidget {
 
   final String text;
   final VoidCallback? onPressed;
+
   final IconData? icon;
 
   final bool isLoading;
   final bool isEnabled;
+
   final bool expand;
 
   final AppTextButtonSize size;
@@ -38,46 +50,121 @@ class AppTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyle = switch (size) {
-      AppTextButtonSize.small => AppTextStyles.buttonSmall,
-      AppTextButtonSize.medium => AppTextStyles.buttonMedium,
-      AppTextButtonSize.large => AppTextStyles.buttonLarge,
+      AppTextButtonSize.small =>
+        AppTextStyles.buttonSmall,
+
+      AppTextButtonSize.medium =>
+        AppTextStyles.buttonMedium,
+
+      AppTextButtonSize.large =>
+        AppTextStyles.buttonLarge,
     };
 
-    final button = TextButton(
-      onPressed: (!isEnabled || isLoading) ? null : onPressed,
-      style: TextButton.styleFrom(
-        foregroundColor: foregroundColor ?? AppColors.primary,
+    final child = TextButton(
+      onPressed: (!isEnabled || isLoading)
+          ? null
+          : onPressed,
+
+      style: ButtonStyle(
+        animationDuration: const Duration(
+          milliseconds: 180,
+        ),
+
+        mouseCursor:
+            WidgetStateProperty.resolveWith(
+          (states) {
+            if (states.contains(
+              WidgetState.disabled,
+            )) {
+              return SystemMouseCursors.forbidden;
+            }
+
+            return SystemMouseCursors.click;
+          },
+        ),
+
+        foregroundColor:
+            WidgetStateProperty.resolveWith(
+          (states) {
+            if (states.contains(
+              WidgetState.disabled,
+            )) {
+              return AppColors.disabledForeground;
+            }
+
+            return foregroundColor ??
+                AppColors.primary;
+          },
+        ),
+
+        overlayColor:
+            WidgetStateProperty.resolveWith(
+          (states) {
+            if (states.contains(
+                  WidgetState.hovered,
+                ) ||
+                states.contains(
+                  WidgetState.focused,
+                ) ||
+                states.contains(
+                  WidgetState.pressed,
+                )) {
+              return (foregroundColor ??
+                      AppColors.primary)
+                  .withValues(alpha: 0.08);
+            }
+
+            return Colors.transparent;
+          },
+        ),
       ),
+
       child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 200),
+        duration: const Duration(
+          milliseconds: 200,
+        ),
+
         child: isLoading
             ? SizedBox(
-                key: const ValueKey('loading'),
+                key: const ValueKey(
+                  'loading',
+                ),
                 width: 20,
                 height: 20,
-                child: CircularProgressIndicator(
+                child:
+                    CircularProgressIndicator(
                   strokeWidth: 2.3,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    foregroundColor ?? AppColors.primary,
+                  valueColor:
+                      AlwaysStoppedAnimation(
+                    foregroundColor ??
+                        AppColors.primary,
                   ),
                 ),
               )
             : Row(
-                key: const ValueKey('content'),
-                mainAxisSize: MainAxisSize.min,
+                key: const ValueKey(
+                  'content',
+                ),
+                mainAxisSize:
+                    MainAxisSize.min,
+                mainAxisAlignment:
+                    MainAxisAlignment.center,
                 children: [
                   if (icon != null) ...[
                     Icon(
                       icon,
                       size: 20,
-                      color: foregroundColor ?? AppColors.primary,
                     ),
-                    const SizedBox(width: AppSpacing.sm),
+                    const SizedBox(
+                      width: AppSpacing.sm,
+                    ),
                   ],
                   Text(
                     text,
                     style: textStyle.copyWith(
-                      color: foregroundColor ?? AppColors.primary,
+                      color:
+                          foregroundColor ??
+                              AppColors.primary,
                     ),
                   ),
                 ],
@@ -85,13 +172,13 @@ class AppTextButton extends StatelessWidget {
       ),
     );
 
-    if (expand) {
-      return SizedBox(
-        width: double.infinity,
-        child: button,
-      );
+    if (!expand) {
+      return child;
     }
 
-    return button;
+    return SizedBox(
+      width: double.infinity,
+      child: child,
+    );
   }
 }

@@ -43,3 +43,13 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# KaoSure local / sensitive / generated files
+.env
+*.zip
+backup_encoding_*/
+kao_id_audit.ps1
+kao_id_audit.txt
+kao_id_tree.txt
+lib_tree.txt
+tatus

@@ -5,53 +5,58 @@ final class Session extends Equatable {
     required this.id,
     required this.ownerId,
     required this.deviceId,
-    required this.accessToken,
-    required this.refreshToken,
+    required this.accessTokenHash,
+    required this.refreshTokenHash,
+    required this.tokenType,
+    required this.platform,
     required this.ipAddress,
     required this.userAgent,
-    required this.isActive,
+    required this.country,
+    required this.city,
+    required this.lastActivityAt,
     required this.expiresAt,
+    required this.revokedAt,
     required this.createdAt,
     required this.updatedAt,
   });
 
   final String id;
   final String ownerId;
-  final String deviceId;
-  final String accessToken;
-  final String refreshToken;
-  final String ipAddress;
-  final String userAgent;
-  final bool isActive;
+  final String? deviceId;
+  final String accessTokenHash;
+  final String? refreshTokenHash;
+  final String tokenType;
+  final String platform;
+  final String? ipAddress;
+  final String? userAgent;
+  final String? country;
+  final String? city;
+  final DateTime lastActivityAt;
   final DateTime expiresAt;
+  final DateTime? revokedAt;
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  @override
-  List<Object?> get props => [
-        id,
-        ownerId,
-        deviceId,
-        accessToken,
-        refreshToken,
-        ipAddress,
-        userAgent,
-        isActive,
-        expiresAt,
-        createdAt,
-        updatedAt,
-      ];
+  bool get isActive {
+    return revokedAt == null &&
+        expiresAt.isAfter(DateTime.now());
+  }
 
   Session copyWith({
     String? id,
     String? ownerId,
     String? deviceId,
-    String? accessToken,
-    String? refreshToken,
+    String? accessTokenHash,
+    String? refreshTokenHash,
+    String? tokenType,
+    String? platform,
     String? ipAddress,
     String? userAgent,
-    bool? isActive,
+    String? country,
+    String? city,
+    DateTime? lastActivityAt,
     DateTime? expiresAt,
+    DateTime? revokedAt,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -59,14 +64,42 @@ final class Session extends Equatable {
       id: id ?? this.id,
       ownerId: ownerId ?? this.ownerId,
       deviceId: deviceId ?? this.deviceId,
-      accessToken: accessToken ?? this.accessToken,
-      refreshToken: refreshToken ?? this.refreshToken,
+      accessTokenHash:
+          accessTokenHash ?? this.accessTokenHash,
+      refreshTokenHash:
+          refreshTokenHash ?? this.refreshTokenHash,
+      tokenType: tokenType ?? this.tokenType,
+      platform: platform ?? this.platform,
       ipAddress: ipAddress ?? this.ipAddress,
       userAgent: userAgent ?? this.userAgent,
-      isActive: isActive ?? this.isActive,
+      country: country ?? this.country,
+      city: city ?? this.city,
+      lastActivityAt:
+          lastActivityAt ?? this.lastActivityAt,
       expiresAt: expiresAt ?? this.expiresAt,
+      revokedAt: revokedAt ?? this.revokedAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        ownerId,
+        deviceId,
+        accessTokenHash,
+        refreshTokenHash,
+        tokenType,
+        platform,
+        ipAddress,
+        userAgent,
+        country,
+        city,
+        lastActivityAt,
+        expiresAt,
+        revokedAt,
+        createdAt,
+        updatedAt,
+      ];
 }

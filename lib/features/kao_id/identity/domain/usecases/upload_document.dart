@@ -1,14 +1,23 @@
 import '../entities/identity_document.dart';
 import '../repositories/identity_repository.dart';
 
-/// Use Case สำหรับสร้างเอกสารยืนยันตัวตนใหม่
-final class UploadDocumentUseCase {
-  const UploadDocumentUseCase(this._repository);
+/// Use case สำหรับสร้างหรือบันทึก Identity Document
+///
+/// การจัดการ Storage และ document_files
+/// เป็นความรับผิดชอบของ Data/Infrastructure layer
+/// ไม่ควรให้ Domain layer รู้จัก DocumentUploadService
+final class UploadDocument {
+  const UploadDocument(
+    this._repository,
+  );
 
   final IdentityRepository _repository;
 
-  /// ดำเนินการสร้างเอกสาร
-  Future<void> call(IdentityDocument document) {
-    return _repository.createDocument(document);
+  Future<IdentityDocument> call({
+    required IdentityDocument document,
+  }) {
+    return _repository.uploadDocument(
+      document: document,
+    );
   }
 }

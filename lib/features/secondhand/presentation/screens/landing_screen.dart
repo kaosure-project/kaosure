@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import '../../../kao_id/presentation/auth/screens/login_screen.dart';
-import '../../../kao_id/presentation/auth/screens/register_screen.dart';
+import '../../../kao_id/auth/presentation/pages/login_page.dart';
+import '../../../kao_id/auth/presentation/pages/register_page.dart';
 
 class LandingScreen extends StatelessWidget {
   static const String routeName = '/';
@@ -54,7 +54,7 @@ class LandingScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushNamed(
                         context,
-                        LoginScreen.routeName,
+                        LoginPage.routeName,
                       );
                     },
                     icon: const Icon(Icons.login),
@@ -67,7 +67,7 @@ class LandingScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushNamed(
                         context,
-                        RegisterScreen.routeName,
+                        RegisterPage.routeName,
                       );
                     },
                     icon: const Icon(Icons.person_add_alt_1),

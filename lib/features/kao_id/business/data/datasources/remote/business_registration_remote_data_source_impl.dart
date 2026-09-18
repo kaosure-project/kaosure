@@ -6,8 +6,8 @@ import 'business_registration_remote_data_source.dart';
 final class BusinessRegistrationRemoteDataSourceImpl
     implements BusinessRegistrationRemoteDataSource {
   BusinessRegistrationRemoteDataSourceImpl({
-    required SupabaseClient supabase,
-  }) : _supabase = supabase;
+    required this._supabase,
+  });
 
   final SupabaseClient _supabase;
 

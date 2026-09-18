@@ -63,13 +63,13 @@ class BusinessVerificationStatusPage extends StatelessWidget {
                 width: 88,
                 height: 88,
                 decoration: BoxDecoration(
-                  color: config.backgroundColor,
+                  color: theme.colorScheme.primaryContainer,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   config.icon,
                   size: 44,
-                  color: config.foregroundColor,
+                  color: theme.colorScheme.onPrimaryContainer,
                 ),
               ),
 
@@ -325,7 +325,7 @@ class _StatusCard extends StatelessWidget {
         children: [
           Icon(
             config.icon,
-            color: config.foregroundColor,
+            color: theme.colorScheme.onPrimaryContainer,
           ),
           const SizedBox(width: 12),
           Expanded(

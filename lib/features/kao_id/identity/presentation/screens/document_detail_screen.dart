@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../domain/enums/document_status.dart';
-import '../../domain/enums/verification_status.dart';
 import '../../domain/enums/document_type_enum.dart';
 import '../../domain/entities/document_file.dart';
 import '../../domain/entities/identity_document.dart';
@@ -23,8 +22,6 @@ final class DocumentDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final verification = document.verification;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('รายละเอียดเอกสาร'),
@@ -46,11 +43,6 @@ final class DocumentDetailScreen extends StatelessWidget {
                   _InfoTile(
                     title: 'สถานะเอกสาร',
                     value: document.status.label,
-                  ),
-                  const SizedBox(height: 12),
-                  _InfoTile(
-                    title: 'สถานะการตรวจสอบ',
-                    value: verification.status.label,
                   ),
                 ],
               ),
@@ -93,53 +85,6 @@ final class DocumentDetailScreen extends StatelessWidget {
                     CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'ข้อมูลการตรวจสอบ',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium,
-                  ),
-                  const SizedBox(height: 16),
-                  _InfoTile(
-                    title: 'วันที่ส่งตรวจ',
-                    value: _formatDate(
-                      verification.submittedAt,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  _InfoTile(
-                    title: 'วันที่ตรวจเสร็จ',
-                    value: _formatDate(
-                      verification.reviewedAt,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  _InfoTile(
-                    title: 'ผู้ตรวจ',
-                    value:
-                        verification.reviewedBy ?? '-',
-                  ),
-                  if (verification.rejectionReason !=
-                      null) ...[
-                    const SizedBox(height: 12),
-                    _InfoTile(
-                      title: 'เหตุผล',
-                      value:
-                          verification.rejectionReason ?? '-'
-                    ),
-                  ],
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
-                children: [
-                  Text(
                     'ไฟล์เอกสาร',
                     style: Theme.of(context)
                         .textTheme
@@ -157,16 +102,6 @@ final class DocumentDetailScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          const SizedBox(height: 24),
-          FilledButton.icon(
-            onPressed: () {
-              // TODO
-            },
-            icon: const Icon(
-              Icons.verified_user,
-            ),
-            label: const Text('ส่งตรวจสอบ'),
           ),
         ],
       ),

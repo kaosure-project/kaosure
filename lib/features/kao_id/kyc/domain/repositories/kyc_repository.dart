@@ -43,7 +43,4 @@ abstract interface class KycRepository {
       getVerificationHistory();
 
 
-  Future<void> submitBankVerification(
-    BankVerification bankVerification,
-  );
 }

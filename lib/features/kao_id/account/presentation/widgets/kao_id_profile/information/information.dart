@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/entities/profile.dart';
+import 'profile_kao_id.dart';
 
 final class ProfileInformation extends StatelessWidget {
   const ProfileInformation({super.key, required this.profile});
@@ -65,6 +66,8 @@ final class ProfileInformation extends StatelessWidget {
           avatar: Icon(Icons.verified, color: _badgeColor, size: 18),
           label: Text(_accountLevel),
         ),
+
+        const ProfileKaoId(),
       ],
     );
   }

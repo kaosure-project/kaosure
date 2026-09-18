@@ -422,10 +422,8 @@ class _StatusConfig {
     required this.title,
     required this.description,
     required this.icon,
-    this.backgroundColor =
-        const Color(0xFFE8F0FE),
-    this.foregroundColor =
-        const Color(0xFF1A73E8),
+    this.backgroundColor = const Color(0xFFE8F0FE),
+    this.foregroundColor = const Color(0xFF1A73E8),
   });
 
   final String title;

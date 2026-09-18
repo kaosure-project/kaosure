@@ -24,3 +24,15 @@ final currentKaoIdIdentityProvider =
     FutureProvider<KaoIdIdentity?>(
   (ref) => ref.watch(kaoIdIssuanceRepositoryProvider).getCurrentIdentity(),
 );
+
+final issueCurrentUserKaoIdProvider =
+    Provider<Future<String> Function()>(
+  (ref) {
+    return () async {
+      final repository = ref.read(kaoIdIssuanceRepositoryProvider);
+      final kaoId = await repository.issueCurrentUserKaoId();
+      ref.invalidate(currentKaoIdIdentityProvider);
+      return kaoId;
+    };
+  },
+);

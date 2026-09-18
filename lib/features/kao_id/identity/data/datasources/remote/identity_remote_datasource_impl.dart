@@ -44,11 +44,9 @@ final class IdentityRemoteDataSourceImpl
       return null;
     }
 
-    final saved = await getDocumentById(document.id);
-    if (saved == null) {
-      throw StateError('Identity document was not persisted.');
-    }
-    return saved;
+    return _buildDocumentModel(
+      Map<String, dynamic>.from(response),
+    );
   }
 
   @override
@@ -85,9 +83,11 @@ final class IdentityRemoteDataSourceImpl
       files: document.files,
     );
 
-    return _buildDocumentModel(
-      Map<String, dynamic>.from(response),
-    );
+    final saved = await getDocumentById(document.id);
+    if (saved == null) {
+      throw StateError('Identity document was not persisted.');
+    }
+    return saved;
   }
 
   @override

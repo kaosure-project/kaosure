@@ -134,9 +134,7 @@ final class _AssignmentTile
       title:
           Text(assignment.displayName),
       subtitle: Text(
-        assignment.kaoId +
-            ' • ' +
-            assignment.roleName,
+        '${assignment.kaoId} • ${assignment.roleName}',
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,

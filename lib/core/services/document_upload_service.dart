@@ -5,7 +5,8 @@ import 'package:path/path.dart' as path;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
-/// Service สำหรับอัปโหลดเอกสาร KYC ไปยัง Supabase Storage.
+/// Service สำหรับอัปโหลดเอกสาร KYC
+/// และเอกสาร Identity ไปยัง Supabase Storage.
 ///
 /// Bucket:
 /// kyc-documents
@@ -21,12 +22,14 @@ final class DocumentUploadService {
 
   static const _uuid = Uuid();
 
+  /// Storage bucket ที่ระบบใช้งานอยู่ในปัจจุบัน
   static const String bucket =
       'kyc-documents';
 
   Future<String> upload({
     required PlatformFile file,
     required String folder,
+    String? mimeType,
   }) async {
     final bytes = file.bytes;
 
@@ -40,6 +43,7 @@ final class DocumentUploadService {
       bytes: Uint8List.fromList(bytes),
       fileName: file.name,
       folder: folder,
+      mimeType: mimeType,
     );
   }
 
@@ -47,6 +51,7 @@ final class DocumentUploadService {
     required Uint8List bytes,
     required String fileName,
     required String folder,
+    String? mimeType,
   }) async {
     final user =
         _client.auth.currentUser;
@@ -63,24 +68,49 @@ final class DocumentUploadService {
       );
     }
 
+    final normalizedFileName =
+        fileName.trim();
+
+    if (normalizedFileName.isEmpty) {
+      throw Exception(
+        'File name is empty.',
+      );
+    }
+
+    final normalizedFolder =
+        folder.trim();
+
+    if (normalizedFolder.isEmpty) {
+      throw Exception(
+        'Upload folder is empty.',
+      );
+    }
+
     final extension =
-        path.extension(fileName);
+        path.extension(normalizedFileName);
 
     final generatedName =
         '${_uuid.v4()}'
         '${extension.toLowerCase()}';
 
     final storagePath =
-        '${user.id}/$folder/$generatedName';
+        '${user.id}/'
+        '$normalizedFolder/'
+        '$generatedName';
+
+    final contentType =
+        mimeType ?? _resolveMimeType(
+          extension,
+        );
 
     await _client.storage
         .from(bucket)
         .uploadBinary(
           storagePath,
           bytes,
-          fileOptions:
-              const FileOptions(
+          fileOptions: FileOptions(
             upsert: false,
+            contentType: contentType,
           ),
         );
 
@@ -102,10 +132,36 @@ final class DocumentUploadService {
   Future<void> delete({
     required String storagePath,
   }) async {
+    final normalizedPath =
+        storagePath.trim();
+
+    if (normalizedPath.isEmpty) {
+      return;
+    }
+
     await _client.storage
         .from(bucket)
         .remove([
-          storagePath,
+          normalizedPath,
         ]);
+  }
+
+  static String? _resolveMimeType(
+    String extension,
+  ) {
+    switch (extension.toLowerCase()) {
+      case '.jpg':
+      case '.jpeg':
+        return 'image/jpeg';
+
+      case '.png':
+        return 'image/png';
+
+      case '.pdf':
+        return 'application/pdf';
+
+      default:
+        return null;
+    }
   }
 }

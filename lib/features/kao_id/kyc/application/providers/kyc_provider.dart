@@ -11,13 +11,14 @@ import '../../domain/usecases/get_identity_card_usecase.dart';
 import '../../domain/usecases/get_passport_usecase.dart';
 import '../../domain/usecases/get_residence_permit_usecase.dart';
 import '../../domain/usecases/get_verification_history_usecase.dart';
+import '../../domain/usecases/get_verification_request_usecase.dart';
 import '../../domain/usecases/get_verification_usecase.dart';
 import '../../domain/usecases/submit_bank_verification_usecase.dart';
-import '../../domain/usecases/submit_passport_usecase.dart';
+import '../../domain/usecases/submit_verification_request_usecase.dart';
 
 import '../controllers/kyc_controller.dart';
 import '../states/kyc_state.dart';
-
+import '../../domain/usecases/submit_passport_usecase.dart';
 final supabaseClientProvider =
     Provider<SupabaseClient>(
   (ref) => Supabase.instance.client,
@@ -26,7 +27,9 @@ final supabaseClientProvider =
 final kycRemoteDataSourceProvider =
     Provider<SupabaseKycRemoteDataSource>(
   (ref) => SupabaseKycRemoteDataSource(
-    ref.watch(supabaseClientProvider),
+    ref.watch(
+      supabaseClientProvider,
+    ),
   ),
 );
 
@@ -42,6 +45,15 @@ final kycRepositoryProvider =
 final getVerificationUseCaseProvider =
     Provider<GetVerificationUseCase>(
   (ref) => GetVerificationUseCase(
+    ref.watch(
+      kycRepositoryProvider,
+    ),
+  ),
+);
+
+final getVerificationRequestUseCaseProvider =
+    Provider<GetVerificationRequestUseCase>(
+  (ref) => GetVerificationRequestUseCase(
     ref.watch(
       kycRepositoryProvider,
     ),
@@ -111,6 +123,15 @@ final getVerificationHistoryUseCaseProvider =
   ),
 );
 
+final submitVerificationRequestUseCaseProvider =
+    Provider<SubmitVerificationRequestUseCase>(
+  (ref) => SubmitVerificationRequestUseCase(
+    ref.watch(
+      kycRepositoryProvider,
+    ),
+  ),
+);
+
 final kycControllerProvider =
     StateNotifierProvider<
         KycController,
@@ -144,6 +165,14 @@ final kycControllerProvider =
       getVerificationHistoryUseCase:
           ref.watch(
         getVerificationHistoryUseCaseProvider,
+      ),
+      getVerificationRequestUseCase:
+          ref.watch(
+        getVerificationRequestUseCaseProvider,
+      ),
+      submitVerificationRequestUseCase:
+          ref.watch(
+        submitVerificationRequestUseCaseProvider,
       ),
     );
   },

@@ -8,6 +8,14 @@ import '../features/kao_id/auth/presentation/pages/register_page.dart';
 import '../features/kao_id/auth/presentation/pages/verify_email_page.dart';
 import '../features/kao_id/bootstrap/screens/kao_id_bootstrap_screen.dart';
 import '../features/kao_id/dashboard/presentation/screens/dashboard_screen.dart';
+import '../features/kao_id/kyc/presentation/screens/kyc_page.dart';
+
+import '../features/kao_id/business/presentation/pages/business_registration_page.dart';
+import '../features/kao_id/business/presentation/pages/business_information_page.dart';
+import '../features/kao_id/business/presentation/pages/business_document_page.dart';
+import '../features/kao_id/business/presentation/pages/business_review_page.dart';
+import '../features/kao_id/business/presentation/pages/business_completed_page.dart';
+
 import '../features/pudtan/presentation/screens/pudtan_chat_screen.dart';
 import '../features/secondhand/presentation/screens/landing_screen.dart';
 import '../features/secondhand/presentation/screens/secondhand_home_screen.dart';
@@ -17,15 +25,14 @@ final class AppRouter {
 
   static const String initialRoute = '/';
 
-  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+  static Route<dynamic> onGenerateRoute(
+    RouteSettings settings,
+  ) {
     switch (settings.name) {
       // -----------------------------------------------------------------------
-      // Temporary entry point
-      //
-      // Secondhand Landing เป็นทางเข้าชั่วคราวของระบบในปัจจุบัน
-      // ผู้ใช้สามารถเข้าสู่ Kao ID ผ่าน Login / Register จากหน้านี้
+      // Entry Point
       // -----------------------------------------------------------------------
-      case '/':
+      case initialRoute:
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => const LandingScreen(),
@@ -73,8 +80,96 @@ final class AppRouter {
       case '/complete-profile':
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) =>
-              const AuthGuard(authenticatedChild: CompleteProfilePage()),
+          builder: (_) => const AuthGuard(
+            authenticatedChild: CompleteProfilePage(),
+          ),
+        );
+
+      // -----------------------------------------------------------------------
+      // Kao ID Identity / KYC
+      // -----------------------------------------------------------------------
+      case '/identity/verification':
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AuthGuard(
+            authenticatedChild: KycPage(),
+          ),
+        );
+
+      // -----------------------------------------------------------------------
+      // Kao ID Business Registration
+      // -----------------------------------------------------------------------
+      case BusinessRegistrationPage.routeName:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AuthGuard(
+            authenticatedChild: BusinessRegistrationPage(),
+          ),
+        );
+
+      case BusinessInformationPage.routeName:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AuthGuard(
+            authenticatedChild: BusinessInformationPage(),
+          ),
+        );
+
+      case BusinessDocumentPage.routeName:
+        final arguments = settings.arguments;
+
+        if (arguments is! Map<String, dynamic>) {
+          return MaterialPageRoute(
+            settings: settings,
+            builder: (_) => const BusinessRegistrationPage(),
+          );
+        }
+
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => AuthGuard(
+            authenticatedChild: BusinessDocumentPage(
+              businessInformation: arguments,
+            ),
+          ),
+        );
+
+      case BusinessReviewPage.routeName:
+        final arguments = settings.arguments;
+
+        if (arguments is! Map<String, dynamic>) {
+          return MaterialPageRoute(
+            settings: settings,
+            builder: (_) => const BusinessRegistrationPage(),
+          );
+        }
+
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => AuthGuard(
+            authenticatedChild: BusinessReviewPage(
+              businessInformation: arguments,
+            ),
+          ),
+        );
+
+      case BusinessCompletedPage.routeName:
+        final arguments = settings.arguments;
+
+        if (arguments is! Map<String, dynamic>) {
+          return MaterialPageRoute(
+            settings: settings,
+            builder: (_) => const BusinessRegistrationPage(),
+          );
+        }
+
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => AuthGuard(
+            authenticatedChild: BusinessCompletedPage(
+              businessInformation: arguments,
+            ),
+          ),
         );
 
       // -----------------------------------------------------------------------
@@ -83,8 +178,9 @@ final class AppRouter {
       case '/dashboard':
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) =>
-              const AuthGuard(authenticatedChild: DashboardScreen()),
+          builder: (_) => const AuthGuard(
+            authenticatedChild: DashboardScreen(),
+          ),
         );
 
       // -----------------------------------------------------------------------
@@ -93,8 +189,9 @@ final class AppRouter {
       case '/home':
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) =>
-              const AuthGuard(authenticatedChild: SecondhandHomeScreen()),
+          builder: (_) => const AuthGuard(
+            authenticatedChild: SecondhandHomeScreen(),
+          ),
         );
 
       // -----------------------------------------------------------------------
@@ -107,7 +204,7 @@ final class AppRouter {
         );
 
       // -----------------------------------------------------------------------
-      // Unknown route
+      // Unknown Route
       // -----------------------------------------------------------------------
       default:
         return MaterialPageRoute(

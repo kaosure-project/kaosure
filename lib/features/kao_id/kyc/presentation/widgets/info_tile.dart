@@ -17,6 +17,11 @@ final class InfoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    final trailingWidgets = <Widget>[
+      ?trailing,
+    ];
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -24,10 +29,10 @@ final class InfoTile extends StatelessWidget {
         vertical: 18,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.grey.shade200,
+          color: colorScheme.outlineVariant,
         ),
       ),
       child: Row(
@@ -37,45 +42,37 @@ final class InfoTile extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: Colors.blue.shade50,
+              color: colorScheme.primaryContainer,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               icon,
-              color: Colors.blue,
+              color: colorScheme.onPrimaryContainer,
             ),
           ),
-
           const SizedBox(width: 16),
-
           Expanded(
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: theme.textTheme.labelMedium
-                      ?.copyWith(
-                    color: Colors.grey.shade600,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-
                 const SizedBox(height: 6),
-
                 Text(
                   value,
-                  style: theme.textTheme.titleMedium
-                      ?.copyWith(
+                  style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
               ],
             ),
           ),
-
-          if (trailing != null) trailing!,
+          ...trailingWidgets,
         ],
       ),
     );

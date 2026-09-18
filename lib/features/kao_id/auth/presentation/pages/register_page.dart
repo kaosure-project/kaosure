@@ -97,6 +97,12 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     }
   }
 
+  void _openBusinessRegistration() {
+    Navigator.of(context).pushNamed(
+      '/kao-id/business/register',
+    );
+  }
+
   String? _validateEmail(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'กรุณากรอกอีเมล';
@@ -126,7 +132,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       return 'รหัสผ่านต้องมีตัวเลขอย่างน้อย 1 ตัว';
     }
 
-    if (!RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-+=/\\[\]~`]').hasMatch(value)) {
+    if (!RegExp(
+      r'[!@#\$%^&*(),.?":{}|<>_\-+=/\\[\]~`]',
+    ).hasMatch(value)) {
       return 'รหัสผ่านต้องมีอักขระพิเศษอย่างน้อย 1 ตัว';
     }
 
@@ -169,7 +177,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                   child: Form(
                     key: _formKey,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      crossAxisAlignment:
+                          CrossAxisAlignment.stretch,
                       children: [
                         const AuthLogo(),
 
@@ -208,8 +217,10 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         ),
 
                         AppPasswordField(
-                          controller: _confirmPasswordController,
-                          validator: _validateConfirmPassword,
+                          controller:
+                              _confirmPasswordController,
+                          validator:
+                              _validateConfirmPassword,
                           label: 'ยืนยันรหัสผ่าน',
                           hint: 'กรอกรหัสผ่านอีกครั้ง',
                         ),
@@ -234,6 +245,28 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                           },
                           child: const Text(
                             'มีบัญชีอยู่แล้ว? เข้าสู่ระบบ',
+                          ),
+                        ),
+
+                        const SizedBox(
+                          height: AppSpacing.sm,
+                        ),
+
+                        const Divider(),
+
+                        const SizedBox(
+                          height: AppSpacing.sm,
+                        ),
+
+                        TextButton.icon(
+                          onPressed:
+                              _openBusinessRegistration,
+                          icon: const Icon(
+                            Icons.business_outlined,
+                            size: 18,
+                          ),
+                          label: const Text(
+                            'สมัครในนามบริษัท / ผู้ประกอบการ',
                           ),
                         ),
                       ],

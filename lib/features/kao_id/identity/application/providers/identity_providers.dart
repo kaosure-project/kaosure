@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../app/providers.dart';
+
 import '../../data/datasources/remote/identity_remote_datasource.dart';
 import '../../data/datasources/remote/identity_remote_datasource_impl.dart';
 import '../../data/repositories/identity_repository_impl.dart';
@@ -10,8 +12,6 @@ import '../../domain/usecases/delete_document.dart';
 import '../../domain/usecases/get_documents.dart';
 import '../../domain/usecases/submit_verification.dart';
 import '../../domain/usecases/upload_document.dart';
-
-import '../../../../../app/providers.dart';
 
 /// ---------------------------------------------------------------------------
 /// Remote Data Source
@@ -40,7 +40,7 @@ final identityRepositoryProvider =
 );
 
 /// ---------------------------------------------------------------------------
-/// UseCases
+/// Use Cases
 /// ---------------------------------------------------------------------------
 
 final getDocumentsProvider =

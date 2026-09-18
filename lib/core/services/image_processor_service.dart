@@ -12,8 +12,6 @@ final class ImageProcessorService {
   Future<Uint8List> processAvatar(
     Uint8List bytes,
   ) async {
-    print('Original size : ${bytes.length ~/ 1024} KB');
-
     final image = img.decodeImage(bytes);
 
     if (image == null) {
@@ -30,8 +28,6 @@ final class ImageProcessorService {
       quality: 85,
     );
 
-    print('Avatar size : ${jpg.length ~/ 1024} KB');
-
     return Uint8List.fromList(jpg);
   }
 
@@ -42,8 +38,6 @@ final class ImageProcessorService {
   Future<Uint8List> processLogo(
     Uint8List bytes,
   ) async {
-    print('Original size : ${bytes.length ~/ 1024} KB');
-
     final image = img.decodeImage(bytes);
 
     if (image == null) {
@@ -83,8 +77,6 @@ final class ImageProcessorService {
       canvas,
       quality: 85,
     );
-
-    print('Logo size : ${jpg.length ~/ 1024} KB');
 
     return Uint8List.fromList(jpg);
   }

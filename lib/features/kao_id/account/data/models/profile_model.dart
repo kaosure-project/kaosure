@@ -3,40 +3,44 @@ import '../../domain/entities/profile.dart';
 final class ProfileModel {
   const ProfileModel({
     required this.id,
-
     this.username,
     this.displayName,
     this.firstName,
     this.lastName,
-
     this.avatarUrl,
     this.bio,
-
     this.languageCode,
-
-    // Kao ID
     required this.accountLevel,
     required this.accountStatus,
     required this.role,
-    this.position,
-
     required this.createdAt,
     required this.updatedAt,
   });
 
   final String id;
 
-  /// Unique username
+  /// Username ของบริการ
+  ///
+  /// ไม่ใช่ข้อกำหนดของ Kao ID
   final String? username;
 
+  /// ชื่อที่แสดงต่อสาธารณะ
   final String? displayName;
+
+  /// ชื่อตามกฎหมาย
   final String? firstName;
+
+  /// นามสกุลตามกฎหมาย
   final String? lastName;
+
   final String? avatarUrl;
+
   final String? bio;
+
+  /// ภาษาที่ต้องการใช้
   final String? languageCode;
 
-  /// standard | registered | verified | business | organization
+  /// registered | verified | business | organization
   final String accountLevel;
 
   /// active | pending | restricted | suspended | closed
@@ -45,10 +49,8 @@ final class ProfileModel {
   /// user | admin | developer | support | kyc_officer
   final String role;
 
-  /// Employee position
-  final String? position;
-
   final DateTime createdAt;
+
   final DateTime updatedAt;
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -67,10 +69,13 @@ final class ProfileModel {
       accountLevel: json['account_level'] as String,
       accountStatus: json['account_status'] as String,
       role: json['role'] as String,
-      position: json['position'] as String?,
 
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
+      createdAt: DateTime.parse(
+        json['created_at'] as String,
+      ),
+      updatedAt: DateTime.parse(
+        json['updated_at'] as String,
+      ),
     );
   }
 
@@ -84,12 +89,9 @@ final class ProfileModel {
       'avatar_url': avatarUrl,
       'bio': bio,
       'language_code': languageCode,
-
       'account_level': accountLevel,
       'account_status': accountStatus,
       'role': role,
-      'position': position,
-
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
     };
@@ -111,7 +113,6 @@ final class ProfileModel {
       accountLevel: accountLevel,
       accountStatus: accountStatus,
       role: role,
-      position: position,
 
       createdAt: createdAt,
       updatedAt: updatedAt,
@@ -134,7 +135,6 @@ final class ProfileModel {
       accountLevel: entity.accountLevel,
       accountStatus: entity.accountStatus,
       role: entity.role,
-      position: entity.position,
 
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,

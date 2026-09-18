@@ -53,9 +53,7 @@ final class _IdentityCardPageState
                     _IdentityCardIntro(
                       theme: theme,
                     ),
-
                     const SizedBox(height: 24),
-
                     DocumentUploadCard(
                       icon: Icons.badge_outlined,
                       title: 'บัตรประชาชน',
@@ -70,32 +68,26 @@ final class _IdentityCardPageState
                       expiryText: '-',
                       frontButtonText:
                           'เลือกด้านหน้า',
-                      onUploadFront: () =>
-                          _pickFront(context),
+                      onUploadFront: _pickFront,
                       backButtonText:
                           'เลือกด้านหลัง',
-                      onUploadBack: () =>
-                          _pickBack(context),
+                      onUploadBack: _pickBack,
                       frontFileName:
                           _frontFileName,
                       frontFileSize: null,
                       onChangeFrontFile:
-                          () => _pickFront(context),
+                          _pickFront,
                       backFileName:
                           _backFileName,
                       backFileSize: null,
                       onChangeBackFile:
-                          () => _pickBack(context),
+                          _pickBack,
                     ),
-
                     const SizedBox(height: 20),
-
                     _DocumentRequirementCard(
                       theme: theme,
                     ),
-
                     const SizedBox(height: 20),
-
                     _PrivacyNotice(
                       theme: theme,
                     ),
@@ -109,14 +101,16 @@ final class _IdentityCardPageState
     );
   }
 
-  Future<void> _pickFront(
-    BuildContext context,
-  ) async {
+  // ===========================================================================
+  // DOCUMENT PICKING
+  // ===========================================================================
+
+  Future<void> _pickFront() async {
     const picker = DocumentPickerService();
 
     final document = await picker.pickImage();
 
-    if (document == null || !mounted) {
+    if (!mounted || document == null) {
       return;
     }
 
@@ -124,21 +118,22 @@ final class _IdentityCardPageState
       _frontFileName = document.name;
     });
 
+    if (!mounted) {
+      return;
+    }
+
     _showSelectedFileMessage(
-      context,
       'เลือกไฟล์ด้านหน้าสำเร็จ',
       document.name,
     );
   }
 
-  Future<void> _pickBack(
-    BuildContext context,
-  ) async {
+  Future<void> _pickBack() async {
     const picker = DocumentPickerService();
 
     final document = await picker.pickImage();
 
-    if (document == null || !mounted) {
+    if (!mounted || document == null) {
       return;
     }
 
@@ -146,15 +141,17 @@ final class _IdentityCardPageState
       _backFileName = document.name;
     });
 
+    if (!mounted) {
+      return;
+    }
+
     _showSelectedFileMessage(
-      context,
       'เลือกไฟล์ด้านหลังสำเร็จ',
       document.name,
     );
   }
 
   void _showSelectedFileMessage(
-    BuildContext context,
     String title,
     String fileName,
   ) {
@@ -172,15 +169,21 @@ final class _IdentityCardPageState
               Text(
                 fileName,
                 maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                overflow:
+                    TextOverflow.ellipsis,
               ),
             ],
           ),
-          behavior: SnackBarBehavior.floating,
+          behavior:
+              SnackBarBehavior.floating,
         ),
       );
   }
 }
+
+// ==============================================================================
+// INTRO
+// ==============================================================================
 
 final class _IdentityCardIntro
     extends StatelessWidget {
@@ -197,12 +200,14 @@ final class _IdentityCardIntro
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest
+        color: colorScheme
+            .surfaceContainerHighest
             .withValues(alpha: 0.45),
         borderRadius:
             BorderRadius.circular(20),
         border: Border.all(
-          color: colorScheme.outlineVariant,
+          color:
+              colorScheme.outlineVariant,
         ),
       ),
       child: Row(
@@ -213,14 +218,15 @@ final class _IdentityCardIntro
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: colorScheme.primaryContainer,
+              color:
+                  colorScheme.primaryContainer,
               borderRadius:
                   BorderRadius.circular(14),
             ),
             child: Icon(
               Icons.verified_user_outlined,
-              color:
-                  colorScheme.onPrimaryContainer,
+              color: colorScheme
+                  .onPrimaryContainer,
             ),
           ),
           const SizedBox(width: 16),
@@ -235,9 +241,9 @@ final class _IdentityCardIntro
                       .textTheme
                       .titleMedium
                       ?.copyWith(
-                        fontWeight:
-                            FontWeight.w700,
-                      ),
+                    fontWeight:
+                        FontWeight.w700,
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(
@@ -248,10 +254,10 @@ final class _IdentityCardIntro
                       .textTheme
                       .bodyMedium
                       ?.copyWith(
-                        color: colorScheme
-                            .onSurfaceVariant,
-                        height: 1.5,
-                      ),
+                    color: colorScheme
+                        .onSurfaceVariant,
+                    height: 1.5,
+                  ),
                 ),
               ],
             ),
@@ -261,6 +267,10 @@ final class _IdentityCardIntro
     );
   }
 }
+
+// ==============================================================================
+// REQUIREMENTS
+// ==============================================================================
 
 final class _DocumentRequirementCard
     extends StatelessWidget {
@@ -281,7 +291,8 @@ final class _DocumentRequirementCard
         borderRadius:
             BorderRadius.circular(20),
         side: BorderSide(
-          color: colorScheme.outlineVariant,
+          color:
+              colorScheme.outlineVariant,
         ),
       ),
       child: Padding(
@@ -296,13 +307,14 @@ final class _DocumentRequirementCard
                   .textTheme
                   .titleMedium
                   ?.copyWith(
-                    fontWeight:
-                        FontWeight.w700,
-                  ),
+                fontWeight:
+                    FontWeight.w700,
+              ),
             ),
             const SizedBox(height: 16),
             const _RequirementItem(
-              icon: Icons.check_circle_outline,
+              icon:
+                  Icons.check_circle_outline,
               text:
                   'ภาพด้านหน้าและด้านหลังต้องชัดเจน',
             ),
@@ -369,6 +381,10 @@ final class _RequirementItem
   }
 }
 
+// ==============================================================================
+// PRIVACY
+// ==============================================================================
+
 final class _PrivacyNotice
     extends StatelessWidget {
   const _PrivacyNotice({
@@ -384,7 +400,8 @@ final class _PrivacyNotice
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: colorScheme.primaryContainer
+        color: colorScheme
+            .primaryContainer
             .withValues(alpha: 0.35),
         borderRadius:
             BorderRadius.circular(18),
@@ -407,10 +424,10 @@ final class _PrivacyNotice
                   .textTheme
                   .bodySmall
                   ?.copyWith(
-                    color: colorScheme
-                        .onPrimaryContainer,
-                    height: 1.5,
-                  ),
+                color: colorScheme
+                    .onPrimaryContainer,
+                height: 1.5,
+              ),
             ),
           ),
         ],

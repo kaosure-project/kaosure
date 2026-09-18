@@ -5,8 +5,8 @@ import '../mappers/session_mapper.dart';
 
 final class SessionRepositoryImpl implements SessionRepository {
   const SessionRepositoryImpl({
-    required SessionRemoteDataSource remoteDataSource,
-  }) : _remoteDataSource = remoteDataSource;
+    required this._remoteDataSource,
+  });
 
   final SessionRemoteDataSource _remoteDataSource;
 

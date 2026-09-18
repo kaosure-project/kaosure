@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../account/application/providers/account_providers.dart';
 import '../../auth/application/providers/auth_provider.dart';
 import '../../auth/domain/entities/user_entity.dart';
-import '../../account/application/providers/account_providers.dart';
 import '../states/bootstrap_state.dart';
 
 final class BootstrapController extends StateNotifier<BootstrapStatus> {
@@ -27,12 +27,14 @@ final class BootstrapController extends StateNotifier<BootstrapStatus> {
 
       if (authState.hasError) {
         debugPrint('AUTH ERROR: ${authState.error}');
+
         state = BootstrapStatus.error;
         return state;
       }
 
       final user = authState.value;
 
+      // ยังไม่ได้เข้าสู่ระบบ
       if (user == null) {
         state = BootstrapStatus.landing;
         return state;
@@ -46,14 +48,14 @@ final class BootstrapController extends StateNotifier<BootstrapStatus> {
         profileId: user.id,
       );
 
-      debugPrint('PROFILE USERNAME: ${profile.username}');
+      debugPrint('PROFILE ID: ${profile.id}');
+      debugPrint('PROFILE DISPLAY NAME: ${profile.displayName}');
 
-      if (profile.username == null ||
-          profile.username!.trim().isEmpty) {
-        state = BootstrapStatus.completeProfile;
-      } else {
-        state = BootstrapStatus.dashboard;
-      }
+      // Kao ID ไม่ใช้ Username เป็นเงื่อนไขของ Profile
+      //
+      // Username เป็นข้อมูลของ Service / Marketplace
+      // ไม่ใช่ข้อมูลบังคับของ Kao ID
+      state = BootstrapStatus.dashboard;
 
       return state;
     } catch (e, stackTrace) {

@@ -6,7 +6,6 @@ import '../../domain/value_objects/expiry_date.dart';
 import '../../domain/value_objects/issued_date.dart';
 
 import 'document_file_model.dart';
-import 'verification_model.dart';
 
 final class IdentityDocumentModel {
   const IdentityDocumentModel({
@@ -16,7 +15,6 @@ final class IdentityDocumentModel {
     required this.documentNumber,
     required this.status,
     required this.files,
-    this.verification,
     required this.createdAt,
     required this.updatedAt,
     this.issuedDate,
@@ -37,8 +35,6 @@ final class IdentityDocumentModel {
   final DocumentStatus status;
 
   final List<DocumentFileModel> files;
-
-  final VerificationModel? verification;
 
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -83,13 +79,6 @@ final class IdentityDocumentModel {
           )
           .toList(),
 
-      verification: map['verification'] == null
-          ? null
-          : VerificationModel.fromMap(
-              Map<String, dynamic>.from(
-                map['verification'] as Map,
-              ),
-            ),
 
       createdAt: DateTime.parse(
         map['created_at'] as String,
@@ -118,11 +107,7 @@ final class IdentityDocumentModel {
       files: entity.files
           .map(DocumentFileModel.fromEntity)
           .toList(),
-      verification: entity.verification == null
-          ? null
-          : VerificationModel.fromEntity(
-              entity.verification!,
-            ),
+
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     );
@@ -145,8 +130,6 @@ final class IdentityDocumentModel {
       files: files
           .map((e) => e.toEntity())
           .toList(),
-      verification:
-          verification?.toEntity(),
       createdAt: createdAt,
       updatedAt: updatedAt,
     );
@@ -155,11 +138,8 @@ final class IdentityDocumentModel {
   /// Converts the model to a payload for
   /// the `identity_documents` table.
   ///
-  /// `files` belongs to `document_files`
-  /// and `verification` belongs to
-  /// `verification_requests`.
-  ///
-  /// They must not be sent to `identity_documents`.
+  /// `files` belongs to `document_files` and must not be sent to
+  /// `identity_documents`. KYC state is owned by the KYC module.
   Map<String, dynamic> toMap() {
     return {
       'id': id,

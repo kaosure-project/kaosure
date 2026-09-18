@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../domain/entities/bank_verification.dart';
-import '../../domain/entities/identity_card.dart';
-import '../../domain/entities/passport.dart';
-import '../../domain/entities/residence_permit.dart';
+import '../../domain/entities/kyc_identity_document.dart';
 import '../../domain/entities/verification.dart';
 
 import '../bank/bank_verification_page.dart';
@@ -29,11 +27,11 @@ final class VerificationSection
 
   final Verification? verification;
 
-  final IdentityCard? identityCard;
+  final KycIdentityDocument? identityCard;
 
-  final Passport? passport;
+  final KycIdentityDocument? passport;
 
-  final ResidencePermit? residencePermit;
+  final KycIdentityDocument? residencePermit;
 
   final BankVerification? bankVerification;
 

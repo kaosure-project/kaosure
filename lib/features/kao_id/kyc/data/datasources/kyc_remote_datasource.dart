@@ -1,4 +1,7 @@
 import '../models/bank_verification_model.dart';
+import '../models/identity_card_model.dart';
+import '../models/passport_model.dart';
+import '../models/residence_permit_model.dart';
 import '../models/kyc_identity_document_model.dart';
 import '../models/verification_history_model.dart';
 import '../models/verification_model.dart';

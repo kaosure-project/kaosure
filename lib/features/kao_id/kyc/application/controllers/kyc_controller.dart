@@ -3,9 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/bank_verification.dart';
 
 import '../../domain/usecases/get_bank_verification_usecase.dart';
-import '../../domain/usecases/get_identity_card_usecase.dart';
-import '../../domain/usecases/get_passport_usecase.dart';
-import '../../domain/usecases/get_residence_permit_usecase.dart';
+import '../../domain/usecases/get_kyc_identity_documents_usecase.dart';
 import '../../domain/usecases/get_verification_history_usecase.dart';
 import '../../domain/usecases/get_verification_request_usecase.dart';
 import '../../domain/usecases/get_verification_usecase.dart';
@@ -18,9 +16,7 @@ final class KycController
     extends StateNotifier<KycState> {
   KycController({
     required this._getVerificationUseCase,
-    required this._getIdentityCardUseCase,
-    required this._getPassportUseCase,
-    required this._getResidencePermitUseCase,
+    required this._getIdentityDocumentsUseCase,
     required this._getBankVerificationUseCase,
     required this._submitBankVerificationUseCase,
     required this._getVerificationHistoryUseCase,
@@ -31,14 +27,8 @@ final class KycController
   final GetVerificationUseCase
       _getVerificationUseCase;
 
-  final GetIdentityCardUseCase
-      _getIdentityCardUseCase;
-
-  final GetPassportUseCase
-      _getPassportUseCase;
-
-  final GetResidencePermitUseCase
-      _getResidencePermitUseCase;
+  final GetKycIdentityDocumentsUseCase
+      _getIdentityDocumentsUseCase;
 
   final GetBankVerificationUseCase
       _getBankVerificationUseCase;
@@ -72,14 +62,8 @@ final class KycController
       final verificationRequest =
           await _getVerificationRequestUseCase();
 
-      final identityCard =
-          await _getIdentityCardUseCase();
-
-      final passport =
-          await _getPassportUseCase();
-
-      final residencePermit =
-          await _getResidencePermitUseCase();
+      final identityDocuments =
+          await _getIdentityDocumentsUseCase();
 
       final bankVerification =
           await _getBankVerificationUseCase();
@@ -92,10 +76,8 @@ final class KycController
         verification: verification,
         verificationRequest:
             verificationRequest,
-        identityCard: identityCard,
-        passport: passport,
-        residencePermit:
-            residencePermit,
+        identityDocuments:
+            identityDocuments,
         bankVerification:
             bankVerification,
         verificationHistory:

@@ -1,4 +1,7 @@
 import '../../domain/entities/bank_verification.dart';
+import '../../domain/entities/identity_card.dart';
+import '../../domain/entities/passport.dart';
+import '../../domain/entities/residence_permit.dart';
 import '../../domain/entities/kyc_identity_document.dart';
 import '../../domain/entities/verification.dart';
 import '../../domain/entities/verification_history.dart';

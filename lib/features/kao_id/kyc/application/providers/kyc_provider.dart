@@ -7,9 +7,7 @@ import '../../data/repositories/supabase_kyc_repository.dart';
 import '../../domain/repositories/kyc_repository.dart';
 
 import '../../domain/usecases/get_bank_verification_usecase.dart';
-import '../../domain/usecases/get_identity_card_usecase.dart';
-import '../../domain/usecases/get_passport_usecase.dart';
-import '../../domain/usecases/get_residence_permit_usecase.dart';
+import '../../domain/usecases/get_kyc_identity_documents_usecase.dart';
 import '../../domain/usecases/get_verification_history_usecase.dart';
 import '../../domain/usecases/get_verification_request_usecase.dart';
 import '../../domain/usecases/get_verification_usecase.dart';
@@ -60,18 +58,9 @@ final getVerificationRequestUseCaseProvider =
   ),
 );
 
-final getIdentityCardUseCaseProvider =
-    Provider<GetIdentityCardUseCase>(
-  (ref) => GetIdentityCardUseCase(
-    ref.watch(
-      kycRepositoryProvider,
-    ),
-  ),
-);
-
-final getPassportUseCaseProvider =
-    Provider<GetPassportUseCase>(
-  (ref) => GetPassportUseCase(
+final getIdentityDocumentsUseCaseProvider =
+    Provider<GetKycIdentityDocumentsUseCase>(
+  (ref) => GetKycIdentityDocumentsUseCase(
     ref.watch(
       kycRepositoryProvider,
     ),
@@ -81,15 +70,6 @@ final getPassportUseCaseProvider =
 final submitPassportUseCaseProvider =
     Provider<SubmitPassportUseCase>(
   (ref) => SubmitPassportUseCase(
-    ref.watch(
-      kycRepositoryProvider,
-    ),
-  ),
-);
-
-final getResidencePermitUseCaseProvider =
-    Provider<GetResidencePermitUseCase>(
-  (ref) => GetResidencePermitUseCase(
     ref.watch(
       kycRepositoryProvider,
     ),
@@ -142,17 +122,9 @@ final kycControllerProvider =
           ref.watch(
         getVerificationUseCaseProvider,
       ),
-      getIdentityCardUseCase:
+      getIdentityDocumentsUseCase:
           ref.watch(
-        getIdentityCardUseCaseProvider,
-      ),
-      getPassportUseCase:
-          ref.watch(
-        getPassportUseCaseProvider,
-      ),
-      getResidencePermitUseCase:
-          ref.watch(
-        getResidencePermitUseCaseProvider,
+        getIdentityDocumentsUseCaseProvider,
       ),
       getBankVerificationUseCase:
           ref.watch(

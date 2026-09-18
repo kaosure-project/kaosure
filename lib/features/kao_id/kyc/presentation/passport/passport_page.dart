@@ -876,20 +876,6 @@ final class _PassportPageState
     }
   }
 
-  String _friendlyError(
-    Object error,
-  ) {
-    if (error is AuthException) {
-      return error.message;
-    }
-
-    if (error is PostgrestException) {
-      return error.message;
-    }
-
-    return 'ไม่สามารถบันทึกข้อมูลหนังสือเดินทางได้';
-  }
-
   void _showError(
     String message,
   ) {

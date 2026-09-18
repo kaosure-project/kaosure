@@ -1,7 +1,4 @@
 import '../../domain/entities/bank_verification.dart';
-import '../../domain/entities/identity_card.dart';
-import '../../domain/entities/passport.dart';
-import '../../domain/entities/residence_permit.dart';
 import '../../domain/entities/kyc_identity_document.dart';
 import '../../domain/entities/verification.dart';
 import '../../domain/entities/verification_history.dart';
@@ -11,9 +8,6 @@ import '../../domain/repositories/kyc_repository.dart';
 import '../datasources/kyc_remote_datasource.dart';
 
 import '../models/bank_verification_model.dart';
-import '../models/identity_card_model.dart';
-import '../models/passport_model.dart';
-import '../models/residence_permit_model.dart';
 
 final class SupabaseKycRepository
     implements KycRepository {
@@ -106,57 +100,6 @@ final class SupabaseKycRepository
           (model) => model.toEntity(),
         )
         .toList();
-  }
-
-  // ===========================================================================
-  // Identity Card
-  // ===========================================================================
-
-  @override
-  Future<void> submitIdentityCard(
-    IdentityCard identityCard,
-  ) {
-    final model =
-        IdentityCardModel.fromEntity(
-      identityCard,
-    );
-
-    return _remoteDataSource
-        .submitIdentityCard(model);
-  }
-
-  // ===========================================================================
-  // Passport
-  // ===========================================================================
-
-  @override
-  Future<void> submitPassport(
-    Passport passport,
-  ) {
-    final model =
-        PassportModel.fromEntity(
-      passport,
-    );
-
-    return _remoteDataSource
-        .submitPassport(model);
-  }
-
-  // ===========================================================================
-  // Residence Permit
-  // ===========================================================================
-
-  @override
-  Future<void> submitResidencePermit(
-    ResidencePermit residencePermit,
-  ) {
-    final model =
-        ResidencePermitModel.fromEntity(
-      residencePermit,
-    );
-
-    return _remoteDataSource
-        .submitResidencePermit(model);
   }
 
   // ===========================================================================

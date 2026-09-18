@@ -1,5 +1,5 @@
 import '../../../devices/domain/entities/device.dart';
-import '../../../identity/domain/entities/verification.dart';
+import '../../../kyc/domain/entities/verification.dart';
 import '../../../account/domain/entities/profile.dart';
 import '../../../sessions/domain/entities/session.dart';
 

@@ -173,7 +173,7 @@ RETURNS boolean
 LANGUAGE plpgsql
 SECURITY DEFINER
 SET search_path = public
-AS $
+AS $$
 DECLARE
     v_user_id uuid := auth.uid();
 BEGIN
@@ -205,7 +205,7 @@ BEGIN
           )
     );
 END;
-$;
+$$;
 
 REVOKE ALL
 ON FUNCTION public.is_active_admin()
@@ -620,3 +620,4 @@ ON public.admin_assignments;
 COMMENT ON TABLE public.admin_assignments
 IS
 'Governance role assignments. Client applications may read according to RLS; assignment and revocation mutations are performed through trusted audited RPC functions.';
+

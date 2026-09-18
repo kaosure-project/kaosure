@@ -136,7 +136,7 @@ class _BusinessInformationPageState
                 const SizedBox(height: 18),
 
                 DropdownButtonFormField<String>(
-                  value: _businessType,
+                  initialValue: _businessType,
                   decoration:
                       const InputDecoration(
                     labelText: 'ประเภทกิจการ',
@@ -205,7 +205,7 @@ class _BusinessInformationPageState
                 const SizedBox(height: 18),
 
                 DropdownButtonFormField<String>(
-                  value: _countryCode,
+                  initialValue: _countryCode,
                   decoration:
                       const InputDecoration(
                     labelText:

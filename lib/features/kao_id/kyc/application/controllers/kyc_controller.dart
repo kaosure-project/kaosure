@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/entities/bank_verification.dart';
 
 import '../../domain/usecases/get_bank_verification_usecase.dart';
 import '../../domain/usecases/get_kyc_identity_documents_usecase.dart';

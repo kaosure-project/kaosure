@@ -138,23 +138,4 @@ final class FakeKycRepository
     ];
   }
 
-  @override
-  Future<void> submitIdentityCard(
-    IdentityCard identityCard,
-  ) async {}
-
-  @override
-  Future<void> submitPassport(
-    Passport passport,
-  ) async {}
-
-  @override
-  Future<void> submitResidencePermit(
-    ResidencePermit residencePermit,
-  ) async {}
-
-  @override
-  Future<void> submitBankVerification(
-    BankVerification bankVerification,
-  ) async {}
 }

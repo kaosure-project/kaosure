@@ -16,7 +16,6 @@ import '../../domain/usecases/submit_verification_request_usecase.dart';
 
 import '../controllers/kyc_controller.dart';
 import '../states/kyc_state.dart';
-import '../../domain/usecases/submit_passport_usecase.dart';
 final supabaseClientProvider =
     Provider<SupabaseClient>(
   (ref) => Supabase.instance.client,
@@ -61,15 +60,6 @@ final getVerificationRequestUseCaseProvider =
 final getIdentityDocumentsUseCaseProvider =
     Provider<GetKycIdentityDocumentsUseCase>(
   (ref) => GetKycIdentityDocumentsUseCase(
-    ref.watch(
-      kycRepositoryProvider,
-    ),
-  ),
-);
-
-final submitPassportUseCaseProvider =
-    Provider<SubmitPassportUseCase>(
-  (ref) => SubmitPassportUseCase(
     ref.watch(
       kycRepositoryProvider,
     ),

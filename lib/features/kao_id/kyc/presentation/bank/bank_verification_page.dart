@@ -781,7 +781,6 @@ final class _VerificationStatusCard
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colors = theme.colorScheme;
 
     final config =
         _statusConfig(
@@ -876,7 +875,6 @@ final class _KycNameMatchCard
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colors = theme.colorScheme;
 
     final config =
         _nameMatchConfig(
@@ -1166,8 +1164,7 @@ final class _ActionButton
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
+  
 
     final label =
         bank.isRejected

@@ -1,5 +1,5 @@
-import '../enums/verification_status.dart';
 import '../entities/verification.dart';
+import '../enums/verification_status.dart';
 
 final class IdentityPermissionService {
   const IdentityPermissionService._();
@@ -43,7 +43,7 @@ final class IdentityPermissionService {
   static bool isFullyVerified(
     Verification verification,
   ) {
-    return verification.status ==
+    return verification.verificationStatus ==
         VerificationStatus.approved;
   }
 
@@ -51,7 +51,7 @@ final class IdentityPermissionService {
   static bool hasApprovedIdentityCard(
     Verification verification,
   ) {
-    return verification.identityCardStatus ==
+    return verification.identityCardVerificationStatus ==
         VerificationStatus.approved;
   }
 
@@ -59,7 +59,7 @@ final class IdentityPermissionService {
   static bool hasApprovedPassport(
     Verification verification,
   ) {
-    return verification.passportStatus ==
+    return verification.passportVerificationStatus ==
         VerificationStatus.approved;
   }
 
@@ -67,7 +67,7 @@ final class IdentityPermissionService {
   static bool hasApprovedResidencePermit(
     Verification verification,
   ) {
-    return verification.residencePermitStatus ==
+    return verification.residencePermitVerificationStatus ==
         VerificationStatus.approved;
   }
 
@@ -75,7 +75,7 @@ final class IdentityPermissionService {
   static bool hasApprovedBank(
     Verification verification,
   ) {
-    return verification.bankStatus ==
+    return verification.bankVerificationStatus ==
         VerificationStatus.approved;
   }
 }

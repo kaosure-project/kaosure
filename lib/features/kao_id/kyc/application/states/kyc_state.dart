@@ -4,11 +4,13 @@ import '../../domain/entities/passport.dart';
 import '../../domain/entities/residence_permit.dart';
 import '../../domain/entities/verification.dart';
 import '../../domain/entities/verification_history.dart';
+import '../../domain/entities/verification_request.dart';
 
 final class KycState {
   const KycState({
     required this.isLoading,
     required this.verification,
+    required this.verificationRequest,
     required this.identityCard,
     required this.passport,
     required this.residencePermit,
@@ -21,6 +23,7 @@ final class KycState {
     return const KycState(
       isLoading: false,
       verification: null,
+      verificationRequest: null,
       identityCard: null,
       passport: null,
       residencePermit: null,
@@ -33,6 +36,9 @@ final class KycState {
   final bool isLoading;
 
   final Verification? verification;
+
+  final VerificationRequest?
+      verificationRequest;
 
   final IdentityCard? identityCard;
 
@@ -47,12 +53,15 @@ final class KycState {
 
   final String? errorMessage;
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Verification
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   bool get hasVerification =>
       verification != null;
+
+  bool get hasVerificationRequest =>
+      verificationRequest != null;
 
   bool get hasIdentityCard =>
       identityCard != null;
@@ -72,9 +81,38 @@ final class KycState {
   bool get hasError =>
       errorMessage != null;
 
-  // ---------------------------------------------------------------------------
-  // Bank verification status
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
+  // Verification Request Status
+  // ===========================================================================
+
+  bool get isRequestPending =>
+      verificationRequest?.isPending ?? false;
+
+  bool get isRequestUnderReview =>
+      verificationRequest?.isUnderReview ?? false;
+
+  bool get isRequestApproved =>
+      verificationRequest?.isApproved ?? false;
+
+  bool get isRequestRejected =>
+      verificationRequest?.isRejected ?? false;
+
+  bool get isRequestCancelled =>
+      verificationRequest?.isCancelled ?? false;
+
+  bool get canSubmitVerificationRequest {
+    final request = verificationRequest;
+
+    if (request == null) {
+      return true;
+    }
+
+    return request.canSubmit;
+  }
+
+  // ===========================================================================
+  // Bank Verification Status
+  // ===========================================================================
 
   bool get isBankPending =>
       bankVerification?.isPending ?? false;
@@ -100,9 +138,15 @@ final class KycState {
   bool get isBankTrusted =>
       bankVerification?.isTrusted ?? false;
 
+  // ===========================================================================
+  // Copy With
+  // ===========================================================================
+
   KycState copyWith({
     bool? isLoading,
     Verification? verification,
+    VerificationRequest?
+        verificationRequest,
     IdentityCard? identityCard,
     Passport? passport,
     ResidencePermit? residencePermit,
@@ -111,6 +155,7 @@ final class KycState {
         verificationHistory,
     String? errorMessage,
     bool clearVerification = false,
+    bool clearVerificationRequest = false,
     bool clearIdentityCard = false,
     bool clearPassport = false,
     bool clearResidencePermit = false,
@@ -126,6 +171,11 @@ final class KycState {
               ? null
               : verification ??
                   this.verification,
+      verificationRequest:
+          clearVerificationRequest
+              ? null
+              : verificationRequest ??
+                  this.verificationRequest,
       identityCard:
           clearIdentityCard
               ? null

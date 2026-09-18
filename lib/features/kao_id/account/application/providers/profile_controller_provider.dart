@@ -5,5 +5,5 @@ import '../states/profile_state.dart';
 
 final profileControllerProvider =
     StateNotifierProvider<ProfileController, ProfileState>(
-      (ref) => ProfileController(ref),
-    );
+  (ref) => ProfileController(ref),
+);

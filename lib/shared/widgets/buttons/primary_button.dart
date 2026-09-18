@@ -59,71 +59,46 @@ final class PrimaryButton extends StatelessWidget {
     };
 
     final textStyle = switch (size) {
-      PrimaryButtonSize.small =>
-        AppTextStyles.buttonSmall,
-
-      PrimaryButtonSize.medium =>
-        AppTextStyles.buttonMedium,
-
-      PrimaryButtonSize.large =>
-        AppTextStyles.buttonLarge,
+      PrimaryButtonSize.small => AppTextStyles.buttonSmall,
+      PrimaryButtonSize.medium => AppTextStyles.buttonMedium,
+      PrimaryButtonSize.large => AppTextStyles.buttonLarge,
     };
 
     final child = FilledButton(
-      onPressed: (!isEnabled || isLoading)
-          ? null
-          : onPressed,
-
+      onPressed: (!isEnabled || isLoading) ? null : onPressed,
       style: ButtonStyle(
-        elevation:
-            const MaterialStatePropertyAll(0),
-
+        elevation: const WidgetStatePropertyAll(0),
         animationDuration: const Duration(
           milliseconds: 180,
         ),
-
-        mouseCursor:
-            MaterialStateProperty.resolveWith(
+        mouseCursor: WidgetStateProperty.resolveWith(
           (states) {
-            if (states.contains(
-              WidgetState.disabled,
-            )) {
+            if (states.contains(WidgetState.disabled)) {
               return SystemMouseCursors.forbidden;
             }
 
             return SystemMouseCursors.click;
           },
         ),
-
-        backgroundColor:
-            MaterialStateProperty.resolveWith(
+        backgroundColor: WidgetStateProperty.resolveWith(
           (states) {
-            if (states.contains(
-              WidgetState.disabled,
-            )) {
+            if (states.contains(WidgetState.disabled)) {
               return AppColors.disabled;
             }
 
-            return backgroundColor ??
-                AppColors.primary;
+            return backgroundColor ?? AppColors.primary;
           },
         ),
-
-        foregroundColor:
-            MaterialStateProperty.resolveWith(
+        foregroundColor: WidgetStateProperty.resolveWith(
           (states) {
-            if (states.contains(
-              WidgetState.disabled,
-            )) {
+            if (states.contains(WidgetState.disabled)) {
               return AppColors.disabledForeground;
             }
 
-            return foregroundColor ??
-                AppColors.onPrimary;
+            return foregroundColor ?? AppColors.onPrimary;
           },
         ),
-
-        shape: MaterialStatePropertyAll(
+        shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
               AppRadius.button,
@@ -131,37 +106,26 @@ final class PrimaryButton extends StatelessWidget {
           ),
         ),
       ),
-
       child: AnimatedSwitcher(
         duration: const Duration(
           milliseconds: 200,
         ),
-
         child: isLoading
             ? SizedBox(
-                key: const ValueKey(
-                  'loading',
-                ),
+                key: const ValueKey('loading'),
                 width: 22,
                 height: 22,
-                child:
-                    CircularProgressIndicator(
+                child: CircularProgressIndicator(
                   strokeWidth: 2.4,
-                  valueColor:
-                      AlwaysStoppedAnimation(
-                    foregroundColor ??
-                        AppColors.onPrimary,
+                  valueColor: AlwaysStoppedAnimation(
+                    foregroundColor ?? AppColors.onPrimary,
                   ),
                 ),
               )
             : Row(
-                key: const ValueKey(
-                  'content',
-                ),
-                mainAxisSize:
-                    MainAxisSize.min,
-                mainAxisAlignment:
-                    MainAxisAlignment.center,
+                key: const ValueKey('content'),
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (icon != null) ...[
                     Icon(
@@ -175,10 +139,7 @@ final class PrimaryButton extends StatelessWidget {
                   Text(
                     text,
                     style: textStyle.copyWith(
-                      color:
-                          foregroundColor ??
-                              AppColors
-                                  .onPrimary,
+                      color: foregroundColor ?? AppColors.onPrimary,
                     ),
                   ),
                 ],
@@ -187,9 +148,7 @@ final class PrimaryButton extends StatelessWidget {
     );
 
     return SizedBox(
-      width: expand
-          ? double.infinity
-          : null,
+      width: expand ? double.infinity : null,
       height: height,
       child: child,
     );

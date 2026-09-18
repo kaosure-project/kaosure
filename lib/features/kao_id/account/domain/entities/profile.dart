@@ -4,23 +4,16 @@ import 'package:equatable/equatable.dart';
 final class Profile extends Equatable {
   const Profile({
     required this.id,
-
     this.username,
     this.displayName,
     this.firstName,
     this.lastName,
-
     required this.avatarUrl,
     required this.bio,
-
     this.languageCode,
-
-    // Kao ID
     required this.accountLevel,
     required this.accountStatus,
     required this.role,
-    required this.position,
-
     required this.createdAt,
     required this.updatedAt,
   });
@@ -28,32 +21,35 @@ final class Profile extends Equatable {
   /// UUID จาก auth.users
   final String id;
 
-  /// Public username (Unique)
+  /// Username ของบริการ
   ///
-  /// กำหนดหลัง Complete Profile
+  /// ไม่ใช่ข้อกำหนดของ Kao ID
+  /// อาจถูกใช้โดย Service เช่น Marketplace
   final String? username;
 
-  /// Public display name
-  ///
-  /// สามารถซ้ำกับคนอื่นได้
+  /// ชื่อที่แสดงต่อสาธารณะ
   final String? displayName;
 
-  /// Legal first name
+  /// ชื่อตามกฎหมาย
+  ///
+  /// ข้อมูลนี้จะเกี่ยวข้องกับกระบวนการ KYC
   final String? firstName;
 
-  /// Legal last name
+  /// นามสกุลตามกฎหมาย
+  ///
+  /// ข้อมูลนี้จะเกี่ยวข้องกับกระบวนการ KYC
   final String? lastName;
 
-  /// Profile avatar
+  /// รูปโปรไฟล์
   final String? avatarUrl;
 
-  /// User biography
+  /// ประวัติหรือคำอธิบายของผู้ใช้
   final String? bio;
 
-  /// Preferred language
+  /// ภาษาที่ต้องการใช้
   final String? languageCode;
 
-  /// Kao ID account level
+  /// ระดับบัญชี Kao ID
   ///
   /// registered
   /// verified
@@ -61,7 +57,7 @@ final class Profile extends Equatable {
   /// organization
   final String accountLevel;
 
-  /// Account status
+  /// สถานะบัญชี
   ///
   /// active
   /// pending
@@ -70,7 +66,7 @@ final class Profile extends Equatable {
   /// closed
   final String accountStatus;
 
-  /// User role
+  /// บทบาทของบัญชี
   ///
   /// user
   /// admin
@@ -79,32 +75,26 @@ final class Profile extends Equatable {
   /// kyc_officer
   final String role;
 
-  /// Employee position
-  ///
-  /// NULL for normal users
-  final String? position;
-
   final DateTime createdAt;
 
   final DateTime updatedAt;
 
   @override
   List<Object?> get props => [
-    id,
-    username,
-    displayName,
-    firstName,
-    lastName,
-    avatarUrl,
-    bio,
-    languageCode,
-    accountLevel,
-    accountStatus,
-    role,
-    position,
-    createdAt,
-    updatedAt,
-  ];
+        id,
+        username,
+        displayName,
+        firstName,
+        lastName,
+        avatarUrl,
+        bio,
+        languageCode,
+        accountLevel,
+        accountStatus,
+        role,
+        createdAt,
+        updatedAt,
+      ];
 
   Profile copyWith({
     String? id,
@@ -118,7 +108,6 @@ final class Profile extends Equatable {
     String? accountLevel,
     String? accountStatus,
     String? role,
-    String? position,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -134,7 +123,6 @@ final class Profile extends Equatable {
       accountLevel: accountLevel ?? this.accountLevel,
       accountStatus: accountStatus ?? this.accountStatus,
       role: role ?? this.role,
-      position: position ?? this.position,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

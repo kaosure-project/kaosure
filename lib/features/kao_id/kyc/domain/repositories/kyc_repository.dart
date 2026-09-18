@@ -4,26 +4,51 @@ import '../entities/passport.dart';
 import '../entities/residence_permit.dart';
 import '../entities/verification.dart';
 import '../entities/verification_history.dart';
+import '../entities/verification_request.dart';
 
 abstract interface class KycRepository {
-  /// ภาพรวมสถานะ KYC
+  // ===========================================================================
+  // Verification
+  // ===========================================================================
+
   Future<Verification> getVerification();
 
-  /// เอกสารแต่ละประเภท
+  // ===========================================================================
+  // Verification Request
+  // ===========================================================================
+
+  Future<VerificationRequest?>
+      getVerificationRequest();
+
+  Future<void> submitVerificationRequest();
+
+  // ===========================================================================
+  // Documents
+  // ===========================================================================
+
   Future<IdentityCard?> getIdentityCard();
 
   Future<Passport?> getPassport();
 
   Future<ResidencePermit?> getResidencePermit();
 
-  /// บัญชีธนาคาร
+  // ===========================================================================
+  // Bank Verification
+  // ===========================================================================
+
   Future<BankVerification?> getBankVerification();
 
-  /// ประวัติการยืนยันตัวตน
+  // ===========================================================================
+  // Verification History
+  // ===========================================================================
+
   Future<List<VerificationHistory>>
       getVerificationHistory();
 
-  /// ส่งเอกสาร
+  // ===========================================================================
+  // Submit Documents
+  // ===========================================================================
+
   Future<void> submitIdentityCard(
     IdentityCard identityCard,
   );
@@ -36,7 +61,6 @@ abstract interface class KycRepository {
     ResidencePermit residencePermit,
   );
 
-  /// ส่งบัญชีธนาคาร
   Future<void> submitBankVerification(
     BankVerification bankVerification,
   );

@@ -14,12 +14,15 @@ final class DocumentStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(
-          color: Colors.grey.shade300,
+          color: colorScheme.outlineVariant,
         ),
       ),
       child: Padding(
@@ -28,7 +31,9 @@ final class DocumentStatusCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 22,
-              backgroundColor: color.withOpacity(0.12),
+              backgroundColor: color.withValues(
+                alpha: 0.12,
+              ),
               child: Icon(
                 icon,
                 color: color,
@@ -42,20 +47,14 @@ final class DocumentStatusCard extends StatelessWidget {
                 children: [
                   Text(
                     'สถานะ',
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium,
+                    style: theme.textTheme.labelMedium,
                   ),
                   const SizedBox(height: 4),
                   Text(
                     status,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(
-                          fontWeight:
-                              FontWeight.bold,
-                        ),
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),

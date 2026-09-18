@@ -149,6 +149,14 @@ final class IdentityDocumentModel {
     );
   }
 
+  /// Converts the model to a payload for
+  /// the `identity_documents` table.
+  ///
+  /// `files` belongs to `document_files`
+  /// and `verification` belongs to
+  /// `verification_requests`.
+  ///
+  /// They must not be sent to `identity_documents`.
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -160,11 +168,6 @@ final class IdentityDocumentModel {
       'expiry_date':
           expiryDate?.toIso8601String(),
       'status': status.value,
-      'files': files
-          .map((e) => e.toMap())
-          .toList(),
-      'verification':
-          verification.toMap(),
       'created_at':
           createdAt.toIso8601String(),
       'updated_at':

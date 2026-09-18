@@ -13,6 +13,7 @@ final class IdentityRemoteDataSourceImpl
   final SupabaseClient _supabase;
 
   static const _documentsTable = 'identity_documents';
+  static const _documentFilesTable = 'document_files';
   static const _verificationTable = 'verification_requests';
 
   @override
@@ -22,11 +23,17 @@ final class IdentityRemoteDataSourceImpl
         .select()
         .order('created_at');
 
-    return response
-        .map<IdentityDocumentModel>(
-          (json) => IdentityDocumentModel.fromMap(json),
-        )
-        .toList();
+    final documents = <IdentityDocumentModel>[];
+
+    for (final json in response) {
+      documents.add(
+        await _buildDocumentModel(
+          Map<String, dynamic>.from(json),
+        ),
+      );
+    }
+
+    return documents;
   }
 
   @override
@@ -43,7 +50,9 @@ final class IdentityRemoteDataSourceImpl
       return null;
     }
 
-    return IdentityDocumentModel.fromMap(response);
+    return _buildDocumentModel(
+      Map<String, dynamic>.from(response),
+    );
   }
 
   @override
@@ -56,7 +65,14 @@ final class IdentityRemoteDataSourceImpl
         .select()
         .single();
 
-    return IdentityDocumentModel.fromMap(response);
+    await _syncDocumentFiles(
+      documentId: document.id,
+      files: document.files,
+    );
+
+    return _buildDocumentModel(
+      Map<String, dynamic>.from(response),
+    );
   }
 
   @override
@@ -70,7 +86,14 @@ final class IdentityRemoteDataSourceImpl
         .select()
         .single();
 
-    return IdentityDocumentModel.fromMap(response);
+    await _syncDocumentFiles(
+      documentId: document.id,
+      files: document.files,
+    );
+
+    return _buildDocumentModel(
+      Map<String, dynamic>.from(response),
+    );
   }
 
   @override
@@ -93,7 +116,9 @@ final class IdentityRemoteDataSourceImpl
         .select()
         .single();
 
-    return VerificationModel.fromMap(response);
+    return VerificationModel.fromMap(
+      Map<String, dynamic>.from(response),
+    );
   }
 
   @override
@@ -109,7 +134,9 @@ final class IdentityRemoteDataSourceImpl
       return null;
     }
 
-    return VerificationModel.fromMap(response);
+    return VerificationModel.fromMap(
+      Map<String, dynamic>.from(response),
+    );
   }
 
   @override
@@ -140,5 +167,94 @@ final class IdentityRemoteDataSourceImpl
         .select('id');
 
     return response.isNotEmpty;
+  }
+
+  Future<IdentityDocumentModel> _buildDocumentModel(
+    Map<String, dynamic> documentMap,
+  ) async {
+    final documentId = documentMap['id'] as String;
+
+    final files = await _getDocumentFiles(
+      documentId,
+    );
+
+    final verification = await _getDocumentVerification(
+      documentId,
+    );
+
+    documentMap['files'] = files;
+    documentMap['verification'] = verification;
+
+    return IdentityDocumentModel.fromMap(
+      documentMap,
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> _getDocumentFiles(
+    String documentId,
+  ) async {
+    final response = await _supabase
+        .from(_documentFilesTable)
+        .select()
+        .eq('document_id', documentId)
+        .order('uploaded_at');
+
+    return response
+        .map(
+          (json) => Map<String, dynamic>.from(json),
+        )
+        .toList();
+  }
+
+  Future<Map<String, dynamic>?> _getDocumentVerification(
+    String documentId,
+  ) async {
+    final response = await _supabase
+        .from(_verificationTable)
+        .select()
+        .eq('document_id', documentId)
+        .order('created_at', ascending: false)
+        .limit(1)
+        .maybeSingle();
+
+    if (response == null) {
+      return null;
+    }
+
+    return Map<String, dynamic>.from(response);
+  }
+
+  Future<void> _syncDocumentFiles({
+    required String documentId,
+    required List<dynamic> files,
+  }) async {
+    await _supabase
+        .from(_documentFilesTable)
+        .delete()
+        .eq('document_id', documentId);
+
+    if (files.isEmpty) {
+      return;
+    }
+
+    final rows = files.map<Map<String, dynamic>>(
+      (file) {
+        final map = file.toMap();
+
+        return {
+          'id': map['id'],
+          'document_id': documentId,
+          'file_path': map['file_path'],
+          'file_name': map['file_name'],
+          'mime_type': map['mime_type'],
+          'file_size': map['file_size'],
+          'uploaded_at': map['uploaded_at'],
+        };
+      },
+    ).toList();
+
+    await _supabase
+        .from(_documentFilesTable)
+        .insert(rows);
   }
 }

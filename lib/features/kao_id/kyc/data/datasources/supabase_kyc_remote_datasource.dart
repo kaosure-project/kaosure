@@ -6,6 +6,7 @@ import '../models/passport_model.dart';
 import '../models/residence_permit_model.dart';
 import '../models/verification_history_model.dart';
 import '../models/verification_model.dart';
+import '../models/verification_request_model.dart';
 
 import 'kyc_remote_datasource.dart';
 
@@ -17,12 +18,7 @@ final class SupabaseKycRemoteDataSource
 
   final SupabaseClient _client;
 
-  // ---------------------------------------------------------------------------
-  // Verification
-  // ---------------------------------------------------------------------------
-
-  @override
-  Future<VerificationModel> getVerification() async {
+  User _requireUser() {
     final user = _client.auth.currentUser;
 
     if (user == null) {
@@ -31,39 +27,91 @@ final class SupabaseKycRemoteDataSource
       );
     }
 
+    return user;
+  }
+
+  // ===========================================================================
+  // Verification
+  // ===========================================================================
+
+  @override
+  Future<VerificationModel>
+      getVerification() async {
+    final user = _requireUser();
+
     final response = await _client
         .from('verifications')
         .select()
         .eq('profile_id', user.id)
-        .single();
+        .maybeSingle();
+
+    if (response == null) {
+      throw Exception(
+        'Verification record not found.',
+      );
+    }
 
     return VerificationModel.fromJson(
       response,
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // Identity Card
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
+  // Verification Request
+  // ===========================================================================
 
   @override
-  Future<IdentityCardModel?> getIdentityCard() async {
-    final user = _client.auth.currentUser;
-
-    if (user == null) {
-      throw const AuthException(
-        'User is not authenticated.',
-      );
-    }
+  Future<VerificationRequestModel?>
+      getVerificationRequest() async {
+    final user = _requireUser();
 
     final response = await _client
-        .from('identity_documents')
+        .from('verification_requests')
+        .select()
+        .eq('requested_by', user.id)
+        .order(
+          'created_at',
+          ascending: false,
+        )
+        .limit(1)
+        .maybeSingle();
+
+    if (response == null) {
+      return null;
+    }
+
+    return VerificationRequestModel.fromJson(
+      response,
+    );
+  }
+
+  @override
+  Future<void>
+      submitVerificationRequest() async {
+    final user = _requireUser();
+
+    await _client
+        .from('verification_requests')
+        .insert({
+      'requested_by': user.id,
+      'status': 'pending',
+    });
+  }
+
+  // ===========================================================================
+  // Identity Card
+  // ===========================================================================
+
+  @override
+  Future<IdentityCardModel?>
+      getIdentityCard() async {
+    final user = _requireUser();
+
+    final response = await _client
+        .from('identity_cards')
         .select()
         .eq('owner_id', user.id)
-        .eq(
-          'document_type',
-          'identity_card',
-        )
+        .isFilter('deleted_at', null)
         .maybeSingle();
 
     if (response == null) {
@@ -75,28 +123,19 @@ final class SupabaseKycRemoteDataSource
     );
   }
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Passport
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   @override
   Future<PassportModel?> getPassport() async {
-    final user = _client.auth.currentUser;
-
-    if (user == null) {
-      throw const AuthException(
-        'User is not authenticated.',
-      );
-    }
+    final user = _requireUser();
 
     final response = await _client
-        .from('identity_documents')
+        .from('passports')
         .select()
         .eq('owner_id', user.id)
-        .eq(
-          'document_type',
-          'passport',
-        )
+        .isFilter('deleted_at', null)
         .maybeSingle();
 
     if (response == null) {
@@ -108,29 +147,20 @@ final class SupabaseKycRemoteDataSource
     );
   }
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Residence Permit
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   @override
   Future<ResidencePermitModel?>
       getResidencePermit() async {
-    final user = _client.auth.currentUser;
-
-    if (user == null) {
-      throw const AuthException(
-        'User is not authenticated.',
-      );
-    }
+    final user = _requireUser();
 
     final response = await _client
-        .from('identity_documents')
+        .from('residence_permits')
         .select()
         .eq('owner_id', user.id)
-        .eq(
-          'document_type',
-          'residence_permit',
-        )
+        .isFilter('deleted_at', null)
         .maybeSingle();
 
     if (response == null) {
@@ -142,20 +172,14 @@ final class SupabaseKycRemoteDataSource
     );
   }
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Bank Verification
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   @override
   Future<BankVerificationModel?>
       getBankVerification() async {
-    final user = _client.auth.currentUser;
-
-    if (user == null) {
-      throw const AuthException(
-        'User is not authenticated.',
-      );
-    }
+    final user = _requireUser();
 
     final response = await _client
         .from('bank_accounts')
@@ -172,23 +196,17 @@ final class SupabaseKycRemoteDataSource
     );
   }
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Verification History
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   @override
   Future<List<VerificationHistoryModel>>
       getVerificationHistory() async {
-    final user = _client.auth.currentUser;
-
-    if (user == null) {
-      throw const AuthException(
-        'User is not authenticated.',
-      );
-    }
+    final user = _requireUser();
 
     final response = await _client
-        .from('verification_history')
+        .from('verification_logs')
         .select()
         .eq('profile_id', user.id)
         .order(
@@ -196,232 +214,65 @@ final class SupabaseKycRemoteDataSource
           ascending: false,
         );
 
-    return (response as List)
+    return response
         .map(
-          (json) =>
+          (row) =>
               VerificationHistoryModel.fromJson(
-            json as Map<String, dynamic>,
+            row,
           ),
         )
         .toList();
   }
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Submit Identity Card
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   @override
   Future<void> submitIdentityCard(
     IdentityCardModel model,
   ) async {
-    final user = _client.auth.currentUser;
-
-    if (user == null) {
-      throw const AuthException(
-        'User is not authenticated.',
-      );
-    }
-
-    await _client
-        .from('identity_documents')
-        .upsert(
-          model.toJson(),
-          onConflict: 'id',
-        );
-
-    await _client
-        .from('verifications')
-        .upsert(
-          {
-            'profile_id': user.id,
-            'identity_card_status':
-                model.status,
-            'updated_at':
-                DateTime.now()
-                    .toIso8601String(),
-          },
-          onConflict: 'profile_id',
-        );
-
-    await _client
-        .from('verification_history')
-        .insert(
-          {
-            'profile_id': user.id,
-            'document_id': model.id,
-            'type': 'identity_card',
-            'status': model.status,
-            'description':
-                'ส่งข้อมูลบัตรประชาชน',
-            'created_at':
-                DateTime.now()
-                    .toIso8601String(),
-          },
-        );
+    throw UnimplementedError(
+      'Identity card submission is not connected yet.',
+    );
   }
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Submit Passport
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   @override
   Future<void> submitPassport(
     PassportModel model,
   ) async {
-    final user = _client.auth.currentUser;
-
-    if (user == null) {
-      throw const AuthException(
-        'User is not authenticated.',
-      );
-    }
-
-    await _client
-        .from('identity_documents')
-        .upsert(
-          model.toJson(),
-          onConflict: 'id',
-        );
-
-    await _client
-        .from('verifications')
-        .upsert(
-          {
-            'profile_id': user.id,
-            'passport_status':
-                model.status,
-            'updated_at':
-                DateTime.now()
-                    .toIso8601String(),
-          },
-          onConflict: 'profile_id',
-        );
-
-    await _client
-        .from('verification_history')
-        .insert(
-          {
-            'profile_id': user.id,
-            'document_id': model.id,
-            'type': 'passport',
-            'status': model.status,
-            'description':
-                'ส่งข้อมูลหนังสือเดินทาง',
-            'created_at':
-                DateTime.now()
-                    .toIso8601String(),
-          },
-        );
+    throw UnimplementedError(
+      'Passport submission is not connected yet.',
+    );
   }
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Submit Residence Permit
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   @override
   Future<void> submitResidencePermit(
     ResidencePermitModel model,
   ) async {
-    final user = _client.auth.currentUser;
-
-    if (user == null) {
-      throw const AuthException(
-        'User is not authenticated.',
-      );
-    }
-
-    await _client
-        .from('identity_documents')
-        .upsert(
-          model.toJson(),
-          onConflict: 'id',
-        );
-
-    await _client
-        .from('verifications')
-        .upsert(
-          {
-            'profile_id': user.id,
-            'residence_permit_status':
-                model.status,
-            'updated_at':
-                DateTime.now()
-                    .toIso8601String(),
-          },
-          onConflict: 'profile_id',
-        );
-
-    await _client
-        .from('verification_history')
-        .insert(
-          {
-            'profile_id': user.id,
-            'document_id': model.id,
-            'type': 'residence_permit',
-            'status': model.status,
-            'description':
-                'ส่งข้อมูลใบอนุญาตพำนัก',
-            'created_at':
-                DateTime.now()
-                    .toIso8601String(),
-          },
-        );
+    throw UnimplementedError(
+      'Residence permit submission is not connected yet.',
+    );
   }
 
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
   // Submit Bank Verification
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
 
   @override
   Future<void> submitBankVerification(
     BankVerificationModel model,
   ) async {
-    final user = _client.auth.currentUser;
-
-    if (user == null) {
-      throw const AuthException(
-        'User is not authenticated.',
-      );
-    }
-
-    final now =
-        DateTime.now().toIso8601String();
-
-    final bankData = model.toJson();
-
-    bankData['profile_id'] = user.id;
-    bankData['updated_at'] = now;
-
-    await _client
-        .from('bank_accounts')
-        .upsert(
-          bankData,
-          onConflict: 'id',
-        );
-
-    await _client
-        .from('verifications')
-        .upsert(
-          {
-            'profile_id': user.id,
-            'bank_status': model.status,
-            'updated_at': now,
-          },
-          onConflict: 'profile_id',
-        );
-
-    await _client
-        .from('verification_history')
-        .insert(
-          {
-            'profile_id': user.id,
-            'document_id': model.id,
-            'type': 'bank',
-            'status': model.status,
-            'description':
-                'ส่งข้อมูลบัญชีธนาคาร',
-            'created_at': now,
-          },
-        );
+    throw UnimplementedError(
+      'Bank verification submission is not connected yet.',
+    );
   }
 }

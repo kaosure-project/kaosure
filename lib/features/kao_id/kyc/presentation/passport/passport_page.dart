@@ -5,9 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../application/providers/kyc_provider.dart';
-import '../../domain/entities/passport.dart';
-import '../../domain/enums/verification_status.dart';
+import '../../../identity/application/providers/identity_providers.dart';
+import '../../../identity/domain/entities/document_file.dart';
+import '../../../identity/domain/entities/identity_document.dart';
+import '../../../identity/domain/enums/document_status.dart';
+import '../../../identity/domain/enums/document_type_enum.dart';
+import '../../../identity/domain/value_objects/document_number.dart';
+import '../../../identity/domain/value_objects/expiry_date.dart';
+import '../../../identity/domain/value_objects/issued_date.dart';
 
 import '../../../../../core/services/document_picker_service.dart';
 import '../../../../../core/services/document_upload_service.dart';
@@ -753,196 +758,98 @@ final class _PassportPageState
   // ===========================================================================
 
   Future<void> _savePassport() async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
+    if (!_formKey.currentState!.validate()) return;
 
-    if (_issuedDate == null) {
-      _showError(
-        'กรุณาเลือกวันที่ออกหนังสือเดินทาง',
-      );
-      return;
-    }
-
-    if (_expiryDate == null) {
-      _showError(
-        'กรุณาเลือกวันหมดอายุหนังสือเดินทาง',
-      );
+    if (_issuedDate == null || _expiryDate == null) {
+      _showError('กรุณาระบุวันที่ออกและวันหมดอายุ');
       return;
     }
 
     if (!_expiryDate!.isAfter(_issuedDate!)) {
-      _showError(
-        'วันหมดอายุต้องอยู่หลังวันที่ออก',
-      );
+      _showError('วันหมดอายุต้องอยู่หลังวันที่ออก');
       return;
     }
 
     final bytes = _fileBytes;
-
-    if (bytes == null ||
-        bytes.isEmpty ||
-        _fileName == null) {
-      _showError(
-        'กรุณาเลือกรูปหนังสือเดินทาง',
-      );
+    if (bytes == null || bytes.isEmpty || _fileName == null) {
+      _showError('กรุณาเลือกรูปหนังสือเดินทาง');
       return;
     }
 
-    final client =
-        Supabase.instance.client;
-
-    final user =
-        client.auth.currentUser;
-
+    final client = Supabase.instance.client;
+    final user = client.auth.currentUser;
     if (user == null) {
-      _showError(
-        'ไม่พบผู้ใช้ที่เข้าสู่ระบบ',
-      );
+      _showError('ไม่พบผู้ใช้ที่เข้าสู่ระบบ');
       return;
     }
 
-    setState(() {
-      _isLoading = true;
-    });
-
+    setState(() => _isLoading = true);
     String? storagePath;
 
     try {
-      // -----------------------------------------------------------------------
-      // 1. Upload document
-      // -----------------------------------------------------------------------
-
-      final uploadService =
-          DocumentUploadService(
-        client,
-      );
-
-      storagePath =
-          await uploadService.uploadBytes(
+      final uploadService = DocumentUploadService(client);
+      storagePath = await uploadService.uploadBytes(
         bytes: bytes,
         fileName: _fileName!,
         folder: 'passport',
+        mimeType: _detectMimeType(_fileName!),
       );
 
-      // -----------------------------------------------------------------------
-      // 2. Create real Passport entity
-      // -----------------------------------------------------------------------
-
       final now = DateTime.now();
-
-      final passport =
-          Passport(
+      final document = IdentityDocument(
         id: const Uuid().v4(),
         ownerId: user.id,
-        documentType: 'passport',
-        passportNumber:
-            _passportController.text
-                .trim()
-                .toUpperCase(),
-        fullName: '',
-        countryCode: 'TH',
-
-        // สำคัญ:
-        // สถานะจริงหลังผู้ใช้ส่งข้อมูลเข้าระบบ
-        // ต้องเป็น pending เพื่อให้ระบบตรวจสอบต่อ
-        status:
-            VerificationStatus.pending.value,
-
-        issuedDate: _issuedDate,
-        expiryDate: _expiryDate,
-
-        verificationMethod:
-            'manual',
-
-        verifiedAt: null,
-        verifiedBy: null,
-        rejectedReason: null,
-        deletedAt: null,
-
-        filePath: storagePath,
-        fileUrl: null,
-        fileName: _fileName,
-        fileSize: bytes.length,
-        mimeType:
-            _detectMimeType(_fileName!),
-        uploadedAt: now,
-
+        documentType: DocumentTypeEnum.passport,
+        documentNumber: DocumentNumber(
+          _passportController.text.trim().toUpperCase(),
+        ),
+        issuedDate: IssuedDate(_issuedDate!),
+        expiryDate: ExpiryDate(_expiryDate!),
+        status: DocumentStatus.uploaded,
+        files: [
+          DocumentFile(
+            id: const Uuid().v4(),
+            fileName: _fileName!,
+            filePath: storagePath,
+            mimeType: _detectMimeType(_fileName!),
+            fileSize: bytes.length,
+            uploadedAt: now,
+          ),
+        ],
         createdAt: now,
         updatedAt: now,
       );
 
-      // -----------------------------------------------------------------------
-      // 3. Submit through KYC use case
-      //
-      // ไม่เขียน Supabase ตรงจาก UI
-      // ใช้ KYC architecture ที่มีอยู่แล้ว
-      // -----------------------------------------------------------------------
+      await ref.read(uploadDocumentProvider)(
+        document: document,
+      );
 
-      await ref
-          .read(
-            submitPassportUseCaseProvider,
-          )
-          .call(passport);
+      if (!mounted) return;
 
-      if (!mounted) {
-        return;
-      }
-
-      // -----------------------------------------------------------------------
-      // 4. แจ้งสำเร็จ
-      // -----------------------------------------------------------------------
-
-      ScaffoldMessenger.of(context)
-          .showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          behavior:
-              SnackBarBehavior.floating,
-          content: Text(
-            'ส่งข้อมูลหนังสือเดินทางเรียบร้อยแล้ว',
-          ),
+          behavior: SnackBarBehavior.floating,
+          content: Text('บันทึกหนังสือเดินทางเรียบร้อยแล้ว'),
         ),
       );
-
-      // ส่ง true กลับให้ KycPage รู้ว่าข้อมูลเปลี่ยน
       Navigator.of(context).pop(true);
     } catch (error) {
-      // -----------------------------------------------------------------------
-      // ถ้า DB save ไม่สำเร็จ
-      // ลบไฟล์ที่ upload ไปแล้ว เพื่อไม่ให้เกิด orphan file
-      // -----------------------------------------------------------------------
-
       if (storagePath != null) {
         try {
-          await DocumentUploadService(
-            client,
-          ).delete(
+          await DocumentUploadService(client).delete(
             storagePath: storagePath,
           );
-        } catch (_) {
-          // ไม่กลบ error หลัก
-        }
+        } catch (_) {}
       }
 
-      if (!mounted) {
-        return;
-      }
-
-      _showError(
-        _friendlyError(error),
-      );
+      if (!mounted) return;
+      _showError(error.toString());
     } finally {
       if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
+        setState(() => _isLoading = false);
       }
     }
   }
-
-  // ===========================================================================
-  // HELPERS
-  // ===========================================================================
 
   String _detectMimeType(
     String fileName,

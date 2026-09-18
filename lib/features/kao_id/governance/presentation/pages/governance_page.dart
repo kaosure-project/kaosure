@@ -74,11 +74,7 @@ final class _GovernancePageState
         title:
             const Text('ถอนสิทธิ์ผู้ดูแล'),
         content: Text(
-          'ยืนยันถอน ' +
-              assignment.roleName +
-              ' จาก ' +
-              assignment.kaoId +
-              ' หรือไม่',
+          'ยืนยันถอน ${assignment.roleName} จาก ${assignment.kaoId} หรือไม่',
         ),
         actions: [
           TextButton(
@@ -119,8 +115,6 @@ final class _GovernancePageState
     final state = ref.watch(
       governanceControllerProvider,
     );
-    final theme = Theme.of(context);
-
     return Scaffold(
       appBar: AppBar(
         title:

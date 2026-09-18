@@ -187,15 +187,14 @@ final class _HistoryCard
   ) {
     final local = value.toLocal();
 
-    return [
+    final date = [
       local.day.toString().padLeft(2, '0'),
       local.month.toString().padLeft(2, '0'),
       local.year.toString(),
-    ].join('/') +
-        ' ' +
-        local.hour.toString().padLeft(2, '0') +
-        ':' +
-        local.minute.toString().padLeft(2, '0');
+    ].join('/');
+    final hour = local.hour.toString().padLeft(2, '0');
+    final minute = local.minute.toString().padLeft(2, '0');
+    return '$date $hour:$minute';
   }
 }
 

@@ -431,6 +431,12 @@ BEGIN
         RAISE EXCEPTION 'Governance role not found or inactive';
     END IF;
 
+    IF lower(trim(p_role_code)) = 'super_admin'
+       AND NOT public.is_company_owner() THEN
+        RAISE EXCEPTION
+            'Only the Company Owner may assign Super Admin';
+    END IF;
+
     INSERT INTO public.admin_assignments (
         profile_id,
         role_id,
@@ -532,6 +538,17 @@ BEGIN
 
     IF NOT FOUND THEN
         RAISE EXCEPTION 'Admin assignment not found';
+    END IF;
+
+    IF EXISTS (
+        SELECT 1
+        FROM public.admin_roles ar
+        WHERE ar.id = v_assignment.role_id
+          AND ar.code = 'super_admin'
+    )
+    AND NOT public.is_company_owner() THEN
+        RAISE EXCEPTION
+            'Only the Company Owner may revoke Super Admin';
     END IF;
 
     UPDATE public.admin_assignments

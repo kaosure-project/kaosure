@@ -179,26 +179,22 @@ final class FakeKycRepository
     return [
       VerificationHistory(
         id: 'history-001',
-        profileId: 'profile-001',
-        documentId: 'identity-001',
-        type: 'identity_card',
-        status:
-            VerificationStatus.approved.value,
-        description:
-            'ยืนยันบัตรประชาชนสำเร็จ',
-        createdBy: 'admin-001',
+        verificationRequestId: 'request-001',
+        action: 'approve',
+        oldStatus: 'under_review',
+        newStatus: 'approved',
+        performedBy: 'admin-001',
+        notes: 'Identity verification approved',
         createdAt: DateTime.now(),
       ),
       VerificationHistory(
         id: 'history-002',
-        profileId: 'profile-001',
-        documentId: 'bank-001',
-        type: 'bank',
-        status:
-            VerificationStatus.approved.value,
-        description:
-            'ยืนยันบัญชีธนาคารสำเร็จ',
-        createdBy: 'admin-001',
+        verificationRequestId: 'request-001',
+        action: 'review',
+        oldStatus: 'pending',
+        newStatus: 'under_review',
+        performedBy: 'admin-001',
+        notes: null,
         createdAt: DateTime.now(),
       ),
     ];

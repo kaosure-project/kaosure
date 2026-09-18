@@ -229,8 +229,16 @@ final class SupabaseKycRemoteDataSource
 
     final response = await _client
         .from('verification_logs')
-        .select()
-        .eq('profile_id', user.id)
+        .select(
+          'id, verification_request_id, action, '
+          'old_status, new_status, performed_by, '
+          'notes, created_at, '
+          'verification_requests!inner(requested_by)',
+        )
+        .eq(
+          'verification_requests.requested_by',
+          user.id,
+        )
         .order(
           'created_at',
           ascending: false,
@@ -240,7 +248,7 @@ final class SupabaseKycRemoteDataSource
         .map(
           (row) =>
               VerificationHistoryModel.fromJson(
-            row,
+            Map<String, dynamic>.from(row),
           ),
         )
         .toList();

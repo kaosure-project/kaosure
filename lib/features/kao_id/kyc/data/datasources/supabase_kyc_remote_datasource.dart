@@ -210,16 +210,4 @@ final class SupabaseKycRemoteDataSource
         .toList();
   }
 
-  // ===========================================================================
-  // Submit Bank Verification
-  // ===========================================================================
-
-  @override
-  Future<void> submitBankVerification(
-    BankVerificationModel model,
-  ) async {
-    throw UnimplementedError(
-      'Bank verification submission is not connected yet.',
-    );
-  }
 }

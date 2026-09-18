@@ -9,13 +9,10 @@ import '../states/identity_state.dart';
 
 final class IdentityController extends StateNotifier<IdentityState> {
   IdentityController({
-    required GetDocuments getDocuments,
-    required DeleteDocument deleteDocument,
-    required UploadDocument uploadDocument,
-  })  : _getDocuments = getDocuments,
-        _deleteDocument = deleteDocument,
-        _uploadDocument = uploadDocument,
-        super(IdentityState.initial());
+    required this._getDocuments,
+    required this._deleteDocument,
+    required this._uploadDocument,
+  }) : super(IdentityState.initial());
 
   final GetDocuments _getDocuments;
   final DeleteDocument _deleteDocument;

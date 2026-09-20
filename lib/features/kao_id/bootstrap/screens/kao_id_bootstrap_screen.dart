@@ -1,10 +1,9 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../auth/presentation/pages/landing_page.dart';
 import '../../account/presentation/pages/complete_profile_page.dart';
+import '../../auth/presentation/pages/landing_page.dart';
 import '../../dashboard/presentation/screens/dashboard_screen.dart';
-
 import '../providers/bootstrap_provider.dart';
 import '../states/bootstrap_state.dart';
 
@@ -34,30 +33,15 @@ final class _KaoIdBootstrapScreenState
       (_, status) {
         switch (status) {
           case BootstrapStatus.landing:
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const LandingPage(),
-              ),
-            );
+            _replaceWith(const LandingPage());
             break;
 
           case BootstrapStatus.completeProfile:
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const CompleteProfilePage(),
-              ),
-            );
+            _replaceWith(const CompleteProfilePage());
             break;
 
           case BootstrapStatus.dashboard:
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const DashboardScreen(),
-              ),
-            );
+            _replaceWith(const DashboardScreen());
             break;
 
           case BootstrapStatus.loading:
@@ -73,6 +57,17 @@ final class _KaoIdBootstrapScreenState
       ),
     );
   }
+
+  void _replaceWith(Widget page) {
+    if (!mounted) {
+      return;
+    }
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => page,
+      ),
+    );
+  }
 }
-
-

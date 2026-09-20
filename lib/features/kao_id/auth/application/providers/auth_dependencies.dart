@@ -9,7 +9,9 @@ import '../../domain/usecases/forgot_password_usecase.dart';
 import '../../domain/usecases/get_current_user_usecase.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/logout_usecase.dart';
+import '../../domain/usecases/refresh_current_user_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
+import '../../domain/usecases/resend_email_verification_usecase.dart';
 
 final supabaseClientProvider = Provider<SupabaseClient>((ref) {
   return Supabase.instance.client;
@@ -51,8 +53,20 @@ final logoutUseCaseProvider = Provider((ref) {
   );
 });
 
+final refreshCurrentUserUseCaseProvider = Provider((ref) {
+  return RefreshCurrentUserUseCase(
+    ref.read(authRepositoryProvider),
+  );
+});
+
 final registerUseCaseProvider = Provider((ref) {
   return RegisterUseCase(
+    ref.read(authRepositoryProvider),
+  );
+});
+
+final resendEmailVerificationUseCaseProvider = Provider((ref) {
+  return ResendEmailVerificationUseCase(
     ref.read(authRepositoryProvider),
   );
 });

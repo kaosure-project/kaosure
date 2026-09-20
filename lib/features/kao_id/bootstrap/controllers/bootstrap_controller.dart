@@ -15,55 +15,66 @@ final class BootstrapController extends StateNotifier<BootstrapStatus> {
     try {
       state = BootstrapStatus.loading;
 
-      AsyncValue<UserEntity?> authState = _ref.read(authProvider);
-
-      while (authState.isLoading) {
-        await Future.delayed(
-          const Duration(milliseconds: 50),
-        );
-
-        authState = _ref.read(authProvider);
-      }
+      final authState = await _waitForAuthState();
 
       if (authState.hasError) {
         debugPrint('AUTH ERROR: ${authState.error}');
-
-        state = BootstrapStatus.error;
-        return state;
+        return _setStatus(BootstrapStatus.error);
       }
 
       final user = authState.value;
 
-      // ยังไม่ได้เข้าสู่ระบบ
+      // No authenticated user.
       if (user == null) {
-        state = BootstrapStatus.landing;
-        return state;
+        return _setStatus(BootstrapStatus.landing);
       }
 
       debugPrint('USER ID: ${user.id}');
 
-      final getProfile = _ref.read(getProfileUseCaseProvider);
+      // Registration is enough to enter Kao ID.
+      // Email, phone, and KYC verification are capability gates,
+      // not application-entry gates.
+      final existsProfile = _ref.read(
+        existsProfileUseCaseProvider,
+      );
 
-      final profile = await getProfile(
+      final profileExists = await existsProfile(
         profileId: user.id,
       );
 
-      debugPrint('PROFILE ID: ${profile.id}');
-      debugPrint('PROFILE DISPLAY NAME: ${profile.displayName}');
+      // Every authenticated account needs its base profile record.
+      // Verification is handled separately from profile readiness.
+      if (!profileExists) {
+        return _setStatus(BootstrapStatus.completeProfile);
+      }
 
-      // Kao ID ไม่ใช้ Username เป็นเงื่อนไขของ Profile
-      //
-      // Username เป็นข้อมูลของ Service / Marketplace
-      // ไม่ใช่ข้อมูลบังคับของ Kao ID
-      state = BootstrapStatus.dashboard;
-
-      return state;
+      return _setStatus(BootstrapStatus.dashboard);
     } catch (e, stackTrace) {
       debugPrint('BOOTSTRAP ERROR: $e');
-      debugPrintStack(stackTrace: stackTrace);
+      debugPrintStack(
+        stackTrace: stackTrace,
+      );
 
-      state = BootstrapStatus.error;
-      return state;
+      return _setStatus(BootstrapStatus.error);
     }
+  }
+
+  Future<AsyncValue<UserEntity?>> _waitForAuthState() async {
+    var authState = _ref.read(authProvider);
+
+    while (authState.isLoading) {
+      await Future<void>.delayed(
+        const Duration(milliseconds: 50),
+      );
+
+      authState = _ref.read(authProvider);
+    }
+
+    return authState;
+  }
+
+  BootstrapStatus _setStatus(BootstrapStatus status) {
+    state = status;
+    return status;
   }
 }

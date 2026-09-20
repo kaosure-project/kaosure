@@ -1,14 +1,15 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../shared/design_system/spacing/app_spacing.dart';
 import '../../../../../shared/widgets/app_bar/app_app_bar.dart';
 import '../../../../../shared/widgets/buttons/primary_button.dart';
 import '../../../../../shared/widgets/cards/app_card.dart';
+import '../../application/providers/auth_provider.dart';
 import '../../../router/kao_id_routes.dart';
 import '../widgets/auth_logo.dart';
 
-class VerifyEmailPage extends StatefulWidget {
+class VerifyEmailPage extends ConsumerStatefulWidget {
   static const String routeName = KaoIdRoutes.verifyEmail;
 
   const VerifyEmailPage({
@@ -16,31 +17,16 @@ class VerifyEmailPage extends StatefulWidget {
   });
 
   @override
-  State<VerifyEmailPage> createState() => _VerifyEmailPageState();
+  ConsumerState<VerifyEmailPage> createState() =>
+      _VerifyEmailPageState();
 }
 
-class _VerifyEmailPageState extends State<VerifyEmailPage> {
-  final _supabase = Supabase.instance.client;
-
+class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
   bool _sending = false;
   bool _checking = false;
 
   Future<void> _sendEmail() async {
-    final user = _supabase.auth.currentUser;
-
-    if (user == null || user.email == null) {
-      if (!mounted) {
-        return;
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'ไม่พบผู้ใช้งาน',
-          ),
-        ),
-      );
-
+    if (_sending) {
       return;
     }
 
@@ -49,10 +35,9 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     });
 
     try {
-      await _supabase.auth.resend(
-        type: OtpType.signup,
-        email: user.email!,
-      );
+      await ref
+          .read(authProvider.notifier)
+          .resendEmailVerification();
 
       if (!mounted) {
         return;
@@ -65,7 +50,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
           ),
         ),
       );
-    } on AuthException catch (e) {
+    } catch (e) {
       if (!mounted) {
         return;
       }
@@ -73,7 +58,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            e.message,
+            e.toString(),
           ),
         ),
       );
@@ -87,32 +72,30 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   }
 
   Future<void> _checkVerification() async {
+    if (_checking) {
+      return;
+    }
+
     setState(() {
       _checking = true;
     });
 
     try {
-      await _supabase.auth.refreshSession();
-
-      final user = _supabase.auth.currentUser;
+      final user = await ref
+          .read(authProvider.notifier)
+          .refreshCurrentUser();
 
       if (!mounted) {
         return;
       }
 
-      if (user?.emailConfirmedAt != null) {
+      if (user?.emailConfirmed != true) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-              'ยืนยันอีเมลสำเร็จ',
+              'ยังไม่ได้ยืนยันอีเมล',
             ),
           ),
-        );
-
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          KaoIdRoutes.login,
-          (_) => false,
         );
 
         return;
@@ -121,7 +104,25 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'ยังไม่ได้ยืนยันอีเมล',
+            'ยืนยันอีเมลสำเร็จ',
+          ),
+        ),
+      );
+
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        KaoIdRoutes.bootstrap,
+        (_) => false,
+      );
+    } catch (e) {
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
           ),
         ),
       );
@@ -136,7 +137,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final email = _supabase.auth.currentUser?.email ?? '-';
+    final authState = ref.watch(authProvider);
+    final email = authState.value?.email ?? '-';
 
     return Scaffold(
       appBar: const AppAppBar(
@@ -237,12 +239,12 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                         onPressed: () {
                           Navigator.pushNamedAndRemoveUntil(
                             context,
-                            KaoIdRoutes.login,
+                            KaoIdRoutes.bootstrap,
                             (_) => false,
                           );
                         },
                         child: const Text(
-                          'กลับไปเข้าสู่ระบบ',
+                          'ยืนยันภายหลัง',
                         ),
                       ),
                     ],

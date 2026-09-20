@@ -38,6 +38,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<UserEntity?>> {
       state = AsyncValue.data(user);
     } catch (e, stackTrace) {
       state = AsyncValue.error(e, stackTrace);
+      rethrow;
     }
   }
 
@@ -56,6 +57,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<UserEntity?>> {
       state = AsyncValue.data(user);
     } catch (e, stackTrace) {
       state = AsyncValue.error(e, stackTrace);
+      rethrow;
     }
   }
 
@@ -65,6 +67,31 @@ class AuthNotifier extends StateNotifier<AsyncValue<UserEntity?>> {
     await useCase(
       email: email,
     );
+  }
+
+  Future<void> resendEmailVerification() async {
+    final useCase = _ref.read(
+      resendEmailVerificationUseCaseProvider,
+    );
+
+    await useCase();
+  }
+
+  Future<UserEntity?> refreshCurrentUser() async {
+    try {
+      final useCase = _ref.read(
+        refreshCurrentUserUseCaseProvider,
+      );
+
+      final user = await useCase();
+
+      state = AsyncValue.data(user);
+
+      return user;
+    } catch (e, stackTrace) {
+      state = AsyncValue.error(e, stackTrace);
+      rethrow;
+    }
   }
 
   Future<void> logout() async {

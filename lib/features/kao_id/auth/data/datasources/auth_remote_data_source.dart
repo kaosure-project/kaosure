@@ -23,8 +23,5 @@ abstract class AuthRemoteDataSource {
   /// รีโหลดข้อมูลผู้ใช้จาก Supabase
   Future<UserModel?> refreshCurrentUser();
 
-  /// ตรวจสอบว่าอีเมลยืนยันแล้วหรือยัง
-  Future<bool> isEmailVerified();
-
   Future<void> logout();
 }

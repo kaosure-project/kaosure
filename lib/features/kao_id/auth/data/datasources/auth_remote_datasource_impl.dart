@@ -3,8 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/user_model.dart';
 import 'auth_remote_data_source.dart';
 
-class AuthRemoteDataSourceImpl
-    implements AuthRemoteDataSource {
+class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   const AuthRemoteDataSourceImpl(
     this.client,
   );
@@ -15,14 +14,9 @@ class AuthRemoteDataSourceImpl
     return UserModel(
       id: user.id,
       email: user.email ?? '',
-      displayName:
-          user.userMetadata?['display_name']
-              as String?,
-      avatarUrl:
-          user.userMetadata?['avatar_url']
-              as String?,
-      emailConfirmed:
-          user.emailConfirmedAt != null,
+      displayName: user.userMetadata?['display_name'] as String?,
+      avatarUrl: user.userMetadata?['avatar_url'] as String?,
+      emailConfirmed: user.emailConfirmedAt != null,
     );
   }
 
@@ -42,8 +36,7 @@ class AuthRemoteDataSourceImpl
     required String email,
     required String password,
   }) async {
-    final response =
-        await client.auth.signInWithPassword(
+    final response = await client.auth.signInWithPassword(
       email: email,
       password: password,
     );
@@ -64,8 +57,7 @@ class AuthRemoteDataSourceImpl
     required String email,
     required String password,
   }) async {
-    final response =
-        await client.auth.signUp(
+    final response = await client.auth.signUp(
       email: email,
       password: password,
     );
@@ -91,11 +83,10 @@ class AuthRemoteDataSourceImpl
   }
 
   @override
-  Future<void> resendEmailVerification()
-      async {
+  Future<void> resendEmailVerification() async {
     final user = client.auth.currentUser;
 
-    if (user == null) {
+    if (user == null || user.email == null) {
       throw const AuthException(
         'User is not authenticated.',
       );
@@ -108,8 +99,7 @@ class AuthRemoteDataSourceImpl
   }
 
   @override
-  Future<UserModel?> refreshCurrentUser()
-      async {
+  Future<UserModel?> refreshCurrentUser() async {
     await client.auth.refreshSession();
 
     final user = client.auth.currentUser;
@@ -119,19 +109,6 @@ class AuthRemoteDataSourceImpl
     }
 
     return _mapUser(user);
-  }
-
-  @override
-  Future<bool> isEmailVerified() async {
-    await client.auth.refreshSession();
-
-    final user = client.auth.currentUser;
-
-    if (user == null) {
-      return false;
-    }
-
-    return user.emailConfirmedAt != null;
   }
 
   @override

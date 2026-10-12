@@ -2879,4 +2879,117 @@ class AppLocalizationsLo extends AppLocalizations {
 
   @override
   String get accEmailUnverified => 'ຍັງບໍ່ຢືນຢັນ';
+
+  @override
+  String get piPageDescription =>
+      'ຂໍ້ມູນຂອງທ່ານຈາກບັນຊີ ແລະ ເອກະສານຢືນຢັນຕົວຕົນ';
+
+  @override
+  String get piRowDescription => 'ຊື່, ອີເມວ, ເບີໂທ ແລະ ທີ່ຢູ່ຕາມບັດ';
+
+  @override
+  String get piGeneralTitle => 'ຂໍ້ມູນທົ່ວໄປ';
+
+  @override
+  String get piFullName => 'ຊື່ ແລະ ນາມສະກຸນ';
+
+  @override
+  String get piPhone => 'ເບີໂທລະສັບ';
+
+  @override
+  String get piNotProvided => 'ຍັງບໍ່ມີຂໍ້ມູນ';
+
+  @override
+  String get piDocumentType => 'ປະເພດເອກະສານ';
+
+  @override
+  String get piDocumentNumber => 'ເລກທີເອກະສານ';
+
+  @override
+  String get piNoExpiry => 'ບໍ່ມີວັນໝົດອາຍຸ';
+
+  @override
+  String get piNoDocument => 'ຍັງບໍ່ໄດ້ສົ່ງເອກະສານຢືນຢັນຕົວຕົນ';
+
+  @override
+  String get piAddressTitle => 'ທີ່ຢູ່ຕາມບັດ';
+
+  @override
+  String get piAddressLine => 'ເລກທີເຮືອນ, ໝູ່ບ້ານ, ຊອຍ, ຖະໜົນ';
+
+  @override
+  String get piSubdistrict => 'ບ້ານ/ຕາແສງ';
+
+  @override
+  String get piDistrict => 'ເມືອງ';
+
+  @override
+  String get piProvince => 'ແຂວງ';
+
+  @override
+  String get piPostalCode => 'ລະຫັດໄປສະນີ';
+
+  @override
+  String get piNoAddress =>
+      'ຍັງບໍ່ມີທີ່ຢູ່ຕາມບັດໃນລະບົບ ທີ່ຢູ່ຈະຖືກບັນທຶກເມື່ອສົ່ງບັດປະຈຳຕົວໃໝ່ ຫຼື ຕໍ່ອາຍຸບັດ';
+
+  @override
+  String get piBadgeKycVerified => 'ຢືນຢັນແລ້ວ (KYC)';
+
+  @override
+  String get piBadgeVerified => 'ຢືນຢັນແລ້ວ';
+
+  @override
+  String get piBadgePending => 'ລໍຖ້າກວດສອບ';
+
+  @override
+  String get piBadgeUnverified => 'ຍັງບໍ່ຢືນຢັນ';
+
+  @override
+  String get piBadgeExpired => 'ໝົດອາຍຸ';
+
+  @override
+  String get piBadgeRejected => 'ບໍ່ຜ່ານການກວດ';
+
+  @override
+  String get piBadgeRevoked => 'ຖືກຖອນ';
+
+  @override
+  String get piShow => 'ສະແດງຂໍ້ມູນເຕັມ';
+
+  @override
+  String get piHide => 'ເຊື່ອງຂໍ້ມູນ';
+
+  @override
+  String get piPrivacyNote =>
+      'ຂໍ້ມູນສຳຄັນຖືກປິດບັງບາງສ່ວນຕາມຫຼັກ PDPA ກົດຮູບຕາແລ້ວຢືນຢັນລະຫັດຜ່ານເພື່ອເບິ່ງຂໍ້ມູນເຕັມ ລະບົບຈະເຊື່ອງອີກຄັ້ງໃນ 30 ວິນາທີ ແລະ ບັນທຶກການເປີດເບິ່ງທຸກຄັ້ງ';
+
+  @override
+  String get piPasswordTitle => 'ຢືນຢັນລະຫັດຜ່ານ';
+
+  @override
+  String get piPasswordHelp =>
+      'ປ້ອນລະຫັດຜ່ານ Kao ID ເພື່ອເບິ່ງຂໍ້ມູນເຕັມ ການຢືນຢັນມີຜົນ 5 ນາທີ';
+
+  @override
+  String get piPasswordConfirm => 'ຢືນຢັນ';
+
+  @override
+  String get piPasswordWrong => 'ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ';
+
+  @override
+  String get piRateLimited =>
+      'ເປີດເບິ່ງຂໍ້ມູນເລື້ອຍເກີນໄປ ກະລຸນາລໍຖ້າສັກຄູ່ແລ້ວລອງໃໝ່';
+
+  @override
+  String get piRevealFailed => 'ສະແດງຂໍ້ມູນເຕັມບໍ່ສຳເລັດ ກະລຸນາລອງອີກຄັ້ງ';
+
+  @override
+  String get piLoadFailed => 'ໂຫຼດຂໍ້ມູນສ່ວນຕົວບໍ່ສຳເລັດ';
+
+  @override
+  String get idAddressRequired => 'ປ້ອນທີ່ຢູ່ຕາມບັດໃຫ້ຄົບທຸກຊ່ອງ';
+
+  @override
+  String get idPostalCodeInvalid => 'ລະຫັດໄປສະນີຕ້ອງເປັນຕົວເລກ 5 ຫຼັກ';
 }

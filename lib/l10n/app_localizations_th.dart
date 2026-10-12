@@ -2921,4 +2921,116 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get accEmailUnverified => 'ยังไม่ยืนยัน';
+
+  @override
+  String get piPageDescription => 'ข้อมูลของคุณจากบัญชีและเอกสารยืนยันตัวตน';
+
+  @override
+  String get piRowDescription => 'ชื่อ อีเมล เบอร์โทร และที่อยู่ตามบัตร';
+
+  @override
+  String get piGeneralTitle => 'ข้อมูลทั่วไป';
+
+  @override
+  String get piFullName => 'ชื่อ-นามสกุล';
+
+  @override
+  String get piPhone => 'เบอร์โทรศัพท์';
+
+  @override
+  String get piNotProvided => 'ยังไม่มีข้อมูล';
+
+  @override
+  String get piDocumentType => 'ประเภทเอกสาร';
+
+  @override
+  String get piDocumentNumber => 'เลขที่เอกสาร';
+
+  @override
+  String get piNoExpiry => 'ไม่มีวันหมดอายุ';
+
+  @override
+  String get piNoDocument => 'ยังไม่ได้ส่งเอกสารยืนยันตัวตน';
+
+  @override
+  String get piAddressTitle => 'ที่อยู่ตามบัตร';
+
+  @override
+  String get piAddressLine => 'บ้านเลขที่ หมู่ ซอย ถนน';
+
+  @override
+  String get piSubdistrict => 'แขวง/ตำบล';
+
+  @override
+  String get piDistrict => 'เขต/อำเภอ';
+
+  @override
+  String get piProvince => 'จังหวัด';
+
+  @override
+  String get piPostalCode => 'รหัสไปรษณีย์';
+
+  @override
+  String get piNoAddress =>
+      'ยังไม่มีที่อยู่ตามบัตรในระบบ ที่อยู่จะถูกบันทึกเมื่อส่งบัตรประชาชนฉบับใหม่หรือต่ออายุบัตร';
+
+  @override
+  String get piBadgeKycVerified => 'ยืนยันแล้ว (KYC)';
+
+  @override
+  String get piBadgeVerified => 'ยืนยันแล้ว';
+
+  @override
+  String get piBadgePending => 'รอตรวจสอบ';
+
+  @override
+  String get piBadgeUnverified => 'ยังไม่ยืนยัน';
+
+  @override
+  String get piBadgeExpired => 'หมดอายุ';
+
+  @override
+  String get piBadgeRejected => 'ไม่ผ่านการตรวจ';
+
+  @override
+  String get piBadgeRevoked => 'ถูกเพิกถอน';
+
+  @override
+  String get piShow => 'แสดงข้อมูลเต็ม';
+
+  @override
+  String get piHide => 'ซ่อนข้อมูล';
+
+  @override
+  String get piPrivacyNote =>
+      'ข้อมูลสำคัญถูกปิดบังบางส่วนตามหลัก PDPA กดรูปตาแล้วยืนยันรหัสผ่านเพื่อดูข้อมูลเต็ม ระบบจะซ่อนให้อีกครั้งใน 30 วินาที และบันทึกการเปิดดูทุกครั้ง';
+
+  @override
+  String get piPasswordTitle => 'ยืนยันรหัสผ่าน';
+
+  @override
+  String get piPasswordHelp =>
+      'กรอกรหัสผ่าน Kao ID เพื่อดูข้อมูลเต็ม การยืนยันมีผล 5 นาที';
+
+  @override
+  String get piPasswordConfirm => 'ยืนยัน';
+
+  @override
+  String get piPasswordWrong => 'รหัสผ่านไม่ถูกต้อง';
+
+  @override
+  String get piRateLimited =>
+      'เปิดดูข้อมูลบ่อยเกินไป กรุณารอสักครู่แล้วลองใหม่';
+
+  @override
+  String get piRevealFailed => 'แสดงข้อมูลเต็มไม่สำเร็จ กรุณาลองอีกครั้ง';
+
+  @override
+  String get piLoadFailed => 'โหลดข้อมูลส่วนตัวไม่สำเร็จ';
+
+  @override
+  String get idAddressRequired => 'กรอกที่อยู่ตามบัตรให้ครบทุกช่อง';
+
+  @override
+  String get idPostalCodeInvalid => 'รหัสไปรษณีย์ต้องเป็นตัวเลข 5 หลัก';
 }

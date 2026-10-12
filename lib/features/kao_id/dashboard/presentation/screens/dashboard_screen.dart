@@ -20,8 +20,7 @@ final class DashboardScreen extends ConsumerStatefulWidget {
 }
 
 final class _DashboardScreenState extends ConsumerState<DashboardScreen> {
-  static const _routes = [KaoIdRoutes.dashboard, KaoIdRoutes.profile,
-    KaoIdRoutes.security, KaoIdRoutes.settings];
+  static const _routes = KaoIdRoutes.accountTabs;
 
   @override
   void initState() {

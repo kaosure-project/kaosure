@@ -2764,4 +2764,113 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get accEmailUnverified => '未確認';
+
+  @override
+  String get piPageDescription => 'アカウントと本人確認書類に基づくあなたの情報です。';
+
+  @override
+  String get piRowDescription => '氏名、メール、電話番号、身分証の住所';
+
+  @override
+  String get piGeneralTitle => '基本情報';
+
+  @override
+  String get piFullName => '氏名';
+
+  @override
+  String get piPhone => '電話番号';
+
+  @override
+  String get piNotProvided => '未登録';
+
+  @override
+  String get piDocumentType => '書類の種類';
+
+  @override
+  String get piDocumentNumber => '書類番号';
+
+  @override
+  String get piNoExpiry => '有効期限なし';
+
+  @override
+  String get piNoDocument => '本人確認書類はまだ提出されていません。';
+
+  @override
+  String get piAddressTitle => '身分証の住所';
+
+  @override
+  String get piAddressLine => '番地・建物名・通り';
+
+  @override
+  String get piSubdistrict => '地区（タムボン）';
+
+  @override
+  String get piDistrict => '郡（アムプー）';
+
+  @override
+  String get piProvince => '県';
+
+  @override
+  String get piPostalCode => '郵便番号';
+
+  @override
+  String get piNoAddress => '身分証の住所はまだ登録されていません。新規または更新した身分証を提出すると記録されます。';
+
+  @override
+  String get piBadgeKycVerified => '本人確認済み';
+
+  @override
+  String get piBadgeVerified => '確認済み';
+
+  @override
+  String get piBadgePending => '審査中';
+
+  @override
+  String get piBadgeUnverified => '未確認';
+
+  @override
+  String get piBadgeExpired => '期限切れ';
+
+  @override
+  String get piBadgeRejected => '承認されませんでした';
+
+  @override
+  String get piBadgeRevoked => '取り消し済み';
+
+  @override
+  String get piShow => 'すべて表示';
+
+  @override
+  String get piHide => '隠す';
+
+  @override
+  String get piPrivacyNote =>
+      '重要な情報は PDPA に基づき一部を伏せて表示しています。目のアイコンを押してパスワードを確認すると全体を表示します。30 秒後に再び隠れ、表示のたびに記録されます。';
+
+  @override
+  String get piPasswordTitle => 'パスワードの確認';
+
+  @override
+  String get piPasswordHelp => '全体を表示するには Kao ID のパスワードを入力してください。確認は 5 分間有効です。';
+
+  @override
+  String get piPasswordConfirm => '確認する';
+
+  @override
+  String get piPasswordWrong => 'パスワードが正しくありません';
+
+  @override
+  String get piRateLimited => '表示回数が多すぎます。しばらくしてからお試しください。';
+
+  @override
+  String get piRevealFailed => '全体を表示できませんでした。もう一度お試しください。';
+
+  @override
+  String get piLoadFailed => '個人情報を読み込めませんでした。';
+
+  @override
+  String get idAddressRequired => '身分証の住所をすべて入力してください';
+
+  @override
+  String get idPostalCodeInvalid => '郵便番号は 5 桁の数字で入力してください';
 }

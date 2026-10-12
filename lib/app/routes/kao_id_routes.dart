@@ -18,6 +18,7 @@ final class KaoIdRoutes {
 
   static const String profile = '/profile';
   static const String editProfile = '/profile/edit';
+  static const String personalInfo = '/profile/personal';
 
   static const String identity = '/identity';
   static const String kyc = '/identity/verification';
@@ -29,6 +30,9 @@ final class KaoIdRoutes {
   static const String changePassword = '/security/password';
 
   static const String settings = '/settings';
+
+  /// Routes behind the Kao ID header tabs, in tab order.
+  static const List<String> accountTabs = [dashboard, profile, security, settings];
 
   static const String businessRegistration = '/kao-id/business/register';
   static const String businessInformation = '/kao-id/business/information';

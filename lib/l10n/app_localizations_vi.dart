@@ -2935,4 +2935,118 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get accEmailUnverified => 'Chưa xác minh';
+
+  @override
+  String get piPageDescription =>
+      'Thông tin của bạn từ tài khoản và giấy tờ tùy thân.';
+
+  @override
+  String get piRowDescription =>
+      'Họ tên, email, điện thoại và địa chỉ trên giấy tờ';
+
+  @override
+  String get piGeneralTitle => 'Thông tin chung';
+
+  @override
+  String get piFullName => 'Họ và tên';
+
+  @override
+  String get piPhone => 'Số điện thoại';
+
+  @override
+  String get piNotProvided => 'Chưa có';
+
+  @override
+  String get piDocumentType => 'Loại giấy tờ';
+
+  @override
+  String get piDocumentNumber => 'Số giấy tờ';
+
+  @override
+  String get piNoExpiry => 'Không thời hạn';
+
+  @override
+  String get piNoDocument => 'Bạn chưa gửi giấy tờ tùy thân.';
+
+  @override
+  String get piAddressTitle => 'Địa chỉ trên giấy tờ';
+
+  @override
+  String get piAddressLine => 'Số nhà, thôn, hẻm, đường';
+
+  @override
+  String get piSubdistrict => 'Phường/Xã';
+
+  @override
+  String get piDistrict => 'Quận/Huyện';
+
+  @override
+  String get piProvince => 'Tỉnh/Thành phố';
+
+  @override
+  String get piPostalCode => 'Mã bưu chính';
+
+  @override
+  String get piNoAddress =>
+      'Chưa có địa chỉ trên giấy tờ. Địa chỉ sẽ được ghi khi bạn gửi thẻ căn cước mới hoặc gia hạn.';
+
+  @override
+  String get piBadgeKycVerified => 'Đã xác minh KYC';
+
+  @override
+  String get piBadgeVerified => 'Đã xác minh';
+
+  @override
+  String get piBadgePending => 'Đang xét duyệt';
+
+  @override
+  String get piBadgeUnverified => 'Chưa xác minh';
+
+  @override
+  String get piBadgeExpired => 'Hết hạn';
+
+  @override
+  String get piBadgeRejected => 'Không được duyệt';
+
+  @override
+  String get piBadgeRevoked => 'Đã thu hồi';
+
+  @override
+  String get piShow => 'Hiện đầy đủ';
+
+  @override
+  String get piHide => 'Ẩn';
+
+  @override
+  String get piPrivacyNote =>
+      'Thông tin nhạy cảm được ẩn một phần theo PDPA. Nhấn biểu tượng con mắt và xác nhận mật khẩu để xem đầy đủ. Thông tin sẽ tự ẩn sau 30 giây và mỗi lần xem đều được ghi lại.';
+
+  @override
+  String get piPasswordTitle => 'Xác nhận mật khẩu';
+
+  @override
+  String get piPasswordHelp =>
+      'Nhập mật khẩu Kao ID để xem đầy đủ. Xác nhận có hiệu lực trong 5 phút.';
+
+  @override
+  String get piPasswordConfirm => 'Xác nhận';
+
+  @override
+  String get piPasswordWrong => 'Mật khẩu không đúng';
+
+  @override
+  String get piRateLimited =>
+      'Xem quá nhiều lần. Vui lòng đợi một lúc rồi thử lại.';
+
+  @override
+  String get piRevealFailed => 'Không thể hiện đầy đủ. Vui lòng thử lại.';
+
+  @override
+  String get piLoadFailed => 'Không tải được thông tin cá nhân.';
+
+  @override
+  String get idAddressRequired => 'Nhập đầy đủ địa chỉ trên thẻ';
+
+  @override
+  String get idPostalCodeInvalid => 'Mã bưu chính phải gồm 5 chữ số';
 }

@@ -2949,4 +2949,117 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get accEmailUnverified => 'အတည်မပြုရသေး';
+
+  @override
+  String get piPageDescription =>
+      'သင့်အကောင့်နှင့် ကိုယ်ပိုင်အထောက်အထားမှ အချက်အလက်များ';
+
+  @override
+  String get piRowDescription => 'အမည်၊ အီးမေးလ်၊ ဖုန်းနှင့် ကတ်ပါလိပ်စာ';
+
+  @override
+  String get piGeneralTitle => 'အထွေထွေ အချက်အလက်';
+
+  @override
+  String get piFullName => 'အမည်အပြည့်အစုံ';
+
+  @override
+  String get piPhone => 'ဖုန်းနံပါတ်';
+
+  @override
+  String get piNotProvided => 'မထည့်ရသေး';
+
+  @override
+  String get piDocumentType => 'စာရွက်စာတမ်း အမျိုးအစား';
+
+  @override
+  String get piDocumentNumber => 'စာရွက်စာတမ်း နံပါတ်';
+
+  @override
+  String get piNoExpiry => 'သက်တမ်းမကုန်';
+
+  @override
+  String get piNoDocument => 'ကိုယ်ပိုင်အထောက်အထား မတင်ရသေးပါ။';
+
+  @override
+  String get piAddressTitle => 'ကတ်ပါ လိပ်စာ';
+
+  @override
+  String get piAddressLine => 'အိမ်အမှတ်၊ ရွာ၊ လမ်းကြား၊ လမ်း';
+
+  @override
+  String get piSubdistrict => 'ကျေးရွာအုပ်စု';
+
+  @override
+  String get piDistrict => 'မြို့နယ်';
+
+  @override
+  String get piProvince => 'ပြည်နယ်/တိုင်း';
+
+  @override
+  String get piPostalCode => 'စာပို့သင်္ကေတ';
+
+  @override
+  String get piNoAddress =>
+      'ကတ်ပါလိပ်စာ မရှိသေးပါ။ မှတ်ပုံတင်ကတ်အသစ် သို့မဟုတ် သက်တမ်းတိုးကတ် တင်သောအခါ မှတ်တမ်းတင်ပါမည်။';
+
+  @override
+  String get piBadgeKycVerified => 'KYC အတည်ပြုပြီး';
+
+  @override
+  String get piBadgeVerified => 'အတည်ပြုပြီး';
+
+  @override
+  String get piBadgePending => 'စစ်ဆေးနေဆဲ';
+
+  @override
+  String get piBadgeUnverified => 'အတည်မပြုရသေး';
+
+  @override
+  String get piBadgeExpired => 'သက်တမ်းကုန်';
+
+  @override
+  String get piBadgeRejected => 'အတည်မပြုခံရ';
+
+  @override
+  String get piBadgeRevoked => 'ရုပ်သိမ်းပြီး';
+
+  @override
+  String get piShow => 'အပြည့်အစုံ ပြပါ';
+
+  @override
+  String get piHide => 'ဖျောက်ပါ';
+
+  @override
+  String get piPrivacyNote =>
+      'အရေးကြီးအချက်အလက်များကို PDPA အရ တစ်စိတ်တစ်ပိုင်း ဖုံးထားသည်။ မျက်လုံးပုံကိုနှိပ်ပြီး စကားဝှက်အတည်ပြုလျှင် အပြည့်အစုံ မြင်ရမည်။ စက္ကန့် ၃၀ အကြာတွင် ပြန်ဖုံးမည်ဖြစ်ပြီး ကြည့်တိုင်း မှတ်တမ်းတင်ပါသည်။';
+
+  @override
+  String get piPasswordTitle => 'စကားဝှက် အတည်ပြုပါ';
+
+  @override
+  String get piPasswordHelp =>
+      'အပြည့်အစုံကြည့်ရန် Kao ID စကားဝှက် ထည့်ပါ။ အတည်ပြုချက်သည် ၅ မိနစ် သက်တမ်းရှိသည်။';
+
+  @override
+  String get piPasswordConfirm => 'အတည်ပြုရန်';
+
+  @override
+  String get piPasswordWrong => 'စကားဝှက် မမှန်ပါ';
+
+  @override
+  String get piRateLimited =>
+      'ကြည့်ရှုမှု များလွန်းသည်။ ခဏစောင့်ပြီး ထပ်ကြိုးစားပါ။';
+
+  @override
+  String get piRevealFailed => 'အပြည့်အစုံ မပြနိုင်ပါ။ ထပ်ကြိုးစားပါ။';
+
+  @override
+  String get piLoadFailed => 'ကိုယ်ရေးအချက်အလက် မဖွင့်နိုင်ပါ။';
+
+  @override
+  String get idAddressRequired => 'ကတ်ပါလိပ်စာ အားလုံးကို ဖြည့်ပါ';
+
+  @override
+  String get idPostalCodeInvalid => 'စာပို့သင်္ကေတသည် ဂဏန်း ၅ လုံး ဖြစ်ရမည်';
 }

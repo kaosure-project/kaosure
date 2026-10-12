@@ -73,6 +73,10 @@ Future<void> fillForm(WidgetTester tester) async {
   await tester.enterText(find.byKey(const ValueKey('id-name')), 'Test');
   await tester.enterText(find.byKey(const ValueKey('id-surname')), 'Account');
   await tester.enterText(find.byKey(const ValueKey('id-number')), '0000000000000');
+  for (final (key, value) in const [('id-address_line', '99/1 Moo 4'), ('id-subdistrict', 'Khlong Tan'),
+      ('id-district', 'Khlong Toei'), ('id-province', 'Bangkok'), ('id-postal_code', '10110')]) {
+    await tester.enterText(find.byKey(ValueKey(key)), value);
+  }
   tester.testTextInput.hide();
   await tester.pumpAndSettle();
   await tapKey(tester, 'id-issued');

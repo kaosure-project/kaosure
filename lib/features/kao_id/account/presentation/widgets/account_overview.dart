@@ -45,6 +45,12 @@ class AccountOverview extends ConsumerWidget {
           kaoId: kaoId, onEdit: onEdit),
         MenuPanel(children: [
           DashboardMenuTile(
+            icon: Icons.contact_page_outlined,
+            title: l10n.personalDetailsTitle,
+            subtitle: l10n.piRowDescription,
+            onTap: () => Navigator.of(context).pushNamed(KaoIdRoutes.personalInfo),
+          ),
+          DashboardMenuTile(
             icon: Icons.badge_outlined,
             title: l10n.identityVerification,
             subtitle: l10n.identityEntryDescription,

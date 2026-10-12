@@ -20,6 +20,7 @@ import '../features/kao_id/bootstrap/presentation/screens/kao_id_bootstrap_scree
 import '../features/kao_id/business/presentation/pages/business_registration_page.dart';
 import '../features/kao_id/dashboard/presentation/screens/dashboard_screen.dart';
 import '../features/kao_id/kyc/presentation/screens/kyc_page.dart';
+import '../features/kao_id/personal_info/presentation/pages/personal_info_page.dart';
 
 final class AppRouter {
   const AppRouter._();
@@ -106,6 +107,12 @@ final class AppRouter {
           builder: (_) => const AuthGuard(
             authenticatedChild: DashboardScreen(initialSection: 3),
           ),
+        );
+
+      case KaoIdRoutes.personalInfo:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AuthGuard(authenticatedChild: PersonalInfoPage()),
         );
 
       case KaoIdRoutes.editProfile:

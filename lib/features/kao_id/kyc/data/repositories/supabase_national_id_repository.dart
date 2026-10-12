@@ -55,10 +55,12 @@ class SupabaseNationalIdRepository implements NationalIdRepository {
     }
     await _check(draft.owner);
     String date(DateTime d) => '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
-    await client.rpc('submit_national_id_r7a', params: {
+    await client.rpc('submit_national_id_r16a', params: {
       'p_id': draft.id, 'p_number': draft.number, 'p_full_name': draft.fullName,
       'p_issued': date(draft.issued), 'p_expiry': draft.expiry == null ? null : date(draft.expiry!),
       'p_front': front, 'p_back': back,
+      'p_address_line': draft.addressLine, 'p_subdistrict': draft.subdistrict,
+      'p_district': draft.district, 'p_province': draft.province, 'p_postal_code': draft.postalCode,
     });
     await _check(draft.owner);
     final row = await client.from('identity_documents').select('*,document_files(*)')

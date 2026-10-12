@@ -5454,6 +5454,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not verified'**
   String get accEmailUnverified;
+
+  /// No description provided for @piPageDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your details from your account and identity documents.'**
+  String get piPageDescription;
+
+  /// No description provided for @piRowDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Name, email, phone and ID-card address'**
+  String get piRowDescription;
+
+  /// No description provided for @piGeneralTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'General information'**
+  String get piGeneralTitle;
+
+  /// No description provided for @piFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get piFullName;
+
+  /// No description provided for @piPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get piPhone;
+
+  /// No description provided for @piNotProvided.
+  ///
+  /// In en, this message translates to:
+  /// **'Not provided'**
+  String get piNotProvided;
+
+  /// No description provided for @piDocumentType.
+  ///
+  /// In en, this message translates to:
+  /// **'Document type'**
+  String get piDocumentType;
+
+  /// No description provided for @piDocumentNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Document number'**
+  String get piDocumentNumber;
+
+  /// No description provided for @piNoExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'No expiry'**
+  String get piNoExpiry;
+
+  /// No description provided for @piNoDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'You have not submitted an identity document yet.'**
+  String get piNoDocument;
+
+  /// No description provided for @piAddressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Address on ID card'**
+  String get piAddressTitle;
+
+  /// No description provided for @piAddressLine.
+  ///
+  /// In en, this message translates to:
+  /// **'House no., village, lane, road'**
+  String get piAddressLine;
+
+  /// No description provided for @piSubdistrict.
+  ///
+  /// In en, this message translates to:
+  /// **'Sub-district'**
+  String get piSubdistrict;
+
+  /// No description provided for @piDistrict.
+  ///
+  /// In en, this message translates to:
+  /// **'District'**
+  String get piDistrict;
+
+  /// No description provided for @piProvince.
+  ///
+  /// In en, this message translates to:
+  /// **'Province'**
+  String get piProvince;
+
+  /// No description provided for @piPostalCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Postal code'**
+  String get piPostalCode;
+
+  /// No description provided for @piNoAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'No ID-card address on file yet. It is recorded when you submit a new or renewed national ID card.'**
+  String get piNoAddress;
+
+  /// No description provided for @piBadgeKycVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'KYC verified'**
+  String get piBadgeKycVerified;
+
+  /// No description provided for @piBadgeVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get piBadgeVerified;
+
+  /// No description provided for @piBadgePending.
+  ///
+  /// In en, this message translates to:
+  /// **'Under review'**
+  String get piBadgePending;
+
+  /// No description provided for @piBadgeUnverified.
+  ///
+  /// In en, this message translates to:
+  /// **'Not verified'**
+  String get piBadgeUnverified;
+
+  /// No description provided for @piBadgeExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get piBadgeExpired;
+
+  /// No description provided for @piBadgeRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not approved'**
+  String get piBadgeRejected;
+
+  /// No description provided for @piBadgeRevoked.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoked'**
+  String get piBadgeRevoked;
+
+  /// No description provided for @piShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show full value'**
+  String get piShow;
+
+  /// No description provided for @piHide.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide'**
+  String get piHide;
+
+  /// No description provided for @piPrivacyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Sensitive details are partly hidden under PDPA. Tap the eye icon and confirm your password to see the full value. It hides again after 30 seconds and every view is recorded.'**
+  String get piPrivacyNote;
+
+  /// No description provided for @piPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your password'**
+  String get piPasswordTitle;
+
+  /// No description provided for @piPasswordHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your Kao ID password to view the full value. The confirmation lasts 5 minutes.'**
+  String get piPasswordHelp;
+
+  /// No description provided for @piPasswordConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get piPasswordConfirm;
+
+  /// No description provided for @piPasswordWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect password'**
+  String get piPasswordWrong;
+
+  /// No description provided for @piRateLimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many views. Please wait a while and try again.'**
+  String get piRateLimited;
+
+  /// No description provided for @piRevealFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t show the full value. Please try again.'**
+  String get piRevealFailed;
+
+  /// No description provided for @piLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your personal information.'**
+  String get piLoadFailed;
+
+  /// No description provided for @idAddressRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter every part of the address on your ID card'**
+  String get idAddressRequired;
+
+  /// No description provided for @idPostalCodeInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Postal code must be 5 digits'**
+  String get idPostalCodeInvalid;
 }
 
 class _AppLocalizationsDelegate

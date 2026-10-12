@@ -32,8 +32,8 @@ class DashboardHomeContent extends ConsumerWidget {
       color: AppColors.kaoBlue,
       tint: AppColors.kaoBlueSoft,
       title: l10n.personalDetailsTitle,
-      description: l10n.personalDetailsDescription,
-      onOpen: onProfile,
+      description: l10n.piRowDescription,
+      onOpen: () => Navigator.of(context).pushNamed(KaoIdRoutes.personalInfo),
     );
     final security = CategoryCard(
       icon: Icons.lock_outline,

@@ -2716,6 +2716,115 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get accEmailUnverified => '未验证';
+
+  @override
+  String get piPageDescription => '来自您的账户和身份证件的信息。';
+
+  @override
+  String get piRowDescription => '姓名、邮箱、电话和证件地址';
+
+  @override
+  String get piGeneralTitle => '基本信息';
+
+  @override
+  String get piFullName => '姓名';
+
+  @override
+  String get piPhone => '电话号码';
+
+  @override
+  String get piNotProvided => '未提供';
+
+  @override
+  String get piDocumentType => '证件类型';
+
+  @override
+  String get piDocumentNumber => '证件号码';
+
+  @override
+  String get piNoExpiry => '无有效期';
+
+  @override
+  String get piNoDocument => '您尚未提交身份证件。';
+
+  @override
+  String get piAddressTitle => '证件地址';
+
+  @override
+  String get piAddressLine => '门牌号、村、巷、路';
+
+  @override
+  String get piSubdistrict => '分区/乡';
+
+  @override
+  String get piDistrict => '区/县';
+
+  @override
+  String get piProvince => '府/省';
+
+  @override
+  String get piPostalCode => '邮政编码';
+
+  @override
+  String get piNoAddress => '尚无证件地址。提交新的或续期的身份证时将会记录。';
+
+  @override
+  String get piBadgeKycVerified => '已通过 KYC';
+
+  @override
+  String get piBadgeVerified => '已验证';
+
+  @override
+  String get piBadgePending => '审核中';
+
+  @override
+  String get piBadgeUnverified => '未验证';
+
+  @override
+  String get piBadgeExpired => '已过期';
+
+  @override
+  String get piBadgeRejected => '未通过';
+
+  @override
+  String get piBadgeRevoked => '已撤销';
+
+  @override
+  String get piShow => '显示完整信息';
+
+  @override
+  String get piHide => '隐藏';
+
+  @override
+  String get piPrivacyNote =>
+      '敏感信息依据 PDPA 部分隐藏。点击眼睛图标并确认密码即可查看完整信息，30 秒后自动隐藏，每次查看都会被记录。';
+
+  @override
+  String get piPasswordTitle => '确认密码';
+
+  @override
+  String get piPasswordHelp => '请输入 Kao ID 密码以查看完整信息，确认有效期为 5 分钟。';
+
+  @override
+  String get piPasswordConfirm => '确认';
+
+  @override
+  String get piPasswordWrong => '密码不正确';
+
+  @override
+  String get piRateLimited => '查看次数过多，请稍后再试。';
+
+  @override
+  String get piRevealFailed => '无法显示完整信息，请重试。';
+
+  @override
+  String get piLoadFailed => '无法加载个人信息。';
+
+  @override
+  String get idAddressRequired => '请完整填写证件上的地址';
+
+  @override
+  String get idPostalCodeInvalid => '邮政编码必须为 5 位数字';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -5430,4 +5539,113 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get accEmailUnverified => '未验证';
+
+  @override
+  String get piPageDescription => '来自您的账户和身份证件的信息。';
+
+  @override
+  String get piRowDescription => '姓名、邮箱、电话和证件地址';
+
+  @override
+  String get piGeneralTitle => '基本信息';
+
+  @override
+  String get piFullName => '姓名';
+
+  @override
+  String get piPhone => '电话号码';
+
+  @override
+  String get piNotProvided => '未提供';
+
+  @override
+  String get piDocumentType => '证件类型';
+
+  @override
+  String get piDocumentNumber => '证件号码';
+
+  @override
+  String get piNoExpiry => '无有效期';
+
+  @override
+  String get piNoDocument => '您尚未提交身份证件。';
+
+  @override
+  String get piAddressTitle => '证件地址';
+
+  @override
+  String get piAddressLine => '门牌号、村、巷、路';
+
+  @override
+  String get piSubdistrict => '分区/乡';
+
+  @override
+  String get piDistrict => '区/县';
+
+  @override
+  String get piProvince => '府/省';
+
+  @override
+  String get piPostalCode => '邮政编码';
+
+  @override
+  String get piNoAddress => '尚无证件地址。提交新的或续期的身份证时将会记录。';
+
+  @override
+  String get piBadgeKycVerified => '已通过 KYC';
+
+  @override
+  String get piBadgeVerified => '已验证';
+
+  @override
+  String get piBadgePending => '审核中';
+
+  @override
+  String get piBadgeUnverified => '未验证';
+
+  @override
+  String get piBadgeExpired => '已过期';
+
+  @override
+  String get piBadgeRejected => '未通过';
+
+  @override
+  String get piBadgeRevoked => '已撤销';
+
+  @override
+  String get piShow => '显示完整信息';
+
+  @override
+  String get piHide => '隐藏';
+
+  @override
+  String get piPrivacyNote =>
+      '敏感信息依据 PDPA 部分隐藏。点击眼睛图标并确认密码即可查看完整信息，30 秒后自动隐藏，每次查看都会被记录。';
+
+  @override
+  String get piPasswordTitle => '确认密码';
+
+  @override
+  String get piPasswordHelp => '请输入 Kao ID 密码以查看完整信息，确认有效期为 5 分钟。';
+
+  @override
+  String get piPasswordConfirm => '确认';
+
+  @override
+  String get piPasswordWrong => '密码不正确';
+
+  @override
+  String get piRateLimited => '查看次数过多，请稍后再试。';
+
+  @override
+  String get piRevealFailed => '无法显示完整信息，请重试。';
+
+  @override
+  String get piLoadFailed => '无法加载个人信息。';
+
+  @override
+  String get idAddressRequired => '请完整填写证件上的地址';
+
+  @override
+  String get idPostalCodeInvalid => '邮政编码必须为 5 位数字';
 }

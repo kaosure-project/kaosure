@@ -20,6 +20,13 @@ final class _IdentityCardPageState extends ConsumerState<IdentityCardPage> {
   final _number = TextEditingController();
   final _name = TextEditingController();
   final _surname = TextEditingController();
+  final _addressLine = TextEditingController();
+  final _subdistrict = TextEditingController();
+  final _district = TextEditingController();
+  final _province = TextEditingController();
+  final _postalCode = TextEditingController();
+  List<TextEditingController> get _addressFields =>
+      [_addressLine, _subdistrict, _district, _province, _postalCode];
   bool _validationAttempted = false;
   String? _owner;
   NationalIdRecord? _record;
@@ -39,6 +46,9 @@ final class _IdentityCardPageState extends ConsumerState<IdentityCardPage> {
     _number.dispose();
     _name.dispose();
     _surname.dispose();
+    for (final field in _addressFields) {
+      field.dispose();
+    }
     super.dispose();
   }
 
@@ -58,7 +68,10 @@ final class _IdentityCardPageState extends ConsumerState<IdentityCardPage> {
         _back = null;
         _number.clear();
         _name.clear();
-      _surname.clear();
+        _surname.clear();
+        for (final field in _addressFields) {
+          field.clear();
+        }
       }
     } catch (error) {
       if (mounted) { setState(() { _known = false; _record = null; _message = error is NationalIdFailure ? error.code : 'load'; }); }
@@ -109,6 +122,15 @@ final class _IdentityCardPageState extends ConsumerState<IdentityCardPage> {
         (_issued != null && !_expiry!.isAfter(_issued!)))) {
       errors['expiry'] = l.idExpiryRequired;
     }
+    final line = _addressLine.text.trim();
+    if (line.length < 3 || line.length > 300) { errors['address_line'] = l.idAddressRequired; }
+    for (final (key, field) in [('subdistrict', _subdistrict), ('district', _district), ('province', _province)]) {
+      final value = field.text.trim();
+      if (value.length < 2 || value.length > 100) { errors[key] = l.idAddressRequired; }
+    }
+    if (!RegExp(r'^\d{5}$').hasMatch(_postalCode.text.trim())) {
+      errors['postal_code'] = l.idPostalCodeInvalid;
+    }
     if (_front == null) { errors['front'] = l.idFrontRequired; }
     if (_back == null) { errors['back'] = l.idBackRequired; }
     return errors;
@@ -134,7 +156,10 @@ final class _IdentityCardPageState extends ConsumerState<IdentityCardPage> {
       FocusScope.of(context).unfocus();
       _attempt = NationalIdDraft(id: const Uuid().v4(), owner: _owner!,
         number: _number.text.trim(), fullName: '${_name.text.trim()} ${_surname.text.trim()}', issued: _issued!,
-        expiry: _lifetime ? null : _expiry, front: _front!, back: _back!);
+        expiry: _lifetime ? null : _expiry, front: _front!, back: _back!,
+        addressLine: _addressLine.text.trim(), subdistrict: _subdistrict.text.trim(),
+        district: _district.text.trim(), province: _province.text.trim(),
+        postalCode: _postalCode.text.trim());
     }
     setState(() { _busy = true; _message = null; });
     try {
@@ -151,6 +176,9 @@ final class _IdentityCardPageState extends ConsumerState<IdentityCardPage> {
       _number.clear();
       _name.clear();
       _surname.clear();
+      for (final field in _addressFields) {
+        field.clear();
+      }
     } catch (error) {
       if (mounted) {
         setState(() => _message = error is NationalIdFailure ? error.code : 'save');
@@ -220,6 +248,16 @@ final class _IdentityCardPageState extends ConsumerState<IdentityCardPage> {
         ],
       )));
     }
+    Widget addressField(String key, TextEditingController controller, String label,
+        {int maxLength = 100, bool digits = false}) => Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: TextField(key: ValueKey('id-$key'), controller: controller, enabled: editable,
+        maxLength: maxLength, onChanged: (_) => setState(() {}),
+        textInputAction: TextInputAction.next,
+        keyboardType: digits ? TextInputType.number : TextInputType.streetAddress,
+        inputFormatters: digits ? [FilteringTextInputFormatter.digitsOnly] : null,
+        decoration: InputDecoration(labelText: label, errorText: errors[key], border: const OutlineInputBorder())),
+    );
     String dateText(DateTime? value) => value == null ? l.kycSelectDate
       : MaterialLocalizations.of(context).formatMediumDate(value);
     return PopScope(canPop: !_busy, child: Scaffold(
@@ -258,7 +296,18 @@ final class _IdentityCardPageState extends ConsumerState<IdentityCardPage> {
               inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(13)],
               onChanged: (_) => setState(() {}),
               decoration: InputDecoration(errorText: errors['number'], labelText: l.idNumber, border: const OutlineInputBorder())),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
+            Text(l.piAddressTitle, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 8),
+            addressField('address_line', _addressLine, l.piAddressLine, maxLength: 300),
+            Wrap(spacing: 12, children: [
+              SizedBox(width: 260, child: addressField('subdistrict', _subdistrict, l.piSubdistrict)),
+              SizedBox(width: 260, child: addressField('district', _district, l.piDistrict)),
+              SizedBox(width: 260, child: addressField('province', _province, l.piProvince)),
+              SizedBox(width: 160, child: addressField('postal_code', _postalCode, l.piPostalCode, maxLength: 5,
+                digits: true)),
+            ]),
+            const SizedBox(height: 4),
             OutlinedButton(key: const ValueKey('id-issued'), onPressed: editable ? () => _date(true) : null,
               child: Text('${l.kycIssueDate}: ${dateText(_issued)}')),
             if (errors['issued'] != null) Text(errors['issued']!, style: TextStyle(color: Theme.of(context).colorScheme.error)),

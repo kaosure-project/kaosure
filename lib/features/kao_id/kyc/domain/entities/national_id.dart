@@ -22,8 +22,11 @@ class NationalIdRecord {
 class NationalIdDraft {
   const NationalIdDraft({required this.id, required this.owner, required this.number,
     required this.fullName, required this.issued, required this.expiry,
-    required this.front, required this.back});
+    required this.front, required this.back, required this.addressLine,
+    required this.subdistrict, required this.district, required this.province,
+    required this.postalCode});
   final String id, owner, number, fullName;
+  final String addressLine, subdistrict, district, province, postalCode;
   final DateTime issued;
   final DateTime? expiry;
   final IdImage front, back;

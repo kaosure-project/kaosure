@@ -2955,4 +2955,119 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accEmailUnverified => 'Not verified';
+
+  @override
+  String get piPageDescription =>
+      'Your details from your account and identity documents.';
+
+  @override
+  String get piRowDescription => 'Name, email, phone and ID-card address';
+
+  @override
+  String get piGeneralTitle => 'General information';
+
+  @override
+  String get piFullName => 'Full name';
+
+  @override
+  String get piPhone => 'Phone number';
+
+  @override
+  String get piNotProvided => 'Not provided';
+
+  @override
+  String get piDocumentType => 'Document type';
+
+  @override
+  String get piDocumentNumber => 'Document number';
+
+  @override
+  String get piNoExpiry => 'No expiry';
+
+  @override
+  String get piNoDocument => 'You have not submitted an identity document yet.';
+
+  @override
+  String get piAddressTitle => 'Address on ID card';
+
+  @override
+  String get piAddressLine => 'House no., village, lane, road';
+
+  @override
+  String get piSubdistrict => 'Sub-district';
+
+  @override
+  String get piDistrict => 'District';
+
+  @override
+  String get piProvince => 'Province';
+
+  @override
+  String get piPostalCode => 'Postal code';
+
+  @override
+  String get piNoAddress =>
+      'No ID-card address on file yet. It is recorded when you submit a new or renewed national ID card.';
+
+  @override
+  String get piBadgeKycVerified => 'KYC verified';
+
+  @override
+  String get piBadgeVerified => 'Verified';
+
+  @override
+  String get piBadgePending => 'Under review';
+
+  @override
+  String get piBadgeUnverified => 'Not verified';
+
+  @override
+  String get piBadgeExpired => 'Expired';
+
+  @override
+  String get piBadgeRejected => 'Not approved';
+
+  @override
+  String get piBadgeRevoked => 'Revoked';
+
+  @override
+  String get piShow => 'Show full value';
+
+  @override
+  String get piHide => 'Hide';
+
+  @override
+  String get piPrivacyNote =>
+      'Sensitive details are partly hidden under PDPA. Tap the eye icon and confirm your password to see the full value. It hides again after 30 seconds and every view is recorded.';
+
+  @override
+  String get piPasswordTitle => 'Confirm your password';
+
+  @override
+  String get piPasswordHelp =>
+      'Enter your Kao ID password to view the full value. The confirmation lasts 5 minutes.';
+
+  @override
+  String get piPasswordConfirm => 'Confirm';
+
+  @override
+  String get piPasswordWrong => 'Incorrect password';
+
+  @override
+  String get piRateLimited =>
+      'Too many views. Please wait a while and try again.';
+
+  @override
+  String get piRevealFailed =>
+      'Couldn\'t show the full value. Please try again.';
+
+  @override
+  String get piLoadFailed => 'Couldn\'t load your personal information.';
+
+  @override
+  String get idAddressRequired =>
+      'Enter every part of the address on your ID card';
+
+  @override
+  String get idPostalCodeInvalid => 'Postal code must be 5 digits';
 }

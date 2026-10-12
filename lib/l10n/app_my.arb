@@ -940,5 +940,17 @@
   "piRevealFailed": "အပြည့်အစုံ မပြနိုင်ပါ။ ထပ်ကြိုးစားပါ။",
   "piLoadFailed": "ကိုယ်ရေးအချက်အလက် မဖွင့်နိုင်ပါ။",
   "idAddressRequired": "ကတ်ပါလိပ်စာ အားလုံးကို ဖြည့်ပါ",
-  "idPostalCodeInvalid": "စာပို့သင်္ကေတသည် ဂဏန်း ၅ လုံး ဖြစ်ရမည်"
+  "idPostalCodeInvalid": "စာပို့သင်္ကေတသည် ဂဏန်း ၅ လုံး ဖြစ်ရမည်",
+  "adminStatKyc": "စစ်ဆေးရန် စောင့်နေသော အထောက်အထား",
+  "adminStatBusiness": "စစ်ဆေးရန် စောင့်နေသော လုပ်ငန်း",
+  "adminGroupReview": "စစ်ဆေးမှုများ",
+  "adminGroupPeople": "အဖွဲ့ဝင်များနှင့် ဝန်ထမ်းများ",
+  "adminGroupPartners": "မိတ်ဖက်များ",
+  "adminGroupSecurity": "စီမံသူ လုံခြုံရေး",
+  "adminMfaHelp": "တောင်းဆိုချက်ဆုံးဖြတ်ခြင်း သို့မဟုတ် အခွင့်အရေးပြောင်းခြင်းမပြုမီ လိုအပ်သည်",
+  "adminSecurityOpsHelp": "စနစ်တန်းစီမှုနှင့် လုံခြုံရေးဖြစ်ရပ်များကို စစ်ဆေးပါ",
+  "businessReviewFilterAll": "အားလုံး",
+  "businessReviewStatusNew": "စစ်ဆေးရန် စောင့်နေသည်",
+  "businessReviewWaitingDays": "{days, plural, =0{ယနေ့ တင်သွင်းသည်} other{{days} ရက် စောင့်နေသည်}}",
+  "businessReviewEmptyFilter": "ဤစစ်ထုတ်မှုနှင့် ကိုက်ညီသော တောင်းဆိုချက် မရှိပါ"
 }

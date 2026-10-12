@@ -6,7 +6,7 @@ import '../../../../../../shared/design_system/colors/app_colors.dart';
 class SectionBody extends StatelessWidget {
   const SectionBody({super.key, required this.icon, required this.color, required this.tint,
     required this.title, required this.description, required this.start, this.end = const [],
-    this.onRefresh});
+    this.top = const [], this.onRefresh});
 
   final IconData icon;
   final Color color;
@@ -15,6 +15,9 @@ class SectionBody extends StatelessWidget {
   final String description;
   final List<Widget> start;
   final List<Widget> end;
+
+  /// Full-width widgets between the heading and the columns.
+  final List<Widget> top;
   final Future<void> Function()? onRefresh;
 
   @override
@@ -56,6 +59,7 @@ class SectionBody extends StatelessWidget {
         children: [
           heading,
           SizedBox(height: gap + 4),
+          for (final widget in top) ...[widget, SizedBox(height: gap)],
           if (wide)
             Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Expanded(child: stack(start, gap)),

@@ -1,87 +1,184 @@
-import '../../../account/presentation/pages/security/security_operations_page.dart';
-import '../../../account/presentation/pages/security/mfa_page.dart';
-import '../../application/services/access_refresh.dart';
-import 'package:kaosure/features/wallet/presentation/pages/partner_page.dart';
-import 'owner_requests_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kaosure/features/wallet/presentation/pages/partner_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
+import 'package:kaosure/shared/design_system/colors/app_colors.dart';
+
+import '../../../account/presentation/pages/security/mfa_page.dart';
+import '../../../account/presentation/pages/security/security_operations_page.dart';
 import '../../../auth/application/providers/auth_provider.dart';
+import '../../../business/application/providers/business_review_providers.dart';
 import '../../../business/presentation/pages/review/business_review_queue_page.dart';
-import '../../../kyc/presentation/pages/review/kyc_review_page.dart';
+import '../../../dashboard/presentation/widgets/home/dashboard_panel.dart';
+import '../../../dashboard/presentation/widgets/section/menu_panel.dart';
+import '../../../dashboard/presentation/widgets/section/section_body.dart';
+import '../../../dashboard/presentation/widgets/security/dashboard_menu_tile.dart';
 import '../../../kyc/application/providers/kyc_review_providers.dart';
+import '../../../kyc/presentation/pages/review/kyc_review_page.dart';
+import '../../application/providers/admin_pending_providers.dart';
 import '../../application/providers/member_access_provider.dart';
+import '../../application/services/access_refresh.dart';
+import '../widgets/admin/admin_scaffold.dart';
+import '../widgets/admin/admin_stat_card.dart';
+import '../widgets/admin/pending_badge.dart';
+import 'owner_requests_page.dart';
 
 class AdminHubPage extends ConsumerStatefulWidget {
   const AdminHubPage({super.key});
   @override
   ConsumerState<AdminHubPage> createState() => _AdminHubPageState();
 }
+
 class _AdminHubPageState extends ConsumerState<AdminHubPage>
     with WidgetsBindingObserver, AccessRefresh<AdminHubPage> {
   @override
   void refreshAccess() {
     ref.invalidate(memberAccessProvider);
     ref.invalidate(kycReviewerAccessProvider);
+    ref.invalidate(kycPendingCountProvider);
+    ref.invalidate(businessReviewQueueProvider);
   }
+
   @override
   void initState() {
     super.initState();
     Future.microtask(() { if (mounted) { refreshAccess(); } });
   }
+
+  Future<void> _open(Widget page) async {
+    await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page));
+    if (mounted) refreshAccess();
+  }
+
+  Future<void> _openNamed(String route) async {
+    await Navigator.of(context).pushNamed(route);
+    if (mounted) refreshAccess();
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final user = ref.watch(authProvider).asData?.value?.id;
     if (user == null) {
-      return Scaffold(appBar: AppBar(title: Text(l.adminHubTitle)),
-        body: Center(child: Text(l.contactSessionChanged)));
+      return AdminScaffold(child: Center(child: Text(l.contactSessionChanged)));
     }
     final account = ref.watch(memberAccessProvider);
     final reviewer = ref.watch(kycReviewerAccessProvider);
+    final loading = account.isLoading || reviewer.isLoading;
+    final failed = account.hasError || reviewer.hasError;
     final canManage = !account.isLoading && !account.hasError && account.asData?.value == true;
     final canReview = !reviewer.isLoading && !reviewer.hasError && reviewer.asData?.value == true;
-    void refresh() {
-      ref.invalidate(memberAccessProvider);
-      ref.invalidate(kycReviewerAccessProvider);
-    }
-    Widget entry(IconData icon, String title, String help, Future<dynamic> Function() open) =>
-      Card(margin: const EdgeInsets.symmetric(vertical: 8), child: ListTile(contentPadding: const EdgeInsets.all(20),leading: CircleAvatar(child: Icon(icon)), title: Text(title),
-        subtitle: Text(help), trailing: const Icon(Icons.chevron_right), onTap: () async {
-          await open();
-          if (mounted) { refreshAccess(); }
-        }));
-    return Scaffold(appBar: AppBar(title: Text(l.adminHubTitle), actions: [
-        IconButton(tooltip: l.twoFactorAuthentication, icon: const Icon(Icons.security),
-          onPressed: () async { await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const MfaPage())); if (mounted) { refreshAccess(); } }),
-        if (canManage) IconButton(tooltip: l.securityOperations, icon: const Icon(Icons.monitor_heart_outlined),
-          onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const SecurityOperationsPage()))),
-      ]),
-      body: Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 800),
-        child: ListView(padding: const EdgeInsets.all(20), children: [
-          Text(l.adminHubScope),
-          OutlinedButton(onPressed: refresh, child: Text(l.authCheckAgain)),
-          if (account.isLoading || reviewer.isLoading) const LinearProgressIndicator(),
-          if (account.hasError || reviewer.hasError) Text(l.kycLoadFailed),
-          if (!account.isLoading && !reviewer.isLoading &&
-              !account.hasError && !reviewer.hasError && !canManage && !canReview)
-            Text(l.adminAccessDenied),
-          if (canManage) entry(Icons.people_outline, l.adminMembersTitle, l.adminReadOnly,
-            () => Navigator.of(context).pushNamed('/admin/members')),
-          if (canManage) entry(Icons.manage_accounts, l.staffTitle, l.adminHubStaffHelp,
-            () => Navigator.of(context).pushNamed('/admin/staff')),
-          if (canManage) entry(Icons.assignment_outlined, l.ownerRequests, l.ownerRequestsHelp,
-            () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const OwnerRequestsPage()))),
-          if (canReview) entry(Icons.fact_check_outlined, l.reviewTitle, l.adminHubReviewHelp,
-            () => Navigator.of(context).push(MaterialPageRoute<void>(
-              builder: (_) => const KycReviewPage()))),
-          if (canReview) entry(Icons.storefront_outlined, l.businessReviewTitle, l.businessReviewHubHelp,
-            () => Navigator.of(context).push(MaterialPageRoute<void>(
-              builder: (_) => const BusinessReviewQueuePage()))),
-          if (canManage) entry(Icons.handshake_outlined, l.partnerTitle, l.partnerHelp,
-            () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const PartnerPage()))),
-          if (canManage) entry(Icons.local_shipping_outlined, l.carrierTitle, l.partnerHelp,
-            () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const PartnerPage(shipping:true)))),
-        ]))));
+    const none = AsyncValue<PendingCount>.loading();
+    final kycCount = canReview ? ref.watch(kycPendingCountProvider) : none;
+    final businessCount = canReview ? ref.watch(businessPendingCountProvider) : none;
+    final secondCount = canReview ? ref.watch(businessSecondVoteCountProvider) : none;
+
+    Widget notice(String message, {bool retry = false}) => DashboardPanel(
+          padding: const EdgeInsets.all(20),
+          child: Row(children: [
+            Icon(retry ? Icons.error_outline : Icons.lock_outline, color: AppColors.textSecondary),
+            const SizedBox(width: 12),
+            Expanded(child: Text(message)),
+            if (retry) ...[
+              const SizedBox(width: 12),
+              OutlinedButton(onPressed: refreshAccess, child: Text(l.authCheckAgain)),
+            ],
+          ]),
+        );
+
+    final stats = [
+      AdminStatCard(icon: Icons.fact_check_outlined, color: AppColors.kaoTeal,
+        tint: AppColors.kaoTealSoft, label: l.adminStatKyc, count: kycCount,
+        onTap: () => _open(const KycReviewPage())),
+      AdminStatCard(icon: Icons.storefront_outlined, color: AppColors.kaoBlue,
+        tint: AppColors.kaoBlueSoft, label: l.adminStatBusiness, count: businessCount,
+        onTap: () => _open(const BusinessReviewQueuePage())),
+      AdminStatCard(icon: Icons.groups_outlined, color: AppColors.kaoAmber,
+        tint: AppColors.kaoAmberSoft, label: l.dualWaiting, count: secondCount,
+        onTap: () => _open(const BusinessReviewQueuePage(onlySecondVote: true))),
+    ];
+
+    final reviews = MenuPanel(title: l.adminGroupReview, children: [
+      DashboardMenuTile(icon: Icons.fact_check_outlined, color: AppColors.kaoTeal,
+        tint: AppColors.kaoTealSoft, title: l.reviewTitle, subtitle: l.adminHubReviewHelp,
+        trailing: PendingTrailing(count: kycCount, color: AppColors.kaoTeal),
+        onTap: () => _open(const KycReviewPage())),
+      DashboardMenuTile(icon: Icons.storefront_outlined, title: l.businessReviewTitle,
+        subtitle: l.businessReviewHubHelp, showDivider: false,
+        trailing: PendingTrailing(count: businessCount),
+        onTap: () => _open(const BusinessReviewQueuePage())),
+    ]);
+
+    final people = MenuPanel(title: l.adminGroupPeople, children: [
+      DashboardMenuTile(icon: Icons.people_outline, title: l.adminMembersTitle,
+        subtitle: l.adminReadOnly, onTap: () => _openNamed('/admin/members')),
+      DashboardMenuTile(icon: Icons.manage_accounts_outlined, title: l.staffTitle,
+        subtitle: l.adminHubStaffHelp, onTap: () => _openNamed('/admin/staff')),
+      DashboardMenuTile(icon: Icons.assignment_outlined, title: l.ownerRequests,
+        subtitle: l.ownerRequestsHelp, showDivider: false,
+        onTap: () => _open(const OwnerRequestsPage())),
+    ]);
+
+    final partners = MenuPanel(title: l.adminGroupPartners, children: [
+      DashboardMenuTile(icon: Icons.handshake_outlined, color: AppColors.kaoGreen,
+        tint: AppColors.kaoGreenSoft, title: l.partnerTitle, subtitle: l.partnerHelp,
+        onTap: () => _open(const PartnerPage())),
+      DashboardMenuTile(icon: Icons.local_shipping_outlined, color: AppColors.kaoGreen,
+        tint: AppColors.kaoGreenSoft, title: l.carrierTitle, subtitle: l.partnerHelp,
+        showDivider: false, onTap: () => _open(const PartnerPage(shipping: true))),
+    ]);
+
+    final security = MenuPanel(title: l.adminGroupSecurity, children: [
+      DashboardMenuTile(icon: Icons.security, color: AppColors.kaoSlate,
+        tint: AppColors.kaoSlateSoft, title: l.twoFactorAuthentication, subtitle: l.adminMfaHelp,
+        showDivider: canManage, onTap: () => _open(const MfaPage())),
+      if (canManage)
+        DashboardMenuTile(icon: Icons.monitor_heart_outlined, color: AppColors.kaoSlate,
+          tint: AppColors.kaoSlateSoft, title: l.securityOperations,
+          subtitle: l.adminSecurityOpsHelp, showDivider: false,
+          onTap: () => _open(const SecurityOperationsPage())),
+    ]);
+
+    final start = [if (canReview) reviews, if (canManage) people];
+    final end = [if (canManage) partners, security];
+
+    return AdminScaffold(
+      actions: [
+        IconButton(
+          tooltip: l.authCheckAgain,
+          color: AppColors.kaoBlue,
+          onPressed: loading ? null : refreshAccess,
+          icon: const Icon(Icons.refresh),
+        ),
+      ],
+      child: SectionBody(
+        icon: Icons.admin_panel_settings_outlined,
+        color: AppColors.kaoBlue,
+        tint: AppColors.kaoBlueSoft,
+        title: l.adminHubTitle,
+        description: l.adminHubScope,
+        top: [
+          if (loading) const LinearProgressIndicator(),
+          if (failed) notice(l.kycLoadFailed, retry: true),
+          if (!loading && !failed && !canManage && !canReview) notice(l.adminAccessDenied),
+          if (canReview)
+            LayoutBuilder(builder: (context, constraints) => constraints.maxWidth >= 640
+                ? Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    for (var i = 0; i < stats.length; i++) ...[
+                      if (i > 0) const SizedBox(width: 16),
+                      Expanded(child: stats[i]),
+                    ],
+                  ])
+                : Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                    for (var i = 0; i < stats.length; i++) ...[
+                      if (i > 0) const SizedBox(height: 12),
+                      stats[i],
+                    ],
+                  ])),
+        ],
+        start: start.isEmpty ? end : start,
+        end: start.isEmpty ? const [] : end,
+      ),
+    );
   }
 }

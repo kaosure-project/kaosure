@@ -2873,4 +2873,48 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get idPostalCodeInvalid => '郵便番号は 5 桁の数字で入力してください';
+
+  @override
+  String get adminStatKyc => '審査待ちの本人確認';
+
+  @override
+  String get adminStatBusiness => '審査待ちの事業者';
+
+  @override
+  String get adminGroupReview => '審査';
+
+  @override
+  String get adminGroupPeople => 'メンバーとスタッフ';
+
+  @override
+  String get adminGroupPartners => 'パートナー';
+
+  @override
+  String get adminGroupSecurity => '管理者のセキュリティ';
+
+  @override
+  String get adminMfaHelp => '申請の判断や権限の変更の前に必要です';
+
+  @override
+  String get adminSecurityOpsHelp => 'システムのキューとセキュリティイベントを確認';
+
+  @override
+  String get businessReviewFilterAll => 'すべて';
+
+  @override
+  String get businessReviewStatusNew => '審査待ち';
+
+  @override
+  String businessReviewWaitingDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days日待ち',
+      zero: '本日提出',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessReviewEmptyFilter => 'この条件に一致する申請はありません';
 }

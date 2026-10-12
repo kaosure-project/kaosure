@@ -971,5 +971,24 @@
   "piRevealFailed": "Couldn't show the full value. Please try again.",
   "piLoadFailed": "Couldn't load your personal information.",
   "idAddressRequired": "Enter every part of the address on your ID card",
-  "idPostalCodeInvalid": "Postal code must be 5 digits"
+  "idPostalCodeInvalid": "Postal code must be 5 digits",
+  "adminStatKyc": "Identity checks waiting",
+  "adminStatBusiness": "Businesses waiting",
+  "adminGroupReview": "Reviews",
+  "adminGroupPeople": "Members and staff",
+  "adminGroupPartners": "Partners",
+  "adminGroupSecurity": "Admin security",
+  "adminMfaHelp": "Required before deciding requests or changing roles",
+  "adminSecurityOpsHelp": "Check system queues and security events",
+  "businessReviewFilterAll": "All",
+  "businessReviewStatusNew": "Awaiting review",
+  "businessReviewWaitingDays": "{days, plural, =0{Submitted today} =1{Waiting 1 day} other{Waiting {days} days}}",
+  "@businessReviewWaitingDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "businessReviewEmptyFilter": "No requests match this filter"
 }

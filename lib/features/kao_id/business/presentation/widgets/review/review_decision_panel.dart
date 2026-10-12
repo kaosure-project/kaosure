@@ -32,7 +32,7 @@ class ReviewDecisionPanel extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(l10n.businessReviewDecisionHeading,
-            style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+            style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 8),
         CheckboxListTile(
           contentPadding: EdgeInsets.zero,

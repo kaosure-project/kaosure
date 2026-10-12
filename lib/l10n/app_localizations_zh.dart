@@ -2825,6 +2825,50 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get idPostalCodeInvalid => '邮政编码必须为 5 位数字';
+
+  @override
+  String get adminStatKyc => '待审核的身份验证';
+
+  @override
+  String get adminStatBusiness => '待审核的企业';
+
+  @override
+  String get adminGroupReview => '审核';
+
+  @override
+  String get adminGroupPeople => '成员与工作人员';
+
+  @override
+  String get adminGroupPartners => '合作伙伴';
+
+  @override
+  String get adminGroupSecurity => '管理员安全';
+
+  @override
+  String get adminMfaHelp => '审核申请或更改权限前必须完成';
+
+  @override
+  String get adminSecurityOpsHelp => '查看系统队列和安全事件';
+
+  @override
+  String get businessReviewFilterAll => '全部';
+
+  @override
+  String get businessReviewStatusNew => '待审核';
+
+  @override
+  String businessReviewWaitingDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '已等待 $days 天',
+      zero: '今天提交',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessReviewEmptyFilter => '没有符合此筛选条件的申请';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -5648,4 +5692,48 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get idPostalCodeInvalid => '邮政编码必须为 5 位数字';
+
+  @override
+  String get adminStatKyc => '待审核的身份验证';
+
+  @override
+  String get adminStatBusiness => '待审核的企业';
+
+  @override
+  String get adminGroupReview => '审核';
+
+  @override
+  String get adminGroupPeople => '成员与工作人员';
+
+  @override
+  String get adminGroupPartners => '合作伙伴';
+
+  @override
+  String get adminGroupSecurity => '管理员安全';
+
+  @override
+  String get adminMfaHelp => '审核申请或更改权限前必须完成';
+
+  @override
+  String get adminSecurityOpsHelp => '查看系统队列和安全事件';
+
+  @override
+  String get businessReviewFilterAll => '全部';
+
+  @override
+  String get businessReviewStatusNew => '待审核';
+
+  @override
+  String businessReviewWaitingDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '已等待 $days 天',
+      zero: '今天提交',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessReviewEmptyFilter => '没有符合此筛选条件的申请';
 }

@@ -5670,6 +5670,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Postal code must be 5 digits'**
   String get idPostalCodeInvalid;
+
+  /// No description provided for @adminStatKyc.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity checks waiting'**
+  String get adminStatKyc;
+
+  /// No description provided for @adminStatBusiness.
+  ///
+  /// In en, this message translates to:
+  /// **'Businesses waiting'**
+  String get adminStatBusiness;
+
+  /// No description provided for @adminGroupReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get adminGroupReview;
+
+  /// No description provided for @adminGroupPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'Members and staff'**
+  String get adminGroupPeople;
+
+  /// No description provided for @adminGroupPartners.
+  ///
+  /// In en, this message translates to:
+  /// **'Partners'**
+  String get adminGroupPartners;
+
+  /// No description provided for @adminGroupSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin security'**
+  String get adminGroupSecurity;
+
+  /// No description provided for @adminMfaHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Required before deciding requests or changing roles'**
+  String get adminMfaHelp;
+
+  /// No description provided for @adminSecurityOpsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Check system queues and security events'**
+  String get adminSecurityOpsHelp;
+
+  /// No description provided for @businessReviewFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get businessReviewFilterAll;
+
+  /// No description provided for @businessReviewStatusNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting review'**
+  String get businessReviewStatusNew;
+
+  /// No description provided for @businessReviewWaitingDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{Submitted today} =1{Waiting 1 day} other{Waiting {days} days}}'**
+  String businessReviewWaitingDays(int days);
+
+  /// No description provided for @businessReviewEmptyFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'No requests match this filter'**
+  String get businessReviewEmptyFilter;
 }
 
 class _AppLocalizationsDelegate

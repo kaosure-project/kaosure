@@ -940,5 +940,17 @@
   "piRevealFailed": "无法显示完整信息，请重试。",
   "piLoadFailed": "无法加载个人信息。",
   "idAddressRequired": "请完整填写证件上的地址",
-  "idPostalCodeInvalid": "邮政编码必须为 5 位数字"
+  "idPostalCodeInvalid": "邮政编码必须为 5 位数字",
+  "adminStatKyc": "待审核的身份验证",
+  "adminStatBusiness": "待审核的企业",
+  "adminGroupReview": "审核",
+  "adminGroupPeople": "成员与工作人员",
+  "adminGroupPartners": "合作伙伴",
+  "adminGroupSecurity": "管理员安全",
+  "adminMfaHelp": "审核申请或更改权限前必须完成",
+  "adminSecurityOpsHelp": "查看系统队列和安全事件",
+  "businessReviewFilterAll": "全部",
+  "businessReviewStatusNew": "待审核",
+  "businessReviewWaitingDays": "{days, plural, =0{今天提交} other{已等待 {days} 天}}",
+  "businessReviewEmptyFilter": "没有符合此筛选条件的申请"
 }

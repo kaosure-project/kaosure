@@ -28,7 +28,7 @@ class KaoIdScaffold extends StatelessWidget {
           final compact = constraints.maxWidth < 720;
           return Column(
             children: [
-              const _BrandStripe(),
+              const BrandStripe(),
               Material(
                 color: AppColors.surface,
                 child: Center(child: ConstrainedBox(
@@ -56,8 +56,9 @@ class KaoIdScaffold extends StatelessWidget {
   }
 }
 
-class _BrandStripe extends StatelessWidget {
-  const _BrandStripe();
+/// Thin blue-to-green Kao ID band at the very top of a page.
+class BrandStripe extends StatelessWidget {
+  const BrandStripe({super.key});
 
   @override
   Widget build(BuildContext context) => const DecoratedBox(

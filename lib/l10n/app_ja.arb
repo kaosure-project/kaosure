@@ -940,5 +940,17 @@
   "piRevealFailed": "全体を表示できませんでした。もう一度お試しください。",
   "piLoadFailed": "個人情報を読み込めませんでした。",
   "idAddressRequired": "身分証の住所をすべて入力してください",
-  "idPostalCodeInvalid": "郵便番号は 5 桁の数字で入力してください"
+  "idPostalCodeInvalid": "郵便番号は 5 桁の数字で入力してください",
+  "adminStatKyc": "審査待ちの本人確認",
+  "adminStatBusiness": "審査待ちの事業者",
+  "adminGroupReview": "審査",
+  "adminGroupPeople": "メンバーとスタッフ",
+  "adminGroupPartners": "パートナー",
+  "adminGroupSecurity": "管理者のセキュリティ",
+  "adminMfaHelp": "申請の判断や権限の変更の前に必要です",
+  "adminSecurityOpsHelp": "システムのキューとセキュリティイベントを確認",
+  "businessReviewFilterAll": "すべて",
+  "businessReviewStatusNew": "審査待ち",
+  "businessReviewWaitingDays": "{days, plural, =0{本日提出} other{{days}日待ち}}",
+  "businessReviewEmptyFilter": "この条件に一致する申請はありません"
 }

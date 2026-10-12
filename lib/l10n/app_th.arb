@@ -940,5 +940,17 @@
   "piRevealFailed": "แสดงข้อมูลเต็มไม่สำเร็จ กรุณาลองอีกครั้ง",
   "piLoadFailed": "โหลดข้อมูลส่วนตัวไม่สำเร็จ",
   "idAddressRequired": "กรอกที่อยู่ตามบัตรให้ครบทุกช่อง",
-  "idPostalCodeInvalid": "รหัสไปรษณีย์ต้องเป็นตัวเลข 5 หลัก"
+  "idPostalCodeInvalid": "รหัสไปรษณีย์ต้องเป็นตัวเลข 5 หลัก",
+  "adminStatKyc": "ยืนยันตัวตนรอตรวจ",
+  "adminStatBusiness": "ธุรกิจรอตรวจ",
+  "adminGroupReview": "งานตรวจสอบ",
+  "adminGroupPeople": "สมาชิกและทีมงาน",
+  "adminGroupPartners": "พาร์ตเนอร์",
+  "adminGroupSecurity": "ความปลอดภัยของผู้ดูแล",
+  "adminMfaHelp": "ต้องยืนยันสองขั้นตอนก่อนตัดสินคำขอหรือเปลี่ยนสิทธิ์",
+  "adminSecurityOpsHelp": "ดูสถานะคิวงานและเหตุการณ์ด้านความปลอดภัยของระบบ",
+  "businessReviewFilterAll": "ทั้งหมด",
+  "businessReviewStatusNew": "รอตรวจ",
+  "businessReviewWaitingDays": "{days, plural, =0{ส่งวันนี้} other{รอมาแล้ว {days} วัน}}",
+  "businessReviewEmptyFilter": "ไม่มีคำขอในตัวกรองนี้"
 }

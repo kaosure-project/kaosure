@@ -3049,4 +3049,49 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get idPostalCodeInvalid => 'Mã bưu chính phải gồm 5 chữ số';
+
+  @override
+  String get adminStatKyc => 'Xác minh danh tính chờ duyệt';
+
+  @override
+  String get adminStatBusiness => 'Doanh nghiệp chờ duyệt';
+
+  @override
+  String get adminGroupReview => 'Kiểm duyệt';
+
+  @override
+  String get adminGroupPeople => 'Thành viên và nhân viên';
+
+  @override
+  String get adminGroupPartners => 'Đối tác';
+
+  @override
+  String get adminGroupSecurity => 'Bảo mật quản trị viên';
+
+  @override
+  String get adminMfaHelp => 'Bắt buộc trước khi duyệt yêu cầu hoặc đổi quyền';
+
+  @override
+  String get adminSecurityOpsHelp =>
+      'Kiểm tra hàng đợi hệ thống và sự kiện bảo mật';
+
+  @override
+  String get businessReviewFilterAll => 'Tất cả';
+
+  @override
+  String get businessReviewStatusNew => 'Chờ duyệt';
+
+  @override
+  String businessReviewWaitingDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Đã chờ $days ngày',
+      zero: 'Gửi hôm nay',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessReviewEmptyFilter => 'Không có yêu cầu phù hợp bộ lọc này';
 }

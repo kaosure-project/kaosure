@@ -10,6 +10,7 @@ const reviewerId = 'test-user';
 
 BusinessReviewItem reviewItem({
   String id = 'reg-1',
+  String name = 'ร้านเก้าเทรดดิ้ง',
   String mime = 'image/png',
   List<String> paths = const ['owner/business-registration/reg-1/doc.png'],
   bool dualReview = false,
@@ -19,7 +20,7 @@ BusinessReviewItem reviewItem({
     BusinessReviewItem(
       id: id,
       businessType: 'registered_business',
-      businessName: 'ร้านเก้าเทรดดิ้ง',
+      businessName: name,
       registrationNumber: '0105561234567',
       businessCategory: 'retail',
       businessDescription: 'Secondhand electronics',

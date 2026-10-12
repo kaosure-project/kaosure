@@ -2992,4 +2992,49 @@ class AppLocalizationsLo extends AppLocalizations {
 
   @override
   String get idPostalCodeInvalid => 'ລະຫັດໄປສະນີຕ້ອງເປັນຕົວເລກ 5 ຫຼັກ';
+
+  @override
+  String get adminStatKyc => 'ການຢືນຢັນຕົວຕົນລໍຖ້າກວດ';
+
+  @override
+  String get adminStatBusiness => 'ທຸລະກິດລໍຖ້າກວດ';
+
+  @override
+  String get adminGroupReview => 'ວຽກກວດສອບ';
+
+  @override
+  String get adminGroupPeople => 'ສະມາຊິກ ແລະ ທີມງານ';
+
+  @override
+  String get adminGroupPartners => 'ພາດເນີ';
+
+  @override
+  String get adminGroupSecurity => 'ຄວາມປອດໄພຂອງຜູ້ດູແລ';
+
+  @override
+  String get adminMfaHelp => 'ຕ້ອງຢືນຢັນສອງຂັ້ນຕອນກ່ອນຕັດສິນຄຳຂໍ ຫຼື ປ່ຽນສິດ';
+
+  @override
+  String get adminSecurityOpsHelp =>
+      'ເບິ່ງສະຖານະຄິວງານ ແລະ ເຫດການດ້ານຄວາມປອດໄພຂອງລະບົບ';
+
+  @override
+  String get businessReviewFilterAll => 'ທັງໝົດ';
+
+  @override
+  String get businessReviewStatusNew => 'ລໍຖ້າກວດ';
+
+  @override
+  String businessReviewWaitingDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'ລໍຖ້າມາແລ້ວ $days ມື້',
+      zero: 'ສົ່ງມື້ນີ້',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessReviewEmptyFilter => 'ບໍ່ມີຄຳຂໍໃນຕົວກອງນີ້';
 }

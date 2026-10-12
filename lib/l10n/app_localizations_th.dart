@@ -3033,4 +3033,50 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get idPostalCodeInvalid => 'รหัสไปรษณีย์ต้องเป็นตัวเลข 5 หลัก';
+
+  @override
+  String get adminStatKyc => 'ยืนยันตัวตนรอตรวจ';
+
+  @override
+  String get adminStatBusiness => 'ธุรกิจรอตรวจ';
+
+  @override
+  String get adminGroupReview => 'งานตรวจสอบ';
+
+  @override
+  String get adminGroupPeople => 'สมาชิกและทีมงาน';
+
+  @override
+  String get adminGroupPartners => 'พาร์ตเนอร์';
+
+  @override
+  String get adminGroupSecurity => 'ความปลอดภัยของผู้ดูแล';
+
+  @override
+  String get adminMfaHelp =>
+      'ต้องยืนยันสองขั้นตอนก่อนตัดสินคำขอหรือเปลี่ยนสิทธิ์';
+
+  @override
+  String get adminSecurityOpsHelp =>
+      'ดูสถานะคิวงานและเหตุการณ์ด้านความปลอดภัยของระบบ';
+
+  @override
+  String get businessReviewFilterAll => 'ทั้งหมด';
+
+  @override
+  String get businessReviewStatusNew => 'รอตรวจ';
+
+  @override
+  String businessReviewWaitingDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'รอมาแล้ว $days วัน',
+      zero: 'ส่งวันนี้',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessReviewEmptyFilter => 'ไม่มีคำขอในตัวกรองนี้';
 }

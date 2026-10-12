@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
+import 'package:kaosure/shared/design_system/colors/app_colors.dart';
 
 import '../../../../account/presentation/pages/security/mfa_page.dart';
 import '../../../../auth/application/providers/auth_provider.dart';
+import '../../../../dashboard/presentation/widgets/home/dashboard_panel.dart';
+import '../../../../dashboard/presentation/widgets/section/section_body.dart';
+import '../../../../governance/presentation/widgets/admin/admin_scaffold.dart';
 import '../../../application/controllers/business_review_decision_controller.dart';
 import '../../../application/providers/business_review_providers.dart';
 import '../../../domain/entities/business_review_item.dart';
@@ -15,7 +19,7 @@ import '../../widgets/dialogs/confirm_dialog.dart';
 import '../../widgets/review/dual_review_notice.dart';
 import '../../widgets/review/review_decision_panel.dart';
 import '../../widgets/review/review_document_tile.dart';
-import '../../widgets/steps/review/review_section.dart';
+import '../../widgets/review/review_info_panel.dart';
 
 class BusinessReviewDetailPage extends ConsumerStatefulWidget {
   const BusinessReviewDetailPage({super.key, required this.item});
@@ -112,129 +116,121 @@ class _BusinessReviewDetailPageState extends ConsumerState<BusinessReviewDetailP
     final l10n = AppLocalizations.of(context);
     final reviewerId = _reviewerId;
     if (reviewerId == null || ref.watch(authProvider).asData?.value?.id != reviewerId) {
-      return Scaffold(
-        appBar: AppBar(title: Text(l10n.businessReviewTitle)),
-        body: Center(child: Text(l10n.contactSessionChanged)),
-      );
+      return AdminScaffold(child: Center(child: Text(l10n.contactSessionChanged)));
     }
 
     final item = widget.item;
     final provider = businessReviewDecisionProvider((item: item, reviewerId: reviewerId));
     final state = ref.watch(provider);
     final controller = ref.read(provider.notifier);
-    final theme = Theme.of(context);
     final submitted = item.submittedAt;
     final missing = l10n.businessReviewNotAvailable;
 
-    Widget section(String title, List<(String, String)> rows) => Card.outlined(
-          margin: const EdgeInsets.only(bottom: 12),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: ReviewSection(title: title, rows: rows),
-          ),
-        );
-
     return PopScope(
       canPop: !state.busy,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(l10n.businessReviewTitle),
-          actions: [
-            IconButton(
-              tooltip: l10n.twoFactorAuthentication,
-              onPressed: state.busy
-                  ? null
-                  : () => Navigator.of(context)
-                      .push(MaterialPageRoute<void>(builder: (_) => const MfaPage())),
-              icon: const Icon(Icons.security),
+      child: AdminScaffold(
+        actions: [
+          IconButton(
+            tooltip: l10n.twoFactorAuthentication,
+            color: AppColors.kaoBlue,
+            onPressed: state.busy
+                ? null
+                : () => Navigator.of(context)
+                    .push(MaterialPageRoute<void>(builder: (_) => const MfaPage())),
+            icon: const Icon(Icons.security),
+          ),
+        ],
+        child: SectionBody(
+          icon: Icons.storefront_outlined,
+          color: AppColors.kaoBlue,
+          tint: AppColors.kaoBlueSoft,
+          title: item.businessName,
+          description: submitted == null
+              ? l10n.businessReviewTitle
+              : '${l10n.businessReviewTitle} · ${l10n.businessReviewSubmittedOn(
+                  MaterialLocalizations.of(context).formatMediumDate(submitted))}',
+          top: [
+            if (item.dualReview) DualReviewNotice(item: item, ownVote: controller.isOwnVote),
+          ],
+          start: [
+            ReviewInfoPanel(
+              title: l10n.businessRegStepDetails,
+              icon: Icons.storefront_outlined,
+              rows: [
+                (l10n.businessRegNameLabel, item.businessName),
+                (l10n.businessRegNumberLabel, item.registrationNumber),
+                (l10n.businessRegTypeLabel, l10n.businessTypeLabel(item.businessType)),
+                (l10n.businessRegCategoryLabel, l10n.businessCategoryLabel(item.businessCategory)),
+                if (item.businessDescription != null)
+                  (l10n.businessReviewDescription, item.businessDescription!),
+              ],
+            ),
+            ReviewInfoPanel(
+              title: l10n.businessReviewApplicant,
+              icon: Icons.badge_outlined,
+              color: AppColors.kaoGreen,
+              rows: [
+                (l10n.businessReviewOwnerKaoId, item.ownerKaoId ?? missing),
+                (l10n.businessReviewOwnerName, item.ownerName ?? missing),
+              ],
+            ),
+            ReviewInfoPanel(
+              title: l10n.businessRegStepBank,
+              icon: Icons.account_balance_outlined,
+              color: AppColors.kaoTeal,
+              rows: [
+                if (item.bankAccountLast4 == null)
+                  ('', missing)
+                else ...[
+                  (l10n.businessReviewBankName, item.bankName ?? missing),
+                  (l10n.businessReviewBankAccount,
+                      l10n.businessReviewBankAccountEnding(item.bankAccountLast4!)),
+                  (l10n.businessReviewBankAccountName, item.bankAccountName ?? missing),
+                ],
+              ],
             ),
           ],
-        ),
-        body: SafeArea(
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 720),
-              child: ListView(
-                padding: const EdgeInsets.all(20),
-                children: [
-                  Text(item.businessName,
-                      style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600)),
-                  if (submitted != null)
-                    Text(l10n.businessReviewSubmittedOn(
-                        MaterialLocalizations.of(context).formatMediumDate(submitted)),
-                        style: theme.textTheme.bodyMedium
-                            ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
-                  const SizedBox(height: 16),
-                  if (item.dualReview) ...[
-                    DualReviewNotice(item: item, ownVote: controller.isOwnVote),
-                    const SizedBox(height: 12),
-                  ],
-                  section(l10n.businessRegStepDetails, [
-                    (l10n.businessRegNameLabel, item.businessName),
-                    (l10n.businessRegNumberLabel, item.registrationNumber),
-                    (l10n.businessRegTypeLabel, l10n.businessTypeLabel(item.businessType)),
-                    (l10n.businessRegCategoryLabel, l10n.businessCategoryLabel(item.businessCategory)),
-                    if (item.businessDescription != null)
-                      (l10n.businessReviewDescription, item.businessDescription!),
-                  ]),
-                  section(l10n.businessReviewApplicant, [
-                    (l10n.businessReviewOwnerKaoId, item.ownerKaoId ?? missing),
-                    (l10n.businessReviewOwnerName, item.ownerName ?? missing),
-                  ]),
-                  section(l10n.businessRegStepBank, [
-                    if (item.bankAccountLast4 == null)
-                      ('', missing)
-                    else ...[
-                      (l10n.businessReviewBankName, item.bankName ?? missing),
-                      (l10n.businessReviewBankAccount,
-                          l10n.businessReviewBankAccountEnding(item.bankAccountLast4!)),
-                      (l10n.businessReviewBankAccountName, item.bankAccountName ?? missing),
-                    ],
-                  ]),
-                  Card.outlined(
-                    margin: const EdgeInsets.only(bottom: 20),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(l10n.businessRegStepDocument,
-                              style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
-                          if (item.documentPaths.isEmpty)
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: Text(l10n.businessReviewErrorDocumentMissing),
-                            ),
-                          for (final path in item.documentPaths)
-                            ReviewDocumentTile(
-                              name: item.documentName ?? l10n.businessRegStepDocument,
-                              isPdf: item.isPdf,
-                              viewed: state.viewedPaths.contains(path),
-                              onOpen: state.busy ? null : () => _openDocument(controller, path),
-                            ),
-                        ],
-                      ),
-                    ),
+          end: [
+            DashboardPanel(
+              title: l10n.businessRegStepDocument,
+              icon: Icons.description_outlined,
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                if (item.documentPaths.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Text(l10n.businessReviewErrorDocumentMissing),
                   ),
-                  if (state.failure != null)
-                    FailureBanner(
-                      message: l10n.businessReviewFailureMessage(state.failure!),
-                      onDismiss: controller.dismissFailure,
-                    ),
-                  ReviewDecisionPanel(
-                    reasonController: _reason,
-                    checked: state.checked,
-                    busy: state.busy,
-                    ownVote: controller.isOwnVote,
-                    documentsViewed: controller.allDocumentsViewed,
-                    onCheckedChanged: state.busy || controller.isOwnVote ? null : controller.setChecked,
-                    onApprove: controller.canApprove ? () => _decide(controller, true) : null,
-                    onReject: controller.canReject ? () => _decide(controller, false) : null,
+                for (final path in item.documentPaths)
+                  ReviewDocumentTile(
+                    name: item.documentName ?? l10n.businessRegStepDocument,
+                    isPdf: item.isPdf,
+                    viewed: state.viewedPaths.contains(path),
+                    onOpen: state.busy ? null : () => _openDocument(controller, path),
                   ),
-                ],
-              ),
+              ]),
             ),
-          ),
+            DashboardPanel(
+              padding: const EdgeInsets.all(20),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                if (state.failure != null)
+                  FailureBanner(
+                    message: l10n.businessReviewFailureMessage(state.failure!),
+                    onDismiss: controller.dismissFailure,
+                  ),
+                ReviewDecisionPanel(
+                  reasonController: _reason,
+                  checked: state.checked,
+                  busy: state.busy,
+                  ownVote: controller.isOwnVote,
+                  documentsViewed: controller.allDocumentsViewed,
+                  onCheckedChanged: state.busy || controller.isOwnVote ? null : controller.setChecked,
+                  onApprove: controller.canApprove ? () => _decide(controller, true) : null,
+                  onReject: controller.canReject ? () => _decide(controller, false) : null,
+                ),
+              ]),
+            ),
+          ],
         ),
       ),
     );

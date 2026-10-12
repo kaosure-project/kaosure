@@ -3062,4 +3062,51 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get idPostalCodeInvalid => 'စာပို့သင်္ကေတသည် ဂဏန်း ၅ လုံး ဖြစ်ရမည်';
+
+  @override
+  String get adminStatKyc => 'စစ်ဆေးရန် စောင့်နေသော အထောက်အထား';
+
+  @override
+  String get adminStatBusiness => 'စစ်ဆေးရန် စောင့်နေသော လုပ်ငန်း';
+
+  @override
+  String get adminGroupReview => 'စစ်ဆေးမှုများ';
+
+  @override
+  String get adminGroupPeople => 'အဖွဲ့ဝင်များနှင့် ဝန်ထမ်းများ';
+
+  @override
+  String get adminGroupPartners => 'မိတ်ဖက်များ';
+
+  @override
+  String get adminGroupSecurity => 'စီမံသူ လုံခြုံရေး';
+
+  @override
+  String get adminMfaHelp =>
+      'တောင်းဆိုချက်ဆုံးဖြတ်ခြင်း သို့မဟုတ် အခွင့်အရေးပြောင်းခြင်းမပြုမီ လိုအပ်သည်';
+
+  @override
+  String get adminSecurityOpsHelp =>
+      'စနစ်တန်းစီမှုနှင့် လုံခြုံရေးဖြစ်ရပ်များကို စစ်ဆေးပါ';
+
+  @override
+  String get businessReviewFilterAll => 'အားလုံး';
+
+  @override
+  String get businessReviewStatusNew => 'စစ်ဆေးရန် စောင့်နေသည်';
+
+  @override
+  String businessReviewWaitingDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days ရက် စောင့်နေသည်',
+      zero: 'ယနေ့ တင်သွင်းသည်',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessReviewEmptyFilter =>
+      'ဤစစ်ထုတ်မှုနှင့် ကိုက်ညီသော တောင်းဆိုချက် မရှိပါ';
 }

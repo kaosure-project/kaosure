@@ -940,5 +940,17 @@
   "piRevealFailed": "Không thể hiện đầy đủ. Vui lòng thử lại.",
   "piLoadFailed": "Không tải được thông tin cá nhân.",
   "idAddressRequired": "Nhập đầy đủ địa chỉ trên thẻ",
-  "idPostalCodeInvalid": "Mã bưu chính phải gồm 5 chữ số"
+  "idPostalCodeInvalid": "Mã bưu chính phải gồm 5 chữ số",
+  "adminStatKyc": "Xác minh danh tính chờ duyệt",
+  "adminStatBusiness": "Doanh nghiệp chờ duyệt",
+  "adminGroupReview": "Kiểm duyệt",
+  "adminGroupPeople": "Thành viên và nhân viên",
+  "adminGroupPartners": "Đối tác",
+  "adminGroupSecurity": "Bảo mật quản trị viên",
+  "adminMfaHelp": "Bắt buộc trước khi duyệt yêu cầu hoặc đổi quyền",
+  "adminSecurityOpsHelp": "Kiểm tra hàng đợi hệ thống và sự kiện bảo mật",
+  "businessReviewFilterAll": "Tất cả",
+  "businessReviewStatusNew": "Chờ duyệt",
+  "businessReviewWaitingDays": "{days, plural, =0{Gửi hôm nay} other{Đã chờ {days} ngày}}",
+  "businessReviewEmptyFilter": "Không có yêu cầu phù hợp bộ lọc này"
 }

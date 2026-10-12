@@ -72,6 +72,25 @@ void main() {
     });
   }
 
+  testWidgets('filters split new requests from those awaiting a second reviewer', (tester) async {
+    repository.items = [
+      reviewItem(),
+      reviewItem(id: 'reg-2', name: 'Second Vote Shop', dualReview: true,
+          firstReviewerId: 'other', firstDecisionApprove: true),
+    ];
+    final l10n = await pump(tester, const BusinessReviewQueuePage(onlySecondVote: true));
+    expect(find.text('Second Vote Shop'), findsOneWidget);
+    expect(find.text('ร้านเก้าเทรดดิ้ง'), findsNothing);
+
+    await tapText(tester, '${l10n.businessReviewStatusNew} (1)');
+    expect(find.text('Second Vote Shop'), findsNothing);
+    expect(find.text('ร้านเก้าเทรดดิ้ง'), findsOneWidget);
+
+    await tapText(tester, '${l10n.businessReviewFilterAll} (2)');
+    expect(find.text('Second Vote Shop'), findsOneWidget);
+    expect(find.text('ร้านเก้าเทรดดิ้ง'), findsOneWidget);
+  });
+
   testWidgets('empty queue and missing permission show clear messages', (tester) async {
     repository.items = [];
     final l10n = await pump(tester, const BusinessReviewQueuePage());

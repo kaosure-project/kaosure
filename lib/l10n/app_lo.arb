@@ -940,5 +940,17 @@
   "piRevealFailed": "ສະແດງຂໍ້ມູນເຕັມບໍ່ສຳເລັດ ກະລຸນາລອງອີກຄັ້ງ",
   "piLoadFailed": "ໂຫຼດຂໍ້ມູນສ່ວນຕົວບໍ່ສຳເລັດ",
   "idAddressRequired": "ປ້ອນທີ່ຢູ່ຕາມບັດໃຫ້ຄົບທຸກຊ່ອງ",
-  "idPostalCodeInvalid": "ລະຫັດໄປສະນີຕ້ອງເປັນຕົວເລກ 5 ຫຼັກ"
+  "idPostalCodeInvalid": "ລະຫັດໄປສະນີຕ້ອງເປັນຕົວເລກ 5 ຫຼັກ",
+  "adminStatKyc": "ການຢືນຢັນຕົວຕົນລໍຖ້າກວດ",
+  "adminStatBusiness": "ທຸລະກິດລໍຖ້າກວດ",
+  "adminGroupReview": "ວຽກກວດສອບ",
+  "adminGroupPeople": "ສະມາຊິກ ແລະ ທີມງານ",
+  "adminGroupPartners": "ພາດເນີ",
+  "adminGroupSecurity": "ຄວາມປອດໄພຂອງຜູ້ດູແລ",
+  "adminMfaHelp": "ຕ້ອງຢືນຢັນສອງຂັ້ນຕອນກ່ອນຕັດສິນຄຳຂໍ ຫຼື ປ່ຽນສິດ",
+  "adminSecurityOpsHelp": "ເບິ່ງສະຖານະຄິວງານ ແລະ ເຫດການດ້ານຄວາມປອດໄພຂອງລະບົບ",
+  "businessReviewFilterAll": "ທັງໝົດ",
+  "businessReviewStatusNew": "ລໍຖ້າກວດ",
+  "businessReviewWaitingDays": "{days, plural, =0{ສົ່ງມື້ນີ້} other{ລໍຖ້າມາແລ້ວ {days} ມື້}}",
+  "businessReviewEmptyFilter": "ບໍ່ມີຄຳຂໍໃນຕົວກອງນີ້"
 }

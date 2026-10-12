@@ -3070,4 +3070,50 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get idPostalCodeInvalid => 'Postal code must be 5 digits';
+
+  @override
+  String get adminStatKyc => 'Identity checks waiting';
+
+  @override
+  String get adminStatBusiness => 'Businesses waiting';
+
+  @override
+  String get adminGroupReview => 'Reviews';
+
+  @override
+  String get adminGroupPeople => 'Members and staff';
+
+  @override
+  String get adminGroupPartners => 'Partners';
+
+  @override
+  String get adminGroupSecurity => 'Admin security';
+
+  @override
+  String get adminMfaHelp =>
+      'Required before deciding requests or changing roles';
+
+  @override
+  String get adminSecurityOpsHelp => 'Check system queues and security events';
+
+  @override
+  String get businessReviewFilterAll => 'All';
+
+  @override
+  String get businessReviewStatusNew => 'Awaiting review';
+
+  @override
+  String businessReviewWaitingDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Waiting $days days',
+      one: 'Waiting 1 day',
+      zero: 'Submitted today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessReviewEmptyFilter => 'No requests match this filter';
 }

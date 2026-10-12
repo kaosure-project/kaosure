@@ -1788,7 +1788,7 @@ class AppLocalizationsLo extends AppLocalizations {
 
   @override
   String get reviewBankNameRequired =>
-      'ຕ້ອງຜ່ານການຢືນຢັນຕົວບຸກຄົນກ່ອນ ແລະຊື່ບັນຊີຕ້ອງກົງກັບເອກະສານທີ່ຜ່ານກວດແລະຍັງບໍ່ໝົດອາຍຸ';
+      'ຊື່ບັນຊີຕ້ອງກົງກັບເອກະສານຢືນຢັນຕົວຕົນທີ່ຜ່ານກວດແລະຍັງບໍ່ໝົດອາຍຸ ຫຼື ກົງກັບຊື່ ແລະ ນາມສະກຸນໃນໂປຣໄຟລ໌ ຖ້າຍັງບໍ່ໄດ້ຢືນຢັນຕົວຕົນ';
 
   @override
   String get adminHubTitle => 'ສູນຜູ້ດູແລ Kao ID';

@@ -572,7 +572,7 @@
   "staffTargetInvalid": "请选择已验证邮箱的正常账户。不能在此授予 Owner 角色。",
   "staffTitle": "工作人员管理",
   "reviewIdentityName": "已核实的身份姓名",
-  "reviewBankNameRequired": "请先通过身份审核。银行账户姓名必须与有效且已批准的身份证明一致。",
+  "reviewBankNameRequired": "银行账户姓名必须与有效且已批准的身份证明一致；尚未完成身份验证时，须与个人资料中的姓名一致。",
   "adminHubTitle": "Kao ID 管理中心",
   "adminHubScope": "管理统一账户和身份验证。交易由 Secondhand 管理。",
   "adminHubStaffHelp": "分配或撤销工作人员角色，并查看操作记录。",

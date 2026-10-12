@@ -572,7 +572,7 @@
   "staffTargetInvalid": "Select an active account with verified email. The Owner cannot be assigned here.",
   "staffTitle": "Staff management",
   "reviewIdentityName": "Verified identity name",
-  "reviewBankNameRequired": "Approve identity verification first. The bank holder name must match a valid approved identity document.",
+  "reviewBankNameRequired": "The bank holder name must match a valid approved identity document, or the profile first and last name if identity is not verified yet.",
   "adminHubTitle": "Kao ID administration",
   "adminHubScope": "Manage central accounts and identity verification. Trading is managed in Secondhand.",
   "adminHubStaffHelp": "Assign or revoke staff roles and view the action history.",

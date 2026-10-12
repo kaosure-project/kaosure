@@ -1853,7 +1853,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reviewBankNameRequired =>
-      'Approve identity verification first. The bank holder name must match a valid approved identity document.';
+      'The bank holder name must match a valid approved identity document, or the profile first and last name if identity is not verified yet.';
 
   @override
   String get adminHubTitle => 'Kao ID administration';

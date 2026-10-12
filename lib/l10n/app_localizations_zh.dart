@@ -1697,7 +1697,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get reviewIdentityName => '已核实的身份姓名';
 
   @override
-  String get reviewBankNameRequired => '请先通过身份审核。银行账户姓名必须与有效且已批准的身份证明一致。';
+  String get reviewBankNameRequired =>
+      '银行账户姓名必须与有效且已批准的身份证明一致；尚未完成身份验证时，须与个人资料中的姓名一致。';
 
   @override
   String get adminHubTitle => 'Kao ID 管理中心';
@@ -4925,7 +4926,8 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
   String get reviewIdentityName => '已核实的身份姓名';
 
   @override
-  String get reviewBankNameRequired => '请先通过身份审核。银行账户姓名必须与有效且已批准的身份证明一致。';
+  String get reviewBankNameRequired =>
+      '银行账户姓名必须与有效且已批准的身份证明一致；尚未完成身份验证时，须与个人资料中的姓名一致。';
 
   @override
   String get adminHubTitle => 'Kao ID 管理中心';

@@ -3460,7 +3460,7 @@ abstract class AppLocalizations {
   /// No description provided for @reviewBankNameRequired.
   ///
   /// In en, this message translates to:
-  /// **'Approve identity verification first. The bank holder name must match a valid approved identity document.'**
+  /// **'The bank holder name must match a valid approved identity document, or the profile first and last name if identity is not verified yet.'**
   String get reviewBankNameRequired;
 
   /// No description provided for @adminHubTitle.

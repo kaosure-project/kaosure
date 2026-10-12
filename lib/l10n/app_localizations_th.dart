@@ -1833,7 +1833,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get reviewBankNameRequired =>
-      'ต้องผ่านการยืนยันตัวบุคคลก่อน และชื่อบัญชีธนาคารต้องตรงกับเอกสารที่ผ่านตรวจและยังไม่หมดอายุ';
+      'ชื่อบัญชีธนาคารต้องตรงกับชื่อในเอกสารยืนยันตัวตนที่ผ่านตรวจและยังไม่หมดอายุ หรือตรงกับชื่อ-นามสกุลในโปรไฟล์หากยังไม่ได้ยืนยันตัวตน';
 
   @override
   String get adminHubTitle => 'ศูนย์ผู้ดูแล Kao ID';

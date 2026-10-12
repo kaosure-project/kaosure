@@ -572,7 +572,7 @@
   "staffTargetInvalid": "Chọn tài khoản đang hoạt động và đã xác minh email. Không thể gán Owner ở đây.",
   "staffTitle": "Quản lý nhân viên",
   "reviewIdentityName": "Tên trên giấy tờ đã xác minh",
-  "reviewBankNameRequired": "Cần duyệt danh tính trước. Tên chủ tài khoản phải khớp giấy tờ định danh đã duyệt và còn hiệu lực.",
+  "reviewBankNameRequired": "Tên chủ tài khoản phải khớp giấy tờ định danh đã duyệt và còn hiệu lực, hoặc họ tên trong hồ sơ nếu chưa xác minh danh tính.",
   "adminHubTitle": "Trung tâm quản trị Kao ID",
   "adminHubScope": "Quản lý tài khoản chung và xác minh danh tính. Giao dịch được quản lý trong Secondhand.",
   "adminHubStaffHelp": "Gán hoặc thu hồi vai trò nhân viên và xem lịch sử thao tác.",

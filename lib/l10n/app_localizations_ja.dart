@@ -1730,7 +1730,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get reviewBankNameRequired =>
-      '先に本人確認を承認してください。口座名義は有効な承認済み本人確認書類の氏名と一致する必要があります。';
+      '口座名義は有効な承認済み本人確認書類の氏名、本人確認前の場合はプロフィールの氏名と一致する必要があります。';
 
   @override
   String get adminHubTitle => 'Kao ID 管理センター';

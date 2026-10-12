@@ -1831,7 +1831,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get reviewBankNameRequired =>
-      'Cần duyệt danh tính trước. Tên chủ tài khoản phải khớp giấy tờ định danh đã duyệt và còn hiệu lực.';
+      'Tên chủ tài khoản phải khớp giấy tờ định danh đã duyệt và còn hiệu lực, hoặc họ tên trong hồ sơ nếu chưa xác minh danh tính.';
 
   @override
   String get adminHubTitle => 'Trung tâm quản trị Kao ID';

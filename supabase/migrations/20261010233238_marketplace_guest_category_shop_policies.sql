@@ -1,0 +1,13 @@
+drop policy if exists "account_closure_r10d" on public.products;
+drop policy if exists "account_closure_r10d" on public.product_images;
+drop policy if exists "account_closure_r10d" on public.categories;
+drop policy if exists "account_closure_r10d" on public.shops;
+drop policy if exists "account_closure_r10d" on public.favorites;
+drop policy if exists "account_closure_r10d" on public.followers;
+drop policy if exists "Users can view categories" on public.categories;
+drop policy if exists "Users can view shops" on public.shops;
+create policy marketplace_guest_read_active_categories on public.categories for select to anon using(is_active=true);
+create policy marketplace_member_read_active_categories on public.categories for select to authenticated using(is_active=true);
+create policy marketplace_guest_read_active_shops on public.shops for select to anon using(shop_status='active');
+create policy marketplace_member_read_active_or_own_shops on public.shops for select to authenticated using(shop_status='active' or ((select kaoid_private.account_active_r9f()) and owner_id=(select auth.uid())));
+;

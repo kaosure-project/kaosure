@@ -1,0 +1,107 @@
+[
+  {
+    "path": "lib/app/router.dart",
+    "baseline_sha256": "53b146dec117fea18630f3f05e87b0d426df0cc805290318a487a72db3748f56",
+    "patch_sha256": "9c94cf33afe510702aefaf9155219d12c5382ad52bcb56671ac822675d843389"
+  },
+  {
+    "path": "lib/features/kao_id/account/presentation/pages/complete_profile_page.dart",
+    "baseline_sha256": "933826c542f1405486d1077356f13eef0acb4589901561e41eac14d0c9c56e39",
+    "patch_sha256": "b7ca40d957382271a55c99165f9495c11d4df3ff286fd84937d1f92c3db28900"
+  },
+  {
+    "path": "lib/features/kao_id/auth/presentation/pages/change_password_page.dart",
+    "baseline_sha256": "64542fdfa0fab5318f000e4b30340219bbb2996828167a16cb86d9c950be3c55",
+    "patch_sha256": "b1292894c17c561a386fcffd7010cef5cfe4297cb339ccf6ff0be6070f350c4d"
+  },
+  {
+    "path": "lib/features/kao_id/auth/presentation/pages/forgot_password_page.dart",
+    "baseline_sha256": "770c92059687a7f366f391c57e7f00f4d90272f7231a8f9609f72280c995d969",
+    "patch_sha256": "e154477fda6f13af81fd024a86052dc94081a8e62af448eb0287996a0045cba5"
+  },
+  {
+    "path": "lib/features/kao_id/auth/presentation/pages/landing_page.dart",
+    "baseline_sha256": "f0e4e851cc2dacf2e3d665f6cd0874d989b12e59690d98517078a39883a45f66",
+    "patch_sha256": "815fc7fb3b4af1ecf03115d9590c62636a50986583f096503f11d1328df87572"
+  },
+  {
+    "path": "lib/features/kao_id/auth/presentation/pages/login_page.dart",
+    "baseline_sha256": "cabcf9f7a05ed563337c9f5c0fb3693300d71a25ebabd066c7758a970ab35678",
+    "patch_sha256": "643f0844b38ecbbe70173f725f02aecf8801b11a303804c1e212651b47a18209"
+  },
+  {
+    "path": "lib/features/kao_id/auth/presentation/pages/register_page.dart",
+    "baseline_sha256": "10417b3b115c06f3d73a9ec6266e9baba461bddf47c315a8cacb67cee1d597c4",
+    "patch_sha256": "389e9b7c8eb833ceb16e517ee9d5aa49c60b40553207a93bda1622adc4e89fc3"
+  },
+  {
+    "path": "lib/features/kao_id/auth/presentation/pages/reset_password_page.dart",
+    "baseline_sha256": "cf2fe3af8ed3b764f59807e39b7cd2dd322e8b1cb3e69da29ab2d6f3a661eaac",
+    "patch_sha256": "5e09030500ab88457ed6da4dfd5610beff5a6676c519bdade2392d1875a2b798"
+  },
+  {
+    "path": "lib/features/kao_id/auth/presentation/pages/verify_email_page.dart",
+    "baseline_sha256": "0f0258f825bbfee2acaf36bb25bba391016994c6dd58a1b960246b669e92c998",
+    "patch_sha256": "dd6df4c7a9841df5c511f6acc6bcedabdcfd0a54996a5ebe6dafcdaf8e85fc62"
+  },
+  {
+    "path": "lib/features/kao_id/auth/presentation/widgets/auth_logo.dart",
+    "baseline_sha256": "d051fffc877ff4aa6f89389be622d4690f544414caff4ff7d1a515fdc40c98de",
+    "patch_sha256": "980d7fe2eb41ea015805ee98ea373a91df68929e1cb11d02a6cd593bed14ce17"
+  },
+  {
+    "path": "lib/features/kao_id/auth/presentation/widgets/password_requirements.dart",
+    "baseline_sha256": "418faadcaba173b8f0c4278628fb8822a6ae202829d14525442ec92b42c70de7",
+    "patch_sha256": "a8fdf0dd212028c543d929682332a1705703b8df85ec6277cf0e7f895bfbf3e4"
+  },
+  {
+    "path": "lib/features/kao_id/bootstrap/screens/kao_id_bootstrap_screen.dart",
+    "baseline_sha256": "43a91d749a7c82326503b29394ed53ac35f27dbcb9a0116e41004d3058587a9a",
+    "patch_sha256": "3bbd4991d099efec1c4c8efbd8cc1a2b797aac7198cc16c384ea7f64fa847eea"
+  },
+  {
+    "path": "lib/features/kao_id/dashboard/presentation/screens/dashboard_screen.dart",
+    "baseline_sha256": "2d202a259a690eff214cc6b34e212b32b45a328e4e8e7c016880cb7daa194178",
+    "patch_sha256": "f8cb56764f150b7192d51094bd4652bfd94354107f175182f15461fbd21ad913"
+  },
+  {
+    "path": "lib/features/kao_id/dashboard/presentation/widgets/settings/sign_out_tile.dart",
+    "baseline_sha256": null,
+    "patch_sha256": "199023742a9d791f9e4650622730965579d282f88367c62c3dbb9c9e2ea54fa9"
+  },
+  {
+    "path": "lib/features/kao_id/kyc/presentation/screens/kyc_page.dart",
+    "baseline_sha256": "7a9c68c0bdea60049118bd35f534e919a4f975bad6b3979da5f4c4532a3d513d",
+    "patch_sha256": "b7488a516a7c93e27e644626be7c28de67434b63df313f33b76a5af546da7f9d"
+  },
+  {
+    "path": "lib/features/kao_id/router/kao_id_routes.dart",
+    "baseline_sha256": "302dea58ce635dfa61d299656b9b02ccec338722c99b369aa1fea9cf11509a87",
+    "patch_sha256": "bedc02120589d673848f3e5b7fbddb0a058999b22af74ad3a811547956fc7ba8"
+  },
+  {
+    "path": "lib/l10n/app_en.arb",
+    "baseline_sha256": "b3a190a46530eeef250d4358840cfb9b5cb60dae64736b537fb0e4b2169a5cf1",
+    "patch_sha256": "577a62b6e07f72b9eb1acbfd665929079985a1eb69ab92c5539a7ffc9d6d8403"
+  },
+  {
+    "path": "lib/l10n/app_th.arb",
+    "baseline_sha256": "44760b4020ac13a4b99a7bb97d7a1b4a10d63df89c830e8b895bcf170ce1d5d1",
+    "patch_sha256": "85a99b4f3b7a63dba7b07a0f30e35153af3429a5ab33f090e1331d37b27b8f4c"
+  },
+  {
+    "path": "lib/shared/widgets/buttons/primary_button.dart",
+    "baseline_sha256": "503c796843116f04e9067d54dcf6206a8975168a3f7c600b2e5e38174805ed3e",
+    "patch_sha256": "bbb46d4e2da30514d4c8fa9ef42076f5f7fec5f259d419f525fb775ef44d4bcd"
+  },
+  {
+    "path": "lib/shared/widgets/forms/app_email_field.dart",
+    "baseline_sha256": "b62f91ce226760591c27bfad8b544e693f6f261b07afbdfb3708803880f0a0f6",
+    "patch_sha256": "8014d49f5b84cb3090cf4d54b6a1e9de86b34ab1e0d64823ff55e58baf0c453e"
+  },
+  {
+    "path": "lib/shared/widgets/forms/app_password_field.dart",
+    "baseline_sha256": "6d2fdd83986ca9af7bc59925c267de30306d8cf64d8a5d212a8670d0c6f272fe",
+    "patch_sha256": "397e89b70a7d4acbc86ad5cdd4cdff587f39a0f4214f469a55874e8c1116b907"
+  }
+]

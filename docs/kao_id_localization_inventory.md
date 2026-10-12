@@ -1,0 +1,853 @@
+# Kao ID — บัญชีงานภาษา หลังรวมชุด 1D (ตรวจ source เท่านั้น)
+
+ฐาน: kaosure_localization_review.zip + ชุด 1A/1B/1C/1D; ไม่ใช่การอ่านไฟล์สดบนเครื่อง Windows
+การสแกนข้อความไทยเป็นเพียงตัวช่วย อาจรวมข้อความ debug/ข้อมูลระบบ และไม่พบข้อความอังกฤษล้วนทุกกรณี
+จำนวนไฟล์ pages/screens ไม่ใช่จำนวนหน้าที่ router เปิดถึงจริง และอาจมี placeholder หรือไฟล์ว่าง
+ห้ามใช้จำนวนที่เหลือเป็นเปอร์เซ็นต์ความสำเร็จ ต้องอ่านเส้นทางและทดสอบ UI จริงด้วย
+
+## ลำดับงานที่ยังต้องทำ
+
+1. ยืนยันผล 1D บนเครื่องผู้ใช้และตรวจ Account/Edit/Complete Profile สองภาษา
+2. Dashboard ส่วน profile/status/empty/error และข้อความ shared ที่หน้าจอใช้
+3. Auth และ Phone verification รวม validator/dialog/snackbar/error โดยคง flow เดิม
+4. KYC, Identity documents และ Kao ID issuance รวมสถานะและผลตรวจ
+5. Devices/Sessions/Security และ Privacy/Notifications/About ที่ยัง TODO
+6. Business/Organization และ Governance รวมสิทธิ์ผู้ใช้
+7. ไล่ทุก route ที่เข้าถึงจริง ทดสอบเปิดหน้าค้างแล้วสลับภาษา รีเฟรช และขนาดหน้าจอ
+
+## จุดตรวจสำคัญในโปรไฟล์
+
+- กฎชื่อ Complete Profile กับ Edit Profile ไม่ตรงกัน: 100 กับ 3–30 ตัวอักษร ยังไม่เปลี่ยนกฎ
+- preferred language ในข้อมูลโปรไฟล์ยังคนละส่วนกับ locale controller ต้องกำหนดแหล่งข้อมูลหลักก่อน sync
+- มี ProfileInformation สองไฟล์ หนึ่งตัวมี ProfileKaoId และอีกตัวไม่มี จึงยังไม่รวมโดยพลการ
+- Edit Profile เดิมแสดงสำเร็จแม้ controller เก็บ error: ชุด 1D เพิ่มตรวจผลก่อน pop แต่ยังต้องทดสอบบันทึกจริง
+- Account menu callbacks เดิมว่าง: ปิดการกดและแจ้งสถานะ ไม่ได้สร้างฟังก์ชันใหม่
+
+## จำนวนบรรทัดข้อความไทยที่สแกนพบหลังรวมชุด
+
+| หมวด | บรรทัดที่ต้องตรวจ |
+|---|---:|
+| account | 1 |
+| auth | 101 |
+| business | 237 |
+| dashboard | 9 |
+| governance | 24 |
+| identity | 104 |
+| kyc | 264 |
+| phone_verification | 37 |
+
+## รายการไฟล์ pages/screens ทั้งหมดที่พบ
+
+สถานะต่อไฟล์: แปลใน 1D = ยังรอ runtime; อื่น ๆ = ต้องตรวจรายละเอียด ไม่สรุปว่าใช้จริงหรือแปลครบ
+
+- `lib/features/kao_id/account/presentation/pages/account_page.dart` — แปลใน 1D / รอทดสอบ
+- `lib/features/kao_id/account/presentation/pages/complete_profile_page.dart` — แปลใน 1D / รอทดสอบ
+- `lib/features/kao_id/account/presentation/pages/edit_profile_page.dart` — แปลใน 1D / รอทดสอบ
+- `lib/features/kao_id/account/presentation/pages/identity_verification_page.dart` — แปลใน 1D / รอทดสอบ
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/auth/presentation/pages/forgot_password_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/auth/presentation/pages/landing_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/auth/presentation/pages/login_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/auth/presentation/pages/profile_dashboard_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/auth/presentation/pages/verify_email_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/bootstrap/screens/kao_id_bootstrap_screen.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/business/presentation/pages/business_completed_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/dashboard/presentation/screens/dashboard_screen.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/devices/presentation/screens/device_list_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/governance/presentation/pages/governance_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/identity/presentation/screens/document_detail_screen.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/identity/presentation/screens/document_preview_screen.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/identity/presentation/screens/identity_verification_screen.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/kyc/presentation/screens/kyc_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/kyc/presentation/screens/residence_permit_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/kyc/presentation/screens/verification_history_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart` — รอตรวจความครบและการเข้าถึงจริง
+
+## จุดที่สแกนพบข้อความไทยค้าง
+
+- `lib/features/kao_id/account/data/datasources/remote/profile_remote_datasource_impl.dart:146` — `throw Exception('Username นี้ถูกใช้งานแล้ว');`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:87` — `'ส่งรหัสยืนยันเรียบร้อยแล้ว',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:106` — `'ไม่สามารถส่งรหัสยืนยันได้ กรุณาลองใหม่อีกครั้ง',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:145` — `'เปลี่ยนรหัสผ่านเรียบร้อยแล้ว',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:166` — `'ไม่สามารถเปลี่ยนรหัสผ่านได้ '`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:167` — `'กรุณาตรวจสอบรหัสยืนยันแล้วลองใหม่',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:182` — `return 'กรุณากรอกรหัสยืนยัน';`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:190` — `return 'กรุณากรอกรหัสผ่านใหม่';`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:194` — `return 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร';`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:198` — `return 'รหัสผ่านต้องมีตัวเลขอย่างน้อย 1 ตัว';`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:204` — `return 'รหัสผ่านต้องมีอักขระพิเศษอย่างน้อย 1 ตัว';`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:212` — `return 'กรุณายืนยันรหัสผ่านใหม่';`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:216` — `return 'รหัสผ่านไม่ตรงกัน';`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:226` — `title: 'เปลี่ยนรหัสผ่าน',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:257` — `'ยืนยันตัวตนก่อนเปลี่ยนรหัสผ่าน',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:268` — `'เพื่อความปลอดภัย เราจะส่งรหัสยืนยัน'`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:269` — `'ไปยังอีเมลหรือหมายเลขโทรศัพท์'`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:270` — `'ที่ยืนยันไว้ในบัญชีของคุณ',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:282` — `text: 'ส่งรหัสยืนยัน',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:307` — `label: 'รหัสยืนยัน',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:308` — `hint: 'กรอกรหัสที่ได้รับ',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:329` — `? 'กำลังส่ง...'`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:330` — `: 'ส่งรหัสใหม่',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:342` — `label: 'รหัสผ่านใหม่',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:343` — `hint: 'กรอกรหัสผ่านใหม่',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:361` — `label: 'ยืนยันรหัสผ่านใหม่',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:362` — `hint: 'กรอกรหัสผ่านใหม่อีกครั้ง',`
+- `lib/features/kao_id/auth/presentation/pages/change_password_page.dart:370` — `text: 'เปลี่ยนรหัสผ่าน',`
+- `lib/features/kao_id/auth/presentation/pages/forgot_password_page.dart:56` — `'ส่งลิงก์สำหรับรีเซ็ตรหัสผ่านไปยังอีเมลเรียบร้อยแล้ว',`
+- `lib/features/kao_id/auth/presentation/pages/forgot_password_page.dart:81` — `return 'กรุณากรอกอีเมล';`
+- `lib/features/kao_id/auth/presentation/pages/forgot_password_page.dart:89` — `return 'รูปแบบอีเมลไม่ถูกต้อง';`
+- `lib/features/kao_id/auth/presentation/pages/forgot_password_page.dart:99` — `title: 'ลืมรหัสผ่าน',`
+- `lib/features/kao_id/auth/presentation/pages/forgot_password_page.dart:131` — `label: 'อีเมล',`
+- `lib/features/kao_id/auth/presentation/pages/forgot_password_page.dart:132` — `hint: 'กรอกอีเมล',`
+- `lib/features/kao_id/auth/presentation/pages/forgot_password_page.dart:140` — `text: 'ส่งลิงก์รีเซ็ตรหัสผ่าน',`
+- `lib/features/kao_id/auth/presentation/pages/login_page.dart:78` — `return 'กรุณากรอกอีเมล';`
+- `lib/features/kao_id/auth/presentation/pages/login_page.dart:86` — `return 'รูปแบบอีเมลไม่ถูกต้อง';`
+- `lib/features/kao_id/auth/presentation/pages/login_page.dart:94` — `return 'กรุณากรอกรหัสผ่าน';`
+- `lib/features/kao_id/auth/presentation/pages/login_page.dart:98` — `return 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร';`
+- `lib/features/kao_id/auth/presentation/pages/login_page.dart:108` — `title: 'เข้าสู่ระบบ',`
+- `lib/features/kao_id/auth/presentation/pages/login_page.dart:139` — `label: 'อีเมล',`
+- `lib/features/kao_id/auth/presentation/pages/login_page.dart:140` — `hint: 'กรอกอีเมล',`
+- `lib/features/kao_id/auth/presentation/pages/login_page.dart:151` — `label: 'รหัสผ่าน',`
+- `lib/features/kao_id/auth/presentation/pages/login_page.dart:152` — `hint: 'กรอกรหัสผ่าน',`
+- `lib/features/kao_id/auth/presentation/pages/login_page.dart:160` — `text: 'เข้าสู่ระบบ',`
+- `lib/features/kao_id/auth/presentation/pages/login_page.dart:177` — `'ลืมรหัสผ่าน?',`
+- `lib/features/kao_id/auth/presentation/pages/login_page.dart:189` — `'สมัครสมาชิก',`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:74` — `'สมัครสมาชิกสำเร็จ',`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:108` — `return 'กรุณากรอกอีเมล';`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:116` — `return 'รูปแบบอีเมลไม่ถูกต้อง';`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:124` — `return 'กรุณากรอกรหัสผ่าน';`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:128` — `return 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร';`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:132` — `return 'รหัสผ่านต้องมีตัวเลขอย่างน้อย 1 ตัว';`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:138` — `return 'รหัสผ่านต้องมีอักขระพิเศษอย่างน้อย 1 ตัว';`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:146` — `return 'กรุณายืนยันรหัสผ่าน';`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:150` — `return 'รหัสผ่านไม่ตรงกัน';`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:160` — `title: 'สร้างบัญชี',`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:192` — `label: 'อีเมล',`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:193` — `hint: 'กรอกอีเมล',`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:203` — `label: 'รหัสผ่าน',`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:204` — `hint: 'กรอกรหัสผ่าน',`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:224` — `label: 'ยืนยันรหัสผ่าน',`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:225` — `hint: 'กรอกรหัสผ่านอีกครั้ง',`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:233` — `text: 'สร้างบัญชี',`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:247` — `'มีบัญชีอยู่แล้ว? เข้าสู่ระบบ',`
+- `lib/features/kao_id/auth/presentation/pages/register_page.dart:269` — `'สมัครในนามบริษัท / ผู้ประกอบการ',`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:96` — `'เปลี่ยนรหัสผ่านเรียบร้อยแล้ว',`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:126` — `return 'กรุณากรอกรหัสผ่านใหม่';`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:130` — `return 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร';`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:134` — `return 'รหัสผ่านต้องมีตัวเลขอย่างน้อย 1 ตัว';`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:140` — `return 'รหัสผ่านต้องมีอักขระพิเศษอย่างน้อย 1 ตัว';`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:148` — `return 'กรุณายืนยันรหัสผ่านใหม่';`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:152` — `return 'รหัสผ่านไม่ตรงกัน';`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:166` — `title: 'ตั้งรหัสผ่านใหม่',`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:208` — `label: 'รหัสผ่านใหม่',`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:209` — `hint: 'กรอกรหัสผ่านใหม่',`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:227` — `label: 'ยืนยันรหัสผ่านใหม่',`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:228` — `hint: 'กรอกรหัสผ่านใหม่อีกครั้ง',`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:236` — `text: 'เปลี่ยนรหัสผ่าน',`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:272` — `'ลิงก์ตั้งรหัสผ่านไม่ถูกต้องหรือหมดอายุ',`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:282` — `'กรุณาขอลิงก์ตั้งรหัสผ่านใหม่อีกครั้ง '`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:283` — `'เพื่อยืนยันคำขอเปลี่ยนรหัสผ่านของคุณ',`
+- `lib/features/kao_id/auth/presentation/pages/reset_password_page.dart:293` — `text: 'ขอลิงก์ใหม่',`
+- `lib/features/kao_id/auth/presentation/pages/verify_email_page.dart:49` — `'ส่งอีเมลยืนยันเรียบร้อยแล้ว',`
+- `lib/features/kao_id/auth/presentation/pages/verify_email_page.dart:96` — `'ยังไม่ได้ยืนยันอีเมล',`
+- `lib/features/kao_id/auth/presentation/pages/verify_email_page.dart:107` — `'ยืนยันอีเมลสำเร็จ',`
+- `lib/features/kao_id/auth/presentation/pages/verify_email_page.dart:145` — `title: 'ยืนยันอีเมล',`
+- `lib/features/kao_id/auth/presentation/pages/verify_email_page.dart:182` — `'ยืนยันอีเมล',`
+- `lib/features/kao_id/auth/presentation/pages/verify_email_page.dart:207` — `'ระบบได้ส่งอีเมลยืนยันบัญชีแล้ว\n'`
+- `lib/features/kao_id/auth/presentation/pages/verify_email_page.dart:208` — `'กรุณาเปิดอีเมลและกดลิงก์ยืนยัน',`
+- `lib/features/kao_id/auth/presentation/pages/verify_email_page.dart:217` — `text: 'ส่งอีเมลยืนยันอีกครั้ง',`
+- `lib/features/kao_id/auth/presentation/pages/verify_email_page.dart:228` — `text: 'ตรวจสอบอีกครั้ง',`
+- `lib/features/kao_id/auth/presentation/pages/verify_email_page.dart:247` — `'ยืนยันภายหลัง',`
+- `lib/features/kao_id/auth/presentation/widgets/auth_logo.dart:38` — `'ยินดีต้อนรับสู่ KaoSure',`
+- `lib/features/kao_id/auth/presentation/widgets/password_requirements.dart:56` — `'รหัสผ่านต้องมี:',`
+- `lib/features/kao_id/auth/presentation/widgets/password_requirements.dart:64` — `_item(_hasMinLength, '8 ตัวขึ้นไป'),`
+- `lib/features/kao_id/auth/presentation/widgets/password_requirements.dart:73` — `_item(_hasLetter, 'ตัวอักษร'),`
+- `lib/features/kao_id/auth/presentation/widgets/password_requirements.dart:82` — `_item(_hasNumber, 'ตัวเลข'),`
+- `lib/features/kao_id/auth/presentation/widgets/password_requirements.dart:91` — `_item(_hasSpecial, 'อักขระพิเศษ'),`
+- `lib/features/kao_id/auth/presentation/widgets/profile_header.dart:28` — `'พศวัต ถวิลคำ',`
+- `lib/features/kao_id/auth/presentation/widgets/profile_header.dart:61` — `'ยืนยันอีเมลแล้ว',`
+- `lib/features/kao_id/auth/presentation/widgets/profile_header.dart:70` — `'สมาชิกตั้งแต่ 20 กรกฎาคม 2569',`
+- `lib/features/kao_id/business/presentation/pages/business_completed_page.dart:46` — `title: const Text('สมัครผู้ประกอบการ'),`
+- `lib/features/kao_id/business/presentation/pages/business_completed_page.dart:79` — `'การสมัครเสร็จสมบูรณ์',`
+- `lib/features/kao_id/business/presentation/pages/business_completed_page.dart:90` — `'ข้อมูลผู้ประกอบการได้รับการยืนยันแล้ว '`
+- `lib/features/kao_id/business/presentation/pages/business_completed_page.dart:91` — `'และพร้อมใช้งานตามสิทธิ์ของบัญชี',`
+- `lib/features/kao_id/business/presentation/pages/business_completed_page.dart:131` — `'บัญชีของคุณยังคงเป็น Kao ID เดิม '`
+- `lib/features/kao_id/business/presentation/pages/business_completed_page.dart:132` — `'และข้อมูลกิจการจะถูกใช้เป็น '`
+- `lib/features/kao_id/business/presentation/pages/business_completed_page.dart:133` — `'Organization สำหรับสิทธิ์ทางธุรกิจ',`
+- `lib/features/kao_id/business/presentation/pages/business_completed_page.dart:147` — `text: 'กลับสู่ Kao ID',`
+- `lib/features/kao_id/business/presentation/pages/business_completed_page.dart:188` — `'ข้อมูลกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_completed_page.dart:197` — `label: 'ชื่อกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_completed_page.dart:203` — `label: 'เลขทะเบียน',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:82` — `'ไม่สามารถเลือกเอกสารได้: $error',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:102` — `'กรุณาแนบเอกสารยืนยันการประกอบกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:145` — `title: const Text('เอกสารกิจการ'),`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:184` — `'เอกสารยืนยันกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:197` — `'แนบเอกสารที่ใช้ยืนยันการประกอบธุรกิจ '`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:198` — `'เพื่อใช้ในขั้นตอนตรวจสอบของ KaoSure',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:227` — `text: 'ตรวจสอบข้อมูล',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:239` — `'ย้อนกลับ',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:289` — `'เอกสารประกอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:299` — `'ขั้นตอนที่ 3 จาก 6',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:384` — `'ข้อกำหนดเอกสาร',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:395` — `'เอกสารจะต้องเป็นของกิจการที่สมัคร '`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:396` — `'และข้อมูลควรตรงกับข้อมูลที่กรอกไว้ '`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:397` — `'ระบบอาจขอเอกสารเพิ่มเติมตามผลการตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:474` — `'แนบเอกสารทะเบียนการค้า',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:485` — `'รองรับ JPG, JPEG และ PNG',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:513` — `const Text('เลือกเอกสาร'),`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:561` — `'ไม่ทราบประเภทไฟล์',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:586` — `tooltip: 'เปลี่ยนเอกสาร',`
+- `lib/features/kao_id/business/presentation/pages/business_document_page.dart:594` — `tooltip: 'ลบเอกสาร',`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:32` — `'ผู้ประกอบการรายย่อย / ทะเบียนการค้า',`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:33` — `'บริษัท',`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:34` — `'นิติบุคคล',`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:71` — `title: const Text('ข้อมูลกิจการ'),`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:83` — `'ข้อมูลกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:93` — `'กรอกข้อมูลกิจการให้ตรงกับเอกสาร '`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:94` — `'ที่จะใช้ยืนยันในขั้นตอนถัดไป',`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:112` — `labelText: 'ชื่อกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:114` — `'กรอกชื่อร้านหรือชื่อกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:125` — `return 'กรุณากรอกชื่อกิจการ';`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:129` — `return 'ชื่อกิจการต้องมีอย่างน้อย 2 ตัวอักษร';`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:142` — `labelText: 'ประเภทกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:165` — `return 'กรุณาเลือกประเภทกิจการ';`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:181` — `labelText: 'เลขทะเบียน',`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:183` — `'เลขทะเบียนการค้า / เลขทะเบียนบริษัท / เลขนิติบุคคล',`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:194` — `return 'กรุณากรอกเลขทะเบียน';`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:198` — `return 'กรุณาตรวจสอบเลขทะเบียน';`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:212` — `'ประเทศที่จดทะเบียน',`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:221` — `child: Text('ประเทศไทย'),`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:259` — `'ข้อมูลนี้จะถูกใช้ร่วมกับเอกสารกิจการ '`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:260` — `'และกระบวนการตรวจสอบ Organization '`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:261` — `'ของ Kao ID',`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:278` — `text: 'ดำเนินการต่อ',`
+- `lib/features/kao_id/business/presentation/pages/business_information_page.dart:291` — `child: const Text('ย้อนกลับ'),`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:262` — `'กรอกข้อมูลกิจการให้ตรงกับเอกสารทางกฎหมาย',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:267` — `label: 'ชื่อกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:268` — `hint: 'เช่น Kao Vintage Co., Ltd.',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:274` — `return 'กรุณากรอกชื่อกิจการ';`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:286` — `label: 'ประเภทการประกอบธุรกิจ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:291` — `child: Text('ธุรกิจจดทะเบียน'),`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:295` — `child: Text('มีเอกสารรับรองธุรกิจ'),`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:308` — `label: 'เลขทะเบียน / เลขอ้างอิง',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:309` — `hint: 'กรอกเลขทะเบียนกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:316` — `return 'กรุณากรอกเลขทะเบียน';`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:327` — `label: 'หมวดหมู่ธุรกิจ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:328` — `hint: 'เช่น ค้าปลีก / ของสะสม / อิเล็กทรอนิกส์',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:334` — `return 'กรุณาระบุหมวดหมู่ธุรกิจ';`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:342` — `label: 'รายละเอียดกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:344` — `'อธิบายลักษณะธุรกิจ สินค้า หรือบริการโดยสรุป',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:374` — `'เอกสารจะถูกตรวจสอบก่อนอนุมัติบัญชีธุรกิจ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:379` — `title: 'ข้อมูลกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:380` — `subtitle: 'ตรวจสอบชื่อและเลขทะเบียน',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:385` — `title: 'เอกสารธุรกิจ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:387` — `? 'อัปโหลดแล้ว'`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:388` — `: 'ยังไม่ได้แนบเอกสาร',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:394` — `title: 'ตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:414` — `return 'อยู่ระหว่างตรวจสอบ';`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:416` — `return 'ต้องแก้ไขข้อมูล';`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:418` — `return 'อนุมัติแล้ว';`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:420` — `return 'คำขอถูกปฏิเสธ';`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:422` — `return 'ส่งคำขอแล้ว';`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:425` — `return 'รอส่งคำขอ';`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:466` — `label: const Text('ยกเลิก'),`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:486` — `? 'บันทึกการแก้ไข'`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:487` — `: 'บันทึกฉบับร่าง',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:509` — `label: const Text('ส่งคำขอ'),`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:530` — `'กรุณาตรวจสอบข้อมูลที่จำเป็น',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:549` — `_showMessage('บันทึกข้อมูลเรียบร้อยแล้ว');`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:552` — `'UI พร้อมแล้ว แต่ยังไม่ได้เชื่อม UseCase',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:559` — `'ไม่สามารถบันทึกข้อมูลได้: $error',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:589` — `'กรุณาบันทึกฉบับร่างก่อนแนบเอกสาร',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:600` — `'ไม่พบ Registration ID',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:608` — `'UI พร้อมแล้ว แต่ยังไม่ได้เชื่อมระบบอัปโหลดเอกสาร',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:635` — `_showMessage('อัปโหลดเอกสารเรียบร้อยแล้ว');`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:639` — `'ไม่สามารถอัปโหลดเอกสารได้: $error',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:652` — `'กรุณากรอกข้อมูลที่จำเป็นให้ครบ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:662` — `'กรุณาแนบเอกสารธุรกิจก่อนส่งคำขอ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:670` — `'ข้อมูลยังไม่พร้อมสำหรับการส่งคำขอ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:681` — `'กรุณาบันทึกฉบับร่างก่อนส่งคำขอ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:689` — `'UI พร้อมแล้ว แต่ยังไม่ได้เชื่อม Submit UseCase',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:709` — `_showMessage('ส่งคำขอเรียบร้อยแล้ว');`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:713` — `'ไม่สามารถส่งคำขอได้: $error',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:729` — `'ยืนยันการส่งคำขอ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:733` — `'เมื่อส่งแล้ว ข้อมูลจะเข้าสู่ขั้นตอนตรวจสอบ '`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:734` — `'และอาจไม่สามารถแก้ไขข้อมูลบางส่วนได้',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:739` — `child: const Text('ตรวจสอบอีกครั้ง'),`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:743` — `child: const Text('ยืนยันส่งคำขอ'),`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:766` — `'ยกเลิกฉบับร่าง?',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:770` — `'ข้อมูลฉบับร่างและข้อมูลที่เกี่ยวข้องจะถูกยกเลิก',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:775` — `child: const Text('ไม่ยกเลิก'),`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:782` — `child: const Text('ยืนยัน'),`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:793` — `'UI พร้อมแล้ว แต่ยังไม่ได้เชื่อม Cancel UseCase',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:810` — `'ไม่สามารถยกเลิกได้: $error',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:871` — `'ยืนยันธุรกิจของคุณ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:899` — `'กรอกข้อมูลกิจการ แนบเอกสาร และส่งคำขอเพื่อเปิดใช้ความสามารถสำหรับบัญชีธุรกิจบน Kao ID',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:962` — `'$completed / 3 ขั้นตอน',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:988` — `title: 'ข้อมูลกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:994` — `title: 'เอกสาร',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1000` — `title: 'ตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1125` — `'เอกสารรับรองธุรกิจ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1132` — `'แนบเอกสารที่ใช้ยืนยันข้อมูลกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1161` — `? 'เอกสารผ่านการตรวจสอบแล้ว'`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1162` — `: 'แนบเอกสารแล้ว รอการตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1171` — `child: const Text('เปลี่ยนเอกสาร'),`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1195` — `? 'กำลังอัปโหลด...'`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1196` — `: 'เลือกและอัปโหลดเอกสาร',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1627` — `'ข้อมูลของคุณปลอดภัย',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1636` — `'ข้อมูลธุรกิจจะถูกใช้เพื่อการยืนยันตัวตนและการตรวจสอบสิทธิ์ของบัญชีธุรกิจเท่านั้น',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1716` — `label: 'ฉบับร่าง',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1717` — `title: 'ยังไม่ส่งคำขอ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1719` — `'คุณสามารถแก้ไขข้อมูลและแนบเอกสารก่อนส่งคำขอได้',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1726` — `label: 'ส่งแล้ว',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1727` — `title: 'ส่งคำขอแล้ว',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1729` — `'ระบบได้รับคำขอแล้วและกำลังเตรียมเข้าสู่ขั้นตอนตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1736` — `label: 'กำลังตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1737` — `title: 'อยู่ระหว่างตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1739` — `'ทีมตรวจสอบกำลังตรวจสอบข้อมูลและเอกสารของกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1746` — `label: 'ต้องแก้ไข',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1747` — `title: 'ต้องดำเนินการเพิ่มเติม',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1749` — `'กรุณาตรวจสอบรายละเอียดและแก้ไขข้อมูลตามที่ระบบแจ้ง',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1756` — `label: 'อนุมัติแล้ว',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1757` — `title: 'ธุรกิจได้รับการอนุมัติ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1759` — `'การยืนยันธุรกิจเสร็จสมบูรณ์แล้ว',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1766` — `label: 'ไม่อนุมัติ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1767` — `title: 'คำขอไม่ผ่านการตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_registration_page.dart:1769` — `'ตรวจสอบเหตุผลจากระบบและดำเนินการส่งคำขอใหม่ตามเงื่อนไข',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:37` — `title: const Text('ตรวจสอบข้อมูล'),`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:47` — `'ตรวจสอบข้อมูลกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:55` — `'กรุณาตรวจสอบข้อมูลทั้งหมด '`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:56` — `'ก่อนส่งคำขอตรวจสอบกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:66` — `title: 'ข้อมูลกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:71` — `label: 'ชื่อกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:78` — `label: 'เลขทะเบียน',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:85` — `label: 'ประเภทกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:92` — `label: 'ประเทศ',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:103` — `title: 'เอกสารกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:132` — `'การส่งข้อมูลจะเป็นการสร้างคำขอ '`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:133` — `'เข้าสู่กระบวนการตรวจสอบกิจการ '`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:134` — `'ยังไม่ถือว่าได้รับการอนุมัติ '`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:135` — `'หรือได้รับสถานะ Verified',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:149` — `text: 'ส่งคำขอตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:168` — `const Text('แก้ไขข้อมูล'),`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:186` — `const Text('ยืนยันการส่งคำขอ'),`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:188` — `'คุณตรวจสอบข้อมูลกิจการและเอกสาร '`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:189` — `'เรียบร้อยแล้วใช่หรือไม่?\n\n'`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:190` — `'เมื่อยืนยัน ระบบจะนำข้อมูลเข้าสู่ '`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:191` — `'กระบวนการตรวจสอบกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:199` — `const Text('กลับไปตรวจสอบ'),`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:220` — `const Text('ยืนยัน'),`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:246` — `'ส่งคำขอตรวจสอบกิจการเรียบร้อยแล้ว',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:260` — `'ไม่สามารถส่งคำขอได้: $error',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:273` — `'ระบบยังไม่ได้เชื่อม Business Registration UseCase',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:412` — `'ไม่พบเอกสาร',`
+- `lib/features/kao_id/business/presentation/pages/business_review_page.dart:490` — `'ประเภทไฟล์: .$extension',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:26` — `'กรุณาเลือกประเภทผู้ประกอบการ',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:54` — `'ประเภทผู้ประกอบการ',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:89` — `'เลือกประเภทที่ตรงกับกิจการของคุณ',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:99` — `'ข้อมูลที่คุณเลือกจะถูกนำไปใช้กำหนดข้อมูลและเอกสารที่ต้องใช้ในขั้นตอนถัดไป',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:113` — `'ผู้ประกอบการรายย่อย / ร้านค้าที่จดทะเบียน',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:115` — `'สำหรับร้านค้าและผู้ประกอบการที่มีทะเบียนการค้า หรือเอกสารรับรองการประกอบกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:127` — `'ผู้ประกอบการที่มีเอกสารกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:129` — `'สำหรับกิจการที่มีเอกสารประกอบการดำเนินธุรกิจตามประเภทที่ KaoSure รองรับ',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:144` — `text: 'ดำเนินการต่อ',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:155` — `'ย้อนกลับ',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:215` — `'ประเภทผู้ประกอบการ',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:223` — `'ขั้นตอนที่ 2 จาก 6',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:282` — `'คุณเป็นผู้ประกอบการประเภทใด?',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:291` — `'เลือกประเภทกิจการเพื่อเริ่มกรอกข้อมูลธุรกิจ',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:467` — `'ข้อมูลจะถูกตรวจสอบตามขั้นตอน',`
+- `lib/features/kao_id/business/presentation/pages/business_type_page.dart:477` — `'KaoSure จะใช้ประเภทกิจการที่เลือกเพื่อกำหนดข้อมูลและเอกสารที่จำเป็นสำหรับการตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:33` — `title: const Text('ยืนยันกิจการ'),`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:61` — `'พร้อมเข้าสู่การตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:72` — `'ตรวจสอบข้อมูลเบื้องต้นเรียบร้อยแล้ว '`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:73` — `'ขั้นตอนถัดไปคือการส่งข้อมูลเข้าสู่กระบวนการ '`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:74` — `'ตรวจสอบกิจการของ Kao ID',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:94` — `title: 'ตรวจสอบข้อมูลกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:96` — `'ตรวจสอบข้อมูลที่ผู้สมัครระบุและเอกสารประกอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:103` — `title: 'ตรวจสอบผู้มีสิทธิ์',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:105` — `'ตรวจสอบความสัมพันธ์ระหว่างผู้สมัครกับกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:112` — `title: 'ประเมินผลการตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:114` — `'กำหนดสถานะตามผลการตรวจสอบและนโยบายความเสี่ยง',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:136` — `'การส่งข้อมูลไม่ได้หมายความว่ากิจการได้รับการอนุมัติ '`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:137` — `'ระบบจะแสดงสถานะตามผลการตรวจสอบจริง',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:152` — `text: 'ส่งเข้าสู่การตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:167` — `child: const Text('ย้อนกลับ'),`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:182` — `title: const Text('ยืนยันการส่งตรวจสอบ'),`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:184` — `'คุณยืนยันว่าข้อมูลกิจการและเอกสารที่ส่ง '`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:185` — `'เป็นข้อมูลจริงและถูกต้องใช่หรือไม่?',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:192` — `child: const Text('ตรวจสอบอีกครั้ง'),`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:206` — `label: const Text('ยืนยันและส่ง'),`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:254` — `'สรุปข้อมูล',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:264` — `label: 'กิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:272` — `label: 'เลขทะเบียน',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:280` — `label: 'เอกสาร',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_page.dart:281` — `value: documentName ?? 'ไม่พบเอกสาร',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:53` — `title: const Text('สถานะการตรวจสอบ'),`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:135` — `title: 'รอส่งตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:137` — `'ข้อมูลกิจการยังอยู่ในขั้นตอนเตรียมส่งเข้าสู่การตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:143` — `title: 'กำลังตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:145` — `'ระบบได้รับข้อมูลแล้ว และอยู่ระหว่างการตรวจสอบกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:151` — `title: 'ตรวจสอบผ่าน',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:153` — `'กิจการผ่านกระบวนการตรวจสอบตามเงื่อนไขที่กำหนด',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:159` — `title: 'ไม่ผ่านการตรวจสอบ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:161` — `'คำขอไม่ผ่านเงื่อนไขการตรวจสอบ กรุณาตรวจสอบรายละเอียดและดำเนินการตามที่ระบบแจ้ง',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:167` — `title: 'ต้องดำเนินการเพิ่มเติม',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:169` — `'ระบบต้องการข้อมูลหรือเอกสารเพิ่มเติมก่อนดำเนินการตรวจสอบต่อ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:175` — `title: 'ไม่ทราบสถานะ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:177` — `'ระบบไม่สามารถระบุสถานะการตรวจสอบของคำขอนี้ได้',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:218` — `'กิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:227` — `label: 'ชื่อกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:233` — `label: 'เลขทะเบียน',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:337` — `'สถานะ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:384` — `text: 'กลับไปดำเนินการ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:392` — `child: const Text('กลับสู่ Kao ID'),`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:401` — `text: 'ดูข้อมูลกิจการ',`
+- `lib/features/kao_id/business/presentation/pages/business_verification_status_page.dart:411` — `text: 'กลับสู่ Kao ID',`
+- `lib/features/kao_id/dashboard/presentation/screens/dashboard_screen.dart:66` — `child: Text('ไม่พบข้อมูลบัญชี'),`
+- `lib/features/kao_id/dashboard/presentation/widgets/profile/profile_information.dart:25` — `? '@ยังไม่ได้ตั้ง Username'`
+- `lib/features/kao_id/dashboard/presentation/widgets/profile/profile_status_chip.dart:21` — `return 'ยืนยันตัวตนแล้ว';`
+- `lib/features/kao_id/dashboard/presentation/widgets/profile/profile_status_chip.dart:24` — `return 'บัญชีธุรกิจ';`
+- `lib/features/kao_id/dashboard/presentation/widgets/profile/profile_status_chip.dart:27` — `return 'บัญชีองค์กร';`
+- `lib/features/kao_id/dashboard/presentation/widgets/profile/profile_status_chip.dart:30` — `return 'บัญชีลงทะเบียน';`
+- `lib/features/kao_id/dashboard/presentation/widgets/profile/profile_status_chip.dart:33` — `return 'บัญชีมาตรฐาน';`
+- `lib/features/kao_id/dashboard/presentation/widgets/settings/general_settings_tile.dart:36` — `'th': 'ไทย',`
+- `lib/features/kao_id/dashboard/presentation/widgets/settings/general_settings_tile.dart:113` — `'th' => 'ไทย',`
+- `lib/features/kao_id/governance/presentation/pages/governance_page.dart:75` — `const Text('ถอนสิทธิ์ผู้ดูแล'),`
+- `lib/features/kao_id/governance/presentation/pages/governance_page.dart:77` — `'ยืนยันถอน ${assignment.roleName} จาก ${assignment.kaoId} หรือไม่',`
+- `lib/features/kao_id/governance/presentation/pages/governance_page.dart:85` — `const Text('ยกเลิก'),`
+- `lib/features/kao_id/governance/presentation/pages/governance_page.dart:92` — `const Text('ถอนสิทธิ์'),`
+- `lib/features/kao_id/governance/presentation/pages/governance_page.dart:168` — `'ไม่สามารถตรวจสอบสิทธิ์ได้',`
+- `lib/features/kao_id/governance/presentation/pages/governance_page.dart:241` — `'บัญชีนี้ไม่มีสิทธิ์เข้า Governance',`
+- `lib/features/kao_id/governance/presentation/pages/governance_page.dart:328` — `'ศูนย์บริหาร Kao ID',`
+- `lib/features/kao_id/governance/presentation/pages/governance_page.dart:336` — `'Identity ยังคงเป็น Kao ID เดิม ส่วนสิทธิ์ Owner, Admin และ KYC Officer จัดการผ่าน Governance แยกจากตัวตน',`
+- `lib/features/kao_id/governance/presentation/widgets/assign_governance_role_dialog.dart:72` — `const Text('แต่งตั้งผู้ดูแลระบบ'),`
+- `lib/features/kao_id/governance/presentation/widgets/assign_governance_role_dialog.dart:96` — `labelText: 'บทบาท',`
+- `lib/features/kao_id/governance/presentation/widgets/assign_governance_role_dialog.dart:129` — `child: const Text('ยกเลิก'),`
+- `lib/features/kao_id/governance/presentation/widgets/assign_governance_role_dialog.dart:143` — `: const Text('แต่งตั้ง'),`
+- `lib/features/kao_id/governance/presentation/widgets/governance_access_card.dart:39` — `: 'ผู้ดูแลระบบ',`
+- `lib/features/kao_id/governance/presentation/widgets/governance_access_card.dart:48` — `? 'มีสิทธิ์'`
+- `lib/features/kao_id/governance/presentation/widgets/governance_access_card.dart:49` — `: 'ไม่มีสิทธิ์',`
+- `lib/features/kao_id/governance/presentation/widgets/governance_assignments_section.dart:45` — `'ผู้ดูแลระบบ',`
+- `lib/features/kao_id/governance/presentation/widgets/governance_assignments_section.dart:58` — `'สิทธิ์ทั้งหมดผูกกับ Kao ID และตรวจสอบย้อนหลังได้',`
+- `lib/features/kao_id/governance/presentation/widgets/governance_assignments_section.dart:73` — `const Text('แต่งตั้ง'),`
+- `lib/features/kao_id/governance/presentation/widgets/governance_assignments_section.dart:86` — `'ยังไม่มีรายการผู้ดูแลระบบ',`
+- `lib/features/kao_id/governance/presentation/widgets/governance_assignments_section.dart:156` — `tooltip: 'ถอนสิทธิ์',`
+- `lib/features/kao_id/governance/presentation/widgets/governance_dashboard_tile.dart:34` — `'Owner, Admin, Role และ Permission',`
+- `lib/features/kao_id/governance/presentation/widgets/governance_summary_cards.dart:28` — `label: 'สิทธิ์ปัจจุบัน',`
+- `lib/features/kao_id/governance/presentation/widgets/governance_summary_cards.dart:37` — `label: 'บทบาทของฉัน',`
+- `lib/features/kao_id/governance/presentation/widgets/governance_summary_cards.dart:44` — `label: 'ผู้ดูแลที่ Active',`
+- `lib/features/kao_id/identity/domain/enums/document_status.dart:66` — `return 'แบบร่าง';`
+- `lib/features/kao_id/identity/domain/enums/document_status.dart:69` — `return 'อัปโหลดแล้ว';`
+- `lib/features/kao_id/identity/domain/enums/document_status.dart:72` — `return 'กำลังตรวจสอบ';`
+- `lib/features/kao_id/identity/domain/enums/document_status.dart:75` — `return 'ผ่านการตรวจสอบ';`
+- `lib/features/kao_id/identity/domain/enums/document_status.dart:78` — `return 'ไม่ผ่านการตรวจสอบ';`
+- `lib/features/kao_id/identity/domain/enums/document_status.dart:81` — `return 'หมดอายุ';`
+- `lib/features/kao_id/identity/domain/enums/document_status.dart:84` — `return 'ถูกระงับ';`
+- `lib/features/kao_id/identity/domain/enums/document_status.dart:87` — `return 'เก็บถาวร';`
+- `lib/features/kao_id/identity/domain/enums/document_type_enum.dart:46` — `return 'บัตรประชาชน';`
+- `lib/features/kao_id/identity/domain/enums/document_type_enum.dart:49` — `return 'หนังสือเดินทาง';`
+- `lib/features/kao_id/identity/domain/enums/document_type_enum.dart:55` — `return 'ใบขับขี่';`
+- `lib/features/kao_id/identity/domain/enums/document_type_enum.dart:58` — `return 'หนังสือรับรองบริษัท';`
+- `lib/features/kao_id/identity/domain/enums/document_type_enum.dart:61` — `return 'เอกสารภาษี';`
+- `lib/features/kao_id/identity/domain/enums/document_type_enum.dart:64` — `return 'อื่น ๆ';`
+- `lib/features/kao_id/identity/domain/validators/company_registration_validator.dart:24` — `String get errorMessage => 'เลขทะเบียนนิติบุคคลไม่ถูกต้อง';`
+- `lib/features/kao_id/identity/domain/validators/passport_validator.dart:26` — `String get errorMessage => 'หมายเลขหนังสือเดินทางไม่ถูกต้อง';`
+- `lib/features/kao_id/identity/domain/validators/residence_card_validator.dart:25` — `String get errorMessage => 'หมายเลข Residence Card ไม่ถูกต้อง';`
+- `lib/features/kao_id/identity/domain/validators/thai_id_validator.dart:34` — `'หมายเลขบัตรประชาชนไม่ถูกต้อง';`
+- `lib/features/kao_id/identity/presentation/screens/document_detail_screen.dart:27` — `title: const Text('รายละเอียดเอกสาร'),`
+- `lib/features/kao_id/identity/presentation/screens/document_detail_screen.dart:44` — `title: 'สถานะเอกสาร',`
+- `lib/features/kao_id/identity/presentation/screens/document_detail_screen.dart:58` — `title: 'หมายเลขเอกสาร',`
+- `lib/features/kao_id/identity/presentation/screens/document_detail_screen.dart:63` — `title: 'วันที่ออกเอกสาร',`
+- `lib/features/kao_id/identity/presentation/screens/document_detail_screen.dart:70` — `title: 'วันหมดอายุ',`
+- `lib/features/kao_id/identity/presentation/screens/document_detail_screen.dart:88` — `'ไฟล์เอกสาร',`
+- `lib/features/kao_id/identity/presentation/screens/document_detail_screen.dart:95` — `const Text('ไม่มีไฟล์เอกสาร')`
+- `lib/features/kao_id/identity/presentation/screens/document_preview_screen.dart:41` — `title: 'ชื่อไฟล์',`
+- `lib/features/kao_id/identity/presentation/screens/document_preview_screen.dart:46` — `title: 'ประเภท',`
+- `lib/features/kao_id/identity/presentation/screens/document_preview_screen.dart:51` — `title: 'ขนาด',`
+- `lib/features/kao_id/identity/presentation/screens/document_preview_screen.dart:56` — `title: 'อัปโหลด',`
+- `lib/features/kao_id/identity/presentation/screens/identity_verification_screen.dart:41` — `title: const Text('เอกสารยืนยันตัวตน'),`
+- `lib/features/kao_id/identity/presentation/screens/identity_verification_screen.dart:68` — `'เอกสารของคุณ',`
+- `lib/features/kao_id/identity/presentation/screens/identity_verification_screen.dart:85` — `'การส่งเอกสารเข้าตรวจสอบและสถานะ KYC จัดการโดยโมดูล KYC '`
+- `lib/features/kao_id/identity/presentation/screens/identity_verification_screen.dart:86` — `'เพื่อให้เอกสารและกระบวนการตรวจสอบมีเจ้าของข้อมูลแยกจากกันอย่างชัดเจน',`
+- `lib/features/kao_id/identity/presentation/screens/identity_verification_screen.dart:128` — `'$documentCount เอกสาร · $pendingCount รายการกำลังตรวจสอบ',`
+- `lib/features/kao_id/identity/presentation/screens/identity_verification_screen.dart:154` — `'ยังไม่มีเอกสารยืนยันตัวตน กรุณาเพิ่มเอกสารผ่านขั้นตอน KYC',`
+- `lib/features/kao_id/identity/presentation/widgets/document_action_buttons.dart:32` — `label: const Text('ส่งตรวจเอกสาร'),`
+- `lib/features/kao_id/identity/presentation/widgets/document_action_buttons.dart:43` — `label: const Text('แก้ไขข้อมูล'),`
+- `lib/features/kao_id/identity/presentation/widgets/document_action_buttons.dart:53` — `label: const Text('ประวัติการตรวจสอบ'),`
+- `lib/features/kao_id/identity/presentation/widgets/document_action_buttons.dart:63` — `label: const Text('ลบเอกสาร'),`
+- `lib/features/kao_id/identity/presentation/widgets/document_file_list.dart:23` — `'ยังไม่มีไฟล์เอกสาร',`
+- `lib/features/kao_id/identity/presentation/widgets/document_files_card.dart:24` — `'ไฟล์เอกสาร',`
+- `lib/features/kao_id/identity/presentation/widgets/document_files_card.dart:37` — `'ยังไม่มีไฟล์เอกสาร',`
+- `lib/features/kao_id/identity/presentation/widgets/document_information_card.dart:42` — `title: 'สถานะเอกสาร',`
+- `lib/features/kao_id/identity/presentation/widgets/document_information_card.dart:47` — `title: 'เลขเอกสาร',`
+- `lib/features/kao_id/identity/presentation/widgets/document_information_card.dart:52` — `title: 'วันที่ออก',`
+- `lib/features/kao_id/identity/presentation/widgets/document_information_card.dart:59` — `title: 'วันหมดอายุ',`
+- `lib/features/kao_id/identity/presentation/widgets/document_list_view.dart:21` — `'ยังไม่มีเอกสาร',`
+- `lib/features/kao_id/identity/presentation/widgets/document_statistics_card.dart:40` — `'สถิติเอกสาร',`
+- `lib/features/kao_id/identity/presentation/widgets/document_status_legend.dart:20` — `'ความหมายของสถานะเอกสาร',`
+- `lib/features/kao_id/identity/presentation/widgets/document_status_legend.dart:52` — `return 'สร้างรายการเอกสารแล้ว แต่ยังไม่ได้อัปโหลดหรือส่งตรวจ';`
+- `lib/features/kao_id/identity/presentation/widgets/document_status_legend.dart:55` — `return 'อัปโหลดเอกสารเรียบร้อยแล้ว พร้อมส่งตรวจสอบ';`
+- `lib/features/kao_id/identity/presentation/widgets/document_status_legend.dart:58` — `return 'เจ้าหน้าที่กำลังตรวจสอบเอกสาร';`
+- `lib/features/kao_id/identity/presentation/widgets/document_status_legend.dart:61` — `return 'เอกสารผ่านการตรวจสอบและสามารถใช้งานได้';`
+- `lib/features/kao_id/identity/presentation/widgets/document_status_legend.dart:64` — `return 'เอกสารถูกปฏิเสธ กรุณาแก้ไขและส่งใหม่';`
+- `lib/features/kao_id/identity/presentation/widgets/document_status_legend.dart:67` — `return 'เอกสารหมดอายุ ต้องอัปโหลดฉบับใหม่';`
+- `lib/features/kao_id/identity/presentation/widgets/document_status_legend.dart:70` — `return 'เอกสารถูกระงับชั่วคราวโดยระบบหรือผู้ดูแล';`
+- `lib/features/kao_id/identity/presentation/widgets/document_status_legend.dart:73` — `return 'เอกสารถูกเก็บเป็นประวัติและไม่ถูกใช้งานแล้ว';`
+- `lib/features/kao_id/identity/presentation/widgets/document_summary_card.dart:34` — `'สรุปเอกสาร',`
+- `lib/features/kao_id/identity/presentation/widgets/document_summary_card.dart:39` — `title: 'ทั้งหมด',`
+- `lib/features/kao_id/identity/presentation/widgets/document_summary_card.dart:44` — `title: 'ผ่านการตรวจ',`
+- `lib/features/kao_id/identity/presentation/widgets/document_summary_card.dart:49` — `title: 'กำลังตรวจสอบ',`
+- `lib/features/kao_id/identity/presentation/widgets/document_summary_card.dart:54` — `title: 'ไม่ผ่าน',`
+- `lib/features/kao_id/identity/presentation/widgets/empty_document_state.dart:6` — `this.title = 'ยังไม่มีเอกสาร',`
+- `lib/features/kao_id/identity/presentation/widgets/empty_document_state.dart:7` — `this.message = 'กรุณาอัปโหลดเอกสารเพื่อเริ่มการยืนยันตัวตน',`
+- `lib/features/kao_id/identity/presentation/widgets/error_document_state.dart:28` — `'เกิดข้อผิดพลาด',`
+- `lib/features/kao_id/identity/presentation/widgets/error_document_state.dart:43` — `label: const Text('ลองใหม่'),`
+- `lib/features/kao_id/identity/presentation/widgets/identity_document_section.dart:12` — `this.title = 'เอกสารยืนยันตัวตน',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_document_section.dart:13` — `this.subtitle = 'เอกสารที่ใช้สำหรับการตรวจสอบตัวตน',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_document_summary_section.dart:11` — `this.title = 'สรุปเอกสาร',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_document_summary_section.dart:12` — `this.subtitle = 'ภาพรวมของเอกสารยืนยันตัวตน',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_guideline_card.dart:7` — `'ใช้เอกสารตัวจริงที่ยังไม่หมดอายุ',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_guideline_card.dart:8` — `'ถ่ายภาพให้คมชัด เห็นข้อมูลครบถ้วน',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_guideline_card.dart:9` — `'หลีกเลี่ยงแสงสะท้อนและเงาบดบัง',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_guideline_card.dart:10` — `'ข้อมูลในเอกสารต้องตรงกับบัญชีผู้ใช้',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_guideline_card.dart:25` — `'คำแนะนำในการอัปโหลดเอกสาร',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_guideline_section.dart:9` — `this.title = 'แนวทางการยืนยันตัวตน',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_guideline_section.dart:11` — `'ศึกษาขั้นตอนและคำแนะนำก่อนส่งเอกสาร',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_information_section.dart:9` — `this.title = 'ข้อมูลสำคัญ',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_information_section.dart:11` — `'โปรดอ่านข้อมูลสำคัญก่อนดำเนินการยืนยันตัวตน',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_information_section.dart:13` — `'การยืนยันตัวตนช่วยเพิ่มความน่าเชื่อถือของบัญชี และปลดล็อกความสามารถในการใช้งานบริการต่าง ๆ ของ Kao ID',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_privacy_notice_card.dart:17` — `'นโยบายความเป็นส่วนตัว',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_privacy_notice_card.dart:24` — `'ข้อมูลจะใช้เพื่อยืนยันตัวตนและป้องกันการทุจริตเท่านั้น',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_privacy_notice_card.dart:30` — `'ข้อมูลส่วนบุคคลได้รับการปกป้องตามมาตรฐานความปลอดภัยของระบบ',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_privacy_notice_card.dart:36` — `'จะไม่มีการเปิดเผยข้อมูลแก่บุคคลภายนอกโดยไม่ได้รับอนุญาต เว้นแต่กฎหมายกำหนด',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_privacy_notice_card.dart:42` — `'ผู้ใช้สามารถขอแก้ไขหรืออัปเดตข้อมูลได้ตามนโยบายของระบบ',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_privacy_section.dart:9` — `this.title = 'ความเป็นส่วนตัว',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_privacy_section.dart:11` — `'ข้อมูลส่วนบุคคลของคุณจะถูกจัดเก็บและใช้งานอย่างปลอดภัยตามนโยบายของ Kao ID',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_requirement_card.dart:25` — `'เอกสารที่ต้องใช้',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_requirement_section.dart:13` — `this.title = 'ข้อกำหนดในการยืนยันตัวตน',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_requirement_section.dart:14` — `this.subtitle = 'ตรวจสอบเอกสารที่จำเป็นสำหรับการยืนยันตัวตน',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_security_notice_card.dart:18` — `'ความปลอดภัยของข้อมูล',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_security_notice_card.dart:27` — `'ข้อมูลและเอกสารของคุณถูกจัดเก็บอย่างปลอดภัย',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_security_notice_card.dart:33` — `'ใช้เพื่อการยืนยันตัวตนตามวัตถุประสงค์ของระบบเท่านั้น',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_security_notice_card.dart:39` — `'ห้ามส่งรหัสผ่านหรือข้อมูลสำคัญผ่านช่องแชท',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_security_notice_card.dart:45` — `'โปรดตรวจสอบความถูกต้องของเอกสารก่อนส่งทุกครั้ง',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_security_section.dart:9` — `this.title = 'ความปลอดภัย',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_security_section.dart:11` — `'ข้อมูลและเอกสารของคุณได้รับการปกป้องตามมาตรฐานของ Kao ID',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_support_card.dart:6` — `this.title = 'ต้องการความช่วยเหลือ?',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_support_card.dart:8` — `'หากพบปัญหาในการยืนยันตัวตน สามารถติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือได้',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_support_card.dart:9` — `this.buttonText = 'ติดต่อฝ่ายสนับสนุน',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_support_section.dart:10` — `this.title = 'ช่วยเหลือ',`
+- `lib/features/kao_id/identity/presentation/widgets/identity_support_section.dart:12` — `'หากพบปัญหาในการยืนยันตัวตน สามารถติดต่อทีมงานได้',`
+- `lib/features/kao_id/identity/presentation/widgets/loading_document_state.dart:6` — `this.message = 'กำลังโหลดข้อมูล...',`
+- `lib/features/kao_id/identity/presentation/widgets/upload_document_button.dart:21` — `'เพิ่มเอกสาร',`
+- `lib/features/kao_id/kyc/data/repositories/fake_kyc_repository.dart:101` — `bankName: 'ธนาคารไทยพาณิชย์',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:51` — `'บัญชีธนาคาร',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:149` — `'ขั้นตอนเพิ่มบัญชีธนาคารจะเปิดในขั้นตอนถัดไป',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:161` — `'การจัดการบัญชีธนาคารจะเปิดในขั้นตอนถัดไป',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:232` — `'ยืนยันบัญชีธนาคาร',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:246` — `? 'เพิ่มบัญชีธนาคารเพื่อใช้ในการรับเงินและบริการทางการเงินของ Kao Ecosystem'`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:247` — `: 'ตรวจสอบสถานะบัญชีและความสอดคล้องกับข้อมูล KYC',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:299` — `'กำลังตรวจสอบข้อมูลบัญชีธนาคาร...',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:351` — `'ไม่สามารถโหลดข้อมูลได้',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:388` — `const Text('ลองอีกครั้ง'),`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:445` — `'ยังไม่มีบัญชีธนาคาร',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:458` — `'เพิ่มบัญชีธนาคารเพื่อเข้าสู่กระบวนการตรวจสอบและยืนยันตัวตนทางการเงิน',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:481` — `'เพิ่มบัญชีธนาคาร',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:559` — `'บัญชีธนาคาร',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:593` — `label: 'ชื่อเจ้าของบัญชี',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:672` — `'บัญชีหลัก',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:729` — `'เลขบัญชี',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:792` — `title: 'สถานะการยืนยัน',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:887` — `'ตรวจสอบชื่อกับ KYC',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1017` — `'เหตุผลที่ไม่ผ่าน',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1116` — `? 'บัญชีธนาคารที่เชื่อถือได้'`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1117` — `: 'การรักษาความปลอดภัย',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1131` — `? 'บัญชีผ่านการยืนยันและชื่อบัญชีตรงกับข้อมูลที่ผ่าน KYC แล้ว'`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1132` — `: 'ชื่อบัญชีธนาคารต้องตรงกับข้อมูลที่ผ่าน KYC ก่อนจึงจะถือว่าเป็นบัญชีที่เชื่อถือได้',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1171` — `? 'ตรวจสอบข้อมูลอีกครั้ง'`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1172` — `: 'จัดการบัญชีธนาคาร';`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1381` — `title: 'ยืนยันแล้ว',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1383` — `'บัญชีธนาคารผ่านการตรวจสอบแล้ว',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1396` — `title: 'กำลังตรวจสอบ',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1398` — `'ระบบกำลังตรวจสอบข้อมูลบัญชีธนาคาร',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1412` — `'อยู่ระหว่างการตรวจสอบเพิ่มเติม',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1414` — `'ข้อมูลต้องได้รับการตรวจสอบเพิ่มเติม',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1427` — `title: 'ไม่ผ่านการยืนยัน',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1429` — `'บัญชีธนาคารไม่ผ่านกระบวนการตรวจสอบ',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1442` — `title: 'หมดอายุ',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1444` — `'ข้อมูลการยืนยันบัญชีหมดอายุ',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1459` — `'ยังไม่ได้เริ่มการยืนยัน',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1461` — `'บัญชีธนาคารยังไม่ได้เข้าสู่กระบวนการตรวจสอบ',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1486` — `'ชื่อบัญชีตรงกับข้อมูล KYC',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1488` — `'ชื่อเจ้าของบัญชีผ่านการตรวจสอบและตรงกับข้อมูลที่ยืนยันตัวตนไว้',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1502` — `'ชื่อบัญชีไม่ตรงกับข้อมูล KYC',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1504` — `'ระบบพบความแตกต่างระหว่างชื่อบัญชีธนาคารกับข้อมูล KYC',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1518` — `'กำลังตรวจสอบชื่อบัญชี',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1520` — `'ระบบต้องตรวจสอบข้อมูลเพิ่มเติมก่อนสรุปผล',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1535` — `'รอการตรวจสอบชื่อบัญชี',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_page.dart:1537` — `'ชื่อบัญชีจะถูกตรวจสอบกับข้อมูล KYC',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_tile.dart:209` — `'บัญชีธนาคาร',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_tile.dart:220` — `'ยังไม่ได้เพิ่มบัญชีธนาคาร',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_tile.dart:345` — `label: 'ยืนยันแล้ว',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_tile.dart:351` — `label: 'กำลังตรวจสอบ',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_tile.dart:357` — `label: 'ไม่ผ่าน',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_tile.dart:363` — `label: 'ตรวจสอบเพิ่มเติม',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_tile.dart:369` — `label: 'หมดอายุ',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_tile.dart:376` — `label: 'ยังไม่ได้ยืนยัน',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_tile.dart:396` — `label: 'ชื่อ KYC ตรงกัน',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_tile.dart:402` — `label: 'ชื่อไม่ตรง',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_tile.dart:408` — `label: 'ตรวจชื่อเพิ่มเติม',`
+- `lib/features/kao_id/kyc/presentation/bank/bank_verification_tile.dart:415` — `label: 'รอตรวจชื่อ KYC',`
+- `lib/features/kao_id/kyc/presentation/email/email_tile.dart:25` — `'อีเมล',`
+- `lib/features/kao_id/kyc/presentation/email/email_tile.dart:35` — `? 'ยืนยันแล้ว'`
+- `lib/features/kao_id/kyc/presentation/email/email_tile.dart:36` — `: 'ยังไม่ยืนยัน',`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:24` — `static const _title = 'ยืนยันอีเมล';`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:27` — `'ใช้อีเมลเพื่อเข้าสู่ระบบ รับการแจ้งเตือน '`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:28` — `'และเพิ่มความปลอดภัยของบัญชี Kao ID';`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:46` — `content: Text('ไม่พบข้อมูลผู้ใช้งาน'),`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:70` — `'ส่งอีเมลยืนยันเรียบร้อยแล้ว',`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:98` — `final email = _user?.email ?? 'ไม่พบอีเมล';`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:147` — `title: 'ข้อมูลอีเมล',`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:149` — `'ข้อมูลอีเมลที่ผูกกับบัญชี Kao ID',`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:156` — `title: 'อีเมล',`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:165` — `title: 'สถานะ',`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:167` — `? 'ยืนยันแล้ว'`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:168` — `: 'ยังไม่ได้ยืนยัน',`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:175` — `text: 'ส่งอีเมลยืนยัน',`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:397` — `'ยืนยันอีเมลแล้ว',`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:408` — `'อีเมลของคุณได้รับการยืนยันเรียบร้อยแล้ว',`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:480` — `'ข้อมูลเพิ่มเติม',`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:491` — `'สิ่งที่ควรรู้เกี่ยวกับการยืนยันอีเมล',`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:511` — `'ลิงก์ยืนยันจะถูกส่งไปยังอีเมลของคุณ',`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:519` — `'ลิงก์มีอายุ 30 นาที',`
+- `lib/features/kao_id/kyc/presentation/email/email_verification_page.dart:527` — `'หลังยืนยันแล้วสถานะจะเปลี่ยนอัตโนมัติ',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:27` — `title: const Text('บัตรประชาชน'),`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:59` — `title: 'บัตรประชาชน',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:61` — `'ใช้สำหรับยืนยันตัวตนตามกฎหมาย '`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:62` — `'รองรับการตรวจสอบผ่านระบบ KYC '`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:63` — `'ของ Kao ID และผู้ให้บริการภายนอก',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:70` — `'เลือกด้านหน้า',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:73` — `'เลือกด้านหลัง',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:126` — `'เลือกไฟล์ด้านหน้าสำเร็จ',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:149` — `'เลือกไฟล์ด้านหลังสำเร็จ',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:239` — `'ยืนยันตัวตนด้วยบัตรประชาชน',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:250` — `'กรุณาเตรียมบัตรประชาชนตัวจริง '`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:251` — `'และถ่ายภาพให้เห็นข้อมูลครบถ้วน '`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:252` — `'ชัดเจน และไม่มีแสงสะท้อน',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:305` — `'ข้อกำหนดเอกสาร',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:319` — `'ภาพด้านหน้าและด้านหลังต้องชัดเจน',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:325` — `'ต้องเห็นข้อมูลบนบัตรครบถ้วน',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:331` — `'หลีกเลี่ยงแสงสะท้อนและภาพเบลอ',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:337` — `'ข้อมูลจะถูกใช้สำหรับการตรวจสอบตัวตน',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:421` — `'ข้อมูลเอกสารใช้สำหรับการยืนยันตัวตน '`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart:422` — `'และควรส่งผ่านระบบของ Kao ID เท่านั้น',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_tile.dart:34` — `return 'ผ่านการยืนยัน';`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_tile.dart:37` — `return 'กำลังตรวจสอบ';`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_tile.dart:40` — `return 'ไม่ผ่าน';`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_tile.dart:43` — `return 'ยังไม่ได้เพิ่ม';`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_tile.dart:63` — `'บัตรประชาชน',`
+- `lib/features/kao_id/kyc/presentation/identity_card/identity_card_tile.dart:68` — `'หมดอายุ $_expiryText',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_expiry.dart:67` — `helpText: 'เลือกวันหมดอายุหนังสือเดินทาง',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_expiry.dart:68` — `cancelText: 'ยกเลิก',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_expiry.dart:69` — `confirmText: 'เลือก',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_mrz_service.dart:43` — `helpText: 'เลือกวันหมดอายุหนังสือเดินทาง',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_mrz_service.dart:44` — `cancelText: 'ยกเลิก',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_mrz_service.dart:45` — `confirmText: 'เลือก',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:61` — `'หนังสือเดินทาง',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:178` — `'หนังสือเดินทาง',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:191` — `'เพิ่มข้อมูลหนังสือเดินทางเพื่อใช้ยืนยันตัวตนของคุณ',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:224` — `title: 'เลขหนังสือเดินทาง',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:226` — `'กรอกหมายเลขตามหนังสือเดินทางของคุณ',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:237` — `hintText: 'เช่น AA1234567',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:272` — `return 'กรุณากรอกเลขหนังสือเดินทาง';`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:276` — `return 'เลขหนังสือเดินทางไม่ถูกต้อง';`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:302` — `title: 'ข้อมูลวันที่',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:304` — `'วันที่ออกและวันหมดอายุของหนังสือเดินทาง',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:318` — `label: 'วันที่ออก',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:329` — `label: 'วันหมดอายุ',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:344` — `label: 'วันที่ออก',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:357` — `label: 'วันหมดอายุ',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:389` — `title: 'เอกสารหนังสือเดินทาง',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:391` — `'อัปโหลดภาพหน้าหนังสือเดินทางที่เห็นข้อมูลชัดเจน',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:444` — `'เพิ่มรูปหนังสือเดินทาง',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:457` — `'แตะเพื่อเลือกไฟล์จากอุปกรณ์',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:530` — `'พร้อมสำหรับการส่งตรวจสอบ',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:547` — `tooltip: 'เปลี่ยนไฟล์',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:604` — `'ข้อมูลของคุณได้รับการปกป้อง',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:617` — `'เอกสารจะถูกจัดเก็บในพื้นที่ KYC แบบ Private และใช้สำหรับกระบวนการยืนยันตัวตนเท่านั้น',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:662` — `? 'กำลังบันทึก...'`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:663` — `: 'บันทึกหนังสือเดินทาง',`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:764` — `_showError('กรุณาระบุวันที่ออกและวันหมดอายุ');`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:769` — `_showError('วันหมดอายุต้องอยู่หลังวันที่ออก');`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:775` — `_showError('กรุณาเลือกรูปหนังสือเดินทาง');`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:782` — `_showError('ไม่พบผู้ใช้ที่เข้าสู่ระบบ');`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:832` — `content: Text('บันทึกหนังสือเดินทางเรียบร้อยแล้ว'),`
+- `lib/features/kao_id/kyc/presentation/passport/passport_page.dart:1099` — `? 'เลือกวันที่'`
+- `lib/features/kao_id/kyc/presentation/passport/passport_tile.dart:68` — `return 'ยืนยันแล้ว';`
+- `lib/features/kao_id/kyc/presentation/passport/passport_tile.dart:72` — `return 'กำลังตรวจสอบ';`
+- `lib/features/kao_id/kyc/presentation/passport/passport_tile.dart:76` — `return 'ไม่ผ่าน';`
+- `lib/features/kao_id/kyc/presentation/passport/passport_tile.dart:80` — `return 'หมดอายุ';`
+- `lib/features/kao_id/kyc/presentation/passport/passport_tile.dart:83` — `return 'ยังไม่ได้เพิ่ม';`
+- `lib/features/kao_id/kyc/presentation/passport/passport_tile.dart:90` — `return 'ยังไม่ได้ระบุวันหมดอายุ';`
+- `lib/features/kao_id/kyc/presentation/passport/passport_tile.dart:93` — `return 'หมดอายุ '`
+- `lib/features/kao_id/kyc/presentation/passport/passport_tile.dart:157` — `'หนังสือเดินทาง',`
+- `lib/features/kao_id/kyc/presentation/screens/kyc_page.dart:76` — `'การยืนยันตัวตน',`
+- `lib/features/kao_id/kyc/presentation/screens/kyc_page.dart:81` — `'ไม่พบข้อมูลโปรไฟล์',`
+- `lib/features/kao_id/kyc/presentation/screens/kyc_page.dart:168` — `'ข้อมูลการยืนยันตัวตน',`
+- `lib/features/kao_id/kyc/presentation/screens/kyc_page.dart:170` — `'จัดการข้อมูลและเอกสารที่ใช้ยืนยันตัวตนของคุณ',`
+- `lib/features/kao_id/kyc/presentation/screens/kyc_page.dart:198` — `'สิทธิ์การใช้งาน',`
+- `lib/features/kao_id/kyc/presentation/screens/kyc_page.dart:200` — `'สิทธิ์ของคุณจะเปลี่ยนแปลงตามสถานะการยืนยันตัวตน',`
+- `lib/features/kao_id/kyc/presentation/screens/residence_permit_page.dart:13` — `'ใบพำนัก',`
+- `lib/features/kao_id/kyc/presentation/screens/residence_permit_page.dart:29` — `'ใบพำนัก',`
+- `lib/features/kao_id/kyc/presentation/screens/residence_permit_page.dart:42` — `'ใช้สำหรับยืนยันสิทธิ์การพำนัก และรองรับการตรวจสอบผ่านระบบ KYC ของ Kao ID',`
+- `lib/features/kao_id/kyc/presentation/screens/residence_permit_page.dart:57` — `'สถานะ',`
+- `lib/features/kao_id/kyc/presentation/screens/residence_permit_page.dart:60` — `'ยังไม่ได้เพิ่มใบพำนัก',`
+- `lib/features/kao_id/kyc/presentation/screens/residence_permit_page.dart:73` — `'วันหมดอายุ',`
+- `lib/features/kao_id/kyc/presentation/screens/residence_permit_page.dart:92` — `'อัปโหลดใบพำนัก',`
+- `lib/features/kao_id/kyc/presentation/screens/verification_history_page.dart:25` — `'ประวัติการยืนยันตัวตน',`
+- `lib/features/kao_id/kyc/presentation/screens/verification_history_page.dart:101` — `'Audit Trail ของ KYC',`
+- `lib/features/kao_id/kyc/presentation/screens/verification_history_page.dart:112` — `'แสดงการส่งตรวจ การตรวจสอบ การอนุมัติ และการปฏิเสธตามข้อมูลจริงจาก verification_logs',`
+- `lib/features/kao_id/kyc/presentation/screens/verification_history_page.dart:152` — `Text('สถานะ: $status'),`
+- `lib/features/kao_id/kyc/presentation/screens/verification_history_page.dart:171` — `return 'อนุมัติการยืนยันตัวตน';`
+- `lib/features/kao_id/kyc/presentation/screens/verification_history_page.dart:173` — `return 'ปฏิเสธการยืนยันตัวตน';`
+- `lib/features/kao_id/kyc/presentation/screens/verification_history_page.dart:175` — `return 'เริ่มตรวจสอบ';`
+- `lib/features/kao_id/kyc/presentation/screens/verification_history_page.dart:177` — `return 'ส่งคำขอตรวจสอบ';`
+- `lib/features/kao_id/kyc/presentation/screens/verification_history_page.dart:179` — `return 'ยกเลิกคำขอ';`
+- `lib/features/kao_id/kyc/presentation/screens/verification_history_page.dart:221` — `Text('ยังไม่มีประวัติ KYC'),`
+- `lib/features/kao_id/kyc/presentation/widgets/document_info_card.dart:34` — `title: 'ชื่อไฟล์',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_info_card.dart:45` — `title: 'ขนาดไฟล์',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_info_card.dart:56` — `title: 'อัปโหลดเมื่อ',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_info_card.dart:76` — `'เปลี่ยนไฟล์',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_status_card.dart:49` — `'สถานะ',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_upload_card.dart:108` — `title: 'ด้านหน้าบัตร',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_upload_card.dart:126` — `title: 'ด้านหลังบัตร',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_upload_card.dart:282` — `title: 'วันหมดอายุ',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_upload_card.dart:342` — `uploadDate: 'วันนี้',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_upload_card.dart:356` — `? 'สามารถเลือกไฟล์ใหม่เพื่อแทนที่ไฟล์เดิมได้'`
+- `lib/features/kao_id/kyc/presentation/widgets/document_upload_card.dart:400` — `'เลือกแล้ว',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_upload_card.dart:468` — `'ข้อกำหนดการอัปโหลด',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_upload_card.dart:479` — `'ตรวจสอบข้อมูลก่อนส่งเอกสาร',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_upload_card.dart:499` — `'อัปโหลดรูปด้านหน้าและด้านหลังของบัตรประชาชน',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_upload_card.dart:507` — `'รองรับ JPG, PNG และ PDF',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_upload_card.dart:515` — `'ขนาดไฟล์ไม่เกิน 10 MB ต่อไฟล์',`
+- `lib/features/kao_id/kyc/presentation/widgets/document_upload_card.dart:523` — `'ข้อมูลถูกเข้ารหัสและจัดเก็บอย่างปลอดภัย',`
+- `lib/features/kao_id/kyc/presentation/widgets/identity_header.dart:151` — `'ความสมบูรณ์ของบัญชี',`
+- `lib/features/kao_id/kyc/presentation/widgets/identity_header.dart:158` — `'บัญชีของคุณ',`
+- `lib/features/kao_id/kyc/presentation/widgets/kyc_status_card.dart:54` — `return 'ยืนยันตัวตนแล้ว';`
+- `lib/features/kao_id/kyc/presentation/widgets/kyc_status_card.dart:57` — `return 'กำลังตรวจสอบ';`
+- `lib/features/kao_id/kyc/presentation/widgets/kyc_status_card.dart:60` — `return 'ไม่ผ่านการตรวจสอบ';`
+- `lib/features/kao_id/kyc/presentation/widgets/kyc_status_card.dart:63` — `return 'ยังไม่ได้ยืนยันตัวตน';`
+- `lib/features/kao_id/kyc/presentation/widgets/page_header.dart:46` — `'การยืนยันตัวตน',`
+- `lib/features/kao_id/kyc/presentation/widgets/page_header.dart:113` — `'บัญชีปลอดภัย',`
+- `lib/features/kao_id/kyc/presentation/widgets/page_header.dart:119` — `'ข้อมูลได้รับการปกป้อง',`
+- `lib/features/kao_id/kyc/presentation/widgets/permission_card.dart:24` — `'สิทธิ์การใช้งาน',`
+- `lib/features/kao_id/kyc/presentation/widgets/permission_section.dart:32` — `title: 'เข้าสู่ระบบ',`
+- `lib/features/kao_id/kyc/presentation/widgets/permission_section.dart:36` — `title: 'แก้ไขโปรไฟล์',`
+- `lib/features/kao_id/kyc/presentation/widgets/permission_section.dart:40` — `title: 'ยืนยันอีเมล',`
+- `lib/features/kao_id/kyc/presentation/widgets/permission_section.dart:44` — `title: 'ยืนยันเบอร์โทรศัพท์',`
+- `lib/features/kao_id/kyc/presentation/widgets/permission_section.dart:48` — `title: 'ซื้อสินค้า',`
+- `lib/features/kao_id/kyc/presentation/widgets/permission_section.dart:52` — `title: 'ขายสินค้า',`
+- `lib/features/kao_id/kyc/presentation/widgets/permission_section.dart:56` — `title: 'ถอนเงิน',`
+- `lib/features/kao_id/kyc/presentation/widgets/phone_tile.dart:25` — `'เบอร์โทรศัพท์',`
+- `lib/features/kao_id/kyc/presentation/widgets/phone_tile.dart:35` — `? 'ยืนยันแล้ว'`
+- `lib/features/kao_id/kyc/presentation/widgets/phone_tile.dart:36` — `: 'ยังไม่ยืนยัน',`
+- `lib/features/kao_id/kyc/presentation/widgets/residence_permit_tile.dart:31` — `return 'ผ่านการยืนยัน';`
+- `lib/features/kao_id/kyc/presentation/widgets/residence_permit_tile.dart:33` — `return 'กำลังตรวจสอบ';`
+- `lib/features/kao_id/kyc/presentation/widgets/residence_permit_tile.dart:35` — `return 'ไม่ผ่าน';`
+- `lib/features/kao_id/kyc/presentation/widgets/residence_permit_tile.dart:37` — `return 'ยังไม่ได้เพิ่ม';`
+- `lib/features/kao_id/kyc/presentation/widgets/residence_permit_tile.dart:57` — `'ใบพำนัก',`
+- `lib/features/kao_id/kyc/presentation/widgets/residence_permit_tile.dart:62` — `'หมดอายุ $_expiryText',`
+- `lib/features/kao_id/kyc/presentation/widgets/selected_file_card.dart:75` — `'เลือกไฟล์ใหม่',`
+- `lib/features/kao_id/kyc/presentation/widgets/status_chip.dart:23` — `text = 'อนุมัติแล้ว';`
+- `lib/features/kao_id/kyc/presentation/widgets/status_chip.dart:30` — `text = 'รอตรวจสอบ';`
+- `lib/features/kao_id/kyc/presentation/widgets/status_chip.dart:37` — `text = 'ไม่ผ่านการตรวจสอบ';`
+- `lib/features/kao_id/kyc/presentation/widgets/status_chip.dart:44` — `text = 'ยังไม่ได้ส่งเอกสาร';`
+- `lib/features/kao_id/kyc/presentation/widgets/upload_area.dart:9` — `this.title = 'อัปโหลดเอกสาร',`
+- `lib/features/kao_id/kyc/presentation/widgets/upload_area.dart:10` — `this.description = 'แตะเพื่อเลือกไฟล์จากเครื่อง',`
+- `lib/features/kao_id/kyc/presentation/widgets/upload_area.dart:11` — `this.buttonText = 'เลือกไฟล์',`
+- `lib/features/kao_id/kyc/presentation/widgets/upload_area.dart:114` — `? 'กำลังดำเนินการ...'`
+- `lib/features/kao_id/kyc/presentation/widgets/upload_area.dart:139` — `'รองรับ JPG, PNG และ PDF',`
+- `lib/features/kao_id/kyc/presentation/widgets/upload_area.dart:157` — `'ขนาดไฟล์ไม่เกิน 10 MB',`
+- `lib/features/kao_id/kyc/presentation/widgets/upload_area.dart:175` — `'ไฟล์ถูกเข้ารหัสและจัดเก็บอย่างปลอดภัย',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_history_tile.dart:18` — `'ประวัติการยืนยันตัวตน',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_history_tile.dart:21` — `'ดูประวัติการตรวจสอบและการเปลี่ยนแปลง',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_progress_card.dart:134` — `'ความคืบหน้าการยืนยันตัวตน',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_progress_card.dart:143` — `? 'การยืนยันตัวตนของคุณครบถ้วนแล้ว'`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_progress_card.dart:144` — `: 'ยืนยันข้อมูลเพิ่มเติมเพื่อยืนยันตัวตนของคุณ',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_progress_card.dart:198` — `? 'ยืนยันครบแล้ว'`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_progress_card.dart:199` — `: 'กำลังดำเนินการ',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_progress_card.dart:207` — `title: 'บัญชีธนาคาร',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_progress_card.dart:209` — `? 'ยืนยันแล้ว'`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_progress_card.dart:210` — `: 'ยังไม่ได้ยืนยัน',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:58` — `title: 'อีเมล',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:61` — `? 'ยืนยันแล้ว'`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:62` — `: 'ยังไม่ยืนยัน',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:87` — `title: 'เบอร์โทรศัพท์',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:92` — `? 'ยืนยันแล้ว'`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:93` — `: 'ยังไม่ยืนยัน',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:120` — `title: 'บัตรประชาชน',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:153` — `title: 'หนังสือเดินทาง',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:185` — `title: 'ใบพำนัก',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:238` — `'ประวัติการยืนยันตัวตน',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:240` — `'ดูประวัติการตรวจสอบและการเปลี่ยนแปลง',`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:265` — `return 'ยังไม่ได้เพิ่ม';`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:272` — `return 'ยืนยันข้อมูลแล้ว';`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:275` — `return 'หมดอายุ ${_formatDate(expiry)}';`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:283` — `return 'ยังไม่ได้ระบุวันหมดอายุ';`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:290` — `return 'ยังไม่ได้ระบุวันหมดอายุ';`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:293` — `return 'หมดอายุ ${_formatDate(expiry)}';`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:301` — `return 'ยังไม่ได้เพิ่ม';`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:308` — `return 'ยืนยันข้อมูลแล้ว';`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:311` — `return 'หมดอายุ ${_formatDate(expiry)}';`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:350` — `return 'ยืนยันแล้ว';`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:355` — `return 'กำลังตรวจสอบ';`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:358` — `return 'ไม่ผ่าน';`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:361` — `return 'หมดอายุ';`
+- `lib/features/kao_id/kyc/presentation/widgets/verification_section.dart:365` — `return 'ยังไม่ได้เพิ่ม';`
+- `lib/features/kao_id/phone_verification/controllers/phone_verification_controller.dart:46` — `errorMessage: 'กรุณากรอกเบอร์โทรศัพท์',`
+- `lib/features/kao_id/phone_verification/controllers/phone_verification_controller.dart:92` — `errorMessage: 'กรุณากรอกรหัส OTP',`
+- `lib/features/kao_id/phone_verification/controllers/phone_verification_controller.dart:99` — `errorMessage: 'ไม่พบหมายเลขโทรศัพท์',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:85` — `'ยืนยันเบอร์โทรศัพท์สำเร็จ',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:98` — `'ยืนยันเบอร์โทรศัพท์',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:242` — `? 'ยืนยันเบอร์โทรศัพท์แล้ว'`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:243` — `: 'ยืนยันเบอร์โทรศัพท์';`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:311` — `'ใช้สำหรับยืนยันความเป็นเจ้าของหมายเลขโทรศัพท์ '`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:312` — `'เพื่อเพิ่มความปลอดภัยของบัญชีและรองรับ '`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:313` — `'การยืนยันตัวตนด้วย OTP',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:359` — `label = 'ยืนยันแล้ว';`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:363` — `label = 'รอยืนยัน OTP';`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:367` — `label = 'ยังไม่ได้ยืนยัน';`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:446` — `'หมายเลขโทรศัพท์',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:456` — `'หมายเลขที่ผูกกับบัญชี Kao ID',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:479` — `'เบอร์โทรศัพท์',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:516` — `title = 'ยืนยันแล้ว';`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:518` — `'หมายเลขโทรศัพท์ได้รับการยืนยันแล้ว';`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:522` — `title = 'ส่งรหัส OTP แล้ว';`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:524` — `'กรุณากรอกรหัส OTP ที่ได้รับเพื่อดำเนินการต่อ';`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:528` — `title = 'ยังไม่ได้ยืนยัน';`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:530` — `'กรุณากรอกหมายเลขโทรศัพท์และส่งรหัส OTP';`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:671` — `'กรอกรหัส OTP',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:682` — `'กรอกรหัส 6 หลักที่ได้รับทาง SMS',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:713` — `labelText: 'รหัส OTP',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:742` — `? 'กำลังตรวจสอบ...'`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:743` — `: 'ยืนยัน OTP',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:753` — `'เปลี่ยนหมายเลขโทรศัพท์',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:792` — `? 'กำลังส่ง OTP...'`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:793` — `: 'ส่งรหัส OTP',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:846` — `'ยืนยันเบอร์โทรศัพท์แล้ว',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:856` — `'หมายเลขโทรศัพท์ของคุณได้รับการยืนยันแล้ว',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:926` — `'ข้อมูลเพิ่มเติม',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:937` — `'ข้อควรระวังในการยืนยันหมายเลขโทรศัพท์',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:958` — `'รหัส OTP จะถูกส่งไปยังหมายเลขโทรศัพท์ที่คุณระบุ',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:966` — `'ห้ามเปิดเผยรหัส OTP ให้ผู้อื่น',`
+- `lib/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart:974` — `'หลังจากยืนยันสำเร็จ สถานะบัญชีจะได้รับการอัปเดตอัตโนมัติ',`

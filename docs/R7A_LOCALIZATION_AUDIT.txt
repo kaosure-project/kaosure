@@ -1,0 +1,3 @@
+Scope: effective KYC sources after R6D + R7A. Generated code excluded.
+Remaining Thai literals (includes domain/error text; manual triage required):
+lib/features/kao_id/kyc/data/repositories/fake_kyc_repository.dart:101: bankName: 'ธนาคารไทยพาณิชย์',

@@ -1,0 +1,723 @@
+{
+  "project": "kaosure-project's Project",
+  "reviewDate": "2026-09-21",
+  "lints": [
+    {
+      "name": "rls_enabled_no_policy",
+      "title": "RLS Enabled No Policy",
+      "level": "INFO",
+      "facing": "EXTERNAL",
+      "categories": [
+        "SECURITY"
+      ],
+      "description": "Detects cases where row level security (RLS) has been enabled on a table but no RLS policies have been created.",
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy",
+      "count": 10,
+      "findings": [
+        {
+          "detail": "Table \\`public.chat_message_attachments\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "chat_message_attachments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Table \\`public.chat_messages\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "chat_messages",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Table \\`public.chat_quick_replies\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "chat_quick_replies",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Table \\`public.organization_delegations\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "organization_delegations",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Table \\`public.organization_role_permissions\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "organization_role_permissions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Table \\`public.organization_role_template_permissions\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "organization_role_template_permissions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Table \\`public.organization_role_templates\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "organization_role_templates",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Table \\`public.organization_roles\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "organization_roles",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Table \\`public.organizations\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "organizations",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Table \\`public.verification_history\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "verification_history",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        }
+      ]
+    },
+    {
+      "name": "function_search_path_mutable",
+      "title": "Function Search Path Mutable",
+      "level": "WARN",
+      "facing": "EXTERNAL",
+      "categories": [
+        "SECURITY"
+      ],
+      "description": "Detects functions where the search_path parameter is not set.",
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0011_function_search_path_mutable",
+      "count": 5,
+      "findings": [
+        {
+          "detail": "Function \\`public.update_updated_at_column\\` has a role mutable search_path",
+          "metadata": {
+            "name": "update_updated_at_column",
+            "type": "function",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function \\`public.set_updated_at\\` has a role mutable search_path",
+          "metadata": {
+            "name": "set_updated_at",
+            "type": "function",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function \\`public.update_platforms_updated_at\\` has a role mutable search_path",
+          "metadata": {
+            "name": "update_platforms_updated_at",
+            "type": "function",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function \\`public.generate_kao_id\\` has a role mutable search_path",
+          "metadata": {
+            "name": "generate_kao_id",
+            "type": "function",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function \\`public.is_admin\\` has a role mutable search_path",
+          "metadata": {
+            "name": "is_admin",
+            "type": "function",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        }
+      ]
+    },
+    {
+      "name": "extension_in_public",
+      "title": "Extension in Public",
+      "level": "WARN",
+      "facing": "EXTERNAL",
+      "categories": [
+        "SECURITY"
+      ],
+      "description": "Detects extensions installed in the \\`public\\` schema.",
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0014_extension_in_public",
+      "count": 2,
+      "findings": [
+        {
+          "detail": "Extension \\`pg_trgm\\` is installed in the public schema. Move it to another schema.",
+          "metadata": {
+            "name": "pg_trgm",
+            "type": "extension",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Extension \\`citext\\` is installed in the public schema. Move it to another schema.",
+          "metadata": {
+            "name": "citext",
+            "type": "extension",
+            "schema": "public"
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        }
+      ]
+    },
+    {
+      "name": "anon_security_definer_function_executable",
+      "title": "Public Can Execute SECURITY DEFINER Function",
+      "level": "WARN",
+      "facing": "EXTERNAL",
+      "categories": [
+        "SECURITY"
+      ],
+      "description": "Detects `SECURITY DEFINER` functions that are callable without signing in. Revoke `EXECUTE`, switch the function to `SECURITY INVOKER`, or move it out of your exposed API schema if it is not meant to be public.",
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0028_anon_security_definer_function_executable",
+      "count": 12,
+      "findings": [
+        {
+          "detail": "Function `public.attach_business_registration_document(p_registration_id uuid, p_document_id uuid)` can be executed by the `anon` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/attach_business_registration_document`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "attach_business_registration_document",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_registration_id uuid, p_document_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.can_access_admin()` can be executed by the `anon` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/can_access_admin`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "can_access_admin",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.cancel_business_registration(p_registration_id uuid)` can be executed by the `anon` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/cancel_business_registration`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "cancel_business_registration",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_registration_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.create_business_registration(p_business_type text, p_business_name text, p_registration_number text, p_business_category text, p_business_description text)` can be executed by the `anon` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/create_business_registration`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "create_business_registration",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_business_type text, p_business_name text, p_registration_number text, p_business_category text, p_business_description text",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.get_business_registration(p_registration_id uuid)` can be executed by the `anon` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/get_business_registration`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "get_business_registration",
+            "schema": "public",
+            "language": "sql",
+            "arguments": "p_registration_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.get_current_business_registration()` can be executed by the `anon` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/get_current_business_registration`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "get_current_business_registration",
+            "schema": "public",
+            "language": "sql",
+            "arguments": "",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.handle_auth_user_updated()` can be executed by the `anon` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/handle_auth_user_updated`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "handle_auth_user_updated",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.handle_new_user()` can be executed by the `anon` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/handle_new_user`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "handle_new_user",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.has_permission(p_permission_code text)` can be executed by the `anon` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/has_permission`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "has_permission",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_permission_code text",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.refresh_business_registration_status(p_registration_id uuid)` can be executed by the `anon` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/refresh_business_registration_status`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "refresh_business_registration_status",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_registration_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.submit_business_registration(p_registration_id uuid)` can be executed by the `anon` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/submit_business_registration`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "submit_business_registration",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_registration_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.update_business_registration(p_registration_id uuid, p_business_type text, p_business_name text, p_registration_number text, p_business_category text, p_business_description text)` can be executed by the `anon` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/update_business_registration`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "update_business_registration",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_registration_id uuid, p_business_type text, p_business_name text, p_registration_number text, p_business_category text, p_business_description text",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        }
+      ]
+    },
+    {
+      "name": "authenticated_security_definer_function_executable",
+      "title": "Signed-In Users Can Execute SECURITY DEFINER Function",
+      "level": "WARN",
+      "facing": "EXTERNAL",
+      "categories": [
+        "SECURITY"
+      ],
+      "description": "Detects `SECURITY DEFINER` functions that are callable by signed-in users. Revoke `EXECUTE`, switch the function to `SECURITY INVOKER`, or move it out of your exposed API schema if signed-in users should not call it.",
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable",
+      "count": 31,
+      "findings": [
+        {
+          "detail": "Function `public.approve_business_kyc(p_organization_id uuid, p_reviewer_id uuid, p_notes text)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/approve_business_kyc`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "approve_business_kyc",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_organization_id uuid, p_reviewer_id uuid, p_notes text",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.approve_financial_verification(p_bank_account_id uuid, p_reviewer_id uuid, p_name_match_status text, p_notes text)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/approve_financial_verification`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "approve_financial_verification",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_bank_account_id uuid, p_reviewer_id uuid, p_name_match_status text, p_notes text",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.approve_kyc_verification(p_verification_request_id uuid, p_reviewer_id uuid, p_notes text)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/approve_kyc_verification`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "approve_kyc_verification",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_verification_request_id uuid, p_reviewer_id uuid, p_notes text",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.assign_admin_role(p_target_kao_id text, p_role_code text, p_expires_at timestamp with time zone)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/assign_admin_role`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "assign_admin_role",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_target_kao_id text, p_role_code text, p_expires_at timestamp with time zone",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.attach_business_registration_document(p_registration_id uuid, p_document_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/attach_business_registration_document`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "attach_business_registration_document",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_registration_id uuid, p_document_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.can_access_admin()` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/can_access_admin`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "can_access_admin",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.cancel_business_registration(p_registration_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/cancel_business_registration`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "cancel_business_registration",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_registration_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.create_business_registration(p_business_type text, p_business_name text, p_registration_number text, p_business_category text, p_business_description text)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/create_business_registration`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "create_business_registration",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_business_type text, p_business_name text, p_registration_number text, p_business_category text, p_business_description text",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.create_business_shop(p_organization_id uuid, p_shop_name text, p_shop_slug text, p_description text)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/create_business_shop`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "create_business_shop",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_organization_id uuid, p_shop_name text, p_shop_slug text, p_description text",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.create_marketplace_product(p_shop_id uuid, p_category_id uuid, p_title text, p_slug text, p_description text, p_condition_level smallint, p_price numeric, p_stock integer)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/create_marketplace_product`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "create_marketplace_product",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_shop_id uuid, p_category_id uuid, p_title text, p_slug text, p_description text, p_condition_level smallint, p_price numeric, p_stock integer",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.create_personal_shop(p_shop_name text, p_shop_slug text, p_description text)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/create_personal_shop`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "create_personal_shop",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_shop_name text, p_shop_slug text, p_description text",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.get_business_registration(p_registration_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/get_business_registration`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "get_business_registration",
+            "schema": "public",
+            "language": "sql",
+            "arguments": "p_registration_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.get_current_business_registration()` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/get_current_business_registration`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "get_current_business_registration",
+            "schema": "public",
+            "language": "sql",
+            "arguments": "",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.get_governance_access()` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/get_governance_access`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "get_governance_access",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.get_governance_admin_assignments()` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/get_governance_admin_assignments`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "get_governance_admin_assignments",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.handle_auth_user_updated()` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/handle_auth_user_updated`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "handle_auth_user_updated",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.handle_new_user()` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/handle_new_user`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "handle_new_user",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.has_permission(p_permission_code text)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/has_permission`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "has_permission",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_permission_code text",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.initialize_organization_verification(p_organization_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/initialize_organization_verification`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "initialize_organization_verification",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_organization_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.initialize_verification(p_profile_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/initialize_verification`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "initialize_verification",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_profile_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.is_active_admin()` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/is_active_admin`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "is_active_admin",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.is_company_owner()` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/is_company_owner`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "is_company_owner",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.is_identity_financially_verified(p_identity_type text, p_profile_id uuid, p_organization_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/is_identity_financially_verified`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "is_identity_financially_verified",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_identity_type text, p_profile_id uuid, p_organization_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.is_seller_financially_verified(p_profile_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/is_seller_financially_verified`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "is_seller_financially_verified",
+            "schema": "public",
+            "language": "sql",
+            "arguments": "p_profile_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.issue_business_kao_id(p_organization_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/issue_business_kao_id`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "issue_business_kao_id",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_organization_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.issue_kao_id(p_profile_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/issue_kao_id`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "issue_kao_id",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_profile_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.refresh_business_registration_status(p_registration_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/refresh_business_registration_status`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "refresh_business_registration_status",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_registration_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.register_organization(p_name text, p_legal_name text, p_registration_number text, p_organization_type text, p_registration_country text)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/register_organization`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "register_organization",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_name text, p_legal_name text, p_registration_number text, p_organization_type text, p_registration_country text",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.revoke_admin_assignment(p_assignment_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/revoke_admin_assignment`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "revoke_admin_assignment",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_assignment_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.submit_business_registration(p_registration_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/submit_business_registration`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "submit_business_registration",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_registration_id uuid",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        },
+        {
+          "detail": "Function `public.update_business_registration(p_registration_id uuid, p_business_type text, p_business_name text, p_registration_number text, p_business_category text, p_business_description text)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/update_business_registration`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+          "metadata": {
+            "name": "update_business_registration",
+            "schema": "public",
+            "language": "plpgsql",
+            "arguments": "p_registration_id uuid, p_business_type text, p_business_name text, p_registration_number text, p_business_category text, p_business_description text",
+            "security_definer": true
+          },
+          "observed_at": "2026-09-21T15:13:52.386Z"
+        }
+      ]
+    },
+    {
+      "name": "auth_leaked_password_protection",
+      "title": "Leaked Password Protection Disabled",
+      "level": "WARN",
+      "facing": "EXTERNAL",
+      "categories": [
+        "SECURITY"
+      ],
+      "description": "Leaked password protection is currently disabled.",
+      "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection",
+      "count": 1,
+      "findings": [
+        {
+          "detail": "Supabase Auth prevents the use of compromised passwords by checking against HaveIBeenPwned.org. Enable this feature to enhance security.",
+          "metadata": {
+            "type": "auth",
+            "entity": "Auth"
+          }
+        }
+      ]
+    }
+  ]
+}

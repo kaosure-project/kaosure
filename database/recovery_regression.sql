@@ -1,0 +1,97 @@
+begin;
+do $$
+declare u uuid:=gen_random_uuid();o uuid;old_doc uuid:=gen_random_uuid();closure uuid;life uuid;e uuid;sid uuid:=gen_random_uuid();s jsonb;path text;k text; owner_sid uuid:=gen_random_uuid(); initial_sid uuid:=gen_random_uuid();
+begin
+ select profile_id into strict o from public.company_owners limit 1;
+ insert into auth.sessions(id,user_id,created_at,updated_at) values(owner_sid,o,now(),now());
+ insert into auth.users(id,email) values(u,'r10e-'||u||'@example.invalid');
+ insert into public.profiles(id,seller_level,username) values(u,'standard','r10e-'||u) on conflict(id) do nothing;
+ insert into public.identity_documents(id,owner_id,document_type,document_number,full_name,issued_date,expiry_date,status,verified_by,verified_at,file_path)
+ values(old_doc,u,'thai_national_id','1234567890123','Recovery Test',current_date-100,current_date+300,'approved',o,now(),u||'/old/front.jpg');
+ insert into public.document_files(document_id,file_path,file_name,mime_type,file_size) values(old_doc,u||'/old/front.jpg','front.jpg','image/jpeg',100);
+ insert into storage.objects(bucket_id,name,owner_id,metadata) values('identity-documents',u||'/old/front.jpg',u::text,'{"size":100,"mimetype":"image/jpeg"}');
+ insert into public.verification_requests(document_id,requested_by,status,reviewed_by,reviewed_at) values(old_doc,u,'approved',o,now());
+ insert into public.kao_id_identities(profile_id,kao_id,status,identity_type,issued_at) values(u,'K'||upper(substr(replace(u::text,'-',''),1,10)),'active','personal',now()) returning kao_id into k;
+ insert into auth.sessions(id,user_id,created_at,updated_at) values(initial_sid,u,now(),now());
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',u,'role','authenticated','session_id',initial_sid)::text,true);
+ closure:=public.lifecycle_submit_r10b('closure','Close rollback account');
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',o,'role','authenticated','session_id',owner_sid)::text,true);
+ perform public.close_account_r10d(closure,'Close for recovery regression');
+ insert into auth.sessions(id,user_id,created_at,updated_at) values(sid,u,clock_timestamp()+interval '1 second',now());
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',u,'role','authenticated','session_id',sid)::text,true);
+ set local role authenticated;
+ life:=public.lifecycle_submit_r10b('recovery','Please verify new evidence');
+ s:=public.prepare_recovery_r10e(life,'thai_national_id');e:=(s->>'id')::uuid;
+ if (public.prepare_recovery_r10e(life,'thai_national_id')->>'id')<>e::text then raise exception 'draft duplicated';end if;
+ if not kaoid_private.recovery_storage_r10e(u||'/national-id/'||e||'/front.jpg',true) then raise exception 'draft upload denied';end if;
+ if kaoid_private.recovery_storage_r10e(u||'/other/file.jpg',true) then raise exception 'unrelated upload allowed';end if;
+ begin update public.profiles set display_name='forged' where id=u;exception when insufficient_privilege then null;end;
+ reset role;
+ foreach path in array kaoid_private.recovery_paths_r10e(u,e,'thai_national_id') loop
+ insert into storage.objects(bucket_id,name,owner_id,metadata) values('identity-documents',path,u::text,'{"size":100,"mimetype":"image/jpeg"}');
+ end loop;
+ set local role authenticated;
+ if (select count(*) from storage.objects where bucket_id='identity-documents' and name=u||'/national-id/'||e||'/front.jpg')<>1 then raise exception 'RLS denied own proof';end if;
+ if exists(select 1 from storage.objects where bucket_id='identity-documents' and name=u||'/old/front.jpg') then raise exception 'closed user read old evidence';end if;
+ perform public.submit_recovery_r10e(e,jsonb_build_object('number','1234567890123','given','Recovery','family','Test','single',false,'birth','1990-01-01','issued',current_date-10,'expiry',current_date+500));
+ perform public.submit_recovery_r10e(e,jsonb_build_object('number','1234567890123','given','Recovery','family','Test','single',false,'birth','1990-01-01','issued',current_date-10,'expiry',current_date+500));
+ if kaoid_private.recovery_storage_r10e(u||'/national-id/'||e||'/front.jpg',true) then raise exception 'submitted upload allowed';end if;
+ begin perform public.review_recovery_r10e(e,true,'Self approval forbidden',true);raise exception 'self approval allowed' using errcode='XX001';exception when insufficient_privilege then null;end;
+ reset role;
+ if (select account_status from public.profiles where id=u)<>'closed' then raise exception 'submission opened account';end if;
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',o,'role','authenticated','session_id',owner_sid)::text,true);
+ set local role authenticated;
+ if not exists(select 1 from jsonb_array_elements(public.kyc_review_queue_r7c()) x where x->>'id'=e::text and (x->>'is_recovery')::boolean) then raise exception 'missing central queue';end if;
+ if not kaoid_private.can_read_evidence_r7c(u||'/old/front.jpg') then raise exception 'old evidence unreadable';end if;
+ begin perform public.kyc_review_decision_r7c(e,true,'No recovery confirmation');raise exception 'generic approval bypass' using errcode='XX001';exception when raise_exception then if sqlerrm<>'recovery_confirmation_required' then raise;end if;end;
+ begin perform public.review_recovery_r10e(e,true,'Unchecked confirmation',false);raise exception 'unchecked accepted' using errcode='XX001';exception when raise_exception then if sqlerrm<>'recovery_confirmation_required' then raise;end if;end;
+ reset role;
+ update public.profiles set account_status='suspended' where id=u;
+ set local role authenticated;
+ begin perform public.review_recovery_r10e(e,true,'Do not restore suspended account',true);raise exception 'suspension bypass' using errcode='XX001';exception when raise_exception then if sqlerrm<>'recovery_request_required' then raise;end if;end;
+ reset role;
+ update public.profiles set account_status='closed' where id=u;
+ set local role authenticated;
+ perform public.review_recovery_r10e(e,true,'Compared new and retained evidence; same person',true);
+ perform public.review_recovery_r10e(e,true,'Idempotent review retry',true);
+ reset role;
+ if (select account_status from public.profiles where id=u)<>'active' then raise exception 'account not restored';end if;
+ if not exists(select 1 from public.kao_id_identities where profile_id=u and kao_id=k and status='active') then raise exception 'original ID not restored';end if;
+ if (select count(*) from public.activity_logs where target_id=life and action='account.request.recover')<>1 then raise exception 'audit duplicated';end if;
+ if exists(select 1 from public.admin_assignments where profile_id=u and is_active) then raise exception 'staff restored';end if;
+ -- A second lifecycle must also work and advance session revocation.
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',u,'role','authenticated','session_id',sid)::text,true);
+ closure:=public.lifecycle_submit_r10b('closure','Second close rollback');
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',o,'role','authenticated','session_id',owner_sid)::text,true);
+ perform public.close_account_r10d(closure,'Second closure approved');
+ sid:=gen_random_uuid();
+ insert into auth.sessions(id,user_id,created_at,updated_at) values(sid,u,clock_timestamp()+interval '1 second',now());
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',u,'role','authenticated','session_id',sid)::text,true);
+ life:=public.lifecycle_submit_r10b('recovery','Recovery withdrawal test');
+ s:=public.prepare_recovery_r10e(life,'passport');e:=(s->>'id')::uuid;
+ foreach path in array kaoid_private.recovery_paths_r10e(u,e,'passport') loop
+ insert into storage.objects(bucket_id,name,owner_id,metadata) values('identity-documents',path,u::text,'{"size":100,"mimetype":"image/jpeg"}');end loop;
+ set local role authenticated;
+ perform public.submit_recovery_r10e(e,jsonb_build_object('number','P123456','given','Recovery','family','Test','single',false,'country','TH','birth','1990-01-01','issued',current_date-10,'expiry',current_date+500));
+ perform public.lifecycle_cancel_r10b(life);
+ reset role;
+ if (select status from public.verification_requests where id=e)<>'cancelled' then raise exception 'withdrawal left review active';end if;
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',o,'role','authenticated','session_id',owner_sid)::text,true);
+ begin perform public.review_recovery_r10e(e,true,'Cannot restore cancelled request',true);raise exception 'cancelled recovery approved' using errcode='XX001';exception when raise_exception then if sqlerrm<>'request_already_processed' then raise;end if;end;
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',u,'role','authenticated','session_id',sid)::text,true);
+ life:=public.lifecycle_submit_r10b('recovery','Rejected recovery test');
+ s:=public.prepare_recovery_r10e(life,'passport');e:=(s->>'id')::uuid;
+ foreach path in array kaoid_private.recovery_paths_r10e(u,e,'passport') loop
+ insert into storage.objects(bucket_id,name,owner_id,metadata) values('identity-documents',path,u::text,'{"size":100,"mimetype":"image/jpeg"}');end loop;
+ set local role authenticated;
+ begin perform public.submit_recovery_r10e(e,jsonb_build_object('number','P123456','given','Recovery','family','Test','single',false,'country','TH','birth','1990-01-01','issued',current_date-100,'expiry',current_date-1));raise exception 'expired evidence accepted' using errcode='XX001';exception when invalid_parameter_value then null;end;
+ perform public.submit_recovery_r10e(e,jsonb_build_object('number','P123456','given','Recovery','family','Test','single',false,'country','TH','birth','1990-01-01','issued',current_date-10,'expiry',current_date+500));
+ reset role;
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',o,'role','authenticated','session_id',owner_sid)::text,true);
+ perform public.review_recovery_r10e(e,false,'Identity evidence insufficient',false);
+ if (select account_status from public.profiles where id=u)<>'closed' or (select status from public.kao_id_identities where profile_id=u)<>'closed' then raise exception 'rejection restored identity';end if;
+ if exists(select 1 from kaoid_private.recovery_writes_r10e) then raise exception 'write scope leaked';end if;
+end $$;
+select 'R10E same-account recovery, central review, no self-approval, no generic bypass, retained ID and idempotency passed (rollback)' as result;
+
+rollback;

@@ -1,0 +1,515 @@
+{
+  "project": "kaosure-project's Project",
+  "reviewDate": "2026-09-21",
+  "mode": "metadata-read-only",
+  "triggers": [
+    {
+      "name": "trg_profiles_updated_at",
+      "table": "profiles",
+      "function": "set_updated_at()",
+      "definition": "CREATE TRIGGER trg_profiles_updated_at BEFORE UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION set_updated_at()"
+    },
+    {
+      "name": "on_auth_user_created",
+      "table": "auth.users",
+      "function": "handle_new_user()",
+      "definition": "CREATE TRIGGER on_auth_user_created AFTER INSERT ON auth.users FOR EACH ROW EXECUTE FUNCTION handle_new_user()"
+    },
+    {
+      "name": "on_auth_user_updated",
+      "table": "auth.users",
+      "function": "handle_auth_user_updated()",
+      "definition": "CREATE TRIGGER on_auth_user_updated AFTER UPDATE OF email_confirmed_at, phone_confirmed_at ON auth.users FOR EACH ROW EXECUTE FUNCTION handle_auth_user_updated()"
+    }
+  ],
+  "profileColumns": [
+    {
+      "name": "id",
+      "type": "uuid",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "name": "display_name",
+      "type": "text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "first_name",
+      "type": "text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "last_name",
+      "type": "text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "avatar_url",
+      "type": "text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "seller_level",
+      "type": "text",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "name": "trust_score",
+      "type": "integer",
+      "default": "0",
+      "nullable": "NO"
+    },
+    {
+      "name": "is_seller",
+      "type": "boolean",
+      "default": "false",
+      "nullable": "NO"
+    },
+    {
+      "name": "account_status",
+      "type": "text",
+      "default": "'active'::text",
+      "nullable": "NO"
+    },
+    {
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "name": "updated_at",
+      "type": "timestamp with time zone",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "name": "role",
+      "type": "text",
+      "default": "'user'::text",
+      "nullable": "NO"
+    },
+    {
+      "name": "username",
+      "type": "text",
+      "default": "'NULL'::text",
+      "nullable": "NO"
+    },
+    {
+      "name": "username_change_count",
+      "type": "integer",
+      "default": "0",
+      "nullable": "NO"
+    },
+    {
+      "name": "username_changed_at",
+      "type": "timestamp with time zone",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "account_level",
+      "type": "text",
+      "default": "'standard'::text",
+      "nullable": "NO"
+    },
+    {
+      "name": "bio",
+      "type": "text",
+      "default": "'NULL'::text",
+      "nullable": "NO"
+    },
+    {
+      "name": "language_code",
+      "type": "text",
+      "default": "'th'::text",
+      "nullable": "NO"
+    },
+    {
+      "name": "country_code",
+      "type": "text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "timezone",
+      "type": "text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "last_login_at",
+      "type": "timestamp with time zone",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "email_verified_at",
+      "type": "timestamp with time zone",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "phone_verified_at",
+      "type": "timestamp with time zone",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "name": "deleted_at",
+      "type": "timestamp with time zone",
+      "default": null,
+      "nullable": "YES"
+    }
+  ],
+  "policies": [
+    {
+      "cmd": "ALL",
+      "check": "true",
+      "roles": [
+        "service_role"
+      ],
+      "table": "sessions",
+      "using": "true",
+      "policy": "System manage sessions",
+      "schema": "public"
+    },
+    {
+      "cmd": "UPDATE",
+      "check": "(profile_id = auth.uid())",
+      "roles": [
+        "authenticated"
+      ],
+      "table": "sessions",
+      "using": "(profile_id = auth.uid())",
+      "policy": "Users revoke own sessions",
+      "schema": "public"
+    },
+    {
+      "cmd": "SELECT",
+      "check": null,
+      "roles": [
+        "authenticated"
+      ],
+      "table": "sessions",
+      "using": "(profile_id = auth.uid())",
+      "policy": "Users view own sessions",
+      "schema": "public"
+    },
+    {
+      "cmd": "INSERT",
+      "check": "(auth.uid() = id)",
+      "roles": [
+        "authenticated"
+      ],
+      "table": "profiles",
+      "using": null,
+      "policy": "Users can insert own profile",
+      "schema": "public"
+    },
+    {
+      "cmd": "UPDATE",
+      "check": "(auth.uid() = id)",
+      "roles": [
+        "authenticated"
+      ],
+      "table": "profiles",
+      "using": "(auth.uid() = id)",
+      "policy": "Users can update own profile",
+      "schema": "public"
+    },
+    {
+      "cmd": "SELECT",
+      "check": null,
+      "roles": [
+        "authenticated"
+      ],
+      "table": "profiles",
+      "using": "(auth.uid() = id)",
+      "policy": "Users can view own profile",
+      "schema": "public"
+    },
+    {
+      "cmd": "SELECT",
+      "check": null,
+      "roles": [
+        "authenticated"
+      ],
+      "table": "profiles",
+      "using": "(auth.uid() = id)",
+      "policy": "profiles_select_own",
+      "schema": "public"
+    },
+    {
+      "cmd": "UPDATE",
+      "check": "(auth.uid() = id)",
+      "roles": [
+        "authenticated"
+      ],
+      "table": "profiles",
+      "using": "(auth.uid() = id)",
+      "policy": "profiles_update_own",
+      "schema": "public"
+    },
+    {
+      "cmd": "SELECT",
+      "check": null,
+      "roles": [
+        "public"
+      ],
+      "table": "kao_id_identities",
+      "using": "(profile_id = auth.uid())",
+      "policy": "kao_id_identity_select_own",
+      "schema": "public"
+    }
+  ],
+  "functions": [
+    {
+      "name": "approve_kyc_verification",
+      "definition": "CREATE OR REPLACE FUNCTION public.approve_kyc_verification(p_verification_request_id uuid, p_reviewer_id uuid, p_notes text DEFAULT NULL::text)\n RETURNS boolean\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\r\nDECLARE\r\n    v_request public.verification_requests%ROWTYPE;\r\nBEGIN\r\n\r\n    -----------------------------------------------------------\r\n    -- 1. Authentication\r\n    -----------------------------------------------------------\r\n\r\n    IF auth.uid() IS NULL THEN\r\n        RAISE EXCEPTION 'Authentication required';\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 2. Reviewer identity\r\n    -----------------------------------------------------------\r\n\r\n    IF p_reviewer_id <> auth.uid() THEN\r\n        RAISE EXCEPTION\r\n            'Reviewer identity does not match authenticated user';\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 3. Reviewer permission\r\n    -----------------------------------------------------------\r\n\r\n    IF NOT EXISTS (\r\n        SELECT 1\r\n        FROM public.profiles\r\n        WHERE id = auth.uid()\r\n          AND role = 'kyc_officer'\r\n          AND account_status = 'active'\r\n    ) THEN\r\n        RAISE EXCEPTION 'KYC officer permission required';\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 4. Lock verification request\r\n    --\r\n    -- Prevent concurrent approval attempts.\r\n    -----------------------------------------------------------\r\n\r\n    SELECT *\r\n    INTO v_request\r\n    FROM public.verification_requests\r\n    WHERE id = p_verification_request_id\r\n    FOR UPDATE;\r\n\r\n    IF NOT FOUND THEN\r\n        RAISE EXCEPTION 'Verification request not found';\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 5. Validate request state\r\n    --\r\n    -- Only pending / under_review requests can be approved.\r\n    -----------------------------------------------------------\r\n\r\n    IF v_request.status NOT IN (\r\n        'pending',\r\n        'under_review'\r\n    ) THEN\r\n        RAISE EXCEPTION\r\n            'Verification request cannot be approved from status: %',\r\n            v_request.status;\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 6. Verify consolidated KYC record exists\r\n    --\r\n    -- verifications is the canonical KYC state for the profile.\r\n    -- It must already exist before approval.\r\n    -----------------------------------------------------------\r\n\r\n    IF NOT EXISTS (\r\n        SELECT 1\r\n        FROM public.verifications\r\n        WHERE profile_id = v_request.requested_by\r\n    ) THEN\r\n        RAISE EXCEPTION\r\n            'Verification record not found for profile';\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 7. Lock consolidated verification record\r\n    -----------------------------------------------------------\r\n\r\n    PERFORM 1\r\n    FROM public.verifications\r\n    WHERE profile_id = v_request.requested_by\r\n    FOR UPDATE;\r\n\r\n    -----------------------------------------------------------\r\n    -- 8. Update consolidated KYC state\r\n    -----------------------------------------------------------\r\n\r\n    UPDATE public.verifications\r\n    SET\r\n        account_level = 'verified',\r\n        status = 'approved',\r\n        last_verified_at = now(),\r\n        last_reviewed_by = p_reviewer_id,\r\n        rejected_reason = NULL,\r\n        updated_at = now()\r\n    WHERE profile_id = v_request.requested_by;\r\n\r\n    -----------------------------------------------------------\r\n    -- 9. Update verification request\r\n    -----------------------------------------------------------\r\n\r\n    UPDATE public.verification_requests\r\n    SET\r\n        status = 'approved',\r\n        reviewed_at = now(),\r\n        reviewed_by = p_reviewer_id,\r\n        rejection_reason = NULL,\r\n        notes = COALESCE(p_notes, notes),\r\n        updated_at = now()\r\n    WHERE id = p_verification_request_id;\r\n\r\n    -----------------------------------------------------------\r\n    -- 10. Write audit log\r\n    -----------------------------------------------------------\r\n\r\n    INSERT INTO public.verification_logs (\r\n        verification_request_id,\r\n        action,\r\n        old_status,\r\n        new_status,\r\n        performed_by,\r\n        notes,\r\n        created_at\r\n    )\r\n    VALUES (\r\n        p_verification_request_id,\r\n        'approve',\r\n        v_request.status,\r\n        'approved',\r\n        p_reviewer_id,\r\n        p_notes,\r\n        now()\r\n    );\r\n\r\n    -----------------------------------------------------------\r\n    -- 11. Success\r\n    -----------------------------------------------------------\r\n\r\n    RETURN true;\r\n\r\nEND;\r\n$function$\n",
+      "anon_execute": false,
+      "authenticated_execute": true
+    },
+    {
+      "name": "get_governance_access",
+      "definition": "CREATE OR REPLACE FUNCTION public.get_governance_access()\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\r\nDECLARE\r\n    v_user_id uuid := auth.uid();\r\n    v_is_owner boolean;\r\n    v_is_admin boolean;\r\n    v_roles jsonb;\r\nBEGIN\r\n    IF v_user_id IS NULL THEN\r\n        RAISE EXCEPTION 'Authentication required';\r\n    END IF;\r\n\r\n    v_is_owner := public.is_company_owner();\r\n    v_is_admin := public.is_active_admin();\r\n\r\n    SELECT COALESCE(\r\n        jsonb_agg(\r\n            jsonb_build_object(\r\n                'code', ar.code,\r\n                'name', ar.name\r\n            )\r\n            ORDER BY ar.name\r\n        ),\r\n        '[]'::jsonb\r\n    )\r\n    INTO v_roles\r\n    FROM public.admin_assignments aa\r\n    JOIN public.admin_roles ar\r\n      ON ar.id = aa.role_id\r\n    WHERE aa.profile_id = v_user_id\r\n      AND aa.is_active = true\r\n      AND aa.starts_at <= now()\r\n      AND (\r\n          aa.expires_at IS NULL\r\n          OR aa.expires_at >= now()\r\n      )\r\n      AND ar.is_active = true;\r\n\r\n    RETURN jsonb_build_object(\r\n        'is_owner', v_is_owner,\r\n        'is_admin', v_is_admin,\r\n        'can_access_admin', (v_is_owner OR v_is_admin),\r\n        'can_view_assignments',\r\n            (\r\n                v_is_owner\r\n                OR public.has_permission('admin.assignments.view')\r\n            ),\r\n        'can_assign_admin',\r\n            (\r\n                v_is_owner\r\n                OR public.has_permission('admin.assignments.create')\r\n            ),\r\n        'can_revoke_admin',\r\n            (\r\n                v_is_owner\r\n                OR public.has_permission('admin.assignments.update')\r\n            ),\r\n        'roles', v_roles\r\n    );\r\nEND;\r\n$function$\n",
+      "anon_execute": false,
+      "authenticated_execute": true
+    },
+    {
+      "name": "handle_auth_user_updated",
+      "definition": "CREATE OR REPLACE FUNCTION public.handle_auth_user_updated()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\nbegin\n  update public.profiles\n  set\n    email_verified_at = new.email_confirmed_at,\n    phone_verified_at = new.phone_confirmed_at,\n    updated_at = now()\n  where id = new.id;\n\n  update public.verifications\n  set\n    email_verified = new.email_confirmed_at is not null,\n    phone_verified = new.phone_confirmed_at is not null,\n    updated_at = now()\n  where profile_id = new.id;\n\n  return new;\nend;\n$function$\n",
+      "anon_execute": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "handle_new_user",
+      "definition": "CREATE OR REPLACE FUNCTION public.handle_new_user()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\nbegin\n  insert into public.profiles (\n    id,\n    username,\n    username_change_count,\n    username_changed_at,\n    display_name,\n    avatar_url,\n    seller_level,\n    trust_score,\n    is_seller,\n    account_status,\n    role,\n    created_at,\n    updated_at\n  )\n  values (\n    new.id,\n    'kao_' || substring(new.id::text, 1, 8),\n    0,\n    null,\n    coalesce(new.raw_user_meta_data->>'display_name', 'New User'),\n    null,\n    'standard',\n    0,\n    false,\n    'active',\n    'user',\n    now(),\n    now()\n  );\n\n  insert into public.verifications (\n    profile_id,\n    account_level,\n    status,\n    email_verified,\n    phone_verified\n  )\n  values (\n    new.id,\n    'registered',\n    'not_started',\n    new.email_confirmed_at is not null,\n    new.phone_confirmed_at is not null\n  );\n\n  return new;\nend;\n$function$\n",
+      "anon_execute": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "initialize_verification",
+      "definition": "CREATE OR REPLACE FUNCTION public.initialize_verification(p_profile_id uuid)\n RETURNS uuid\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\r\nDECLARE\r\n    v_verification_id uuid;\r\nBEGIN\r\n\r\n    -----------------------------------------------------------\r\n    -- 1. Authentication\r\n    -----------------------------------------------------------\r\n\r\n    IF auth.uid() IS NULL THEN\r\n        RAISE EXCEPTION 'Authentication required';\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 2. Profile ownership\r\n    -----------------------------------------------------------\r\n\r\n    IF p_profile_id <> auth.uid() THEN\r\n        RAISE EXCEPTION\r\n            'Not authorized to initialize verification for this profile';\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 3. Validate profile\r\n    -----------------------------------------------------------\r\n\r\n    IF NOT EXISTS (\r\n        SELECT 1\r\n        FROM public.profiles\r\n        WHERE id = p_profile_id\r\n    ) THEN\r\n        RAISE EXCEPTION 'Profile not found';\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 4. Return existing verification\r\n    --\r\n    -- Idempotent:\r\n    -- Multiple calls must never create multiple verification\r\n    -- records for the same profile.\r\n    -----------------------------------------------------------\r\n\r\n    SELECT id\r\n    INTO v_verification_id\r\n    FROM public.verifications\r\n    WHERE profile_id = p_profile_id\r\n    LIMIT 1;\r\n\r\n    IF v_verification_id IS NOT NULL THEN\r\n        RETURN v_verification_id;\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 5. Create canonical verification state\r\n    -----------------------------------------------------------\r\n\r\n    INSERT INTO public.verifications (\r\n        profile_id,\r\n        account_level,\r\n        status,\r\n        email_verified,\r\n        phone_verified,\r\n        identity_card_status,\r\n        passport_status,\r\n        residence_permit_status,\r\n        bank_status,\r\n        identity_score,\r\n        created_at,\r\n        updated_at\r\n    )\r\n    VALUES (\r\n        p_profile_id,\r\n        'registered',\r\n        'not_started',\r\n        false,\r\n        false,\r\n        'not_started',\r\n        'not_started',\r\n        'not_started',\r\n        'not_started',\r\n        0,\r\n        now(),\r\n        now()\r\n    )\r\n    RETURNING id\r\n    INTO v_verification_id;\r\n\r\n    -----------------------------------------------------------\r\n    -- 6. Return verification ID\r\n    -----------------------------------------------------------\r\n\r\n    RETURN v_verification_id;\r\n\r\nEXCEPTION\r\n    WHEN unique_violation THEN\r\n\r\n        -------------------------------------------------------\r\n        -- Concurrent initialization:\r\n        -- another transaction created the verification first.\r\n        -------------------------------------------------------\r\n\r\n        SELECT id\r\n        INTO v_verification_id\r\n        FROM public.verifications\r\n        WHERE profile_id = p_profile_id\r\n        LIMIT 1;\r\n\r\n        IF v_verification_id IS NOT NULL THEN\r\n            RETURN v_verification_id;\r\n        END IF;\r\n\r\n        RAISE;\r\nEND;\r\n$function$\n",
+      "anon_execute": false,
+      "authenticated_execute": true
+    },
+    {
+      "name": "is_active_admin",
+      "definition": "CREATE OR REPLACE FUNCTION public.is_active_admin()\n RETURNS boolean\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\r\nDECLARE\r\n    v_user_id uuid := auth.uid();\r\nBEGIN\r\n    IF v_user_id IS NULL THEN\r\n        RETURN false;\r\n    END IF;\r\n\r\n    RETURN EXISTS (\r\n        SELECT 1\r\n        FROM public.admin_assignments aa\r\n        JOIN public.profiles p\r\n          ON p.id = aa.profile_id\r\n         AND p.account_status = 'active'\r\n        JOIN public.verifications v\r\n          ON v.profile_id = aa.profile_id\r\n         AND v.status = 'approved'\r\n        JOIN public.kao_id_identities k\r\n          ON k.profile_id = aa.profile_id\r\n         AND k.status = 'active'\r\n        JOIN public.admin_roles ar\r\n          ON ar.id = aa.role_id\r\n         AND ar.is_active = true\r\n        WHERE aa.profile_id = v_user_id\r\n          AND aa.is_active = true\r\n          AND aa.starts_at <= now()\r\n          AND (\r\n              aa.expires_at IS NULL\r\n              OR aa.expires_at >= now()\r\n          )\r\n    );\r\nEND;\r\n$function$\n",
+      "anon_execute": false,
+      "authenticated_execute": true
+    },
+    {
+      "name": "issue_kao_id",
+      "definition": "CREATE OR REPLACE FUNCTION public.issue_kao_id(p_profile_id uuid)\n RETURNS text\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\r\nDECLARE\r\n    existing_kao_id text;\r\n    new_kao_id text;\r\n    verification_status text;\r\nBEGIN\r\n\r\n    -----------------------------------------------------------\r\n    -- 1. Authentication\r\n    -----------------------------------------------------------\r\n\r\n    IF auth.uid() IS NULL THEN\r\n        RAISE EXCEPTION 'Authentication required';\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 2. Profile ownership\r\n    -----------------------------------------------------------\r\n\r\n    IF p_profile_id <> auth.uid() THEN\r\n        RAISE EXCEPTION 'Not authorized to issue Kao ID for this profile';\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 3. Validate profile\r\n    -----------------------------------------------------------\r\n\r\n    IF NOT EXISTS (\r\n        SELECT 1\r\n        FROM public.profiles\r\n        WHERE id = p_profile_id\r\n    ) THEN\r\n        RAISE EXCEPTION 'Profile not found';\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 4. Return existing Kao ID\r\n    --\r\n    -- Idempotent issuance.\r\n    -----------------------------------------------------------\r\n\r\n    SELECT kao_id\r\n    INTO existing_kao_id\r\n    FROM public.kao_id_identities\r\n    WHERE profile_id = p_profile_id\r\n    LIMIT 1;\r\n\r\n    IF existing_kao_id IS NOT NULL THEN\r\n        RETURN existing_kao_id;\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 5. KYC gate\r\n    --\r\n    -- The canonical consolidated verification record must\r\n    -- exist and must be approved.\r\n    -----------------------------------------------------------\r\n\r\n    SELECT status\r\n    INTO verification_status\r\n    FROM public.verifications\r\n    WHERE profile_id = p_profile_id\r\n    LIMIT 1;\r\n\r\n    IF verification_status IS NULL THEN\r\n        RAISE EXCEPTION 'KYC verification record not found';\r\n    END IF;\r\n\r\n    IF verification_status <> 'approved' THEN\r\n        RAISE EXCEPTION 'KYC verification is not approved';\r\n    END IF;\r\n\r\n    -----------------------------------------------------------\r\n    -- 6. Generate Kao ID\r\n    -----------------------------------------------------------\r\n\r\n    new_kao_id := public.generate_kao_id();\r\n\r\n    -----------------------------------------------------------\r\n    -- 7. Create canonical Kao ID identity\r\n    -----------------------------------------------------------\r\n\r\n    INSERT INTO public.kao_id_identities (\r\n        profile_id,\r\n        kao_id,\r\n        status,\r\n        issued_at\r\n    )\r\n    VALUES (\r\n        p_profile_id,\r\n        new_kao_id,\r\n        'active',\r\n        now()\r\n    );\r\n\r\n    -----------------------------------------------------------\r\n    -- 8. Return immutable public Kao ID\r\n    -----------------------------------------------------------\r\n\r\n    RETURN new_kao_id;\r\n\r\nEXCEPTION\r\n    WHEN unique_violation THEN\r\n\r\n        -------------------------------------------------------\r\n        -- Concurrent issuance:\r\n        -- another transaction may have created the Kao ID\r\n        -- for this profile first.\r\n        -------------------------------------------------------\r\n\r\n        SELECT kao_id\r\n        INTO existing_kao_id\r\n        FROM public.kao_id_identities\r\n        WHERE profile_id = p_profile_id\r\n        LIMIT 1;\r\n\r\n        IF existing_kao_id IS NOT NULL THEN\r\n            RETURN existing_kao_id;\r\n        END IF;\r\n\r\n        RAISE;\r\nEND;\r\n$function$\n",
+      "anon_execute": false,
+      "authenticated_execute": true
+    }
+  ],
+  "constraints": [
+    {
+      "name": "account_status_check",
+      "table": "profiles",
+      "definition": "CHECK ((account_status = ANY (ARRAY['active'::text, 'suspended'::text, 'banned'::text, 'closed'::text])))"
+    },
+    {
+      "name": "profiles_id_fkey",
+      "table": "profiles",
+      "definition": "FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "profiles_pkey",
+      "table": "profiles",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "profiles_role_check",
+      "table": "profiles",
+      "definition": "CHECK ((role = ANY (ARRAY['user'::text, 'seller'::text, 'moderator'::text, 'admin'::text, 'super_admin'::text])))"
+    },
+    {
+      "name": "profiles_username_key",
+      "table": "profiles",
+      "definition": "UNIQUE (username)"
+    },
+    {
+      "name": "seller_level_check",
+      "table": "profiles",
+      "definition": "CHECK ((seller_level = ANY (ARRAY['standard'::text, 'verified'::text, 'trusted'::text, 'licensed'::text, 'admin'::text])))"
+    },
+    {
+      "name": "chk_kao_id_identity_format",
+      "table": "kao_id_identities",
+      "definition": "CHECK ((kao_id ~ '^K[A-Z0-9]{10}$'::text))"
+    },
+    {
+      "name": "chk_kao_id_identity_owner",
+      "table": "kao_id_identities",
+      "definition": "CHECK ((((identity_type = 'personal'::text) AND (profile_id IS NOT NULL) AND (organization_id IS NULL)) OR ((identity_type = 'business'::text) AND (profile_id IS NULL) AND (organization_id IS NOT NULL))))"
+    },
+    {
+      "name": "chk_kao_id_identity_status",
+      "table": "kao_id_identities",
+      "definition": "CHECK ((status = ANY (ARRAY['active'::text, 'suspended'::text, 'closed'::text])))"
+    },
+    {
+      "name": "chk_kao_id_identity_type",
+      "table": "kao_id_identities",
+      "definition": "CHECK ((identity_type = ANY (ARRAY['personal'::text, 'business'::text])))"
+    },
+    {
+      "name": "kao_id_identities_organization_id_fkey",
+      "table": "kao_id_identities",
+      "definition": "FOREIGN KEY (organization_id) REFERENCES organizations(id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "kao_id_identities_pkey",
+      "table": "kao_id_identities",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "kao_id_identities_profile_id_fkey",
+      "table": "kao_id_identities",
+      "definition": "FOREIGN KEY (profile_id) REFERENCES profiles(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "uq_kao_id_identity_kao_id",
+      "table": "kao_id_identities",
+      "definition": "UNIQUE (kao_id)"
+    },
+    {
+      "name": "uq_kao_id_identity_profile",
+      "table": "kao_id_identities",
+      "definition": "UNIQUE (profile_id)"
+    }
+  ],
+  "profile_grants": [
+    {
+      "column": "id",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "display_name",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "first_name",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "last_name",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "avatar_url",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "seller_level",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "trust_score",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "is_seller",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "account_status",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "created_at",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "updated_at",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "role",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "username",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "username_change_count",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "username_changed_at",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "account_level",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "bio",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "language_code",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "country_code",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "timezone",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "last_login_at",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "email_verified_at",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "phone_verified_at",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    },
+    {
+      "column": "deleted_at",
+      "authenticated_insert": false,
+      "authenticated_update": true
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/providers/governance_provider.dart';
@@ -29,9 +30,9 @@ final class GovernanceDashboardTile
         return DashboardMenuTile(
           icon: Icons
               .admin_panel_settings_outlined,
-          title: 'Governance',
+          title: AppLocalizations.of(context).governanceLabel,
           subtitle:
-              'Owner, Admin, Role และ Permission',
+              AppLocalizations.of(context).governanceDescription,
           onTap: () {
             Navigator.of(context).pushNamed(
               KaoIdRoutes.governance,

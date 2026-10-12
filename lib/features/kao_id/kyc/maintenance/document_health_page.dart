@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/core/providers/supabase_provider.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../../account/lifecycle/account_access_gate.dart';
+import '../../account/data/repositories/supabase_account_access_repository.dart';
 import '../../governance/shared/admin_display.dart';
 import '../presentation/widgets/kyc_status_label.dart';
 import '../presentation/identity_card/identity_card_page.dart';

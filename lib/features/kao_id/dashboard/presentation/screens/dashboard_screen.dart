@@ -1,7 +1,7 @@
-import '../../../account/security/mfa_page.dart';
-import '../../../account/security/sessions_page.dart';
+import '../../../account/presentation/pages/security/mfa_page.dart';
+import '../../../account/presentation/pages/security/sessions_page.dart';
 import '../../../kyc/maintenance/document_health_page.dart';
-import '../../../account/lifecycle/lifecycle_page.dart';
+import '../../../account/presentation/pages/lifecycle/lifecycle_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';

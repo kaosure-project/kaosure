@@ -1,5 +1,5 @@
-import '../account/security/security_operations_page.dart';
-import '../account/security/mfa_page.dart';
+import '../account/presentation/pages/security/security_operations_page.dart';
+import '../account/presentation/pages/security/mfa_page.dart';
 import 'shared/access_refresh.dart';
 import 'package:kaosure/features/wallet/partners/partner_page.dart';
 import 'lifecycle/owner_requests_page.dart';

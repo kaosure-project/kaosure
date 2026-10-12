@@ -1,10 +1,10 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../kao_id/account/security/mfa_page.dart';
+import '../../kao_id/account/presentation/pages/security/mfa_page.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../../kao_id/account/lifecycle/account_access_gate.dart';
+import '../../kao_id/account/data/repositories/supabase_account_access_repository.dart';
 import '../../kao_id/governance/shared/admin_display.dart';
 import 'partner_repository.dart';
 

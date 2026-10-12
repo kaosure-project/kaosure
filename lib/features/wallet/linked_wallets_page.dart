@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/core/providers/supabase_provider.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../kao_id/account/lifecycle/account_access_gate.dart';
+import '../kao_id/account/data/repositories/supabase_account_access_repository.dart';
 import '../kao_id/governance/shared/admin_display.dart';
 abstract class LinkedWalletRepository {
   Future<List<Map<String,dynamic>>> load(String user,String? profile);

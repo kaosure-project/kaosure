@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kaosure/features/kao_id/account/lifecycle/lifecycle_page.dart';
+import 'package:kaosure/features/kao_id/account/domain/repositories/lifecycle_repository.dart';
+import 'package:kaosure/features/kao_id/account/data/repositories/supabase_lifecycle_repository.dart';
+import 'package:kaosure/features/kao_id/account/presentation/pages/lifecycle/lifecycle_page.dart';
 import 'package:kaosure/features/kao_id/auth/application/providers/auth_provider.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'auth_localization_r2_test.dart' show TestAuthNotifier;

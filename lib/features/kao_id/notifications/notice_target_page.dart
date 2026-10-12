@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/core/providers/supabase_provider.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import '../auth/application/providers/auth_provider.dart';
-import '../account/security/mfa_page.dart';
+import '../account/presentation/pages/security/mfa_page.dart';
 import '../governance/shared/access_refresh.dart';
 import '../kyc/review/kyc_review_page.dart';
 

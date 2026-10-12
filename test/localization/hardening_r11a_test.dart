@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kaosure/features/kao_id/account/lifecycle/account_access_gate.dart';
-import 'package:kaosure/features/kao_id/account/security/sessions_page.dart';
+import 'package:kaosure/features/kao_id/account/data/repositories/supabase_account_access_repository.dart';
+import 'package:kaosure/features/kao_id/account/presentation/widgets/account_access_gate.dart';
+import 'package:kaosure/features/kao_id/account/domain/repositories/sessions_repository.dart';
+import 'package:kaosure/features/kao_id/account/data/repositories/supabase_sessions_repository.dart';
+import 'package:kaosure/features/kao_id/account/presentation/pages/security/sessions_page.dart';
 import 'package:kaosure/features/kao_id/kyc/maintenance/document_health_page.dart';
 import 'package:kaosure/features/kao_id/kyc/identity_card/national_id_repository.dart';
 import 'package:kaosure/features/kao_id/kyc/passport/passport_repository.dart';

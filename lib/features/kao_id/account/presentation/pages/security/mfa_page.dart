@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../../auth/application/providers/auth_provider.dart';
-import '../../governance/members/member_repository.dart';
-import '../../kyc/review/kyc_review_repository.dart';
-import 'mfa_repository.dart';
+import '../../../../auth/application/providers/auth_provider.dart';
+import '../../../../governance/members/member_repository.dart';
+import '../../../../kyc/review/kyc_review_repository.dart';
+import '../../../data/repositories/supabase_mfa_repository.dart';
 
 class MfaPage extends ConsumerStatefulWidget {
   const MfaPage({super.key});

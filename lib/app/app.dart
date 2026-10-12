@@ -7,7 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../core/localization/locale_controller.dart';
 import 'routes/kao_id_routes.dart';
 import '../l10n/app_localizations.dart';
-import '../features/kao_id/account/lifecycle/account_access_gate.dart';
+import '../features/kao_id/account/presentation/widgets/account_access_gate.dart';
 import 'router.dart';
 import 'theme.dart';
 

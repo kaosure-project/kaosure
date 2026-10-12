@@ -1,58 +1,9 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:kaosure/core/providers/supabase_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/features/kao_id/account/data/repositories/supabase_recovery_repository.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../../auth/application/providers/auth_provider.dart';
-import '../../kyc/identity_card/national_id_repository.dart';
-
-abstract class RecoveryRepository {
-  Future<List<Map<String, dynamic>>> snapshot();
-  Future<Map<String, dynamic>> prepare(String request, String type);
-  Future<void> submit(Map<String, dynamic> draft, Map<String, dynamic> data, List<IdImage> files);
-  Future<Uint8List> preview(String path);
-}
-final recoveryRepositoryProvider = Provider<RecoveryRepository>((ref) =>
-  _RecoveryRepository(ref.read(supabaseClientProvider)));
-final recoveryDecisionProvider = Provider<Future<void> Function(String, bool, String, bool)>((ref) =>
-  (id, approve, reason, confirm) async {
-    await ref.read(supabaseClientProvider).rpc('review_recovery_r10e', params: {
-      'p_request': id, 'p_approve': approve, 'p_reason': reason, 'p_confirm': confirm});
-  });
-class _RecoveryRepository implements RecoveryRepository {
-  _RecoveryRepository(this.client);
-  final SupabaseClient client;
-  @override
-  Future<List<Map<String, dynamic>>> snapshot() async =>
-    (await client.rpc('recovery_snapshot_r10e') as List).map((r) => Map<String, dynamic>.from(r as Map)).toList();
-  @override
-  Future<Map<String, dynamic>> prepare(String request, String type) async =>
-    Map<String, dynamic>.from(await client.rpc('prepare_recovery_r10e', params: {
-      'p_lifecycle': request, 'p_type': type}) as Map);
-  @override
-  Future<void> submit(Map<String, dynamic> draft, Map<String, dynamic> data, List<IdImage> files) async {
-    final user = client.auth.currentUser?.id;
-    if (user == null) { throw StateError('session'); }
-    final paths = (draft['paths'] as List).cast<String>();
-    if (files.length != paths.length || paths.any((p) => !p.startsWith('$user/'))) { throw StateError('files'); }
-    for (var i = 0; i < paths.length; i++) {
-      if (client.auth.currentUser?.id != user) { throw StateError('session'); }
-      try {
-        await client.storage.from('identity-documents').uploadBinary(paths[i], files[i].bytes,
-          fileOptions: const FileOptions(contentType: 'image/jpeg', upsert: false));
-      } catch (_) {
-        if (client.auth.currentUser?.id != user) { rethrow; }
-        final saved = await client.storage.from('identity-documents').download(paths[i]);
-        if (!listEquals(saved, files[i].bytes)) { throw StateError('file_conflict'); }
-      }
-    }
-    if (client.auth.currentUser?.id != user) { throw StateError('session'); }
-    await client.rpc('submit_recovery_r10e', params: {'p_id': draft['id'], 'p_data': data});
-  }
-  @override
-  Future<Uint8List> preview(String path) => client.storage.from('identity-documents').download(path);
-}
+import '../../../../auth/application/providers/auth_provider.dart';
+import '../../../../kyc/identity_card/national_id_repository.dart';
 
 class RecoveryEvidencePage extends ConsumerStatefulWidget {
   const RecoveryEvidencePage({super.key, required this.requestId});
@@ -60,6 +11,7 @@ class RecoveryEvidencePage extends ConsumerStatefulWidget {
   @override
   ConsumerState<RecoveryEvidencePage> createState() => _RecoveryEvidencePageState();
 }
+
 class _RecoveryEvidencePageState extends ConsumerState<RecoveryEvidencePage> {
   final _number = TextEditingController(), _given = TextEditingController(),
     _family = TextEditingController(), _country = TextEditingController();

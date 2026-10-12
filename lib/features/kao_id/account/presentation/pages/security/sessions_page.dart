@@ -1,33 +1,17 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kaosure/core/providers/supabase_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/features/kao_id/account/data/repositories/supabase_sessions_repository.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../../governance/shared/admin_display.dart';
-import '../lifecycle/account_access_gate.dart';
+import '../../../../governance/shared/admin_display.dart';
+import '../../../data/repositories/supabase_account_access_repository.dart';
 
-abstract class SessionsRepository {
-  Future<List<Map<String, dynamic>>> list();
-  Future<void> revoke(String? id, {bool others = false, required String expectedUser});
-}
-final sessionsRepositoryProvider = Provider<SessionsRepository>((ref) => _SessionsRepository(ref));
-class _SessionsRepository implements SessionsRepository {
-  _SessionsRepository(this.ref);
-  final Ref ref;
-  @override
-  Future<List<Map<String, dynamic>>> list() async =>
-    (await ref.read(supabaseClientProvider).rpc('sessions_r11a') as List)
-      .map((e) => Map<String, dynamic>.from(e as Map)).toList();
-  @override
-  Future<void> revoke(String? id, {bool others = false, required String expectedUser}) async {
-    await ref.read(supabaseClientProvider).rpc('revoke_session_r11a', params: {'p_session': id, 'p_others': others, 'p_expected_user': expectedUser});
-  }
-}
 class SessionsPage extends ConsumerStatefulWidget {
   const SessionsPage({super.key});
   @override
   ConsumerState<SessionsPage> createState() => _SessionsPageState();
 }
+
 class _SessionsPageState extends ConsumerState<SessionsPage> with WidgetsBindingObserver {
   List<Map<String, dynamic>> _rows = [];
   bool _busy = true, _failed = false;

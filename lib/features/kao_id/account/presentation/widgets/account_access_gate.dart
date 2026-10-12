@@ -1,36 +1,13 @@
-import '../../governance/members/member_repository.dart';
-import '../../kyc/review/kyc_review_repository.dart';
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:kaosure/core/providers/supabase_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/features/kao_id/account/data/repositories/supabase_account_access_repository.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../../auth/application/providers/auth_provider.dart';
-import '../../auth/presentation/pages/reset_password_page.dart';
-import 'lifecycle_page.dart';
-
-abstract class AccountAccessRepository {
-  String? get userId;
-  Stream<void> get changes;
-  Future<String> check();
-  Future<void> signOut();
-}
-final accountAccessRepositoryProvider = Provider<AccountAccessRepository>((ref) =>
-    _AccountAccessRepository(ref.read(supabaseClientProvider)));
-class _AccountAccessRepository implements AccountAccessRepository {
-  _AccountAccessRepository(this.client);
-  final SupabaseClient client;
-  @override
-  String? get userId => client.auth.currentUser?.id;
-  @override
-  Stream<void> get changes => client.auth.onAuthStateChange.map((_) {});
-  @override
-  Future<String> check() async =>
-      (await client.rpc('account_access_r10d') as Map)['state'] as String;
-  @override
-  Future<void> signOut() => client.auth.signOut(scope: SignOutScope.local);
-}
+import '../../../auth/application/providers/auth_provider.dart';
+import '../../../auth/presentation/pages/reset_password_page.dart';
+import '../../../governance/members/member_repository.dart';
+import '../../../kyc/review/kyc_review_repository.dart';
+import '../pages/lifecycle/lifecycle_page.dart';
 
 /// The server enforces closure; this gate hides stale screens and explains it.
 class AccountAccessGate extends ConsumerStatefulWidget {
@@ -40,6 +17,7 @@ class AccountAccessGate extends ConsumerStatefulWidget {
   @override
   ConsumerState<AccountAccessGate> createState() => _AccountAccessGateState();
 }
+
 class _AccountAccessGateState extends ConsumerState<AccountAccessGate>
     with WidgetsBindingObserver {
   StreamSubscription<void>? _subscription;

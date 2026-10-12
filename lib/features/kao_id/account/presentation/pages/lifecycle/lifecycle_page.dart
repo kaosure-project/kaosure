@@ -1,40 +1,17 @@
-import 'recovery_evidence_page.dart';
-import '../../governance/shared/admin_display.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kaosure/core/providers/supabase_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/features/kao_id/account/data/repositories/supabase_lifecycle_repository.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../../auth/application/providers/auth_provider.dart';
-
-abstract class LifecycleRepository {
-  Future<Map<String, dynamic>> snapshot();
-  Future<void> submit(String kind, String reason);
-  Future<void> cancel(String id);
-}
-final lifecycleRepositoryProvider = Provider<LifecycleRepository>((ref) =>
-    _LifecycleRepository(ref));
-class _LifecycleRepository implements LifecycleRepository {
-  _LifecycleRepository(this.ref);
-  final Ref ref;
-  @override
-  Future<Map<String, dynamic>> snapshot() async => Map<String, dynamic>.from(
-    await ref.read(supabaseClientProvider).rpc('lifecycle_snapshot_r10b') as Map);
-  @override
-  Future<void> submit(String kind, String reason) async {
-    await ref.read(supabaseClientProvider).rpc('lifecycle_submit_r10b',
-      params: {'p_kind': kind, 'p_reason': reason});
-  }
-  @override
-  Future<void> cancel(String id) async {
-    await ref.read(supabaseClientProvider).rpc('lifecycle_cancel_r10b', params: {'p_id': id});
-  }
-}
+import '../../../../auth/application/providers/auth_provider.dart';
+import '../../../../governance/shared/admin_display.dart';
+import 'recovery_evidence_page.dart';
 
 class LifecyclePage extends ConsumerStatefulWidget {
   const LifecyclePage({super.key});
   @override
   ConsumerState<LifecyclePage> createState() => _LifecyclePageState();
 }
+
 class _LifecyclePageState extends ConsumerState<LifecyclePage> {
   final _reason = TextEditingController();
   String? _user;

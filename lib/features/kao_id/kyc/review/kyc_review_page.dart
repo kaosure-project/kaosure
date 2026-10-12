@@ -1,6 +1,6 @@
-import '../../account/security/mfa_page.dart';
+import '../../account/presentation/pages/security/mfa_page.dart';
 import '../../governance/shared/access_refresh.dart';
-import '../../account/lifecycle/recovery_evidence_page.dart';
+import '../../account/application/providers/recovery_providers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

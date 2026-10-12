@@ -1,16 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:kaosure/core/providers/supabase_provider.dart';
+import 'package:kaosure/features/kao_id/account/domain/repositories/mfa_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-abstract interface class MfaRepository {
-  Future<Map<String, dynamic>> load();
-  Future<Map<String, String>> enroll(String name, String password);
-  Future<void> verify(String factor, String code);
-  Future<void> cancelEnrollment(String factor);
-  Future<void> enablePolicy();
-}
 final mfaRepositoryProvider = Provider<MfaRepository>((ref) =>
     SupabaseMfaRepository(ref.watch(supabaseClientProvider)));
+
 class SupabaseMfaRepository implements MfaRepository {
   SupabaseMfaRepository(this.client);
   final SupabaseClient client;

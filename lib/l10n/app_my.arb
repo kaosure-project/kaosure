@@ -890,5 +890,19 @@
   "dashLoadFailedShort": "ဖွင့်၍မရပါ",
   "dashSecurityTitle": "အကောင့်ဝင်ခြင်းနှင့် လုံခြုံရေး",
   "dashSecurityDescription": "စကားဝှက်၊ အဆင့်နှစ်ဆင့် အတည်ပြုခြင်းနှင့် ဝင်ထားသော စက်များ။",
-  "dashAdminCenter": "စီမံခန့်ခွဲမှုစင်တာ"
+  "dashAdminCenter": "စီမံခန့်ခွဲမှုစင်တာ",
+  "secSignInTitle": "အကောင့်ဝင်ခြင်း",
+  "secDevicesTitle": "စက်ပစ္စည်းများနှင့် ဆက်ရှင်များ",
+  "secDocumentsTitle": "ကိုယ်ပိုင်အထောက်အထား စာရွက်စာတမ်းများ",
+  "secDocumentHealthDescription": "သက်တမ်းကုန်ရက်ကို စစ်ဆေးပြီး အစားထိုးစာရွက်စာတမ်း ပေးပို့ပါ။",
+  "setGeneralTitle": "အထွေထွေ",
+  "setAccountTitle": "အကောင့်စီမံခန့်ခွဲမှု",
+  "setLifecycleDescription": "အကောင့်ပိတ်ရန် သို့မဟုတ် ပြန်လည်အသုံးပြုရန် တောင်းဆိုပါ။",
+  "setSignOutDescription": "ဤစက်ပေါ်ရှိ Kao ID မှ ထွက်ပါ။",
+  "accProfileTitle": "ပရိုဖိုင်",
+  "accDetailsTitle": "အကောင့်အသေးစိတ်",
+  "accUsernameLabel": "အသုံးပြုသူအမည်",
+  "accMemberSince": "အဖွဲ့ဝင်ဖြစ်သည့်ရက်",
+  "accEmailVerified": "အတည်ပြုပြီး",
+  "accEmailUnverified": "အတည်မပြုရသေး"
 }

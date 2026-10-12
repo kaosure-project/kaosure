@@ -5370,6 +5370,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Admin center'**
   String get dashAdminCenter;
+
+  /// No description provided for @secSignInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Signing in'**
+  String get secSignInTitle;
+
+  /// No description provided for @secDevicesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Devices and sessions'**
+  String get secDevicesTitle;
+
+  /// No description provided for @secDocumentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity documents'**
+  String get secDocumentsTitle;
+
+  /// No description provided for @secDocumentHealthDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Check expiry dates and send replacement documents.'**
+  String get secDocumentHealthDescription;
+
+  /// No description provided for @setGeneralTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get setGeneralTitle;
+
+  /// No description provided for @setAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account management'**
+  String get setAccountTitle;
+
+  /// No description provided for @setLifecycleDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Request to close your account or restore a closed one.'**
+  String get setLifecycleDescription;
+
+  /// No description provided for @setSignOutDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out of Kao ID on this device.'**
+  String get setSignOutDescription;
+
+  /// No description provided for @accProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get accProfileTitle;
+
+  /// No description provided for @accDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account details'**
+  String get accDetailsTitle;
+
+  /// No description provided for @accUsernameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get accUsernameLabel;
+
+  /// No description provided for @accMemberSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Member since'**
+  String get accMemberSince;
+
+  /// No description provided for @accEmailVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get accEmailVerified;
+
+  /// No description provided for @accEmailUnverified.
+  ///
+  /// In en, this message translates to:
+  /// **'Not verified'**
+  String get accEmailUnverified;
 }
 
 class _AppLocalizationsDelegate

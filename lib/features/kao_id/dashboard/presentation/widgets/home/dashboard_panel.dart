@@ -5,13 +5,14 @@ import '../../../../../../shared/design_system/colors/app_colors.dart';
 /// White dashboard card on the grey page background.
 class DashboardPanel extends StatelessWidget {
   const DashboardPanel({super.key, required this.child, this.title, this.icon,
-    this.iconColor = AppColors.kaoBlue, this.onTap});
+    this.iconColor = AppColors.kaoBlue, this.onTap, this.padding = const EdgeInsets.all(24)});
 
   final Widget child;
   final String? title;
   final IconData? icon;
   final Color iconColor;
   final VoidCallback? onTap;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class DashboardPanel extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: padding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

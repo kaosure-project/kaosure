@@ -890,5 +890,19 @@
   "dashLoadFailedShort": "ໂຫຼດບໍ່ສຳເລັດ",
   "dashSecurityTitle": "ການເຂົ້າສູ່ລະບົບ ແລະ ຄວາມປອດໄພ",
   "dashSecurityDescription": "ລະຫັດຜ່ານ, ການຢືນຢັນສອງຂັ້ນຕອນ ແລະ ອຸປະກອນທີ່ເຂົ້າສູ່ລະບົບ.",
-  "dashAdminCenter": "ສູນຜູ້ດູແລ"
+  "dashAdminCenter": "ສູນຜູ້ດູແລ",
+  "secSignInTitle": "ການເຂົ້າສູ່ລະບົບ",
+  "secDevicesTitle": "ອຸປະກອນ ແລະ ເຊສຊັນ",
+  "secDocumentsTitle": "ເອກະສານຢືນຢັນຕົວຕົນ",
+  "secDocumentHealthDescription": "ກວດວັນໝົດອາຍຸ ແລະ ສົ່ງເອກະສານທົດແທນ",
+  "setGeneralTitle": "ທົ່ວໄປ",
+  "setAccountTitle": "ການຈັດການບັນຊີ",
+  "setLifecycleDescription": "ສົ່ງຄຳຂໍປິດບັນຊີ ຫຼື ຂໍກັບມາໃຊ້ບັນຊີເດີມ",
+  "setSignOutDescription": "ອອກຈາກ Kao ID ໃນອຸປະກອນນີ້",
+  "accProfileTitle": "ໂປຣໄຟລ໌",
+  "accDetailsTitle": "ຂໍ້ມູນບັນຊີ",
+  "accUsernameLabel": "ຊື່ຜູ້ໃຊ້",
+  "accMemberSince": "ວັນທີສະໝັກ",
+  "accEmailVerified": "ຢືນຢັນແລ້ວ",
+  "accEmailUnverified": "ຍັງບໍ່ຢືນຢັນ"
 }

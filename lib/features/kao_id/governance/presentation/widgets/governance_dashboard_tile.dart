@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../application/providers/governance_provider.dart';
 import '../../../dashboard/presentation/widgets/security/dashboard_menu_tile.dart';
 import '../../../../../app/routes/kao_id_routes.dart';
+import '../../../../../shared/design_system/colors/app_colors.dart';
 
 final class GovernanceDashboardTile
     extends ConsumerWidget {
@@ -33,6 +34,8 @@ final class GovernanceDashboardTile
           title: AppLocalizations.of(context).governanceLabel,
           subtitle:
               AppLocalizations.of(context).governanceDescription,
+          color: AppColors.kaoSlate,
+          tint: AppColors.kaoSlateSoft,
           onTap: () {
             Navigator.of(context).pushNamed(
               KaoIdRoutes.governance,

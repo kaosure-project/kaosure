@@ -2878,4 +2878,47 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get dashAdminCenter => 'ศูนย์ผู้ดูแล';
+
+  @override
+  String get secSignInTitle => 'การเข้าสู่ระบบ';
+
+  @override
+  String get secDevicesTitle => 'อุปกรณ์และเซสชัน';
+
+  @override
+  String get secDocumentsTitle => 'เอกสารยืนยันตัวตน';
+
+  @override
+  String get secDocumentHealthDescription => 'ตรวจวันหมดอายุและส่งเอกสารทดแทน';
+
+  @override
+  String get setGeneralTitle => 'ทั่วไป';
+
+  @override
+  String get setAccountTitle => 'การจัดการบัญชี';
+
+  @override
+  String get setLifecycleDescription =>
+      'ส่งคำขอปิดบัญชีหรือขอกลับมาใช้บัญชีเดิม';
+
+  @override
+  String get setSignOutDescription => 'ออกจาก Kao ID บนอุปกรณ์นี้';
+
+  @override
+  String get accProfileTitle => 'โปรไฟล์';
+
+  @override
+  String get accDetailsTitle => 'ข้อมูลบัญชี';
+
+  @override
+  String get accUsernameLabel => 'ชื่อผู้ใช้';
+
+  @override
+  String get accMemberSince => 'วันที่สมัคร';
+
+  @override
+  String get accEmailVerified => 'ยืนยันแล้ว';
+
+  @override
+  String get accEmailUnverified => 'ยังไม่ยืนยัน';
 }

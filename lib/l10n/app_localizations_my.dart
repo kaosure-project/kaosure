@@ -2905,4 +2905,48 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get dashAdminCenter => 'စီမံခန့်ခွဲမှုစင်တာ';
+
+  @override
+  String get secSignInTitle => 'အကောင့်ဝင်ခြင်း';
+
+  @override
+  String get secDevicesTitle => 'စက်ပစ္စည်းများနှင့် ဆက်ရှင်များ';
+
+  @override
+  String get secDocumentsTitle => 'ကိုယ်ပိုင်အထောက်အထား စာရွက်စာတမ်းများ';
+
+  @override
+  String get secDocumentHealthDescription =>
+      'သက်တမ်းကုန်ရက်ကို စစ်ဆေးပြီး အစားထိုးစာရွက်စာတမ်း ပေးပို့ပါ။';
+
+  @override
+  String get setGeneralTitle => 'အထွေထွေ';
+
+  @override
+  String get setAccountTitle => 'အကောင့်စီမံခန့်ခွဲမှု';
+
+  @override
+  String get setLifecycleDescription =>
+      'အကောင့်ပိတ်ရန် သို့မဟုတ် ပြန်လည်အသုံးပြုရန် တောင်းဆိုပါ။';
+
+  @override
+  String get setSignOutDescription => 'ဤစက်ပေါ်ရှိ Kao ID မှ ထွက်ပါ။';
+
+  @override
+  String get accProfileTitle => 'ပရိုဖိုင်';
+
+  @override
+  String get accDetailsTitle => 'အကောင့်အသေးစိတ်';
+
+  @override
+  String get accUsernameLabel => 'အသုံးပြုသူအမည်';
+
+  @override
+  String get accMemberSince => 'အဖွဲ့ဝင်ဖြစ်သည့်ရက်';
+
+  @override
+  String get accEmailVerified => 'အတည်ပြုပြီး';
+
+  @override
+  String get accEmailUnverified => 'အတည်မပြုရသေး';
 }

@@ -31,6 +31,7 @@ class AppColors {
   static const Color kaoSlate = Color(0xFF455A64);
   static const Color kaoSlateSoft = Color(0xFFECEFF1);
   static const Color kaoPage = Color(0xFFF3F5F8);
+  static const Color kaoDangerSoft = Color(0xFFFDECEC);
 
   // ==========================================================================
   // Status

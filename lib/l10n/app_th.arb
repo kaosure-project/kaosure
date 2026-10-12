@@ -890,5 +890,19 @@
   "dashLoadFailedShort": "โหลดไม่สำเร็จ",
   "dashSecurityTitle": "การเข้าสู่ระบบและความปลอดภัย",
   "dashSecurityDescription": "รหัสผ่าน การยืนยันสองขั้นตอน และอุปกรณ์ที่เข้าสู่ระบบ",
-  "dashAdminCenter": "ศูนย์ผู้ดูแล"
+  "dashAdminCenter": "ศูนย์ผู้ดูแล",
+  "secSignInTitle": "การเข้าสู่ระบบ",
+  "secDevicesTitle": "อุปกรณ์และเซสชัน",
+  "secDocumentsTitle": "เอกสารยืนยันตัวตน",
+  "secDocumentHealthDescription": "ตรวจวันหมดอายุและส่งเอกสารทดแทน",
+  "setGeneralTitle": "ทั่วไป",
+  "setAccountTitle": "การจัดการบัญชี",
+  "setLifecycleDescription": "ส่งคำขอปิดบัญชีหรือขอกลับมาใช้บัญชีเดิม",
+  "setSignOutDescription": "ออกจาก Kao ID บนอุปกรณ์นี้",
+  "accProfileTitle": "โปรไฟล์",
+  "accDetailsTitle": "ข้อมูลบัญชี",
+  "accUsernameLabel": "ชื่อผู้ใช้",
+  "accMemberSince": "วันที่สมัคร",
+  "accEmailVerified": "ยืนยันแล้ว",
+  "accEmailUnverified": "ยังไม่ยืนยัน"
 }

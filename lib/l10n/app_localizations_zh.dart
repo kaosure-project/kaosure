@@ -2674,6 +2674,48 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get dashAdminCenter => '管理中心';
+
+  @override
+  String get secSignInTitle => '登录';
+
+  @override
+  String get secDevicesTitle => '设备与会话';
+
+  @override
+  String get secDocumentsTitle => '身份证件';
+
+  @override
+  String get secDocumentHealthDescription => '查看有效期并提交替换证件。';
+
+  @override
+  String get setGeneralTitle => '常规';
+
+  @override
+  String get setAccountTitle => '账户管理';
+
+  @override
+  String get setLifecycleDescription => '申请注销账户或恢复已注销的账户。';
+
+  @override
+  String get setSignOutDescription => '在此设备上退出 Kao ID。';
+
+  @override
+  String get accProfileTitle => '个人资料';
+
+  @override
+  String get accDetailsTitle => '账户详情';
+
+  @override
+  String get accUsernameLabel => '用户名';
+
+  @override
+  String get accMemberSince => '注册日期';
+
+  @override
+  String get accEmailVerified => '已验证';
+
+  @override
+  String get accEmailUnverified => '未验证';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -5346,4 +5388,46 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get dashAdminCenter => '管理中心';
+
+  @override
+  String get secSignInTitle => '登录';
+
+  @override
+  String get secDevicesTitle => '设备与会话';
+
+  @override
+  String get secDocumentsTitle => '身份证件';
+
+  @override
+  String get secDocumentHealthDescription => '查看有效期并提交替换证件。';
+
+  @override
+  String get setGeneralTitle => '常规';
+
+  @override
+  String get setAccountTitle => '账户管理';
+
+  @override
+  String get setLifecycleDescription => '申请注销账户或恢复已注销的账户。';
+
+  @override
+  String get setSignOutDescription => '在此设备上退出 Kao ID。';
+
+  @override
+  String get accProfileTitle => '个人资料';
+
+  @override
+  String get accDetailsTitle => '账户详情';
+
+  @override
+  String get accUsernameLabel => '用户名';
+
+  @override
+  String get accMemberSince => '注册日期';
+
+  @override
+  String get accEmailVerified => '已验证';
+
+  @override
+  String get accEmailUnverified => '未验证';
 }

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/core/localization/locale_controller.dart';
 import 'package:kaosure/core/localization/app_languages.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
+import 'package:kaosure/shared/design_system/colors/app_colors.dart';
 
 import '../security/dashboard_menu_tile.dart';
 
@@ -120,6 +121,9 @@ class _GeneralSettingsTileState
           title: l10n.language,
           subtitle: languageName,
           onTap: _chooseLanguage,
+          showDivider: false,
+          color: AppColors.kaoSlate,
+          tint: AppColors.kaoSlateSoft,
         ),
       ),
     );

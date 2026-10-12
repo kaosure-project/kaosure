@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 
 import '../../../../../../app/routes/kao_id_routes.dart';
+import '../../../../../../shared/design_system/colors/app_colors.dart';
 import 'dashboard_menu_tile.dart';
 
 final class PasswordTile extends StatelessWidget {
@@ -17,6 +18,8 @@ final class PasswordTile extends StatelessWidget {
       icon: Icons.lock_outline,
       title: l10n.password,
       subtitle: l10n.passwordChangeDescription,
+      color: AppColors.kaoGreen,
+      tint: AppColors.kaoGreenSoft,
       onTap: () {
         Navigator.of(context).pushNamed(
           KaoIdRoutes.changePassword,

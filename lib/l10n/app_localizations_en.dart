@@ -2911,4 +2911,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dashAdminCenter => 'Admin center';
+
+  @override
+  String get secSignInTitle => 'Signing in';
+
+  @override
+  String get secDevicesTitle => 'Devices and sessions';
+
+  @override
+  String get secDocumentsTitle => 'Identity documents';
+
+  @override
+  String get secDocumentHealthDescription =>
+      'Check expiry dates and send replacement documents.';
+
+  @override
+  String get setGeneralTitle => 'General';
+
+  @override
+  String get setAccountTitle => 'Account management';
+
+  @override
+  String get setLifecycleDescription =>
+      'Request to close your account or restore a closed one.';
+
+  @override
+  String get setSignOutDescription => 'Sign out of Kao ID on this device.';
+
+  @override
+  String get accProfileTitle => 'Profile';
+
+  @override
+  String get accDetailsTitle => 'Account details';
+
+  @override
+  String get accUsernameLabel => 'Username';
+
+  @override
+  String get accMemberSince => 'Member since';
+
+  @override
+  String get accEmailVerified => 'Verified';
+
+  @override
+  String get accEmailUnverified => 'Not verified';
 }

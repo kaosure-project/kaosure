@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../app/routes/kao_id_routes.dart';
+import '../../../issuance/application/providers/kao_id_issuance_provider.dart';
 import '../../application/providers/profile_controller_provider.dart';
 import '../../application/states/profile_state.dart';
-import '../widgets/kao_id_profile/card.dart';
+import '../../domain/entities/profile.dart';
+import '../widgets/account_overview.dart';
 
 final class AccountPage extends ConsumerStatefulWidget {
   const AccountPage({
@@ -80,35 +83,20 @@ final class _AccountPageState
       return const _EmptyProfileView();
     }
 
-    return RefreshIndicator(
+    final profile = state.profile!;
+    return AccountOverview(
+      profile: profile,
+      onEdit: () => _editProfile(profile),
       onRefresh: () async {
-        await ref
-            .read(
-              profileControllerProvider.notifier,
-            )
-            .loadCurrentProfile();
+        ref.invalidate(currentKaoIdIdentityProvider);
+        await ref.read(profileControllerProvider.notifier).loadCurrentProfile();
       },
-      child: ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.fromLTRB(
-          16,
-          16,
-          16,
-          32,
-        ),
-        children: [
-          if (widget.embedded) ...[
-            Text(AppLocalizations.of(context).accountTitle,
-              style: Theme.of(context).textTheme.headlineSmall),
-            const SizedBox(height: 16),
-          ],
-          KaoIdProfileCard(
-            profile: state.profile!,
-          ),
-
-        ],
-      ),
     );
+  }
+
+  Future<void> _editProfile(Profile profile) async {
+    await Navigator.of(context).pushNamed(KaoIdRoutes.editProfile, arguments: profile);
+    if (mounted) await ref.read(profileControllerProvider.notifier).loadCurrentProfile();
   }
 }
 

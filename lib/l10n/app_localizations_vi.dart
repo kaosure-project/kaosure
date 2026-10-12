@@ -2891,4 +2891,48 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get dashAdminCenter => 'Trung tâm quản trị';
+
+  @override
+  String get secSignInTitle => 'Đăng nhập';
+
+  @override
+  String get secDevicesTitle => 'Thiết bị và phiên';
+
+  @override
+  String get secDocumentsTitle => 'Giấy tờ tùy thân';
+
+  @override
+  String get secDocumentHealthDescription =>
+      'Kiểm tra ngày hết hạn và gửi giấy tờ thay thế.';
+
+  @override
+  String get setGeneralTitle => 'Chung';
+
+  @override
+  String get setAccountTitle => 'Quản lý tài khoản';
+
+  @override
+  String get setLifecycleDescription =>
+      'Yêu cầu đóng tài khoản hoặc khôi phục tài khoản đã đóng.';
+
+  @override
+  String get setSignOutDescription => 'Đăng xuất Kao ID trên thiết bị này.';
+
+  @override
+  String get accProfileTitle => 'Hồ sơ';
+
+  @override
+  String get accDetailsTitle => 'Chi tiết tài khoản';
+
+  @override
+  String get accUsernameLabel => 'Tên người dùng';
+
+  @override
+  String get accMemberSince => 'Thành viên từ';
+
+  @override
+  String get accEmailVerified => 'Đã xác minh';
+
+  @override
+  String get accEmailUnverified => 'Chưa xác minh';
 }

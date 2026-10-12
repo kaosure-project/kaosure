@@ -2835,4 +2835,48 @@ class AppLocalizationsLo extends AppLocalizations {
 
   @override
   String get dashAdminCenter => 'ສູນຜູ້ດູແລ';
+
+  @override
+  String get secSignInTitle => 'ການເຂົ້າສູ່ລະບົບ';
+
+  @override
+  String get secDevicesTitle => 'ອຸປະກອນ ແລະ ເຊສຊັນ';
+
+  @override
+  String get secDocumentsTitle => 'ເອກະສານຢືນຢັນຕົວຕົນ';
+
+  @override
+  String get secDocumentHealthDescription =>
+      'ກວດວັນໝົດອາຍຸ ແລະ ສົ່ງເອກະສານທົດແທນ';
+
+  @override
+  String get setGeneralTitle => 'ທົ່ວໄປ';
+
+  @override
+  String get setAccountTitle => 'ການຈັດການບັນຊີ';
+
+  @override
+  String get setLifecycleDescription =>
+      'ສົ່ງຄຳຂໍປິດບັນຊີ ຫຼື ຂໍກັບມາໃຊ້ບັນຊີເດີມ';
+
+  @override
+  String get setSignOutDescription => 'ອອກຈາກ Kao ID ໃນອຸປະກອນນີ້';
+
+  @override
+  String get accProfileTitle => 'ໂປຣໄຟລ໌';
+
+  @override
+  String get accDetailsTitle => 'ຂໍ້ມູນບັນຊີ';
+
+  @override
+  String get accUsernameLabel => 'ຊື່ຜູ້ໃຊ້';
+
+  @override
+  String get accMemberSince => 'ວັນທີສະໝັກ';
+
+  @override
+  String get accEmailVerified => 'ຢືນຢັນແລ້ວ';
+
+  @override
+  String get accEmailUnverified => 'ຍັງບໍ່ຢືນຢັນ';
 }

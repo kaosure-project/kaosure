@@ -2722,4 +2722,46 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get dashAdminCenter => '管理センター';
+
+  @override
+  String get secSignInTitle => 'ログイン';
+
+  @override
+  String get secDevicesTitle => '端末とセッション';
+
+  @override
+  String get secDocumentsTitle => '本人確認書類';
+
+  @override
+  String get secDocumentHealthDescription => '有効期限を確認し、更新書類を提出します。';
+
+  @override
+  String get setGeneralTitle => '一般';
+
+  @override
+  String get setAccountTitle => 'アカウント管理';
+
+  @override
+  String get setLifecycleDescription => 'アカウントの閉鎖または復元を申請します。';
+
+  @override
+  String get setSignOutDescription => 'この端末で Kao ID からログアウトします。';
+
+  @override
+  String get accProfileTitle => 'プロフィール';
+
+  @override
+  String get accDetailsTitle => 'アカウント詳細';
+
+  @override
+  String get accUsernameLabel => 'ユーザー名';
+
+  @override
+  String get accMemberSince => '登録日';
+
+  @override
+  String get accEmailVerified => '確認済み';
+
+  @override
+  String get accEmailUnverified => '未確認';
 }

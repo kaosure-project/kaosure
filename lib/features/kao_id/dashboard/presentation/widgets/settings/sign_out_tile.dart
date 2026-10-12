@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 
+import '../../../../../../shared/design_system/colors/app_colors.dart';
+import '../security/dashboard_menu_tile.dart';
 import 'sign_out_action.dart';
 
 final class SignOutTile extends StatefulWidget {
@@ -42,10 +44,14 @@ final class _SignOutTileState extends State<SignOutTile> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return ListTile(
+    return DashboardMenuTile(
       enabled: !_busy && !_confirming,
-      leading: const Icon(Icons.logout),
-      title: Text(l10n.signOut),
+      icon: Icons.logout,
+      title: l10n.signOut,
+      subtitle: l10n.setSignOutDescription,
+      color: AppColors.error,
+      tint: AppColors.kaoDangerSoft,
+      showDivider: false,
       trailing: _busy
           ? const SizedBox(
               width: 20, height: 20,

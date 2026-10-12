@@ -890,5 +890,19 @@
   "dashLoadFailedShort": "Không tải được",
   "dashSecurityTitle": "Đăng nhập và bảo mật",
   "dashSecurityDescription": "Mật khẩu, xác minh hai bước và thiết bị đang đăng nhập.",
-  "dashAdminCenter": "Trung tâm quản trị"
+  "dashAdminCenter": "Trung tâm quản trị",
+  "secSignInTitle": "Đăng nhập",
+  "secDevicesTitle": "Thiết bị và phiên",
+  "secDocumentsTitle": "Giấy tờ tùy thân",
+  "secDocumentHealthDescription": "Kiểm tra ngày hết hạn và gửi giấy tờ thay thế.",
+  "setGeneralTitle": "Chung",
+  "setAccountTitle": "Quản lý tài khoản",
+  "setLifecycleDescription": "Yêu cầu đóng tài khoản hoặc khôi phục tài khoản đã đóng.",
+  "setSignOutDescription": "Đăng xuất Kao ID trên thiết bị này.",
+  "accProfileTitle": "Hồ sơ",
+  "accDetailsTitle": "Chi tiết tài khoản",
+  "accUsernameLabel": "Tên người dùng",
+  "accMemberSince": "Thành viên từ",
+  "accEmailVerified": "Đã xác minh",
+  "accEmailUnverified": "Chưa xác minh"
 }

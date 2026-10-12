@@ -890,5 +890,19 @@
   "dashLoadFailedShort": "読み込めません",
   "dashSecurityTitle": "ログインとセキュリティ",
   "dashSecurityDescription": "パスワード、2段階認証、ログイン中の端末を管理します。",
-  "dashAdminCenter": "管理センター"
+  "dashAdminCenter": "管理センター",
+  "secSignInTitle": "ログイン",
+  "secDevicesTitle": "端末とセッション",
+  "secDocumentsTitle": "本人確認書類",
+  "secDocumentHealthDescription": "有効期限を確認し、更新書類を提出します。",
+  "setGeneralTitle": "一般",
+  "setAccountTitle": "アカウント管理",
+  "setLifecycleDescription": "アカウントの閉鎖または復元を申請します。",
+  "setSignOutDescription": "この端末で Kao ID からログアウトします。",
+  "accProfileTitle": "プロフィール",
+  "accDetailsTitle": "アカウント詳細",
+  "accUsernameLabel": "ユーザー名",
+  "accMemberSince": "登録日",
+  "accEmailVerified": "確認済み",
+  "accEmailUnverified": "未確認"
 }

@@ -890,5 +890,19 @@
   "dashLoadFailedShort": "无法加载",
   "dashSecurityTitle": "登录与安全",
   "dashSecurityDescription": "管理密码、两步验证和已登录的设备。",
-  "dashAdminCenter": "管理中心"
+  "dashAdminCenter": "管理中心",
+  "secSignInTitle": "登录",
+  "secDevicesTitle": "设备与会话",
+  "secDocumentsTitle": "身份证件",
+  "secDocumentHealthDescription": "查看有效期并提交替换证件。",
+  "setGeneralTitle": "常规",
+  "setAccountTitle": "账户管理",
+  "setLifecycleDescription": "申请注销账户或恢复已注销的账户。",
+  "setSignOutDescription": "在此设备上退出 Kao ID。",
+  "accProfileTitle": "个人资料",
+  "accDetailsTitle": "账户详情",
+  "accUsernameLabel": "用户名",
+  "accMemberSince": "注册日期",
+  "accEmailVerified": "已验证",
+  "accEmailUnverified": "未验证"
 }

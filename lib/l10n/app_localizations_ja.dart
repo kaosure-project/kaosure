@@ -2291,4 +2291,242 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get noticeAccessFailed => '項目を開けません。接続、現在の権限、MFAを確認して再試行してください。';
+
+  @override
+  String get businessRegTitle => 'ビジネスを登録';
+
+  @override
+  String get businessRegSubtitle => '一度の確認で、すべての Kao サービスでビジネスを利用できます。';
+
+  @override
+  String businessRegStepCounter(int current, int total) {
+    return 'ステップ $current/$total';
+  }
+
+  @override
+  String get businessRegStepDetails => '事業情報';
+
+  @override
+  String get businessRegStepDocument => '登記書類';
+
+  @override
+  String get businessRegStepBank => '銀行口座';
+
+  @override
+  String get businessRegStepReview => '確認して送信';
+
+  @override
+  String get businessRegSecureNotice => 'お客様の情報は暗号化され、ビジネスの確認にのみ使用されます。';
+
+  @override
+  String get businessRegDetailsHeading => 'ビジネスについて教えてください';
+
+  @override
+  String get businessRegDetailsDescription => '登記書類に記載されているとおりに入力してください。';
+
+  @override
+  String get businessRegTypeLabel => '事業形態';
+
+  @override
+  String get businessRegTypeCompany => '会社またはパートナーシップ';
+
+  @override
+  String get businessRegTypeCompanyHint => '13桁の登記番号を持つ法人';
+
+  @override
+  String get businessRegTypeOrganization => '財団または協会';
+
+  @override
+  String get businessRegTypeOrganizationHint => '登記済みの非営利団体';
+
+  @override
+  String get businessRegNameLabel => '登記上の名称';
+
+  @override
+  String get businessRegNumberLabel => '登記番号';
+
+  @override
+  String get businessRegNumberHelp => '13桁の数字のみ';
+
+  @override
+  String get businessRegCategoryLabel => '業種';
+
+  @override
+  String get businessRegCategoryRetail => '小売';
+
+  @override
+  String get businessRegCategoryFood => '飲食';
+
+  @override
+  String get businessRegCategoryServices => 'サービス';
+
+  @override
+  String get businessRegCategoryTechnology => 'テクノロジー';
+
+  @override
+  String get businessRegCategoryOther => 'その他';
+
+  @override
+  String get businessRegDescriptionLabel => '事業内容（任意）';
+
+  @override
+  String get businessRegFieldRequired => 'この項目は必須です';
+
+  @override
+  String get businessRegNumberInvalid => '13桁の登記番号を入力してください';
+
+  @override
+  String get businessRegDocumentHeading => '登記書類をアップロード';
+
+  @override
+  String get businessRegDocumentDescription => '事業者名と登記番号が記載された会社証明書または登記証明書。';
+
+  @override
+  String get businessRegDocumentRequirements =>
+      'JPG、PNG、または PDF（10 MB 以下）。すべての文字がはっきり読める必要があります。';
+
+  @override
+  String get businessRegDocumentChoose => 'ファイルを選択';
+
+  @override
+  String get businessRegDocumentReplace => 'ファイルを変更';
+
+  @override
+  String get businessRegDocumentUploaded => '書類をアップロードしました';
+
+  @override
+  String get businessRegDocumentUploading => '安全にアップロードしています…';
+
+  @override
+  String get businessRegDocumentMissing => 'まだ書類がアップロードされていません';
+
+  @override
+  String get businessRegBankHeading => '受取用の銀行口座';
+
+  @override
+  String get businessRegBankDescription => '事業の売上は、Kao ID で確認済みの銀行口座に振り込まれます。';
+
+  @override
+  String get businessRegBankApproved => '確認済み';
+
+  @override
+  String get businessRegBankPending => '審査中';
+
+  @override
+  String get businessRegBankRejected => '承認されませんでした';
+
+  @override
+  String get businessRegBankMissing => '確認済みの銀行口座がまだありません';
+
+  @override
+  String get businessRegBankRequiredHelp => '銀行口座の確認が完了すると送信できます。';
+
+  @override
+  String get businessRegBankVerifyAction => '銀行口座を確認する';
+
+  @override
+  String get businessRegBankCheckAgain => '再確認';
+
+  @override
+  String get businessRegReviewHeading => '内容を確認してください';
+
+  @override
+  String get businessRegReviewDescription => '内容に誤りがないか確認してください。審査中は編集できません。';
+
+  @override
+  String get businessRegEdit => '編集';
+
+  @override
+  String get businessRegConsent => 'この情報が正確であることを確認し、Kao ID による確認に同意します。';
+
+  @override
+  String get businessRegSubmit => '審査に送信';
+
+  @override
+  String get businessRegContinue => '次へ';
+
+  @override
+  String get businessRegBack => '戻る';
+
+  @override
+  String get businessRegSubmitConfirmTitle => '登録を送信しますか？';
+
+  @override
+  String get businessRegSubmitConfirmBody => 'ビジネス情報を審査し、結果をお知らせします。';
+
+  @override
+  String get businessRegCancelDraft => '登録をキャンセル';
+
+  @override
+  String get businessRegCancelConfirmTitle => 'この登録をキャンセルしますか？';
+
+  @override
+  String get businessRegCancelConfirmBody => '下書きとアップロードした書類は使用されなくなります。';
+
+  @override
+  String get businessRegKeepEditing => '編集を続ける';
+
+  @override
+  String get businessRegStatusReviewTitle => 'ビジネスを審査しています';
+
+  @override
+  String get businessRegStatusReviewBody => '審査が完了したらすぐにお知らせします。';
+
+  @override
+  String get businessRegStatusApprovedTitle => 'ビジネスが確認されました';
+
+  @override
+  String get businessRegStatusApprovedBody => 'Kao の各サービスでビジネスを利用できるようになりました。';
+
+  @override
+  String get businessRegStatusRejectedTitle => '登録は承認されませんでした';
+
+  @override
+  String get businessRegStatusRejectedBody => '最新の情報で新しく登録できます。';
+
+  @override
+  String get businessRegStatusActionTitle => '対応が必要です';
+
+  @override
+  String get businessRegStatusActionBody => '更新が必要な内容は通知をご確認ください。';
+
+  @override
+  String get businessRegRefreshStatus => 'ステータスを更新';
+
+  @override
+  String get businessRegStartNew => '新しく登録する';
+
+  @override
+  String get businessRegBackToAccount => 'アカウントに戻る';
+
+  @override
+  String get businessRegErrorGeneric => '問題が発生しました。もう一度お試しください。';
+
+  @override
+  String get businessRegErrorSession => 'セッションが終了しました。もう一度サインインしてください。';
+
+  @override
+  String get businessRegErrorRestricted => '現在、このアカウントではビジネスを登録できません。';
+
+  @override
+  String get businessRegErrorActiveExists => 'すでに手続き中の登録があります。';
+
+  @override
+  String get businessRegErrorNotEditable => 'この登録は変更できなくなりました。';
+
+  @override
+  String get businessRegErrorDocumentRequired => '登記書類をアップロードしてください。';
+
+  @override
+  String get businessRegErrorBankRequired => '送信する前に、確認済みの銀行口座が必要です。';
+
+  @override
+  String get businessRegErrorFile =>
+      'このファイルは使用できません。10 MB 以下の JPG、PNG、PDF を選択してください。';
+
+  @override
+  String get businessRegErrorDuplicate => 'この登記番号はすでに登録されています。';
+
+  @override
+  String get businessRegHubDescription => 'ビジネスを確認して、ストアの開設と売上の受け取りを始めましょう。';
 }

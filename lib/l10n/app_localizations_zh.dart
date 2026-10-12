@@ -2250,6 +2250,243 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get noticeAccessFailed => '无法打开此项目。请检查网络、当前权限和多重身份验证，然后重试。';
+
+  @override
+  String get businessRegTitle => '注册企业';
+
+  @override
+  String get businessRegSubtitle => '只需验证一次，即可在所有 Kao 服务中使用您的企业。';
+
+  @override
+  String businessRegStepCounter(int current, int total) {
+    return '第 $current 步，共 $total 步';
+  }
+
+  @override
+  String get businessRegStepDetails => '企业信息';
+
+  @override
+  String get businessRegStepDocument => '企业文件';
+
+  @override
+  String get businessRegStepBank => '银行账户';
+
+  @override
+  String get businessRegStepReview => '核对并提交';
+
+  @override
+  String get businessRegSecureNotice => '您的信息已加密，仅用于验证您的企业。';
+
+  @override
+  String get businessRegDetailsHeading => '介绍一下您的企业';
+
+  @override
+  String get businessRegDetailsDescription => '请按照注册文件上的内容准确填写。';
+
+  @override
+  String get businessRegTypeLabel => '企业类型';
+
+  @override
+  String get businessRegTypeCompany => '公司或合伙企业';
+
+  @override
+  String get businessRegTypeCompanyHint => '拥有 13 位注册号的法人';
+
+  @override
+  String get businessRegTypeOrganization => '基金会或协会';
+
+  @override
+  String get businessRegTypeOrganizationHint => '已注册的非营利组织';
+
+  @override
+  String get businessRegNameLabel => '注册名称';
+
+  @override
+  String get businessRegNumberLabel => '注册号';
+
+  @override
+  String get businessRegNumberHelp => '仅限 13 位数字';
+
+  @override
+  String get businessRegCategoryLabel => '业务类别';
+
+  @override
+  String get businessRegCategoryRetail => '零售';
+
+  @override
+  String get businessRegCategoryFood => '餐饮';
+
+  @override
+  String get businessRegCategoryServices => '服务';
+
+  @override
+  String get businessRegCategoryTechnology => '科技';
+
+  @override
+  String get businessRegCategoryOther => '其他';
+
+  @override
+  String get businessRegDescriptionLabel => '企业简介（选填）';
+
+  @override
+  String get businessRegFieldRequired => '此项为必填项';
+
+  @override
+  String get businessRegNumberInvalid => '请输入 13 位注册号';
+
+  @override
+  String get businessRegDocumentHeading => '上传注册文件';
+
+  @override
+  String get businessRegDocumentDescription => '显示企业名称和注册号的公司证明或注册证书。';
+
+  @override
+  String get businessRegDocumentRequirements =>
+      'JPG、PNG 或 PDF，不超过 10 MB，所有文字须清晰可读。';
+
+  @override
+  String get businessRegDocumentChoose => '选择文件';
+
+  @override
+  String get businessRegDocumentReplace => '更换文件';
+
+  @override
+  String get businessRegDocumentUploaded => '文件已上传';
+
+  @override
+  String get businessRegDocumentUploading => '正在安全上传…';
+
+  @override
+  String get businessRegDocumentMissing => '尚未上传文件';
+
+  @override
+  String get businessRegBankHeading => '收款银行账户';
+
+  @override
+  String get businessRegBankDescription => '企业收入将转入您 Kao ID 中已验证的银行账户。';
+
+  @override
+  String get businessRegBankApproved => '已验证';
+
+  @override
+  String get businessRegBankPending => '审核中';
+
+  @override
+  String get businessRegBankRejected => '未通过';
+
+  @override
+  String get businessRegBankMissing => '尚无已验证的银行账户';
+
+  @override
+  String get businessRegBankRequiredHelp => '银行账户验证通过后即可提交。';
+
+  @override
+  String get businessRegBankVerifyAction => '验证银行账户';
+
+  @override
+  String get businessRegBankCheckAgain => '重新检查';
+
+  @override
+  String get businessRegReviewHeading => '核对您的信息';
+
+  @override
+  String get businessRegReviewDescription => '请确认信息无误。审核期间无法编辑。';
+
+  @override
+  String get businessRegEdit => '编辑';
+
+  @override
+  String get businessRegConsent => '我确认以上信息准确无误，并同意 Kao ID 对其进行核验。';
+
+  @override
+  String get businessRegSubmit => '提交审核';
+
+  @override
+  String get businessRegContinue => '继续';
+
+  @override
+  String get businessRegBack => '返回';
+
+  @override
+  String get businessRegSubmitConfirmTitle => '确定提交注册申请？';
+
+  @override
+  String get businessRegSubmitConfirmBody => '我们将审核您的企业信息并通知您结果。';
+
+  @override
+  String get businessRegCancelDraft => '取消注册';
+
+  @override
+  String get businessRegCancelConfirmTitle => '确定取消此注册？';
+
+  @override
+  String get businessRegCancelConfirmBody => '草稿和已上传的文件将不再使用。';
+
+  @override
+  String get businessRegKeepEditing => '继续编辑';
+
+  @override
+  String get businessRegStatusReviewTitle => '正在审核您的企业';
+
+  @override
+  String get businessRegStatusReviewBody => '审核完成后我们会立即通知您。';
+
+  @override
+  String get businessRegStatusApprovedTitle => '您的企业已通过验证';
+
+  @override
+  String get businessRegStatusApprovedBody => '您现在可以在 Kao 服务中使用您的企业。';
+
+  @override
+  String get businessRegStatusRejectedTitle => '注册未获批准';
+
+  @override
+  String get businessRegStatusRejectedBody => '您可以使用更新后的信息重新注册。';
+
+  @override
+  String get businessRegStatusActionTitle => '需要您处理';
+
+  @override
+  String get businessRegStatusActionBody => '请查看通知了解需要更新的内容。';
+
+  @override
+  String get businessRegRefreshStatus => '刷新状态';
+
+  @override
+  String get businessRegStartNew => '重新注册';
+
+  @override
+  String get businessRegBackToAccount => '返回我的账户';
+
+  @override
+  String get businessRegErrorGeneric => '出现问题，请重试。';
+
+  @override
+  String get businessRegErrorSession => '会话已结束，请重新登录。';
+
+  @override
+  String get businessRegErrorRestricted => '您的账户目前无法注册企业。';
+
+  @override
+  String get businessRegErrorActiveExists => '您已有一项正在处理的注册申请。';
+
+  @override
+  String get businessRegErrorNotEditable => '此注册申请已无法更改。';
+
+  @override
+  String get businessRegErrorDocumentRequired => '请上传注册文件。';
+
+  @override
+  String get businessRegErrorBankRequired => '提交前需要一个已验证的银行账户。';
+
+  @override
+  String get businessRegErrorFile => '无法使用此文件。请选择不超过 10 MB 的 JPG、PNG 或 PDF。';
+
+  @override
+  String get businessRegErrorDuplicate => '此注册号已被注册。';
+
+  @override
+  String get businessRegHubDescription => '验证您的企业以开设店铺并接收款项。';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -4498,4 +4735,241 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get noticeAccessFailed => '无法打开此项目。请检查网络、当前权限和多重身份验证，然后重试。';
+
+  @override
+  String get businessRegTitle => '注册企业';
+
+  @override
+  String get businessRegSubtitle => '只需验证一次，即可在所有 Kao 服务中使用您的企业。';
+
+  @override
+  String businessRegStepCounter(int current, int total) {
+    return '第 $current 步，共 $total 步';
+  }
+
+  @override
+  String get businessRegStepDetails => '企业信息';
+
+  @override
+  String get businessRegStepDocument => '企业文件';
+
+  @override
+  String get businessRegStepBank => '银行账户';
+
+  @override
+  String get businessRegStepReview => '核对并提交';
+
+  @override
+  String get businessRegSecureNotice => '您的信息已加密，仅用于验证您的企业。';
+
+  @override
+  String get businessRegDetailsHeading => '介绍一下您的企业';
+
+  @override
+  String get businessRegDetailsDescription => '请按照注册文件上的内容准确填写。';
+
+  @override
+  String get businessRegTypeLabel => '企业类型';
+
+  @override
+  String get businessRegTypeCompany => '公司或合伙企业';
+
+  @override
+  String get businessRegTypeCompanyHint => '拥有 13 位注册号的法人';
+
+  @override
+  String get businessRegTypeOrganization => '基金会或协会';
+
+  @override
+  String get businessRegTypeOrganizationHint => '已注册的非营利组织';
+
+  @override
+  String get businessRegNameLabel => '注册名称';
+
+  @override
+  String get businessRegNumberLabel => '注册号';
+
+  @override
+  String get businessRegNumberHelp => '仅限 13 位数字';
+
+  @override
+  String get businessRegCategoryLabel => '业务类别';
+
+  @override
+  String get businessRegCategoryRetail => '零售';
+
+  @override
+  String get businessRegCategoryFood => '餐饮';
+
+  @override
+  String get businessRegCategoryServices => '服务';
+
+  @override
+  String get businessRegCategoryTechnology => '科技';
+
+  @override
+  String get businessRegCategoryOther => '其他';
+
+  @override
+  String get businessRegDescriptionLabel => '企业简介（选填）';
+
+  @override
+  String get businessRegFieldRequired => '此项为必填项';
+
+  @override
+  String get businessRegNumberInvalid => '请输入 13 位注册号';
+
+  @override
+  String get businessRegDocumentHeading => '上传注册文件';
+
+  @override
+  String get businessRegDocumentDescription => '显示企业名称和注册号的公司证明或注册证书。';
+
+  @override
+  String get businessRegDocumentRequirements =>
+      'JPG、PNG 或 PDF，不超过 10 MB，所有文字须清晰可读。';
+
+  @override
+  String get businessRegDocumentChoose => '选择文件';
+
+  @override
+  String get businessRegDocumentReplace => '更换文件';
+
+  @override
+  String get businessRegDocumentUploaded => '文件已上传';
+
+  @override
+  String get businessRegDocumentUploading => '正在安全上传…';
+
+  @override
+  String get businessRegDocumentMissing => '尚未上传文件';
+
+  @override
+  String get businessRegBankHeading => '收款银行账户';
+
+  @override
+  String get businessRegBankDescription => '企业收入将转入您 Kao ID 中已验证的银行账户。';
+
+  @override
+  String get businessRegBankApproved => '已验证';
+
+  @override
+  String get businessRegBankPending => '审核中';
+
+  @override
+  String get businessRegBankRejected => '未通过';
+
+  @override
+  String get businessRegBankMissing => '尚无已验证的银行账户';
+
+  @override
+  String get businessRegBankRequiredHelp => '银行账户验证通过后即可提交。';
+
+  @override
+  String get businessRegBankVerifyAction => '验证银行账户';
+
+  @override
+  String get businessRegBankCheckAgain => '重新检查';
+
+  @override
+  String get businessRegReviewHeading => '核对您的信息';
+
+  @override
+  String get businessRegReviewDescription => '请确认信息无误。审核期间无法编辑。';
+
+  @override
+  String get businessRegEdit => '编辑';
+
+  @override
+  String get businessRegConsent => '我确认以上信息准确无误，并同意 Kao ID 对其进行核验。';
+
+  @override
+  String get businessRegSubmit => '提交审核';
+
+  @override
+  String get businessRegContinue => '继续';
+
+  @override
+  String get businessRegBack => '返回';
+
+  @override
+  String get businessRegSubmitConfirmTitle => '确定提交注册申请？';
+
+  @override
+  String get businessRegSubmitConfirmBody => '我们将审核您的企业信息并通知您结果。';
+
+  @override
+  String get businessRegCancelDraft => '取消注册';
+
+  @override
+  String get businessRegCancelConfirmTitle => '确定取消此注册？';
+
+  @override
+  String get businessRegCancelConfirmBody => '草稿和已上传的文件将不再使用。';
+
+  @override
+  String get businessRegKeepEditing => '继续编辑';
+
+  @override
+  String get businessRegStatusReviewTitle => '正在审核您的企业';
+
+  @override
+  String get businessRegStatusReviewBody => '审核完成后我们会立即通知您。';
+
+  @override
+  String get businessRegStatusApprovedTitle => '您的企业已通过验证';
+
+  @override
+  String get businessRegStatusApprovedBody => '您现在可以在 Kao 服务中使用您的企业。';
+
+  @override
+  String get businessRegStatusRejectedTitle => '注册未获批准';
+
+  @override
+  String get businessRegStatusRejectedBody => '您可以使用更新后的信息重新注册。';
+
+  @override
+  String get businessRegStatusActionTitle => '需要您处理';
+
+  @override
+  String get businessRegStatusActionBody => '请查看通知了解需要更新的内容。';
+
+  @override
+  String get businessRegRefreshStatus => '刷新状态';
+
+  @override
+  String get businessRegStartNew => '重新注册';
+
+  @override
+  String get businessRegBackToAccount => '返回我的账户';
+
+  @override
+  String get businessRegErrorGeneric => '出现问题，请重试。';
+
+  @override
+  String get businessRegErrorSession => '会话已结束，请重新登录。';
+
+  @override
+  String get businessRegErrorRestricted => '您的账户目前无法注册企业。';
+
+  @override
+  String get businessRegErrorActiveExists => '您已有一项正在处理的注册申请。';
+
+  @override
+  String get businessRegErrorNotEditable => '此注册申请已无法更改。';
+
+  @override
+  String get businessRegErrorDocumentRequired => '请上传注册文件。';
+
+  @override
+  String get businessRegErrorBankRequired => '提交前需要一个已验证的银行账户。';
+
+  @override
+  String get businessRegErrorFile => '无法使用此文件。请选择不超过 10 MB 的 JPG、PNG 或 PDF。';
+
+  @override
+  String get businessRegErrorDuplicate => '此注册号已被注册。';
+
+  @override
+  String get businessRegHubDescription => '验证您的企业以开设店铺并接收款项。';
 }

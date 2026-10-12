@@ -2442,4 +2442,267 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get noticeAccessFailed =>
       'Cannot open this item. Check your connection, current permissions and MFA, then retry.';
+
+  @override
+  String get businessRegTitle => 'Register your business';
+
+  @override
+  String get businessRegSubtitle =>
+      'Verify your business once and use it across Kao services.';
+
+  @override
+  String businessRegStepCounter(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get businessRegStepDetails => 'Business details';
+
+  @override
+  String get businessRegStepDocument => 'Business document';
+
+  @override
+  String get businessRegStepBank => 'Bank account';
+
+  @override
+  String get businessRegStepReview => 'Review and submit';
+
+  @override
+  String get businessRegSecureNotice =>
+      'Your information is encrypted and used only to verify your business.';
+
+  @override
+  String get businessRegDetailsHeading => 'Tell us about your business';
+
+  @override
+  String get businessRegDetailsDescription =>
+      'Enter the details exactly as they appear on your registration document.';
+
+  @override
+  String get businessRegTypeLabel => 'Business type';
+
+  @override
+  String get businessRegTypeCompany => 'Company or partnership';
+
+  @override
+  String get businessRegTypeCompanyHint =>
+      'Registered juristic person with a 13-digit registration number';
+
+  @override
+  String get businessRegTypeOrganization => 'Foundation or association';
+
+  @override
+  String get businessRegTypeOrganizationHint =>
+      'Registered non-profit organization';
+
+  @override
+  String get businessRegNameLabel => 'Registered business name';
+
+  @override
+  String get businessRegNumberLabel => 'Registration number';
+
+  @override
+  String get businessRegNumberHelp => '13 digits, numbers only';
+
+  @override
+  String get businessRegCategoryLabel => 'Business category';
+
+  @override
+  String get businessRegCategoryRetail => 'Retail';
+
+  @override
+  String get businessRegCategoryFood => 'Food and beverage';
+
+  @override
+  String get businessRegCategoryServices => 'Services';
+
+  @override
+  String get businessRegCategoryTechnology => 'Technology';
+
+  @override
+  String get businessRegCategoryOther => 'Other';
+
+  @override
+  String get businessRegDescriptionLabel => 'About your business (optional)';
+
+  @override
+  String get businessRegFieldRequired => 'This field is required';
+
+  @override
+  String get businessRegNumberInvalid => 'Enter a 13-digit registration number';
+
+  @override
+  String get businessRegDocumentHeading => 'Upload your registration document';
+
+  @override
+  String get businessRegDocumentDescription =>
+      'A company certificate or registration certificate showing the business name and number.';
+
+  @override
+  String get businessRegDocumentRequirements =>
+      'JPG, PNG or PDF, up to 10 MB. All text must be clearly readable.';
+
+  @override
+  String get businessRegDocumentChoose => 'Choose file';
+
+  @override
+  String get businessRegDocumentReplace => 'Replace file';
+
+  @override
+  String get businessRegDocumentUploaded => 'Document uploaded';
+
+  @override
+  String get businessRegDocumentUploading => 'Uploading securely…';
+
+  @override
+  String get businessRegDocumentMissing => 'No document uploaded yet';
+
+  @override
+  String get businessRegBankHeading => 'Payout bank account';
+
+  @override
+  String get businessRegBankDescription =>
+      'Business payouts go to the bank account verified with your Kao ID.';
+
+  @override
+  String get businessRegBankApproved => 'Verified';
+
+  @override
+  String get businessRegBankPending => 'Under review';
+
+  @override
+  String get businessRegBankRejected => 'Not approved';
+
+  @override
+  String get businessRegBankMissing => 'No verified bank account yet';
+
+  @override
+  String get businessRegBankRequiredHelp =>
+      'You can submit once your bank account is verified.';
+
+  @override
+  String get businessRegBankVerifyAction => 'Verify a bank account';
+
+  @override
+  String get businessRegBankCheckAgain => 'Check again';
+
+  @override
+  String get businessRegReviewHeading => 'Review your details';
+
+  @override
+  String get businessRegReviewDescription =>
+      'Make sure everything is correct. You can\'t edit while it\'s under review.';
+
+  @override
+  String get businessRegEdit => 'Edit';
+
+  @override
+  String get businessRegConsent =>
+      'I confirm this information is accurate and allow Kao ID to verify it.';
+
+  @override
+  String get businessRegSubmit => 'Submit for review';
+
+  @override
+  String get businessRegContinue => 'Continue';
+
+  @override
+  String get businessRegBack => 'Back';
+
+  @override
+  String get businessRegSubmitConfirmTitle => 'Submit your registration?';
+
+  @override
+  String get businessRegSubmitConfirmBody =>
+      'We\'ll review your business and notify you of the result.';
+
+  @override
+  String get businessRegCancelDraft => 'Cancel registration';
+
+  @override
+  String get businessRegCancelConfirmTitle => 'Cancel this registration?';
+
+  @override
+  String get businessRegCancelConfirmBody =>
+      'Your draft and uploaded document will no longer be used.';
+
+  @override
+  String get businessRegKeepEditing => 'Keep editing';
+
+  @override
+  String get businessRegStatusReviewTitle => 'We\'re reviewing your business';
+
+  @override
+  String get businessRegStatusReviewBody =>
+      'We\'ll notify you as soon as the review is complete.';
+
+  @override
+  String get businessRegStatusApprovedTitle => 'Your business is verified';
+
+  @override
+  String get businessRegStatusApprovedBody =>
+      'You can now use your business with Kao services.';
+
+  @override
+  String get businessRegStatusRejectedTitle => 'Registration not approved';
+
+  @override
+  String get businessRegStatusRejectedBody =>
+      'You can start a new registration with updated information.';
+
+  @override
+  String get businessRegStatusActionTitle => 'Action needed';
+
+  @override
+  String get businessRegStatusActionBody =>
+      'Check your notifications for what to update.';
+
+  @override
+  String get businessRegRefreshStatus => 'Refresh status';
+
+  @override
+  String get businessRegStartNew => 'Start a new registration';
+
+  @override
+  String get businessRegBackToAccount => 'Back to my account';
+
+  @override
+  String get businessRegErrorGeneric =>
+      'Something went wrong. Please try again.';
+
+  @override
+  String get businessRegErrorSession =>
+      'Your session has ended. Please sign in again.';
+
+  @override
+  String get businessRegErrorRestricted =>
+      'Your account can\'t register a business right now.';
+
+  @override
+  String get businessRegErrorActiveExists =>
+      'You already have a registration in progress.';
+
+  @override
+  String get businessRegErrorNotEditable =>
+      'This registration can no longer be changed.';
+
+  @override
+  String get businessRegErrorDocumentRequired =>
+      'Please upload your registration document.';
+
+  @override
+  String get businessRegErrorBankRequired =>
+      'A verified bank account is required before you submit.';
+
+  @override
+  String get businessRegErrorFile =>
+      'This file can\'t be used. Choose a JPG, PNG or PDF up to 10 MB.';
+
+  @override
+  String get businessRegErrorDuplicate =>
+      'This registration number is already registered.';
+
+  @override
+  String get businessRegHubDescription =>
+      'Verify your business to open a store and receive payouts.';
 }

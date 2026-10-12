@@ -2371,4 +2371,264 @@ class AppLocalizationsLo extends AppLocalizations {
   @override
   String get noticeAccessFailed =>
       'ເປີດລາຍການບໍ່ໄດ້ ກະລຸນາກວດການເຊື່ອມຕໍ່ ສິດປັດຈຸບັນ ແລະ MFA ແລ້ວລອງໃໝ່';
+
+  @override
+  String get businessRegTitle => 'ລົງທະບຽນທຸລະກິດ';
+
+  @override
+  String get businessRegSubtitle =>
+      'ຢືນຢັນທຸລະກິດຂອງທ່ານຄັ້ງດຽວ ແລະ ໃຊ້ໄດ້ກັບທຸກບໍລິການຂອງ Kao.';
+
+  @override
+  String businessRegStepCounter(int current, int total) {
+    return 'ຂັ້ນຕອນ $current ຈາກ $total';
+  }
+
+  @override
+  String get businessRegStepDetails => 'ຂໍ້ມູນທຸລະກິດ';
+
+  @override
+  String get businessRegStepDocument => 'ເອກະສານທຸລະກິດ';
+
+  @override
+  String get businessRegStepBank => 'ບັນຊີທະນາຄານ';
+
+  @override
+  String get businessRegStepReview => 'ກວດສອບ ແລະ ສົ່ງ';
+
+  @override
+  String get businessRegSecureNotice =>
+      'ຂໍ້ມູນຂອງທ່ານຖືກເຂົ້າລະຫັດ ແລະ ໃຊ້ເພື່ອຢືນຢັນທຸລະກິດເທົ່ານັ້ນ.';
+
+  @override
+  String get businessRegDetailsHeading => 'ບອກພວກເຮົາກ່ຽວກັບທຸລະກິດຂອງທ່ານ';
+
+  @override
+  String get businessRegDetailsDescription =>
+      'ກະລຸນາປ້ອນຂໍ້ມູນໃຫ້ກົງກັບເອກະສານຈົດທະບຽນ.';
+
+  @override
+  String get businessRegTypeLabel => 'ປະເພດທຸລະກິດ';
+
+  @override
+  String get businessRegTypeCompany => 'ບໍລິສັດ ຫຼື ຫ້າງຫຸ້ນສ່ວນ';
+
+  @override
+  String get businessRegTypeCompanyHint => 'ນິຕິບຸກຄົນທີ່ມີເລກທະບຽນ 13 ຕົວເລກ';
+
+  @override
+  String get businessRegTypeOrganization => 'ມູນລະນິທິ ຫຼື ສະມາຄົມ';
+
+  @override
+  String get businessRegTypeOrganizationHint =>
+      'ອົງການບໍ່ຫວັງຜົນກຳໄລທີ່ຈົດທະບຽນແລ້ວ';
+
+  @override
+  String get businessRegNameLabel => 'ຊື່ທຸລະກິດຕາມທະບຽນ';
+
+  @override
+  String get businessRegNumberLabel => 'ເລກທະບຽນ';
+
+  @override
+  String get businessRegNumberHelp => 'ຕົວເລກ 13 ຫຼັກເທົ່ານັ້ນ';
+
+  @override
+  String get businessRegCategoryLabel => 'ໝວດໝູ່ທຸລະກິດ';
+
+  @override
+  String get businessRegCategoryRetail => 'ຂາຍຍ່ອຍ';
+
+  @override
+  String get businessRegCategoryFood => 'ອາຫານ ແລະ ເຄື່ອງດື່ມ';
+
+  @override
+  String get businessRegCategoryServices => 'ການບໍລິການ';
+
+  @override
+  String get businessRegCategoryTechnology => 'ເຕັກໂນໂລຊີ';
+
+  @override
+  String get businessRegCategoryOther => 'ອື່ນໆ';
+
+  @override
+  String get businessRegDescriptionLabel => 'ລາຍລະອຽດທຸລະກິດ (ບໍ່ບັງຄັບ)';
+
+  @override
+  String get businessRegFieldRequired => 'ກະລຸນາປ້ອນຂໍ້ມູນນີ້';
+
+  @override
+  String get businessRegNumberInvalid => 'ກະລຸນາປ້ອນເລກທະບຽນ 13 ຫຼັກ';
+
+  @override
+  String get businessRegDocumentHeading => 'ອັບໂຫຼດເອກະສານຈົດທະບຽນ';
+
+  @override
+  String get businessRegDocumentDescription =>
+      'ໜັງສືຢັ້ງຢືນບໍລິສັດ ຫຼື ໃບທະບຽນ ທີ່ສະແດງຊື່ ແລະ ເລກທະບຽນທຸລະກິດ.';
+
+  @override
+  String get businessRegDocumentRequirements =>
+      'ໄຟລ໌ JPG, PNG ຫຼື PDF ບໍ່ເກີນ 10 MB ແລະ ຂໍ້ຄວາມຕ້ອງອ່ານໄດ້ຊັດເຈນ.';
+
+  @override
+  String get businessRegDocumentChoose => 'ເລືອກໄຟລ໌';
+
+  @override
+  String get businessRegDocumentReplace => 'ປ່ຽນໄຟລ໌';
+
+  @override
+  String get businessRegDocumentUploaded => 'ອັບໂຫຼດເອກະສານແລ້ວ';
+
+  @override
+  String get businessRegDocumentUploading => 'ກຳລັງອັບໂຫຼດຢ່າງປອດໄພ…';
+
+  @override
+  String get businessRegDocumentMissing => 'ຍັງບໍ່ໄດ້ອັບໂຫຼດເອກະສານ';
+
+  @override
+  String get businessRegBankHeading => 'ບັນຊີຮັບເງິນ';
+
+  @override
+  String get businessRegBankDescription =>
+      'ລາຍຮັບຂອງທຸລະກິດຈະໂອນເຂົ້າບັນຊີທະນາຄານທີ່ຢືນຢັນແລ້ວໃນ Kao ID ຂອງທ່ານ.';
+
+  @override
+  String get businessRegBankApproved => 'ຢືນຢັນແລ້ວ';
+
+  @override
+  String get businessRegBankPending => 'ກຳລັງກວດສອບ';
+
+  @override
+  String get businessRegBankRejected => 'ບໍ່ຜ່ານການກວດສອບ';
+
+  @override
+  String get businessRegBankMissing => 'ຍັງບໍ່ມີບັນຊີທະນາຄານທີ່ຢືນຢັນແລ້ວ';
+
+  @override
+  String get businessRegBankRequiredHelp =>
+      'ທ່ານຈະສົ່ງຄຳຂໍໄດ້ເມື່ອບັນຊີທະນາຄານຖືກຢືນຢັນແລ້ວ.';
+
+  @override
+  String get businessRegBankVerifyAction => 'ຢືນຢັນບັນຊີທະນາຄານ';
+
+  @override
+  String get businessRegBankCheckAgain => 'ກວດສອບອີກຄັ້ງ';
+
+  @override
+  String get businessRegReviewHeading => 'ກວດສອບຂໍ້ມູນຂອງທ່ານ';
+
+  @override
+  String get businessRegReviewDescription =>
+      'ກະລຸນາກວດສອບໃຫ້ຖືກຕ້ອງ ເພາະລະຫວ່າງການພິຈາລະນາຈະແກ້ໄຂບໍ່ໄດ້.';
+
+  @override
+  String get businessRegEdit => 'ແກ້ໄຂ';
+
+  @override
+  String get businessRegConsent =>
+      'ຂ້ອຍຢືນຢັນວ່າຂໍ້ມູນຖືກຕ້ອງ ແລະ ຍິນຍອມໃຫ້ Kao ID ກວດສອບຂໍ້ມູນນີ້.';
+
+  @override
+  String get businessRegSubmit => 'ສົ່ງເພື່ອພິຈາລະນາ';
+
+  @override
+  String get businessRegContinue => 'ຕໍ່ໄປ';
+
+  @override
+  String get businessRegBack => 'ກັບຄືນ';
+
+  @override
+  String get businessRegSubmitConfirmTitle => 'ສົ່ງຄຳຂໍລົງທະບຽນບໍ?';
+
+  @override
+  String get businessRegSubmitConfirmBody =>
+      'ພວກເຮົາຈະກວດສອບທຸລະກິດຂອງທ່ານ ແລະ ແຈ້ງຜົນໃຫ້ຊາບ.';
+
+  @override
+  String get businessRegCancelDraft => 'ຍົກເລີກການລົງທະບຽນ';
+
+  @override
+  String get businessRegCancelConfirmTitle => 'ຍົກເລີກການລົງທະບຽນນີ້ບໍ?';
+
+  @override
+  String get businessRegCancelConfirmBody =>
+      'ສະບັບຮ່າງ ແລະ ເອກະສານທີ່ອັບໂຫຼດຈະບໍ່ຖືກນຳໃຊ້ອີກ.';
+
+  @override
+  String get businessRegKeepEditing => 'ແກ້ໄຂຕໍ່';
+
+  @override
+  String get businessRegStatusReviewTitle => 'ກຳລັງກວດສອບທຸລະກິດຂອງທ່ານ';
+
+  @override
+  String get businessRegStatusReviewBody =>
+      'ພວກເຮົາຈະແຈ້ງໃຫ້ຊາບທັນທີເມື່ອການກວດສອບສຳເລັດ.';
+
+  @override
+  String get businessRegStatusApprovedTitle =>
+      'ທຸລະກິດຂອງທ່ານຜ່ານການຢືນຢັນແລ້ວ';
+
+  @override
+  String get businessRegStatusApprovedBody =>
+      'ຕອນນີ້ທ່ານສາມາດໃຊ້ທຸລະກິດກັບບໍລິການຂອງ Kao ໄດ້ແລ້ວ.';
+
+  @override
+  String get businessRegStatusRejectedTitle => 'ຄຳຂໍບໍ່ໄດ້ຮັບການອະນຸມັດ';
+
+  @override
+  String get businessRegStatusRejectedBody =>
+      'ທ່ານສາມາດເລີ່ມລົງທະບຽນໃໝ່ດ້ວຍຂໍ້ມູນທີ່ຖືກຕ້ອງ.';
+
+  @override
+  String get businessRegStatusActionTitle => 'ຕ້ອງດຳເນີນການເພີ່ມເຕີມ';
+
+  @override
+  String get businessRegStatusActionBody =>
+      'ກະລຸນາກວດເບິ່ງການແຈ້ງເຕືອນເພື່ອຮູ້ສິ່ງທີ່ຕ້ອງແກ້ໄຂ.';
+
+  @override
+  String get businessRegRefreshStatus => 'ອັບເດດສະຖານະ';
+
+  @override
+  String get businessRegStartNew => 'ເລີ່ມລົງທະບຽນໃໝ່';
+
+  @override
+  String get businessRegBackToAccount => 'ກັບໄປທີ່ບັນຊີຂອງຂ້ອຍ';
+
+  @override
+  String get businessRegErrorGeneric => 'ເກີດຂໍ້ຜິດພາດ ກະລຸນາລອງໃໝ່.';
+
+  @override
+  String get businessRegErrorSession =>
+      'ເຊດຊັນໝົດອາຍຸ ກະລຸນາເຂົ້າສູ່ລະບົບອີກຄັ້ງ.';
+
+  @override
+  String get businessRegErrorRestricted =>
+      'ບັນຊີຂອງທ່ານຍັງລົງທະບຽນທຸລະກິດບໍ່ໄດ້ໃນຕອນນີ້.';
+
+  @override
+  String get businessRegErrorActiveExists =>
+      'ທ່ານມີຄຳຂໍລົງທະບຽນທີ່ກຳລັງດຳເນີນການຢູ່ແລ້ວ.';
+
+  @override
+  String get businessRegErrorNotEditable => 'ຄຳຂໍນີ້ບໍ່ສາມາດແກ້ໄຂໄດ້ແລ້ວ.';
+
+  @override
+  String get businessRegErrorDocumentRequired =>
+      'ກະລຸນາອັບໂຫຼດເອກະສານຈົດທະບຽນ.';
+
+  @override
+  String get businessRegErrorBankRequired =>
+      'ຕ້ອງມີບັນຊີທະນາຄານທີ່ຢືນຢັນແລ້ວກ່ອນສົ່ງຄຳຂໍ.';
+
+  @override
+  String get businessRegErrorFile =>
+      'ໃຊ້ໄຟລ໌ນີ້ບໍ່ໄດ້ ກະລຸນາເລືອກ JPG, PNG ຫຼື PDF ບໍ່ເກີນ 10 MB.';
+
+  @override
+  String get businessRegErrorDuplicate => 'ເລກທະບຽນນີ້ຖືກລົງທະບຽນແລ້ວ.';
+
+  @override
+  String get businessRegHubDescription =>
+      'ຢືນຢັນທຸລະກິດເພື່ອເປີດຮ້ານຄ້າ ແລະ ຮັບເງິນ.';
 }

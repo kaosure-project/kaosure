@@ -2417,4 +2417,262 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get noticeAccessFailed =>
       'เปิดรายการไม่ได้ กรุณาตรวจการเชื่อมต่อ สิทธิ์ปัจจุบัน และ MFA แล้วลองใหม่';
+
+  @override
+  String get businessRegTitle => 'ลงทะเบียนธุรกิจ';
+
+  @override
+  String get businessRegSubtitle =>
+      'ยืนยันธุรกิจของคุณครั้งเดียว ใช้ได้กับทุกบริการของ Kao';
+
+  @override
+  String businessRegStepCounter(int current, int total) {
+    return 'ขั้นที่ $current จาก $total';
+  }
+
+  @override
+  String get businessRegStepDetails => 'ข้อมูลธุรกิจ';
+
+  @override
+  String get businessRegStepDocument => 'เอกสารธุรกิจ';
+
+  @override
+  String get businessRegStepBank => 'บัญชีธนาคาร';
+
+  @override
+  String get businessRegStepReview => 'ตรวจสอบและยืนยัน';
+
+  @override
+  String get businessRegSecureNotice =>
+      'ข้อมูลของคุณถูกเข้ารหัส และใช้เพื่อยืนยันธุรกิจเท่านั้น';
+
+  @override
+  String get businessRegDetailsHeading => 'บอกเราเกี่ยวกับธุรกิจของคุณ';
+
+  @override
+  String get businessRegDetailsDescription =>
+      'กรอกข้อมูลให้ตรงกับเอกสารจดทะเบียน';
+
+  @override
+  String get businessRegTypeLabel => 'ประเภทธุรกิจ';
+
+  @override
+  String get businessRegTypeCompany => 'บริษัทหรือห้างหุ้นส่วน';
+
+  @override
+  String get businessRegTypeCompanyHint => 'นิติบุคคลที่มีเลขทะเบียน 13 หลัก';
+
+  @override
+  String get businessRegTypeOrganization => 'มูลนิธิหรือสมาคม';
+
+  @override
+  String get businessRegTypeOrganizationHint =>
+      'องค์กรไม่แสวงหากำไรที่จดทะเบียนแล้ว';
+
+  @override
+  String get businessRegNameLabel => 'ชื่อกิจการตามทะเบียน';
+
+  @override
+  String get businessRegNumberLabel => 'เลขทะเบียนนิติบุคคล';
+
+  @override
+  String get businessRegNumberHelp => 'ตัวเลข 13 หลัก';
+
+  @override
+  String get businessRegCategoryLabel => 'หมวดหมู่ธุรกิจ';
+
+  @override
+  String get businessRegCategoryRetail => 'ค้าปลีก';
+
+  @override
+  String get businessRegCategoryFood => 'อาหารและเครื่องดื่ม';
+
+  @override
+  String get businessRegCategoryServices => 'บริการ';
+
+  @override
+  String get businessRegCategoryTechnology => 'เทคโนโลยี';
+
+  @override
+  String get businessRegCategoryOther => 'อื่น ๆ';
+
+  @override
+  String get businessRegDescriptionLabel => 'รายละเอียดธุรกิจ (ไม่บังคับ)';
+
+  @override
+  String get businessRegFieldRequired => 'กรุณากรอกข้อมูลนี้';
+
+  @override
+  String get businessRegNumberInvalid => 'กรุณากรอกเลขทะเบียน 13 หลัก';
+
+  @override
+  String get businessRegDocumentHeading => 'อัปโหลดเอกสารจดทะเบียน';
+
+  @override
+  String get businessRegDocumentDescription =>
+      'หนังสือรับรองบริษัทหรือใบสำคัญแสดงการจดทะเบียน ที่แสดงชื่อและเลขทะเบียนกิจการ';
+
+  @override
+  String get businessRegDocumentRequirements =>
+      'ไฟล์ JPG, PNG หรือ PDF ขนาดไม่เกิน 10 MB และต้องอ่านข้อความได้ชัดเจน';
+
+  @override
+  String get businessRegDocumentChoose => 'เลือกไฟล์';
+
+  @override
+  String get businessRegDocumentReplace => 'เปลี่ยนไฟล์';
+
+  @override
+  String get businessRegDocumentUploaded => 'อัปโหลดเอกสารแล้ว';
+
+  @override
+  String get businessRegDocumentUploading => 'กำลังอัปโหลดอย่างปลอดภัย…';
+
+  @override
+  String get businessRegDocumentMissing => 'ยังไม่ได้อัปโหลดเอกสาร';
+
+  @override
+  String get businessRegBankHeading => 'บัญชีรับเงิน';
+
+  @override
+  String get businessRegBankDescription =>
+      'รายได้ของธุรกิจจะโอนเข้าบัญชีธนาคารที่ยืนยันแล้วใน Kao ID ของคุณ';
+
+  @override
+  String get businessRegBankApproved => 'ยืนยันแล้ว';
+
+  @override
+  String get businessRegBankPending => 'กำลังตรวจสอบ';
+
+  @override
+  String get businessRegBankRejected => 'ไม่ผ่านการตรวจสอบ';
+
+  @override
+  String get businessRegBankMissing => 'ยังไม่มีบัญชีธนาคารที่ยืนยันแล้ว';
+
+  @override
+  String get businessRegBankRequiredHelp =>
+      'คุณจะส่งคำขอได้เมื่อบัญชีธนาคารผ่านการยืนยันแล้ว';
+
+  @override
+  String get businessRegBankVerifyAction => 'ยืนยันบัญชีธนาคาร';
+
+  @override
+  String get businessRegBankCheckAgain => 'ตรวจสอบอีกครั้ง';
+
+  @override
+  String get businessRegReviewHeading => 'ตรวจสอบข้อมูลของคุณ';
+
+  @override
+  String get businessRegReviewDescription =>
+      'ตรวจสอบให้ถูกต้อง เพราะระหว่างการพิจารณาจะแก้ไขข้อมูลไม่ได้';
+
+  @override
+  String get businessRegEdit => 'แก้ไข';
+
+  @override
+  String get businessRegConsent =>
+      'ฉันยืนยันว่าข้อมูลถูกต้อง และยินยอมให้ Kao ID ตรวจสอบข้อมูลนี้';
+
+  @override
+  String get businessRegSubmit => 'ส่งคำขอเพื่อพิจารณา';
+
+  @override
+  String get businessRegContinue => 'ถัดไป';
+
+  @override
+  String get businessRegBack => 'ย้อนกลับ';
+
+  @override
+  String get businessRegSubmitConfirmTitle => 'ยืนยันการส่งคำขอ?';
+
+  @override
+  String get businessRegSubmitConfirmBody =>
+      'เราจะตรวจสอบข้อมูลธุรกิจและแจ้งผลให้คุณทราบ';
+
+  @override
+  String get businessRegCancelDraft => 'ยกเลิกการลงทะเบียน';
+
+  @override
+  String get businessRegCancelConfirmTitle => 'ยกเลิกการลงทะเบียนนี้?';
+
+  @override
+  String get businessRegCancelConfirmBody =>
+      'ฉบับร่างและเอกสารที่อัปโหลดจะไม่ถูกใช้งานอีก';
+
+  @override
+  String get businessRegKeepEditing => 'แก้ไขต่อ';
+
+  @override
+  String get businessRegStatusReviewTitle => 'กำลังตรวจสอบธุรกิจของคุณ';
+
+  @override
+  String get businessRegStatusReviewBody =>
+      'เราจะแจ้งให้ทราบทันทีเมื่อการตรวจสอบเสร็จสิ้น';
+
+  @override
+  String get businessRegStatusApprovedTitle => 'ธุรกิจของคุณผ่านการยืนยันแล้ว';
+
+  @override
+  String get businessRegStatusApprovedBody =>
+      'ตอนนี้คุณใช้งานธุรกิจกับบริการของ Kao ได้แล้ว';
+
+  @override
+  String get businessRegStatusRejectedTitle => 'คำขอไม่ผ่านการอนุมัติ';
+
+  @override
+  String get businessRegStatusRejectedBody =>
+      'คุณเริ่มลงทะเบียนใหม่พร้อมข้อมูลที่ถูกต้องได้';
+
+  @override
+  String get businessRegStatusActionTitle => 'ต้องดำเนินการเพิ่มเติม';
+
+  @override
+  String get businessRegStatusActionBody =>
+      'โปรดตรวจสอบการแจ้งเตือนเพื่อดูสิ่งที่ต้องแก้ไข';
+
+  @override
+  String get businessRegRefreshStatus => 'อัปเดตสถานะ';
+
+  @override
+  String get businessRegStartNew => 'เริ่มลงทะเบียนใหม่';
+
+  @override
+  String get businessRegBackToAccount => 'กลับไปที่บัญชีของฉัน';
+
+  @override
+  String get businessRegErrorGeneric => 'เกิดข้อผิดพลาด กรุณาลองอีกครั้ง';
+
+  @override
+  String get businessRegErrorSession =>
+      'เซสชันหมดอายุ กรุณาเข้าสู่ระบบอีกครั้ง';
+
+  @override
+  String get businessRegErrorRestricted =>
+      'บัญชีของคุณยังลงทะเบียนธุรกิจไม่ได้ในขณะนี้';
+
+  @override
+  String get businessRegErrorActiveExists =>
+      'คุณมีคำขอลงทะเบียนที่กำลังดำเนินการอยู่แล้ว';
+
+  @override
+  String get businessRegErrorNotEditable => 'คำขอนี้ไม่สามารถแก้ไขได้แล้ว';
+
+  @override
+  String get businessRegErrorDocumentRequired => 'กรุณาอัปโหลดเอกสารจดทะเบียน';
+
+  @override
+  String get businessRegErrorBankRequired =>
+      'ต้องมีบัญชีธนาคารที่ยืนยันแล้วก่อนส่งคำขอ';
+
+  @override
+  String get businessRegErrorFile =>
+      'ใช้ไฟล์นี้ไม่ได้ กรุณาเลือกไฟล์ JPG, PNG หรือ PDF ขนาดไม่เกิน 10 MB';
+
+  @override
+  String get businessRegErrorDuplicate => 'เลขทะเบียนนี้ถูกลงทะเบียนไว้แล้ว';
+
+  @override
+  String get businessRegHubDescription =>
+      'ยืนยันธุรกิจเพื่อเปิดร้านค้าและรับเงิน';
 }

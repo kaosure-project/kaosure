@@ -2430,4 +2430,271 @@ class AppLocalizationsMy extends AppLocalizations {
   @override
   String get noticeAccessFailed =>
       'ဖွင့်၍မရပါ။ အင်တာနက်၊ လက်ရှိလုပ်ပိုင်ခွင့်နှင့် MFA ကိုစစ်ဆေးပြီး ထပ်ကြိုးစားပါ။';
+
+  @override
+  String get businessRegTitle => 'လုပ်ငန်းမှတ်ပုံတင်ရန်';
+
+  @override
+  String get businessRegSubtitle =>
+      'သင့်လုပ်ငန်းကို တစ်ကြိမ်အတည်ပြုပြီး Kao ဝန်ဆောင်မှုအားလုံးတွင် အသုံးပြုပါ။';
+
+  @override
+  String businessRegStepCounter(int current, int total) {
+    return 'အဆင့် $current / $total';
+  }
+
+  @override
+  String get businessRegStepDetails => 'လုပ်ငန်းအချက်အလက်';
+
+  @override
+  String get businessRegStepDocument => 'လုပ်ငန်းစာရွက်စာတမ်း';
+
+  @override
+  String get businessRegStepBank => 'ဘဏ်အကောင့်';
+
+  @override
+  String get businessRegStepReview => 'စစ်ဆေးပြီး တင်သွင်းရန်';
+
+  @override
+  String get businessRegSecureNotice =>
+      'သင့်အချက်အလက်များကို ကုဒ်ဝှက်ထားပြီး လုပ်ငန်းအတည်ပြုရန်အတွက်သာ အသုံးပြုပါသည်။';
+
+  @override
+  String get businessRegDetailsHeading => 'သင့်လုပ်ငန်းအကြောင်း ပြောပြပါ';
+
+  @override
+  String get businessRegDetailsDescription =>
+      'မှတ်ပုံတင်စာရွက်စာတမ်းပါအတိုင်း တိကျစွာ ဖြည့်ပါ။';
+
+  @override
+  String get businessRegTypeLabel => 'လုပ်ငန်းအမျိုးအစား';
+
+  @override
+  String get businessRegTypeCompany => 'ကုမ္ပဏီ သို့မဟုတ် အစုစပ်လုပ်ငန်း';
+
+  @override
+  String get businessRegTypeCompanyHint =>
+      'ဂဏန်း ၁၃ လုံးပါ မှတ်ပုံတင်နံပါတ်ရှိသော တရားဝင်အဖွဲ့အစည်း';
+
+  @override
+  String get businessRegTypeOrganization =>
+      'ဖောင်ဒေးရှင်း သို့မဟုတ် အသင်းအဖွဲ့';
+
+  @override
+  String get businessRegTypeOrganizationHint =>
+      'မှတ်ပုံတင်ထားသော အကျိုးအမြတ်မယူသည့် အဖွဲ့အစည်း';
+
+  @override
+  String get businessRegNameLabel => 'မှတ်ပုံတင်ထားသော လုပ်ငန်းအမည်';
+
+  @override
+  String get businessRegNumberLabel => 'မှတ်ပုံတင်နံပါတ်';
+
+  @override
+  String get businessRegNumberHelp => 'ဂဏန်း ၁၃ လုံးသာ';
+
+  @override
+  String get businessRegCategoryLabel => 'လုပ်ငန်းကဏ္ဍ';
+
+  @override
+  String get businessRegCategoryRetail => 'လက်လီရောင်းချခြင်း';
+
+  @override
+  String get businessRegCategoryFood => 'အစားအသောက်';
+
+  @override
+  String get businessRegCategoryServices => 'ဝန်ဆောင်မှု';
+
+  @override
+  String get businessRegCategoryTechnology => 'နည်းပညာ';
+
+  @override
+  String get businessRegCategoryOther => 'အခြား';
+
+  @override
+  String get businessRegDescriptionLabel => 'လုပ်ငန်းအကြောင်း (မဖြည့်လည်းရ)';
+
+  @override
+  String get businessRegFieldRequired => 'ဤအကွက်ကို ဖြည့်ရန်လိုအပ်သည်';
+
+  @override
+  String get businessRegNumberInvalid =>
+      'ဂဏန်း ၁၃ လုံးပါ မှတ်ပုံတင်နံပါတ် ထည့်ပါ';
+
+  @override
+  String get businessRegDocumentHeading => 'မှတ်ပုံတင်စာရွက်စာတမ်း တင်ပါ';
+
+  @override
+  String get businessRegDocumentDescription =>
+      'လုပ်ငန်းအမည်နှင့် မှတ်ပုံတင်နံပါတ် ပါဝင်သော ကုမ္ပဏီအထောက်အထား သို့မဟုတ် မှတ်ပုံတင်လက်မှတ်။';
+
+  @override
+  String get businessRegDocumentRequirements =>
+      'JPG၊ PNG သို့မဟုတ် PDF၊ 10 MB အထိ။ စာသားအားလုံး ရှင်းလင်းစွာ ဖတ်နိုင်ရမည်။';
+
+  @override
+  String get businessRegDocumentChoose => 'ဖိုင်ရွေးပါ';
+
+  @override
+  String get businessRegDocumentReplace => 'ဖိုင်ပြောင်းပါ';
+
+  @override
+  String get businessRegDocumentUploaded => 'စာရွက်စာတမ်း တင်ပြီးပါပြီ';
+
+  @override
+  String get businessRegDocumentUploading => 'လုံခြုံစွာ တင်နေသည်…';
+
+  @override
+  String get businessRegDocumentMissing => 'စာရွက်စာတမ်း မတင်ရသေးပါ';
+
+  @override
+  String get businessRegBankHeading => 'ငွေလက်ခံမည့် ဘဏ်အကောင့်';
+
+  @override
+  String get businessRegBankDescription =>
+      'လုပ်ငန်းဝင်ငွေများကို သင့် Kao ID တွင် အတည်ပြုထားသော ဘဏ်အကောင့်သို့ လွှဲပေးပါမည်။';
+
+  @override
+  String get businessRegBankApproved => 'အတည်ပြုပြီး';
+
+  @override
+  String get businessRegBankPending => 'စစ်ဆေးနေဆဲ';
+
+  @override
+  String get businessRegBankRejected => 'အတည်မပြုပါ';
+
+  @override
+  String get businessRegBankMissing => 'အတည်ပြုထားသော ဘဏ်အကောင့် မရှိသေးပါ';
+
+  @override
+  String get businessRegBankRequiredHelp =>
+      'ဘဏ်အကောင့် အတည်ပြုပြီးမှ တင်သွင်းနိုင်ပါမည်။';
+
+  @override
+  String get businessRegBankVerifyAction => 'ဘဏ်အကောင့် အတည်ပြုရန်';
+
+  @override
+  String get businessRegBankCheckAgain => 'ပြန်စစ်ပါ';
+
+  @override
+  String get businessRegReviewHeading => 'သင့်အချက်အလက်များကို စစ်ဆေးပါ';
+
+  @override
+  String get businessRegReviewDescription =>
+      'အားလုံးမှန်ကန်ကြောင်း စစ်ဆေးပါ။ စစ်ဆေးနေစဉ် ပြင်ဆင်၍ မရပါ။';
+
+  @override
+  String get businessRegEdit => 'ပြင်ဆင်ရန်';
+
+  @override
+  String get businessRegConsent =>
+      'ဤအချက်အလက်များ မှန်ကန်ကြောင်း အတည်ပြုပြီး Kao ID မှ စစ်ဆေးခြင်းကို သဘောတူပါသည်။';
+
+  @override
+  String get businessRegSubmit => 'စစ်ဆေးရန် တင်သွင်းပါ';
+
+  @override
+  String get businessRegContinue => 'ဆက်လုပ်ရန်';
+
+  @override
+  String get businessRegBack => 'နောက်သို့';
+
+  @override
+  String get businessRegSubmitConfirmTitle => 'မှတ်ပုံတင်မှုကို တင်သွင်းမလား။';
+
+  @override
+  String get businessRegSubmitConfirmBody =>
+      'သင့်လုပ်ငန်းကို စစ်ဆေးပြီး ရလဒ်ကို အကြောင်းကြားပါမည်။';
+
+  @override
+  String get businessRegCancelDraft => 'မှတ်ပုံတင်ခြင်းကို ပယ်ဖျက်ရန်';
+
+  @override
+  String get businessRegCancelConfirmTitle =>
+      'ဤမှတ်ပုံတင်ခြင်းကို ပယ်ဖျက်မလား။';
+
+  @override
+  String get businessRegCancelConfirmBody =>
+      'မူကြမ်းနှင့် တင်ထားသော စာရွက်စာတမ်းကို ထပ်မံအသုံးမပြုတော့ပါ။';
+
+  @override
+  String get businessRegKeepEditing => 'ဆက်ပြင်ဆင်ရန်';
+
+  @override
+  String get businessRegStatusReviewTitle => 'သင့်လုပ်ငန်းကို စစ်ဆေးနေပါသည်';
+
+  @override
+  String get businessRegStatusReviewBody =>
+      'စစ်ဆေးမှု ပြီးဆုံးသည်နှင့် အကြောင်းကြားပါမည်။';
+
+  @override
+  String get businessRegStatusApprovedTitle =>
+      'သင့်လုပ်ငန်းကို အတည်ပြုပြီးပါပြီ';
+
+  @override
+  String get businessRegStatusApprovedBody =>
+      'ယခု Kao ဝန်ဆောင်မှုများတွင် သင့်လုပ်ငန်းကို အသုံးပြုနိုင်ပါပြီ။';
+
+  @override
+  String get businessRegStatusRejectedTitle => 'မှတ်ပုံတင်မှုကို အတည်မပြုပါ';
+
+  @override
+  String get businessRegStatusRejectedBody =>
+      'အချက်အလက်အသစ်ဖြင့် မှတ်ပုံတင်ခြင်းကို ပြန်လည်စတင်နိုင်ပါသည်။';
+
+  @override
+  String get businessRegStatusActionTitle => 'လုပ်ဆောင်ရန် လိုအပ်သည်';
+
+  @override
+  String get businessRegStatusActionBody =>
+      'ပြင်ဆင်ရမည့်အရာများကို အသိပေးချက်တွင် ကြည့်ပါ။';
+
+  @override
+  String get businessRegRefreshStatus => 'အခြေအနေကို ပြန်စစ်ရန်';
+
+  @override
+  String get businessRegStartNew => 'မှတ်ပုံတင်ခြင်း အသစ်စတင်ရန်';
+
+  @override
+  String get businessRegBackToAccount => 'ကျွန်ုပ်၏အကောင့်သို့ ပြန်သွားရန်';
+
+  @override
+  String get businessRegErrorGeneric =>
+      'တစ်ခုခု မှားယွင်းသွားပါသည်။ ထပ်ကြိုးစားပါ။';
+
+  @override
+  String get businessRegErrorSession =>
+      'ဆက်ရှင် ပြီးဆုံးသွားပါပြီ။ ထပ်မံဝင်ရောက်ပါ။';
+
+  @override
+  String get businessRegErrorRestricted =>
+      'သင့်အကောင့်ဖြင့် ယခု လုပ်ငန်းမှတ်ပုံတင်၍ မရပါ။';
+
+  @override
+  String get businessRegErrorActiveExists =>
+      'လုပ်ဆောင်နေဆဲ မှတ်ပုံတင်မှုတစ်ခု ရှိနှင့်ပြီးဖြစ်သည်။';
+
+  @override
+  String get businessRegErrorNotEditable =>
+      'ဤမှတ်ပုံတင်မှုကို ပြောင်းလဲ၍ မရတော့ပါ။';
+
+  @override
+  String get businessRegErrorDocumentRequired =>
+      'မှတ်ပုံတင်စာရွက်စာတမ်း တင်ပါ။';
+
+  @override
+  String get businessRegErrorBankRequired =>
+      'မတင်သွင်းမီ အတည်ပြုထားသော ဘဏ်အကောင့် လိုအပ်ပါသည်။';
+
+  @override
+  String get businessRegErrorFile =>
+      'ဤဖိုင်ကို အသုံးပြု၍ မရပါ။ 10 MB အထိ JPG၊ PNG သို့မဟုတ် PDF ကို ရွေးပါ။';
+
+  @override
+  String get businessRegErrorDuplicate =>
+      'ဤမှတ်ပုံတင်နံပါတ်ကို မှတ်ပုံတင်ပြီးဖြစ်သည်။';
+
+  @override
+  String get businessRegHubDescription =>
+      'စတိုးဖွင့်ရန်နှင့် ငွေလက်ခံရန် သင့်လုပ်ငန်းကို အတည်ပြုပါ။';
 }

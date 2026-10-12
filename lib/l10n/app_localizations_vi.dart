@@ -2419,4 +2419,270 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get noticeAccessFailed =>
       'Không thể mở mục này. Hãy kiểm tra kết nối, quyền hiện tại và MFA rồi thử lại.';
+
+  @override
+  String get businessRegTitle => 'Đăng ký doanh nghiệp';
+
+  @override
+  String get businessRegSubtitle =>
+      'Xác minh doanh nghiệp một lần và sử dụng trên mọi dịch vụ Kao.';
+
+  @override
+  String businessRegStepCounter(int current, int total) {
+    return 'Bước $current/$total';
+  }
+
+  @override
+  String get businessRegStepDetails => 'Thông tin doanh nghiệp';
+
+  @override
+  String get businessRegStepDocument => 'Giấy tờ doanh nghiệp';
+
+  @override
+  String get businessRegStepBank => 'Tài khoản ngân hàng';
+
+  @override
+  String get businessRegStepReview => 'Xem lại và gửi';
+
+  @override
+  String get businessRegSecureNotice =>
+      'Thông tin của bạn được mã hóa và chỉ dùng để xác minh doanh nghiệp.';
+
+  @override
+  String get businessRegDetailsHeading =>
+      'Cho chúng tôi biết về doanh nghiệp của bạn';
+
+  @override
+  String get businessRegDetailsDescription =>
+      'Nhập thông tin đúng như trên giấy đăng ký.';
+
+  @override
+  String get businessRegTypeLabel => 'Loại hình doanh nghiệp';
+
+  @override
+  String get businessRegTypeCompany => 'Công ty hoặc công ty hợp danh';
+
+  @override
+  String get businessRegTypeCompanyHint =>
+      'Pháp nhân có mã số đăng ký 13 chữ số';
+
+  @override
+  String get businessRegTypeOrganization => 'Quỹ hoặc hiệp hội';
+
+  @override
+  String get businessRegTypeOrganizationHint =>
+      'Tổ chức phi lợi nhuận đã đăng ký';
+
+  @override
+  String get businessRegNameLabel => 'Tên doanh nghiệp đã đăng ký';
+
+  @override
+  String get businessRegNumberLabel => 'Mã số đăng ký';
+
+  @override
+  String get businessRegNumberHelp => 'Chỉ gồm 13 chữ số';
+
+  @override
+  String get businessRegCategoryLabel => 'Ngành nghề kinh doanh';
+
+  @override
+  String get businessRegCategoryRetail => 'Bán lẻ';
+
+  @override
+  String get businessRegCategoryFood => 'Ăn uống';
+
+  @override
+  String get businessRegCategoryServices => 'Dịch vụ';
+
+  @override
+  String get businessRegCategoryTechnology => 'Công nghệ';
+
+  @override
+  String get businessRegCategoryOther => 'Khác';
+
+  @override
+  String get businessRegDescriptionLabel =>
+      'Giới thiệu doanh nghiệp (không bắt buộc)';
+
+  @override
+  String get businessRegFieldRequired => 'Vui lòng điền thông tin này';
+
+  @override
+  String get businessRegNumberInvalid => 'Nhập mã số đăng ký gồm 13 chữ số';
+
+  @override
+  String get businessRegDocumentHeading => 'Tải lên giấy đăng ký';
+
+  @override
+  String get businessRegDocumentDescription =>
+      'Giấy chứng nhận công ty hoặc giấy đăng ký có ghi tên và mã số doanh nghiệp.';
+
+  @override
+  String get businessRegDocumentRequirements =>
+      'JPG, PNG hoặc PDF, tối đa 10 MB. Mọi chữ phải đọc rõ ràng.';
+
+  @override
+  String get businessRegDocumentChoose => 'Chọn tệp';
+
+  @override
+  String get businessRegDocumentReplace => 'Thay tệp';
+
+  @override
+  String get businessRegDocumentUploaded => 'Đã tải lên giấy tờ';
+
+  @override
+  String get businessRegDocumentUploading => 'Đang tải lên an toàn…';
+
+  @override
+  String get businessRegDocumentMissing => 'Chưa tải lên giấy tờ';
+
+  @override
+  String get businessRegBankHeading => 'Tài khoản nhận tiền';
+
+  @override
+  String get businessRegBankDescription =>
+      'Doanh thu sẽ được chuyển vào tài khoản ngân hàng đã xác minh trong Kao ID của bạn.';
+
+  @override
+  String get businessRegBankApproved => 'Đã xác minh';
+
+  @override
+  String get businessRegBankPending => 'Đang xem xét';
+
+  @override
+  String get businessRegBankRejected => 'Không được chấp thuận';
+
+  @override
+  String get businessRegBankMissing =>
+      'Chưa có tài khoản ngân hàng đã xác minh';
+
+  @override
+  String get businessRegBankRequiredHelp =>
+      'Bạn có thể gửi sau khi tài khoản ngân hàng được xác minh.';
+
+  @override
+  String get businessRegBankVerifyAction => 'Xác minh tài khoản ngân hàng';
+
+  @override
+  String get businessRegBankCheckAgain => 'Kiểm tra lại';
+
+  @override
+  String get businessRegReviewHeading => 'Xem lại thông tin';
+
+  @override
+  String get businessRegReviewDescription =>
+      'Hãy kiểm tra kỹ. Bạn không thể chỉnh sửa trong khi đang xét duyệt.';
+
+  @override
+  String get businessRegEdit => 'Sửa';
+
+  @override
+  String get businessRegConsent =>
+      'Tôi xác nhận thông tin này là chính xác và đồng ý để Kao ID xác minh.';
+
+  @override
+  String get businessRegSubmit => 'Gửi xét duyệt';
+
+  @override
+  String get businessRegContinue => 'Tiếp tục';
+
+  @override
+  String get businessRegBack => 'Quay lại';
+
+  @override
+  String get businessRegSubmitConfirmTitle => 'Gửi hồ sơ đăng ký?';
+
+  @override
+  String get businessRegSubmitConfirmBody =>
+      'Chúng tôi sẽ xét duyệt doanh nghiệp và thông báo kết quả cho bạn.';
+
+  @override
+  String get businessRegCancelDraft => 'Hủy đăng ký';
+
+  @override
+  String get businessRegCancelConfirmTitle => 'Hủy hồ sơ đăng ký này?';
+
+  @override
+  String get businessRegCancelConfirmBody =>
+      'Bản nháp và giấy tờ đã tải lên sẽ không còn được sử dụng.';
+
+  @override
+  String get businessRegKeepEditing => 'Tiếp tục chỉnh sửa';
+
+  @override
+  String get businessRegStatusReviewTitle =>
+      'Chúng tôi đang xét duyệt doanh nghiệp của bạn';
+
+  @override
+  String get businessRegStatusReviewBody =>
+      'Chúng tôi sẽ thông báo ngay khi xét duyệt xong.';
+
+  @override
+  String get businessRegStatusApprovedTitle =>
+      'Doanh nghiệp của bạn đã được xác minh';
+
+  @override
+  String get businessRegStatusApprovedBody =>
+      'Giờ đây bạn có thể dùng doanh nghiệp với các dịch vụ Kao.';
+
+  @override
+  String get businessRegStatusRejectedTitle =>
+      'Hồ sơ đăng ký không được chấp thuận';
+
+  @override
+  String get businessRegStatusRejectedBody =>
+      'Bạn có thể đăng ký lại với thông tin đã cập nhật.';
+
+  @override
+  String get businessRegStatusActionTitle => 'Cần bổ sung';
+
+  @override
+  String get businessRegStatusActionBody =>
+      'Hãy xem thông báo để biết nội dung cần cập nhật.';
+
+  @override
+  String get businessRegRefreshStatus => 'Cập nhật trạng thái';
+
+  @override
+  String get businessRegStartNew => 'Bắt đầu đăng ký mới';
+
+  @override
+  String get businessRegBackToAccount => 'Quay lại tài khoản của tôi';
+
+  @override
+  String get businessRegErrorGeneric => 'Đã xảy ra lỗi. Vui lòng thử lại.';
+
+  @override
+  String get businessRegErrorSession =>
+      'Phiên đăng nhập đã kết thúc. Vui lòng đăng nhập lại.';
+
+  @override
+  String get businessRegErrorRestricted =>
+      'Tài khoản của bạn hiện chưa thể đăng ký doanh nghiệp.';
+
+  @override
+  String get businessRegErrorActiveExists =>
+      'Bạn đã có một hồ sơ đăng ký đang xử lý.';
+
+  @override
+  String get businessRegErrorNotEditable => 'Hồ sơ này không thể thay đổi nữa.';
+
+  @override
+  String get businessRegErrorDocumentRequired =>
+      'Vui lòng tải lên giấy đăng ký.';
+
+  @override
+  String get businessRegErrorBankRequired =>
+      'Cần có tài khoản ngân hàng đã xác minh trước khi gửi.';
+
+  @override
+  String get businessRegErrorFile =>
+      'Không thể dùng tệp này. Hãy chọn JPG, PNG hoặc PDF tối đa 10 MB.';
+
+  @override
+  String get businessRegErrorDuplicate => 'Mã số đăng ký này đã được đăng ký.';
+
+  @override
+  String get businessRegHubDescription =>
+      'Xác minh doanh nghiệp để mở cửa hàng và nhận tiền.';
 }

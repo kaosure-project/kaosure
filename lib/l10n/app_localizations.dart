@@ -4542,6 +4542,474 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cannot open this item. Check your connection, current permissions and MFA, then retry.'**
   String get noticeAccessFailed;
+
+  /// No description provided for @businessRegTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Register your business'**
+  String get businessRegTitle;
+
+  /// No description provided for @businessRegSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your business once and use it across Kao services.'**
+  String get businessRegSubtitle;
+
+  /// No description provided for @businessRegStepCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String businessRegStepCounter(int current, int total);
+
+  /// No description provided for @businessRegStepDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Business details'**
+  String get businessRegStepDetails;
+
+  /// No description provided for @businessRegStepDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Business document'**
+  String get businessRegStepDocument;
+
+  /// No description provided for @businessRegStepBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank account'**
+  String get businessRegStepBank;
+
+  /// No description provided for @businessRegStepReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review and submit'**
+  String get businessRegStepReview;
+
+  /// No description provided for @businessRegSecureNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Your information is encrypted and used only to verify your business.'**
+  String get businessRegSecureNotice;
+
+  /// No description provided for @businessRegDetailsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about your business'**
+  String get businessRegDetailsHeading;
+
+  /// No description provided for @businessRegDetailsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the details exactly as they appear on your registration document.'**
+  String get businessRegDetailsDescription;
+
+  /// No description provided for @businessRegTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Business type'**
+  String get businessRegTypeLabel;
+
+  /// No description provided for @businessRegTypeCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Company or partnership'**
+  String get businessRegTypeCompany;
+
+  /// No description provided for @businessRegTypeCompanyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered juristic person with a 13-digit registration number'**
+  String get businessRegTypeCompanyHint;
+
+  /// No description provided for @businessRegTypeOrganization.
+  ///
+  /// In en, this message translates to:
+  /// **'Foundation or association'**
+  String get businessRegTypeOrganization;
+
+  /// No description provided for @businessRegTypeOrganizationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered non-profit organization'**
+  String get businessRegTypeOrganizationHint;
+
+  /// No description provided for @businessRegNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered business name'**
+  String get businessRegNameLabel;
+
+  /// No description provided for @businessRegNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration number'**
+  String get businessRegNumberLabel;
+
+  /// No description provided for @businessRegNumberHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'13 digits, numbers only'**
+  String get businessRegNumberHelp;
+
+  /// No description provided for @businessRegCategoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Business category'**
+  String get businessRegCategoryLabel;
+
+  /// No description provided for @businessRegCategoryRetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Retail'**
+  String get businessRegCategoryRetail;
+
+  /// No description provided for @businessRegCategoryFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Food and beverage'**
+  String get businessRegCategoryFood;
+
+  /// No description provided for @businessRegCategoryServices.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get businessRegCategoryServices;
+
+  /// No description provided for @businessRegCategoryTechnology.
+  ///
+  /// In en, this message translates to:
+  /// **'Technology'**
+  String get businessRegCategoryTechnology;
+
+  /// No description provided for @businessRegCategoryOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get businessRegCategoryOther;
+
+  /// No description provided for @businessRegDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'About your business (optional)'**
+  String get businessRegDescriptionLabel;
+
+  /// No description provided for @businessRegFieldRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get businessRegFieldRequired;
+
+  /// No description provided for @businessRegNumberInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a 13-digit registration number'**
+  String get businessRegNumberInvalid;
+
+  /// No description provided for @businessRegDocumentHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload your registration document'**
+  String get businessRegDocumentHeading;
+
+  /// No description provided for @businessRegDocumentDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'A company certificate or registration certificate showing the business name and number.'**
+  String get businessRegDocumentDescription;
+
+  /// No description provided for @businessRegDocumentRequirements.
+  ///
+  /// In en, this message translates to:
+  /// **'JPG, PNG or PDF, up to 10 MB. All text must be clearly readable.'**
+  String get businessRegDocumentRequirements;
+
+  /// No description provided for @businessRegDocumentChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose file'**
+  String get businessRegDocumentChoose;
+
+  /// No description provided for @businessRegDocumentReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace file'**
+  String get businessRegDocumentReplace;
+
+  /// No description provided for @businessRegDocumentUploaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Document uploaded'**
+  String get businessRegDocumentUploaded;
+
+  /// No description provided for @businessRegDocumentUploading.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading securely…'**
+  String get businessRegDocumentUploading;
+
+  /// No description provided for @businessRegDocumentMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'No document uploaded yet'**
+  String get businessRegDocumentMissing;
+
+  /// No description provided for @businessRegBankHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout bank account'**
+  String get businessRegBankHeading;
+
+  /// No description provided for @businessRegBankDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Business payouts go to the bank account verified with your Kao ID.'**
+  String get businessRegBankDescription;
+
+  /// No description provided for @businessRegBankApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get businessRegBankApproved;
+
+  /// No description provided for @businessRegBankPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Under review'**
+  String get businessRegBankPending;
+
+  /// No description provided for @businessRegBankRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not approved'**
+  String get businessRegBankRejected;
+
+  /// No description provided for @businessRegBankMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'No verified bank account yet'**
+  String get businessRegBankMissing;
+
+  /// No description provided for @businessRegBankRequiredHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'You can submit once your bank account is verified.'**
+  String get businessRegBankRequiredHelp;
+
+  /// No description provided for @businessRegBankVerifyAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify a bank account'**
+  String get businessRegBankVerifyAction;
+
+  /// No description provided for @businessRegBankCheckAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get businessRegBankCheckAgain;
+
+  /// No description provided for @businessRegReviewHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Review your details'**
+  String get businessRegReviewHeading;
+
+  /// No description provided for @businessRegReviewDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Make sure everything is correct. You can\'t edit while it\'s under review.'**
+  String get businessRegReviewDescription;
+
+  /// No description provided for @businessRegEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get businessRegEdit;
+
+  /// No description provided for @businessRegConsent.
+  ///
+  /// In en, this message translates to:
+  /// **'I confirm this information is accurate and allow Kao ID to verify it.'**
+  String get businessRegConsent;
+
+  /// No description provided for @businessRegSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit for review'**
+  String get businessRegSubmit;
+
+  /// No description provided for @businessRegContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get businessRegContinue;
+
+  /// No description provided for @businessRegBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get businessRegBack;
+
+  /// No description provided for @businessRegSubmitConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit your registration?'**
+  String get businessRegSubmitConfirmTitle;
+
+  /// No description provided for @businessRegSubmitConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll review your business and notify you of the result.'**
+  String get businessRegSubmitConfirmBody;
+
+  /// No description provided for @businessRegCancelDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel registration'**
+  String get businessRegCancelDraft;
+
+  /// No description provided for @businessRegCancelConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this registration?'**
+  String get businessRegCancelConfirmTitle;
+
+  /// No description provided for @businessRegCancelConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your draft and uploaded document will no longer be used.'**
+  String get businessRegCancelConfirmBody;
+
+  /// No description provided for @businessRegKeepEditing.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
+  String get businessRegKeepEditing;
+
+  /// No description provided for @businessRegStatusReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'re reviewing your business'**
+  String get businessRegStatusReviewTitle;
+
+  /// No description provided for @businessRegStatusReviewBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll notify you as soon as the review is complete.'**
+  String get businessRegStatusReviewBody;
+
+  /// No description provided for @businessRegStatusApprovedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your business is verified'**
+  String get businessRegStatusApprovedTitle;
+
+  /// No description provided for @businessRegStatusApprovedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You can now use your business with Kao services.'**
+  String get businessRegStatusApprovedBody;
+
+  /// No description provided for @businessRegStatusRejectedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration not approved'**
+  String get businessRegStatusRejectedTitle;
+
+  /// No description provided for @businessRegStatusRejectedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You can start a new registration with updated information.'**
+  String get businessRegStatusRejectedBody;
+
+  /// No description provided for @businessRegStatusActionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Action needed'**
+  String get businessRegStatusActionTitle;
+
+  /// No description provided for @businessRegStatusActionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your notifications for what to update.'**
+  String get businessRegStatusActionBody;
+
+  /// No description provided for @businessRegRefreshStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh status'**
+  String get businessRegRefreshStatus;
+
+  /// No description provided for @businessRegStartNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Start a new registration'**
+  String get businessRegStartNew;
+
+  /// No description provided for @businessRegBackToAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to my account'**
+  String get businessRegBackToAccount;
+
+  /// No description provided for @businessRegErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get businessRegErrorGeneric;
+
+  /// No description provided for @businessRegErrorSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Your session has ended. Please sign in again.'**
+  String get businessRegErrorSession;
+
+  /// No description provided for @businessRegErrorRestricted.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account can\'t register a business right now.'**
+  String get businessRegErrorRestricted;
+
+  /// No description provided for @businessRegErrorActiveExists.
+  ///
+  /// In en, this message translates to:
+  /// **'You already have a registration in progress.'**
+  String get businessRegErrorActiveExists;
+
+  /// No description provided for @businessRegErrorNotEditable.
+  ///
+  /// In en, this message translates to:
+  /// **'This registration can no longer be changed.'**
+  String get businessRegErrorNotEditable;
+
+  /// No description provided for @businessRegErrorDocumentRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please upload your registration document.'**
+  String get businessRegErrorDocumentRequired;
+
+  /// No description provided for @businessRegErrorBankRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'A verified bank account is required before you submit.'**
+  String get businessRegErrorBankRequired;
+
+  /// No description provided for @businessRegErrorFile.
+  ///
+  /// In en, this message translates to:
+  /// **'This file can\'t be used. Choose a JPG, PNG or PDF up to 10 MB.'**
+  String get businessRegErrorFile;
+
+  /// No description provided for @businessRegErrorDuplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'This registration number is already registered.'**
+  String get businessRegErrorDuplicate;
+
+  /// No description provided for @businessRegHubDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your business to open a store and receive payouts.'**
+  String get businessRegHubDescription;
 }
 
 class _AppLocalizationsDelegate

@@ -15,12 +15,18 @@ class SupabasePhoneVerificationRepository implements PhoneVerificationRepository
     return PhoneIdentity(user.id, phone.isEmpty ? '' : '+${phone.replaceFirst(RegExp(r'^\+'), '')}',
       phone.isNotEmpty && user.phoneConfirmedAt != null);
   }
+  /// The SMS hook only sends a phone-change OTP that Kao ID announced first.
+  Future<void> _begin(String phone) =>
+      client.rpc<dynamic>('begin_phone_change_r19', params: {'p_phone': phone});
+
   @override
   Future<void> send(String phone) async {
+    await _begin(phone);
     await client.auth.updateUser(UserAttributes(phone: phone));
   }
   @override
   Future<void> resend(String phone) async {
+    await _begin(phone);
     await client.auth.resend(type: OtpType.phoneChange, phone: phone);
   }
   @override

@@ -210,7 +210,8 @@ Response shape (sections appear only when the app is registered for them):
   - Password: `security_update_password_require_current_password` is on; the app token got `400 current_password_required`. Kao ID's change-password page sends the current password; password recovery sessions are exempt by Supabase.
   - Email: secure email change is on, so a change needs confirmation from both the old and the new address.
   - `user_metadata`: writable by any user token; no Kao ID policy or function reads it, and none may.
-- [ ] Phone: an app token can still start a phone change (OTP goes to the new number). Route phone changes through Kao ID only before production, or keep phone off the claims an app can rely on.
+- [x] Phone (R19h): Supabase Auth still accepts `PUT /auth/v1/user {phone}` from an app token, but every SMS passes the Send SMS hook `kaoid_private.send_sms_hook_r19`. An OTP to a number other than the current one needs a 10-minute intent from `begin_phone_change_r19`, which only Kao ID's own session (no `client_id`) may create; otherwise the hook returns 403 and Auth rolls the change back. The member also gets a "phone changed" email.
+- [ ] SMS delivery: the hook ends with `503 sms_delivery_not_configured`. Before phone OTP goes live, replace that return with a real provider call (HTTP hook / Edge Function) keeping the same intent check.
 - [ ] Production: real HTTPS redirect URIs, MFA policy on for registry changes.
 
 ## 6. Checks

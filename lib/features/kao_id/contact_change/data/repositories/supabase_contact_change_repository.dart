@@ -83,6 +83,10 @@ class SupabaseContactChangeRepository implements ContactChangeRepository {
         await proof.auth.mfa.challengeAndVerify(factorId: factorId!, code: code);
       }
       await _user(owner);
+      if (kind == ContactKind.phone) {
+        // The SMS hook only sends a phone-change OTP that Kao ID announced first.
+        await proof.rpc<dynamic>('begin_phone_change_r19', params: {'p_phone': target});
+      }
       if (resend) {
         await proof.auth.resend(
           type: kind == ContactKind.email ? OtpType.emailChange : OtpType.phoneChange,

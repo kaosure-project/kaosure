@@ -6,6 +6,7 @@ class QuickActionCard extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.onTap,
+    this.subtitle,
     this.badge,
     this.enabled = true,
   });
@@ -13,56 +14,51 @@ class QuickActionCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final VoidCallback onTap;
+  final String? subtitle;
   final Widget? badge;
   final bool enabled;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    return Card(
-      elevation: 0,
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: InkWell(
-        onTap: enabled ? onTap : null,
-        child: AspectRatio(
-          aspectRatio: 1,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Stack(
-              children: [
-                if (badge != null)
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: badge!,
+    return Semantics(
+      button: true,
+      enabled: enabled,
+      child: Card(
+        elevation: 0,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: InkWell(
+          onTap: enabled ? onTap : null,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 140),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (badge != null) ...[
+                    Align(alignment: Alignment.topRight, child: badge!),
+                    const SizedBox(height: 8),
+                  ],
+                  Icon(icon, size: 32),
+                  const SizedBox(height: 12),
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.bodyMedium,
                   ),
-
-                Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        icon,
-                        size: 32,
-                      ),
-
-                      const SizedBox(height: 12),
-
-                      Text(
-                        title,
-                        textAlign: TextAlign.center,
-                        style: theme.textTheme.bodyMedium,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                  if (subtitle != null) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle!,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ],
+                ],
+              ),
             ),
           ),
         ),

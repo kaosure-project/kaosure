@@ -136,10 +136,13 @@ final class PrimaryButton extends StatelessWidget {
                       width: AppSpacing.sm,
                     ),
                   ],
-                  Text(
-                    text,
-                    style: textStyle.copyWith(
-                      color: foregroundColor ?? AppColors.onPrimary,
+                  Flexible(
+                    child: Text(
+                      text,
+                      textAlign: TextAlign.center,
+                      style: textStyle.copyWith(
+                        color: foregroundColor ?? AppColors.onPrimary,
+                      ),
                     ),
                   ),
                 ],
@@ -149,8 +152,10 @@ final class PrimaryButton extends StatelessWidget {
 
     return SizedBox(
       width: expand ? double.infinity : null,
-      height: height,
-      child: child,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: height),
+        child: child,
+      ),
     );
   }
 }

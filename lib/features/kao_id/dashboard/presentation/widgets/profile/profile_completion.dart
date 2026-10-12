@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
 import '../../../../account/domain/entities/profile.dart';
 
@@ -55,7 +56,7 @@ final class ProfileCompletion extends StatelessWidget {
         const SizedBox(height: 8),
 
         Text(
-          'Account Completion ${(100 * _progress).round()}%',
+          AppLocalizations.of(context).accountCompletion((100 * _progress).round()),
           style: theme.textTheme.bodySmall,
         ),
       ],

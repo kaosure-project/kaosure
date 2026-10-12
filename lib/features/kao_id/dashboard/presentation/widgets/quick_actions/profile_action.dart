@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../application/providers/dashboard_provider.dart';
@@ -15,9 +16,11 @@ final class ProfileAction extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
+    final l10n = AppLocalizations.of(context);
+
     return QuickActionCard(
       icon: Icons.person_outline,
-      title: 'โปรไฟล์',
+      title: l10n.profile,
       onTap: () async {
         await Navigator.push(
           context,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
 import 'auction_tile.dart';
 import 'kaopay_tile.dart';
@@ -12,6 +13,8 @@ final class DashboardServicesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -25,7 +28,7 @@ final class DashboardServicesSection extends StatelessWidget {
               8,
             ),
             child: Text(
-              'บริการ',
+              l10n.services,
               style: Theme.of(context)
                   .textTheme
                   .titleLarge,

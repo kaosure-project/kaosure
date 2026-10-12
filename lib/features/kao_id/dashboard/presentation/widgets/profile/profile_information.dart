@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
 import '../../../../account/domain/entities/profile.dart';
 import 'profile_status_chip.dart';
@@ -17,12 +18,12 @@ final class ProfileInformation extends StatelessWidget {
 
     final displayName =
         (profile.displayName ?? '').trim().isEmpty
-            ? 'Kao ID User'
+            ? AppLocalizations.of(context).kaoIdUser
             : profile.displayName!;
 
     final username =
         (profile.username ?? '').trim().isEmpty
-            ? '@ยังไม่ได้ตั้ง Username'
+            ? AppLocalizations.of(context).usernameNotSet
             : '@${profile.username}';
 
     return Column(
@@ -39,6 +40,7 @@ final class ProfileInformation extends StatelessWidget {
 
         Text(
           username,
+          textAlign: TextAlign.center,
           style: theme.textTheme.bodyMedium?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
 import '../../../../account/domain/entities/profile.dart';
 
@@ -15,22 +16,22 @@ final class ProfileStatusChip extends StatelessWidget {
       profile.accountLevel == 'business' ||
       profile.accountLevel == 'organization';
 
-  String get _verificationText {
+  String _verificationText(BuildContext context) {
     switch (profile.accountLevel) {
       case 'verified':
-        return 'ยืนยันตัวตนแล้ว';
+        return AppLocalizations.of(context).accountVerified;
 
       case 'business':
-        return 'บัญชีธุรกิจ';
+        return AppLocalizations.of(context).businessAccount;
 
       case 'organization':
-        return 'บัญชีองค์กร';
+        return AppLocalizations.of(context).organizationAccount;
 
       case 'registered':
-        return 'บัญชีลงทะเบียน';
+        return AppLocalizations.of(context).accountRegistered;
 
       default:
-        return 'บัญชีมาตรฐาน';
+        return AppLocalizations.of(context).accountStandard;
     }
   }
 
@@ -47,7 +48,7 @@ final class ProfileStatusChip extends StatelessWidget {
             : Colors.orange,
       ),
       label: Text(
-        _verificationText,
+        _verificationText(context),
       ),
     );
   }

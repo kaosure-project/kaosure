@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
 import 'devices_tile.dart';
 import 'login_history_tile.dart';
@@ -12,6 +13,8 @@ final class DashboardSecuritySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -25,7 +28,7 @@ final class DashboardSecuritySection extends StatelessWidget {
               8,
             ),
             child: Text(
-              'ความปลอดภัย',
+              l10n.security,
               style: Theme.of(context)
                   .textTheme
                   .titleLarge,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
-class DashboardAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
+class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DashboardAppBar({
     super.key,
     this.onNotificationPressed,
@@ -16,28 +16,25 @@ class DashboardAppBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return AppBar(
       automaticallyImplyLeading: true,
       centerTitle: false,
       elevation: 0,
-      title: const Text(
-        'เก๋าไอดี',
-      ),
+      title: Text(l10n.kaoId),
       actions: [
-        IconButton(
-          tooltip: 'Notifications',
-          icon: const Icon(
-            Icons.notifications_outlined,
+        if (onNotificationPressed != null)
+          IconButton(
+            tooltip: l10n.notifications,
+            icon: const Icon(Icons.notifications_outlined),
+            onPressed: onNotificationPressed,
           ),
-          onPressed: onNotificationPressed,
-        ),
-        IconButton(
-          tooltip: 'Settings',
-          icon: const Icon(
-            Icons.settings_outlined,
+        if (onSettingsPressed != null)
+          IconButton(
+            tooltip: l10n.settings,
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: onSettingsPressed,
           ),
-          onPressed: onSettingsPressed,
-        ),
       ],
     );
   }

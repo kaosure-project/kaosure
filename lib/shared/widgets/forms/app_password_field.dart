@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
 import 'app_text_field.dart';
 
@@ -12,8 +13,8 @@ class AppPasswordField extends StatefulWidget {
     this.validator,
     this.enabled = true,
     this.readOnly = false,
-    this.label = 'Password',
-    this.hint = 'Enter your password',
+    this.label,
+    this.hint,
   });
 
   final TextEditingController? controller;
@@ -27,8 +28,8 @@ class AppPasswordField extends StatefulWidget {
   final bool enabled;
   final bool readOnly;
 
-  final String label;
-  final String hint;
+  final String? label;
+  final String? hint;
 
   @override
   State<AppPasswordField> createState() => _AppPasswordFieldState();
@@ -43,8 +44,8 @@ class _AppPasswordFieldState extends State<AppPasswordField> {
       controller: widget.controller,
       focusNode: widget.focusNode,
 
-      label: widget.label,
-      hint: widget.hint,
+      label: widget.label ?? AppLocalizations.of(context).password,
+      hint: widget.hint ?? AppLocalizations.of(context).authPasswordHint,
 
       obscureText: _obscureText,
 
@@ -57,6 +58,9 @@ class _AppPasswordFieldState extends State<AppPasswordField> {
       prefixIcon: const Icon(Icons.lock_outline),
 
       suffixIcon: IconButton(
+        tooltip: _obscureText
+            ? AppLocalizations.of(context).authShowPassword
+            : AppLocalizations.of(context).authHidePassword,
         onPressed: () {
           setState(() {
             _obscureText = !_obscureText;

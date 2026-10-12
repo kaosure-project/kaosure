@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
+import '../../../../router/kao_id_routes.dart';
 import 'dashboard_menu_tile.dart';
 
 final class PasswordTile extends StatelessWidget {
@@ -9,12 +11,16 @@ final class PasswordTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return DashboardMenuTile(
       icon: Icons.lock_outline,
-      title: 'Password',
-      subtitle: 'Change your password',
+      title: l10n.password,
+      subtitle: l10n.passwordChangeDescription,
       onTap: () {
-        // TODO: Navigate to Password Screen
+        Navigator.of(context).pushNamed(
+          KaoIdRoutes.changePassword,
+        );
       },
     );
   }

@@ -1,42 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
 import '../../../../account/domain/entities/profile.dart';
 import 'kao_code_action.dart';
-import 'kaopay_action.dart';
 import 'profile_action.dart';
+import 'quick_actions_layout.dart';
 import 'verify_action.dart';
 
 class DashboardQuickActions extends StatelessWidget {
-  const DashboardQuickActions({
-    super.key,
-    required this.profile,
-  });
+  const DashboardQuickActions({super.key, required this.profile});
 
   final Profile profile;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'เมนูลัด',
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-
+        Text(l10n.quickActions, style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: 16),
-
-        GridView.count(
-          crossAxisCount: 4,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
-          childAspectRatio: 0.9,
-          children: const [
+        const QuickActionsLayout(
+          children: [
             ProfileAction(),
             VerifyAction(),
-            KaoPayAction(),
             KaoCodeAction(),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
 import 'app_text_field.dart';
 
@@ -12,8 +13,8 @@ class AppEmailField extends StatelessWidget {
     this.validator,
     this.enabled = true,
     this.readOnly = false,
-    this.label = 'อีเมล',
-    this.hint = 'กรอกอีเมล',
+    this.label,
+    this.hint,
   });
 
   final TextEditingController? controller;
@@ -27,8 +28,8 @@ class AppEmailField extends StatelessWidget {
   final bool enabled;
   final bool readOnly;
 
-  final String label;
-  final String hint;
+  final String? label;
+  final String? hint;
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +37,8 @@ class AppEmailField extends StatelessWidget {
       controller: controller,
       focusNode: focusNode,
 
-      label: label,
-      hint: hint,
+      label: label ?? AppLocalizations.of(context).authEmail,
+      hint: hint ?? AppLocalizations.of(context).authEmailHint,
 
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,

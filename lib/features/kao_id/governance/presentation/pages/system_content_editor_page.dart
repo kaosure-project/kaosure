@@ -35,12 +35,16 @@ class _SystemContentEditorPageState extends ConsumerState<SystemContentEditorPag
   late String _app = _initial?.app ?? widget.app ?? SystemContentItem.apps.first;
   late String _category = _initial?.category ?? SystemContentItem.categories.first;
   late bool _active = _initial?.isActive ?? true;
+  late String _role = SystemContentItem.presetRoles.contains(_initial?.presetRole)
+      ? _initial!.presetRole!
+      : SystemContentItem.presetRoles.first;
   String? _owner;
   Object? _error;
   bool _busy = false;
 
   bool get _same => mounted && _owner != null && ref.read(authProvider).asData?.value?.id == _owner;
   bool get _editing => _initial?.id != null;
+  bool get _preset => _category == 'preset';
 
   @override
   void initState() {
@@ -64,8 +68,11 @@ class _SystemContentEditorPageState extends ConsumerState<SystemContentEditorPag
   Future<void> _save() async {
     if (!_same || _busy) return;
     final icon = _icon.text.trim();
-    final meta = {...?_initial?.meta}..remove('icon');
+    final meta = {...?_initial?.meta}
+      ..remove('icon')
+      ..remove('role');
     if (icon.isNotEmpty) meta['icon'] = icon;
+    if (_preset) meta['role'] = _role;
     final item = SystemContentItem(
       id: _initial?.id,
       key: _key.text.trim(),
@@ -170,16 +177,21 @@ class _SystemContentEditorPageState extends ConsumerState<SystemContentEditorPag
                         children: [
                           SizedBox(
                             width: 260,
-                            child: DropdownButtonFormField<String>(
-                              key: const ValueKey('content-app'),
-                              initialValue: _app,
-                              isExpanded: true,
-                              decoration: field(l.contentsApp),
-                              items: [
-                                for (final app in {...SystemContentItem.apps, _app})
-                                  DropdownMenuItem(value: app, child: Text(contentAppText(l, app))),
-                              ],
-                              onChanged: _busy || _editing ? null : (value) => setState(() => _app = value ?? _app),
+                            child: KeyedSubtree(
+                              key: ValueKey('content-app-$_app'),
+                              child: DropdownButtonFormField<String>(
+                                key: const ValueKey('content-app'),
+                                initialValue: _app,
+                                isExpanded: true,
+                                decoration: field(l.contentsApp),
+                                items: [
+                                  for (final app in {...SystemContentItem.apps, _app})
+                                    DropdownMenuItem(value: app, child: Text(contentAppText(l, app))),
+                                ],
+                                onChanged: _busy || _editing || _preset
+                                    ? null
+                                    : (value) => setState(() => _app = value ?? _app),
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -193,9 +205,29 @@ class _SystemContentEditorPageState extends ConsumerState<SystemContentEditorPag
                                 for (final category in SystemContentItem.categories)
                                   DropdownMenuItem(value: category, child: Text(contentCategoryText(l, category))),
                               ],
-                              onChanged: _busy ? null : (value) => setState(() => _category = value ?? _category),
+                              onChanged: _busy
+                                  ? null
+                                  : (value) => setState(() {
+                                      _category = value ?? _category;
+                                      if (_preset && !_editing) _app = SystemContentItem.presetApp;
+                                    }),
                             ),
                           ),
+                          if (_preset)
+                            SizedBox(
+                              width: 260,
+                              child: DropdownButtonFormField<String>(
+                                key: const ValueKey('content-preset-role'),
+                                initialValue: _role,
+                                isExpanded: true,
+                                decoration: field(l.contentsPresetRole),
+                                items: [
+                                  for (final role in SystemContentItem.presetRoles)
+                                    DropdownMenuItem(value: role, child: Text(contentPresetRoleText(l, role))),
+                                ],
+                                onChanged: _busy ? null : (value) => setState(() => _role = value ?? _role),
+                              ),
+                            ),
                         ],
                       ),
                       gap(),
@@ -215,9 +247,14 @@ class _SystemContentEditorPageState extends ConsumerState<SystemContentEditorPag
                         minLines: 4,
                         maxLines: 14,
                         onChanged: (_) => setState(() {}),
+                        maxLength: _preset ? 300 : null,
                         decoration: field(
                           l.contentsBodyTh,
-                          helper: _category == 'notice' ? l.contentsPlaceholderHelp : l.contentsBodyHelp,
+                          helper: switch (_category) {
+                            'notice' => l.contentsPlaceholderHelp,
+                            'preset' => l.contentsPresetHelp,
+                            _ => l.contentsBodyHelp,
+                          },
                         ),
                       ),
                       gap(),
@@ -235,6 +272,7 @@ class _SystemContentEditorPageState extends ConsumerState<SystemContentEditorPag
                         enabled: !_busy,
                         minLines: 4,
                         maxLines: 14,
+                        maxLength: _preset ? 300 : null,
                         decoration: field(l.contentsBodyEn),
                       ),
                       gap(),

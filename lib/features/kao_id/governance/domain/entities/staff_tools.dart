@@ -1,12 +1,20 @@
 /// Admin Hub tools the signed-in staff member may open, from `staff_tools_r24`.
 /// Company owners and Admin / Super Admin roles with the permission get them.
 class StaffTools {
-  const StaffTools({this.withdrawals = false, this.contents = false, this.pendingWithdrawals = 0});
+  const StaffTools({
+    this.withdrawals = false,
+    this.contents = false,
+    this.reviews = false,
+    this.pendingWithdrawals = 0,
+    this.pendingReviewReports = 0,
+  });
 
   factory StaffTools.fromJson(Map<String, dynamic> json) => StaffTools(
     withdrawals: json['withdrawals'] == true,
     contents: json['contents'] == true,
+    reviews: json['reviews'] == true,
     pendingWithdrawals: (json['pending_withdrawals'] as num?)?.toInt() ?? 0,
+    pendingReviewReports: (json['pending_review_reports'] as num?)?.toInt() ?? 0,
   );
 
   static const none = StaffTools();
@@ -16,7 +24,13 @@ class StaffTools {
 
   /// `content.system.manage`.
   final bool contents;
+
+  /// `marketplace.reviews.moderate`.
+  final bool reviews;
   final int pendingWithdrawals;
 
-  bool get any => withdrawals || contents;
+  /// Reviews with at least one waiting report.
+  final int pendingReviewReports;
+
+  bool get any => withdrawals || contents || reviews;
 }

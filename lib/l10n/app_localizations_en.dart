@@ -3745,4 +3745,171 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contentsErrorInvalid => 'Check the type, order and icon name.';
+
+  @override
+  String get adminGroupMarketplace => 'Marketplace';
+
+  @override
+  String get moderationTitle => 'Review moderation';
+
+  @override
+  String get moderationHubHelp =>
+      'Check reported Secondhand reviews and hide or show them';
+
+  @override
+  String get moderationHelp =>
+      'Reviews can\'t be edited or deleted. Hide a review that breaks the rules: members no longer see it and it no longer counts toward ratings. The reviewer and the reporters are notified.';
+
+  @override
+  String get moderationFilterReported => 'Reported';
+
+  @override
+  String get moderationFilterHidden => 'Hidden';
+
+  @override
+  String get moderationFilterRecent => 'All reviews';
+
+  @override
+  String get moderationGood => 'Good';
+
+  @override
+  String get moderationBad => 'Bad';
+
+  @override
+  String get moderationHiddenBadge => 'Hidden from members';
+
+  @override
+  String get moderationVisible => 'Shown to members';
+
+  @override
+  String moderationPendingReports(int count) {
+    return '$count reports waiting';
+  }
+
+  @override
+  String get moderationVerdict => 'Rating';
+
+  @override
+  String get moderationReviewer => 'Written by';
+
+  @override
+  String get moderationReviewee => 'About';
+
+  @override
+  String get moderationRoleBuyer => 'buyer';
+
+  @override
+  String get moderationRoleSeller => 'seller';
+
+  @override
+  String get moderationOrder => 'Order';
+
+  @override
+  String get moderationWrittenAt => 'Written on';
+
+  @override
+  String get moderationPreset => 'Ready-made message';
+
+  @override
+  String get moderationComment => 'Message';
+
+  @override
+  String get moderationVisibility => 'Visibility';
+
+  @override
+  String get moderationHiddenBy => 'Hidden by';
+
+  @override
+  String get moderationHiddenReason => 'Reason for hiding';
+
+  @override
+  String get moderationReports => 'Reports';
+
+  @override
+  String get moderationNoReports => 'No reports on this review';
+
+  @override
+  String get moderationReportPending => 'Waiting';
+
+  @override
+  String get moderationReportUpheld => 'Upheld, review hidden';
+
+  @override
+  String get moderationReportDismissed => 'Dismissed, review kept';
+
+  @override
+  String get moderationReasonAbusive => 'Rude or abusive';
+
+  @override
+  String get moderationReasonPersonalInfo => 'Shares personal information';
+
+  @override
+  String get moderationReasonFalseInfo => 'Not true';
+
+  @override
+  String get moderationReasonSpam => 'Spam or advertising';
+
+  @override
+  String get moderationReasonOther => 'Other';
+
+  @override
+  String get moderationNote => 'Note to the reviewer';
+
+  @override
+  String get moderationNoteHelp =>
+      'Required to hide (3 to 500 characters). The reviewer sees it in their notification.';
+
+  @override
+  String get moderationHide => 'Hide review';
+
+  @override
+  String get moderationKeep => 'Keep showing';
+
+  @override
+  String get moderationShow => 'Show again';
+
+  @override
+  String get moderationHideConfirm =>
+      'Hide this review from members? Waiting reports are marked as upheld.';
+
+  @override
+  String get moderationKeepConfirm =>
+      'Keep this review shown? Waiting reports are dismissed.';
+
+  @override
+  String get moderationShowConfirm => 'Show this review to members again?';
+
+  @override
+  String get moderationDone =>
+      'Saved. The reviewer and the reporters have been notified.';
+
+  @override
+  String get moderationErrorOwn =>
+      'You can\'t moderate a review you wrote or received.';
+
+  @override
+  String get moderationErrorNote =>
+      'Write a note of at least 3 characters to hide a review.';
+
+  @override
+  String get moderationErrorGone => 'This review no longer exists.';
+
+  @override
+  String get contentsCategoryPreset => 'Review preset';
+
+  @override
+  String get contentsPresetRole => 'Shown in the form of';
+
+  @override
+  String get contentsPresetRoleBuyer => 'Buyers rating the seller';
+
+  @override
+  String get contentsPresetRoleSeller => 'Sellers rating the buyer';
+
+  @override
+  String get contentsPresetRoleAny => 'Both sides';
+
+  @override
+  String get contentsPresetHelp =>
+      'Title is the chip label; the text is the sentence saved with the review (up to 300 characters). Presets are only offered with \"Good\".';
 }

@@ -3456,6 +3456,166 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get contentsErrorInvalid => '请检查类型、顺序和图标名称。';
+
+  @override
+  String get adminGroupMarketplace => '交易市场';
+
+  @override
+  String get moderationTitle => '评价管理';
+
+  @override
+  String get moderationHubHelp => '检查被举报的 Secondhand 评价，并隐藏或显示';
+
+  @override
+  String get moderationHelp =>
+      '评价无法编辑或删除。请隐藏违反规则的评价：会员将看不到，也不计入评分。系统会通知评价者和举报人。';
+
+  @override
+  String get moderationFilterReported => '被举报';
+
+  @override
+  String get moderationFilterHidden => '已隐藏';
+
+  @override
+  String get moderationFilterRecent => '全部评价';
+
+  @override
+  String get moderationGood => '好评';
+
+  @override
+  String get moderationBad => '差评';
+
+  @override
+  String get moderationHiddenBadge => '对会员隐藏';
+
+  @override
+  String get moderationVisible => '对会员显示';
+
+  @override
+  String moderationPendingReports(int count) {
+    return '$count 条举报待处理';
+  }
+
+  @override
+  String get moderationVerdict => '评价结果';
+
+  @override
+  String get moderationReviewer => '评价者';
+
+  @override
+  String get moderationReviewee => '被评价者';
+
+  @override
+  String get moderationRoleBuyer => '买家';
+
+  @override
+  String get moderationRoleSeller => '卖家';
+
+  @override
+  String get moderationOrder => '订单';
+
+  @override
+  String get moderationWrittenAt => '评价日期';
+
+  @override
+  String get moderationPreset => '预设文字';
+
+  @override
+  String get moderationComment => '留言';
+
+  @override
+  String get moderationVisibility => '显示状态';
+
+  @override
+  String get moderationHiddenBy => '隐藏人';
+
+  @override
+  String get moderationHiddenReason => '隐藏原因';
+
+  @override
+  String get moderationReports => '举报';
+
+  @override
+  String get moderationNoReports => '此评价暂无举报';
+
+  @override
+  String get moderationReportPending => '待处理';
+
+  @override
+  String get moderationReportUpheld => '已受理，评价已隐藏';
+
+  @override
+  String get moderationReportDismissed => '已驳回，评价继续显示';
+
+  @override
+  String get moderationReasonAbusive => '粗鲁或辱骂';
+
+  @override
+  String get moderationReasonPersonalInfo => '泄露个人信息';
+
+  @override
+  String get moderationReasonFalseInfo => '内容不实';
+
+  @override
+  String get moderationReasonSpam => '垃圾信息或广告';
+
+  @override
+  String get moderationReasonOther => '其他';
+
+  @override
+  String get moderationNote => '给评价者的备注';
+
+  @override
+  String get moderationNoteHelp => '隐藏时必填（3–500 个字符），评价者会在通知中看到。';
+
+  @override
+  String get moderationHide => '隐藏评价';
+
+  @override
+  String get moderationKeep => '继续显示';
+
+  @override
+  String get moderationShow => '重新显示';
+
+  @override
+  String get moderationHideConfirm => '要对会员隐藏此评价吗？待处理的举报将记录为已受理。';
+
+  @override
+  String get moderationKeepConfirm => '继续显示此评价吗？待处理的举报将被驳回。';
+
+  @override
+  String get moderationShowConfirm => '要重新向会员显示此评价吗？';
+
+  @override
+  String get moderationDone => '已保存，已通知评价者和举报人。';
+
+  @override
+  String get moderationErrorOwn => '不能处理自己写的或关于自己的评价。';
+
+  @override
+  String get moderationErrorNote => '隐藏评价前请填写至少 3 个字符的备注。';
+
+  @override
+  String get moderationErrorGone => '此评价已不存在。';
+
+  @override
+  String get contentsCategoryPreset => '评价预设文字';
+
+  @override
+  String get contentsPresetRole => '显示在以下表单';
+
+  @override
+  String get contentsPresetRoleBuyer => '买家评价卖家';
+
+  @override
+  String get contentsPresetRoleSeller => '卖家评价买家';
+
+  @override
+  String get contentsPresetRoleAny => '双方';
+
+  @override
+  String get contentsPresetHelp =>
+      '标题是按钮名称，正文是随评价保存的句子（最多 300 个字符）。仅在选择\"好评\"时显示。';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -6910,4 +7070,164 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get contentsErrorInvalid => '请检查类型、顺序和图标名称。';
+
+  @override
+  String get adminGroupMarketplace => '交易市场';
+
+  @override
+  String get moderationTitle => '评价管理';
+
+  @override
+  String get moderationHubHelp => '检查被举报的 Secondhand 评价，并隐藏或显示';
+
+  @override
+  String get moderationHelp =>
+      '评价无法编辑或删除。请隐藏违反规则的评价：会员将看不到，也不计入评分。系统会通知评价者和举报人。';
+
+  @override
+  String get moderationFilterReported => '被举报';
+
+  @override
+  String get moderationFilterHidden => '已隐藏';
+
+  @override
+  String get moderationFilterRecent => '全部评价';
+
+  @override
+  String get moderationGood => '好评';
+
+  @override
+  String get moderationBad => '差评';
+
+  @override
+  String get moderationHiddenBadge => '对会员隐藏';
+
+  @override
+  String get moderationVisible => '对会员显示';
+
+  @override
+  String moderationPendingReports(int count) {
+    return '$count 条举报待处理';
+  }
+
+  @override
+  String get moderationVerdict => '评价结果';
+
+  @override
+  String get moderationReviewer => '评价者';
+
+  @override
+  String get moderationReviewee => '被评价者';
+
+  @override
+  String get moderationRoleBuyer => '买家';
+
+  @override
+  String get moderationRoleSeller => '卖家';
+
+  @override
+  String get moderationOrder => '订单';
+
+  @override
+  String get moderationWrittenAt => '评价日期';
+
+  @override
+  String get moderationPreset => '预设文字';
+
+  @override
+  String get moderationComment => '留言';
+
+  @override
+  String get moderationVisibility => '显示状态';
+
+  @override
+  String get moderationHiddenBy => '隐藏人';
+
+  @override
+  String get moderationHiddenReason => '隐藏原因';
+
+  @override
+  String get moderationReports => '举报';
+
+  @override
+  String get moderationNoReports => '此评价暂无举报';
+
+  @override
+  String get moderationReportPending => '待处理';
+
+  @override
+  String get moderationReportUpheld => '已受理，评价已隐藏';
+
+  @override
+  String get moderationReportDismissed => '已驳回，评价继续显示';
+
+  @override
+  String get moderationReasonAbusive => '粗鲁或辱骂';
+
+  @override
+  String get moderationReasonPersonalInfo => '泄露个人信息';
+
+  @override
+  String get moderationReasonFalseInfo => '内容不实';
+
+  @override
+  String get moderationReasonSpam => '垃圾信息或广告';
+
+  @override
+  String get moderationReasonOther => '其他';
+
+  @override
+  String get moderationNote => '给评价者的备注';
+
+  @override
+  String get moderationNoteHelp => '隐藏时必填（3–500 个字符），评价者会在通知中看到。';
+
+  @override
+  String get moderationHide => '隐藏评价';
+
+  @override
+  String get moderationKeep => '继续显示';
+
+  @override
+  String get moderationShow => '重新显示';
+
+  @override
+  String get moderationHideConfirm => '要对会员隐藏此评价吗？待处理的举报将记录为已受理。';
+
+  @override
+  String get moderationKeepConfirm => '继续显示此评价吗？待处理的举报将被驳回。';
+
+  @override
+  String get moderationShowConfirm => '要重新向会员显示此评价吗？';
+
+  @override
+  String get moderationDone => '已保存，已通知评价者和举报人。';
+
+  @override
+  String get moderationErrorOwn => '不能处理自己写的或关于自己的评价。';
+
+  @override
+  String get moderationErrorNote => '隐藏评价前请填写至少 3 个字符的备注。';
+
+  @override
+  String get moderationErrorGone => '此评价已不存在。';
+
+  @override
+  String get contentsCategoryPreset => '评价预设文字';
+
+  @override
+  String get contentsPresetRole => '显示在以下表单';
+
+  @override
+  String get contentsPresetRoleBuyer => '买家评价卖家';
+
+  @override
+  String get contentsPresetRoleSeller => '卖家评价买家';
+
+  @override
+  String get contentsPresetRoleAny => '双方';
+
+  @override
+  String get contentsPresetHelp =>
+      '标题是按钮名称，正文是随评价保存的句子（最多 300 个字符）。仅在选择\"好评\"时显示。';
 }

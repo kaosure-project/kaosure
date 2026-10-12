@@ -3704,4 +3704,171 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get contentsErrorInvalid => 'ตรวจประเภท ลำดับ และชื่อไอคอน';
+
+  @override
+  String get adminGroupMarketplace => 'ตลาดซื้อขาย';
+
+  @override
+  String get moderationTitle => 'จัดการรีวิว';
+
+  @override
+  String get moderationHubHelp =>
+      'ตรวจรีวิว Secondhand ที่ถูกรายงาน แล้วซ่อนหรือแสดง';
+
+  @override
+  String get moderationHelp =>
+      'รีวิวแก้ไขหรือลบไม่ได้ ให้ซ่อนรีวิวที่ผิดกติกา สมาชิกจะไม่เห็นรีวิวนั้นและไม่นำไปคิดคะแนน ระบบจะแจ้งผู้เขียนรีวิวและผู้รายงาน';
+
+  @override
+  String get moderationFilterReported => 'ถูกรายงาน';
+
+  @override
+  String get moderationFilterHidden => 'ซ่อนอยู่';
+
+  @override
+  String get moderationFilterRecent => 'รีวิวทั้งหมด';
+
+  @override
+  String get moderationGood => 'ดี';
+
+  @override
+  String get moderationBad => 'ไม่ดี';
+
+  @override
+  String get moderationHiddenBadge => 'ซ่อนจากสมาชิก';
+
+  @override
+  String get moderationVisible => 'แสดงต่อสมาชิก';
+
+  @override
+  String moderationPendingReports(int count) {
+    return 'รายงานรอตรวจ $count รายการ';
+  }
+
+  @override
+  String get moderationVerdict => 'การประเมิน';
+
+  @override
+  String get moderationReviewer => 'ผู้เขียน';
+
+  @override
+  String get moderationReviewee => 'ผู้ถูกประเมิน';
+
+  @override
+  String get moderationRoleBuyer => 'ผู้ซื้อ';
+
+  @override
+  String get moderationRoleSeller => 'ผู้ขาย';
+
+  @override
+  String get moderationOrder => 'คำสั่งซื้อ';
+
+  @override
+  String get moderationWrittenAt => 'วันที่เขียน';
+
+  @override
+  String get moderationPreset => 'ข้อความสำเร็จรูป';
+
+  @override
+  String get moderationComment => 'ข้อความ';
+
+  @override
+  String get moderationVisibility => 'การแสดงผล';
+
+  @override
+  String get moderationHiddenBy => 'ซ่อนโดย';
+
+  @override
+  String get moderationHiddenReason => 'เหตุผลที่ซ่อน';
+
+  @override
+  String get moderationReports => 'รายงาน';
+
+  @override
+  String get moderationNoReports => 'ยังไม่มีรายงานในรีวิวนี้';
+
+  @override
+  String get moderationReportPending => 'รอตรวจ';
+
+  @override
+  String get moderationReportUpheld => 'รับเรื่อง ซ่อนรีวิวแล้ว';
+
+  @override
+  String get moderationReportDismissed => 'ไม่รับเรื่อง ยังแสดงรีวิว';
+
+  @override
+  String get moderationReasonAbusive => 'ถ้อยคำไม่สุภาพหรือหยาบคาย';
+
+  @override
+  String get moderationReasonPersonalInfo => 'เปิดเผยข้อมูลส่วนตัว';
+
+  @override
+  String get moderationReasonFalseInfo => 'ข้อมูลไม่เป็นความจริง';
+
+  @override
+  String get moderationReasonSpam => 'สแปมหรือโฆษณา';
+
+  @override
+  String get moderationReasonOther => 'อื่น ๆ';
+
+  @override
+  String get moderationNote => 'หมายเหตุถึงผู้เขียนรีวิว';
+
+  @override
+  String get moderationNoteHelp =>
+      'จำเป็นเมื่อซ่อน (3–500 ตัวอักษร) ผู้เขียนรีวิวจะเห็นในการแจ้งเตือน';
+
+  @override
+  String get moderationHide => 'ซ่อนรีวิว';
+
+  @override
+  String get moderationKeep => 'แสดงต่อ';
+
+  @override
+  String get moderationShow => 'แสดงอีกครั้ง';
+
+  @override
+  String get moderationHideConfirm =>
+      'ซ่อนรีวิวนี้จากสมาชิกหรือไม่? รายงานที่รอตรวจจะถูกบันทึกว่ารับเรื่อง';
+
+  @override
+  String get moderationKeepConfirm =>
+      'แสดงรีวิวนี้ต่อหรือไม่? รายงานที่รอตรวจจะถูกบันทึกว่าไม่รับเรื่อง';
+
+  @override
+  String get moderationShowConfirm => 'แสดงรีวิวนี้ต่อสมาชิกอีกครั้งหรือไม่?';
+
+  @override
+  String get moderationDone =>
+      'บันทึกแล้ว ระบบแจ้งผู้เขียนรีวิวและผู้รายงานแล้ว';
+
+  @override
+  String get moderationErrorOwn =>
+      'จัดการรีวิวที่คุณเขียนเองหรือรีวิวที่เขียนถึงคุณไม่ได้';
+
+  @override
+  String get moderationErrorNote =>
+      'เขียนหมายเหตุอย่างน้อย 3 ตัวอักษรก่อนซ่อนรีวิว';
+
+  @override
+  String get moderationErrorGone => 'ไม่พบรีวิวนี้แล้ว';
+
+  @override
+  String get contentsCategoryPreset => 'ข้อความรีวิวสำเร็จรูป';
+
+  @override
+  String get contentsPresetRole => 'แสดงในฟอร์มของ';
+
+  @override
+  String get contentsPresetRoleBuyer => 'ผู้ซื้อประเมินผู้ขาย';
+
+  @override
+  String get contentsPresetRoleSeller => 'ผู้ขายประเมินผู้ซื้อ';
+
+  @override
+  String get contentsPresetRoleAny => 'ทั้งสองฝ่าย';
+
+  @override
+  String get contentsPresetHelp =>
+      'หัวข้อคือชื่อปุ่ม ส่วนเนื้อหาคือประโยคที่บันทึกพร้อมรีวิว (ไม่เกิน 300 ตัวอักษร) แสดงเฉพาะเมื่อเลือก \"ดี\"';
 }

@@ -3662,4 +3662,170 @@ class AppLocalizationsLo extends AppLocalizations {
 
   @override
   String get contentsErrorInvalid => 'ກວດປະເພດ ລຳດັບ ແລະ ຊື່ໄອຄອນ.';
+
+  @override
+  String get adminGroupMarketplace => 'ຕະຫຼາດຊື້ຂາຍ';
+
+  @override
+  String get moderationTitle => 'ຈັດການລີວິວ';
+
+  @override
+  String get moderationHubHelp =>
+      'ກວດລີວິວ Secondhand ທີ່ຖືກລາຍງານ ແລ້ວເຊື່ອງ ຫຼື ສະແດງ';
+
+  @override
+  String get moderationHelp =>
+      'ລີວິວແກ້ໄຂ ຫຼື ລຶບບໍ່ໄດ້. ໃຫ້ເຊື່ອງລີວິວທີ່ຜິດກົດ: ສະມາຊິກຈະບໍ່ເຫັນ ແລະ ບໍ່ນຳໄປຄິດຄະແນນ. ລະບົບຈະແຈ້ງຜູ້ຂຽນ ແລະ ຜູ້ລາຍງານ.';
+
+  @override
+  String get moderationFilterReported => 'ຖືກລາຍງານ';
+
+  @override
+  String get moderationFilterHidden => 'ເຊື່ອງຢູ່';
+
+  @override
+  String get moderationFilterRecent => 'ລີວິວທັງໝົດ';
+
+  @override
+  String get moderationGood => 'ດີ';
+
+  @override
+  String get moderationBad => 'ບໍ່ດີ';
+
+  @override
+  String get moderationHiddenBadge => 'ເຊື່ອງຈາກສະມາຊິກ';
+
+  @override
+  String get moderationVisible => 'ສະແດງຕໍ່ສະມາຊິກ';
+
+  @override
+  String moderationPendingReports(int count) {
+    return 'ລາຍງານລໍຖ້າກວດ $count ລາຍການ';
+  }
+
+  @override
+  String get moderationVerdict => 'ການປະເມີນ';
+
+  @override
+  String get moderationReviewer => 'ຜູ້ຂຽນ';
+
+  @override
+  String get moderationReviewee => 'ຜູ້ຖືກປະເມີນ';
+
+  @override
+  String get moderationRoleBuyer => 'ຜູ້ຊື້';
+
+  @override
+  String get moderationRoleSeller => 'ຜູ້ຂາຍ';
+
+  @override
+  String get moderationOrder => 'ຄຳສັ່ງຊື້';
+
+  @override
+  String get moderationWrittenAt => 'ວັນທີຂຽນ';
+
+  @override
+  String get moderationPreset => 'ຂໍ້ຄວາມສຳເລັດຮູບ';
+
+  @override
+  String get moderationComment => 'ຂໍ້ຄວາມ';
+
+  @override
+  String get moderationVisibility => 'ການສະແດງຜົນ';
+
+  @override
+  String get moderationHiddenBy => 'ເຊື່ອງໂດຍ';
+
+  @override
+  String get moderationHiddenReason => 'ເຫດຜົນທີ່ເຊື່ອງ';
+
+  @override
+  String get moderationReports => 'ລາຍງານ';
+
+  @override
+  String get moderationNoReports => 'ຍັງບໍ່ມີລາຍງານໃນລີວິວນີ້';
+
+  @override
+  String get moderationReportPending => 'ລໍຖ້າກວດ';
+
+  @override
+  String get moderationReportUpheld => 'ຮັບເລື່ອງ ເຊື່ອງລີວິວແລ້ວ';
+
+  @override
+  String get moderationReportDismissed => 'ບໍ່ຮັບເລື່ອງ ຍັງສະແດງລີວິວ';
+
+  @override
+  String get moderationReasonAbusive => 'ຄຳເວົ້າບໍ່ສຸພາບ';
+
+  @override
+  String get moderationReasonPersonalInfo => 'ເປີດເຜີຍຂໍ້ມູນສ່ວນຕົວ';
+
+  @override
+  String get moderationReasonFalseInfo => 'ຂໍ້ມູນບໍ່ເປັນຄວາມຈິງ';
+
+  @override
+  String get moderationReasonSpam => 'ສະແປມ ຫຼື ໂຄສະນາ';
+
+  @override
+  String get moderationReasonOther => 'ອື່ນໆ';
+
+  @override
+  String get moderationNote => 'ໝາຍເຫດເຖິງຜູ້ຂຽນລີວິວ';
+
+  @override
+  String get moderationNoteHelp =>
+      'ຈຳເປັນເມື່ອເຊື່ອງ (3–500 ຕົວອັກສອນ). ຜູ້ຂຽນຈະເຫັນໃນການແຈ້ງເຕືອນ.';
+
+  @override
+  String get moderationHide => 'ເຊື່ອງລີວິວ';
+
+  @override
+  String get moderationKeep => 'ສະແດງຕໍ່';
+
+  @override
+  String get moderationShow => 'ສະແດງອີກຄັ້ງ';
+
+  @override
+  String get moderationHideConfirm =>
+      'ເຊື່ອງລີວິວນີ້ຈາກສະມາຊິກບໍ? ລາຍງານທີ່ລໍຖ້າຈະຖືກບັນທຶກວ່າຮັບເລື່ອງ.';
+
+  @override
+  String get moderationKeepConfirm =>
+      'ສະແດງລີວິວນີ້ຕໍ່ບໍ? ລາຍງານທີ່ລໍຖ້າຈະຖືກປະຕິເສດ.';
+
+  @override
+  String get moderationShowConfirm => 'ສະແດງລີວິວນີ້ຕໍ່ສະມາຊິກອີກຄັ້ງບໍ?';
+
+  @override
+  String get moderationDone => 'ບັນທຶກແລ້ວ. ລະບົບແຈ້ງຜູ້ຂຽນ ແລະ ຜູ້ລາຍງານແລ້ວ.';
+
+  @override
+  String get moderationErrorOwn =>
+      'ຈັດການລີວິວທີ່ທ່ານຂຽນເອງ ຫຼື ທີ່ຂຽນເຖິງທ່ານບໍ່ໄດ້.';
+
+  @override
+  String get moderationErrorNote =>
+      'ຂຽນໝາຍເຫດຢ່າງໜ້ອຍ 3 ຕົວອັກສອນກ່ອນເຊື່ອງລີວິວ.';
+
+  @override
+  String get moderationErrorGone => 'ບໍ່ພົບລີວິວນີ້ແລ້ວ.';
+
+  @override
+  String get contentsCategoryPreset => 'ຂໍ້ຄວາມລີວິວສຳເລັດຮູບ';
+
+  @override
+  String get contentsPresetRole => 'ສະແດງໃນຟອມຂອງ';
+
+  @override
+  String get contentsPresetRoleBuyer => 'ຜູ້ຊື້ປະເມີນຜູ້ຂາຍ';
+
+  @override
+  String get contentsPresetRoleSeller => 'ຜູ້ຂາຍປະເມີນຜູ້ຊື້';
+
+  @override
+  String get contentsPresetRoleAny => 'ທັງສອງຝ່າຍ';
+
+  @override
+  String get contentsPresetHelp =>
+      'ຫົວຂໍ້ຄືຊື່ປຸ່ມ, ເນື້ອຫາຄືປະໂຫຍກທີ່ບັນທຶກພ້ອມລີວິວ (ບໍ່ເກີນ 300 ຕົວອັກສອນ). ສະແດງສະເພາະເມື່ອເລືອກ \"ດີ\".';
 }

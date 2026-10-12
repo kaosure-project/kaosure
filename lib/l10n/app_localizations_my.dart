@@ -3748,4 +3748,172 @@ class AppLocalizationsMy extends AppLocalizations {
   @override
   String get contentsErrorInvalid =>
       'အမျိုးအစား၊ အစီအစဉ်နှင့် အိုင်ကွန်အမည်ကို စစ်ပါ။';
+
+  @override
+  String get adminGroupMarketplace => 'ဈေးကွက်';
+
+  @override
+  String get moderationTitle => 'သုံးသပ်ချက် စီမံခြင်း';
+
+  @override
+  String get moderationHubHelp =>
+      'တိုင်ကြားထားသော Secondhand သုံးသပ်ချက်များကို စစ်ဆေးပြီး ဖျောက်ရန် သို့မဟုတ် ပြရန်';
+
+  @override
+  String get moderationHelp =>
+      'သုံးသပ်ချက်များကို ပြင်ဆင်ခြင်း၊ ဖျက်ခြင်း မပြုနိုင်ပါ။ စည်းမျဉ်းချိုးဖောက်သော သုံးသပ်ချက်ကို ဖျောက်ပါ။ အဖွဲ့ဝင်များ မမြင်ရတော့ဘဲ အမှတ်တွင်လည်း မထည့်တွက်ပါ။ ရေးသူနှင့် တိုင်ကြားသူများထံ အကြောင်းကြားပါမည်။';
+
+  @override
+  String get moderationFilterReported => 'တိုင်ကြားထားသည်';
+
+  @override
+  String get moderationFilterHidden => 'ဖျောက်ထားသည်';
+
+  @override
+  String get moderationFilterRecent => 'သုံးသပ်ချက်အားလုံး';
+
+  @override
+  String get moderationGood => 'ကောင်း';
+
+  @override
+  String get moderationBad => 'မကောင်း';
+
+  @override
+  String get moderationHiddenBadge => 'အဖွဲ့ဝင်များထံမှ ဖျောက်ထားသည်';
+
+  @override
+  String get moderationVisible => 'အဖွဲ့ဝင်များထံ ပြသနေသည်';
+
+  @override
+  String moderationPendingReports(int count) {
+    return 'စစ်ဆေးရန် တိုင်ကြားချက် $count ခု';
+  }
+
+  @override
+  String get moderationVerdict => 'အဆင့်သတ်မှတ်ချက်';
+
+  @override
+  String get moderationReviewer => 'ရေးသူ';
+
+  @override
+  String get moderationReviewee => 'သုံးသပ်ခံရသူ';
+
+  @override
+  String get moderationRoleBuyer => 'ဝယ်သူ';
+
+  @override
+  String get moderationRoleSeller => 'ရောင်းသူ';
+
+  @override
+  String get moderationOrder => 'အော်ဒါ';
+
+  @override
+  String get moderationWrittenAt => 'ရေးသားသည့်ရက်';
+
+  @override
+  String get moderationPreset => 'အသင့်သုံး စာသား';
+
+  @override
+  String get moderationComment => 'စာ';
+
+  @override
+  String get moderationVisibility => 'ပြသမှု';
+
+  @override
+  String get moderationHiddenBy => 'ဖျောက်သူ';
+
+  @override
+  String get moderationHiddenReason => 'ဖျောက်ရသည့် အကြောင်းရင်း';
+
+  @override
+  String get moderationReports => 'တိုင်ကြားချက်များ';
+
+  @override
+  String get moderationNoReports => 'ဤသုံးသပ်ချက်တွင် တိုင်ကြားချက် မရှိပါ';
+
+  @override
+  String get moderationReportPending => 'စောင့်ဆိုင်းနေသည်';
+
+  @override
+  String get moderationReportUpheld => 'လက်ခံပြီး သုံးသပ်ချက်ကို ဖျောက်ထားသည်';
+
+  @override
+  String get moderationReportDismissed => 'ပယ်ချပြီး သုံးသပ်ချက်ကို ဆက်ပြသည်';
+
+  @override
+  String get moderationReasonAbusive => 'ရိုင်းစိုင်းသော စကား';
+
+  @override
+  String get moderationReasonPersonalInfo => 'ကိုယ်ရေးအချက်အလက် ထုတ်ဖော်ခြင်း';
+
+  @override
+  String get moderationReasonFalseInfo => 'မမှန်ကန်ပါ';
+
+  @override
+  String get moderationReasonSpam => 'စပမ် သို့မဟုတ် ကြော်ငြာ';
+
+  @override
+  String get moderationReasonOther => 'အခြား';
+
+  @override
+  String get moderationNote => 'ရေးသူထံ မှတ်ချက်';
+
+  @override
+  String get moderationNoteHelp =>
+      'ဖျောက်ရန် လိုအပ်သည် (စာလုံး 3–500)။ ရေးသူက အကြောင်းကြားချက်တွင် မြင်ရပါမည်။';
+
+  @override
+  String get moderationHide => 'သုံးသပ်ချက် ဖျောက်ရန်';
+
+  @override
+  String get moderationKeep => 'ဆက်ပြရန်';
+
+  @override
+  String get moderationShow => 'ပြန်ပြရန်';
+
+  @override
+  String get moderationHideConfirm =>
+      'ဤသုံးသပ်ချက်ကို အဖွဲ့ဝင်များထံမှ ဖျောက်မလား။ စောင့်ဆိုင်းနေသော တိုင်ကြားချက်များကို လက်ခံသည်ဟု မှတ်တမ်းတင်ပါမည်။';
+
+  @override
+  String get moderationKeepConfirm =>
+      'ဤသုံးသပ်ချက်ကို ဆက်ပြမလား။ စောင့်ဆိုင်းနေသော တိုင်ကြားချက်များကို ပယ်ချပါမည်။';
+
+  @override
+  String get moderationShowConfirm =>
+      'ဤသုံးသပ်ချက်ကို အဖွဲ့ဝင်များထံ ပြန်ပြမလား။';
+
+  @override
+  String get moderationDone =>
+      'သိမ်းပြီးပါပြီ။ ရေးသူနှင့် တိုင်ကြားသူများထံ အကြောင်းကြားပြီးပါပြီ။';
+
+  @override
+  String get moderationErrorOwn =>
+      'သင်ရေးထားသော သို့မဟုတ် သင့်အကြောင်း ရေးထားသော သုံးသပ်ချက်ကို စီမံ၍ မရပါ။';
+
+  @override
+  String get moderationErrorNote =>
+      'သုံးသပ်ချက်ကို ဖျောက်ရန် စာလုံး 3 လုံးအထက် မှတ်ချက် ရေးပါ။';
+
+  @override
+  String get moderationErrorGone => 'ဤသုံးသပ်ချက် မရှိတော့ပါ။';
+
+  @override
+  String get contentsCategoryPreset => 'သုံးသပ်ချက် အသင့်သုံးစာ';
+
+  @override
+  String get contentsPresetRole => 'ပြသမည့် ဖောင်';
+
+  @override
+  String get contentsPresetRoleBuyer => 'ဝယ်သူက ရောင်းသူကို သုံးသပ်';
+
+  @override
+  String get contentsPresetRoleSeller => 'ရောင်းသူက ဝယ်သူကို သုံးသပ်';
+
+  @override
+  String get contentsPresetRoleAny => 'နှစ်ဖက်စလုံး';
+
+  @override
+  String get contentsPresetHelp =>
+      'ခေါင်းစဉ်သည် ခလုတ်အမည်ဖြစ်ပြီး စာကိုယ်သည် သုံးသပ်ချက်နှင့်အတူ သိမ်းမည့် စာကြောင်းဖြစ်သည် (စာလုံး 300 အထိ)။ \"ကောင်း\" ရွေးမှသာ ပြပါမည်။';
 }

@@ -3723,4 +3723,171 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get contentsErrorInvalid => 'Kiểm tra loại, thứ tự và tên biểu tượng.';
+
+  @override
+  String get adminGroupMarketplace => 'Chợ mua bán';
+
+  @override
+  String get moderationTitle => 'Quản lý đánh giá';
+
+  @override
+  String get moderationHubHelp =>
+      'Kiểm tra đánh giá Secondhand bị báo cáo rồi ẩn hoặc hiện';
+
+  @override
+  String get moderationHelp =>
+      'Đánh giá không thể sửa hay xóa. Hãy ẩn đánh giá vi phạm quy định: thành viên không còn thấy và không tính vào điểm. Người viết và người báo cáo sẽ được thông báo.';
+
+  @override
+  String get moderationFilterReported => 'Bị báo cáo';
+
+  @override
+  String get moderationFilterHidden => 'Đang ẩn';
+
+  @override
+  String get moderationFilterRecent => 'Tất cả đánh giá';
+
+  @override
+  String get moderationGood => 'Tốt';
+
+  @override
+  String get moderationBad => 'Không tốt';
+
+  @override
+  String get moderationHiddenBadge => 'Đang ẩn với thành viên';
+
+  @override
+  String get moderationVisible => 'Đang hiển thị';
+
+  @override
+  String moderationPendingReports(int count) {
+    return '$count báo cáo chờ xử lý';
+  }
+
+  @override
+  String get moderationVerdict => 'Đánh giá';
+
+  @override
+  String get moderationReviewer => 'Người viết';
+
+  @override
+  String get moderationReviewee => 'Người được đánh giá';
+
+  @override
+  String get moderationRoleBuyer => 'người mua';
+
+  @override
+  String get moderationRoleSeller => 'người bán';
+
+  @override
+  String get moderationOrder => 'Đơn hàng';
+
+  @override
+  String get moderationWrittenAt => 'Ngày viết';
+
+  @override
+  String get moderationPreset => 'Câu mẫu';
+
+  @override
+  String get moderationComment => 'Lời nhắn';
+
+  @override
+  String get moderationVisibility => 'Hiển thị';
+
+  @override
+  String get moderationHiddenBy => 'Người ẩn';
+
+  @override
+  String get moderationHiddenReason => 'Lý do ẩn';
+
+  @override
+  String get moderationReports => 'Báo cáo';
+
+  @override
+  String get moderationNoReports => 'Chưa có báo cáo nào cho đánh giá này';
+
+  @override
+  String get moderationReportPending => 'Chờ xử lý';
+
+  @override
+  String get moderationReportUpheld => 'Chấp nhận, đã ẩn đánh giá';
+
+  @override
+  String get moderationReportDismissed => 'Bác bỏ, vẫn hiển thị';
+
+  @override
+  String get moderationReasonAbusive => 'Thô lỗ hoặc xúc phạm';
+
+  @override
+  String get moderationReasonPersonalInfo => 'Tiết lộ thông tin cá nhân';
+
+  @override
+  String get moderationReasonFalseInfo => 'Không đúng sự thật';
+
+  @override
+  String get moderationReasonSpam => 'Spam hoặc quảng cáo';
+
+  @override
+  String get moderationReasonOther => 'Khác';
+
+  @override
+  String get moderationNote => 'Ghi chú cho người viết';
+
+  @override
+  String get moderationNoteHelp =>
+      'Bắt buộc khi ẩn (3–500 ký tự). Người viết sẽ thấy trong thông báo.';
+
+  @override
+  String get moderationHide => 'Ẩn đánh giá';
+
+  @override
+  String get moderationKeep => 'Giữ hiển thị';
+
+  @override
+  String get moderationShow => 'Hiện lại';
+
+  @override
+  String get moderationHideConfirm =>
+      'Ẩn đánh giá này với thành viên? Các báo cáo đang chờ sẽ được ghi nhận là chấp nhận.';
+
+  @override
+  String get moderationKeepConfirm =>
+      'Tiếp tục hiển thị đánh giá này? Các báo cáo đang chờ sẽ bị bác bỏ.';
+
+  @override
+  String get moderationShowConfirm => 'Hiện lại đánh giá này cho thành viên?';
+
+  @override
+  String get moderationDone =>
+      'Đã lưu. Người viết và người báo cáo đã được thông báo.';
+
+  @override
+  String get moderationErrorOwn =>
+      'Bạn không thể xử lý đánh giá do mình viết hoặc viết về mình.';
+
+  @override
+  String get moderationErrorNote =>
+      'Hãy viết ghi chú ít nhất 3 ký tự để ẩn đánh giá.';
+
+  @override
+  String get moderationErrorGone => 'Không còn tìm thấy đánh giá này.';
+
+  @override
+  String get contentsCategoryPreset => 'Câu đánh giá mẫu';
+
+  @override
+  String get contentsPresetRole => 'Hiển thị trong mẫu của';
+
+  @override
+  String get contentsPresetRoleBuyer => 'Người mua đánh giá người bán';
+
+  @override
+  String get contentsPresetRoleSeller => 'Người bán đánh giá người mua';
+
+  @override
+  String get contentsPresetRoleAny => 'Cả hai bên';
+
+  @override
+  String get contentsPresetHelp =>
+      'Tiêu đề là tên nút, nội dung là câu được lưu cùng đánh giá (tối đa 300 ký tự). Chỉ hiện khi chọn \"Tốt\".';
 }

@@ -3516,4 +3516,164 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get contentsErrorInvalid => '種類、表示順、アイコン名を確認してください。';
+
+  @override
+  String get adminGroupMarketplace => 'マーケットプレイス';
+
+  @override
+  String get moderationTitle => '評価の管理';
+
+  @override
+  String get moderationHubHelp => '通報された Secondhand の評価を確認し、非表示・再表示する';
+
+  @override
+  String get moderationHelp =>
+      '評価は編集・削除できません。ルール違反の評価は非表示にしてください。会員には表示されず、評価スコアにも含まれません。投稿者と通報者に通知されます。';
+
+  @override
+  String get moderationFilterReported => '通報あり';
+
+  @override
+  String get moderationFilterHidden => '非表示';
+
+  @override
+  String get moderationFilterRecent => 'すべての評価';
+
+  @override
+  String get moderationGood => '良い';
+
+  @override
+  String get moderationBad => '悪い';
+
+  @override
+  String get moderationHiddenBadge => '会員に非表示';
+
+  @override
+  String get moderationVisible => '会員に表示中';
+
+  @override
+  String moderationPendingReports(int count) {
+    return '未確認の通報 $count 件';
+  }
+
+  @override
+  String get moderationVerdict => '評価';
+
+  @override
+  String get moderationReviewer => '投稿者';
+
+  @override
+  String get moderationReviewee => '評価された人';
+
+  @override
+  String get moderationRoleBuyer => '購入者';
+
+  @override
+  String get moderationRoleSeller => '出品者';
+
+  @override
+  String get moderationOrder => '注文';
+
+  @override
+  String get moderationWrittenAt => '投稿日';
+
+  @override
+  String get moderationPreset => '定型文';
+
+  @override
+  String get moderationComment => 'メッセージ';
+
+  @override
+  String get moderationVisibility => '表示状態';
+
+  @override
+  String get moderationHiddenBy => '非表示にした人';
+
+  @override
+  String get moderationHiddenReason => '非表示の理由';
+
+  @override
+  String get moderationReports => '通報';
+
+  @override
+  String get moderationNoReports => 'この評価への通報はありません';
+
+  @override
+  String get moderationReportPending => '確認待ち';
+
+  @override
+  String get moderationReportUpheld => '受理・評価を非表示';
+
+  @override
+  String get moderationReportDismissed => '却下・評価を表示継続';
+
+  @override
+  String get moderationReasonAbusive => '失礼・暴言';
+
+  @override
+  String get moderationReasonPersonalInfo => '個人情報の公開';
+
+  @override
+  String get moderationReasonFalseInfo => '事実と異なる';
+
+  @override
+  String get moderationReasonSpam => 'スパム・宣伝';
+
+  @override
+  String get moderationReasonOther => 'その他';
+
+  @override
+  String get moderationNote => '投稿者へのメモ';
+
+  @override
+  String get moderationNoteHelp => '非表示にする場合は必須（3〜500文字）。投稿者への通知に表示されます。';
+
+  @override
+  String get moderationHide => '評価を非表示';
+
+  @override
+  String get moderationKeep => '表示を継続';
+
+  @override
+  String get moderationShow => '再表示';
+
+  @override
+  String get moderationHideConfirm => 'この評価を会員に非表示にしますか？確認待ちの通報は受理として記録されます。';
+
+  @override
+  String get moderationKeepConfirm => 'この評価の表示を続けますか？確認待ちの通報は却下されます。';
+
+  @override
+  String get moderationShowConfirm => 'この評価を会員に再表示しますか？';
+
+  @override
+  String get moderationDone => '保存しました。投稿者と通報者に通知しました。';
+
+  @override
+  String get moderationErrorOwn => '自分が書いた評価や自分宛ての評価は管理できません。';
+
+  @override
+  String get moderationErrorNote => '非表示にするには3文字以上のメモを入力してください。';
+
+  @override
+  String get moderationErrorGone => 'この評価は見つかりません。';
+
+  @override
+  String get contentsCategoryPreset => '評価の定型文';
+
+  @override
+  String get contentsPresetRole => '表示するフォーム';
+
+  @override
+  String get contentsPresetRoleBuyer => '購入者が出品者を評価';
+
+  @override
+  String get contentsPresetRoleSeller => '出品者が購入者を評価';
+
+  @override
+  String get contentsPresetRoleAny => '両方';
+
+  @override
+  String get contentsPresetHelp =>
+      'タイトルはボタン名、本文は評価と一緒に保存される文章です（300文字以内）。「良い」を選んだときだけ表示されます。';
 }

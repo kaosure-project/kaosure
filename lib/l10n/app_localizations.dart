@@ -6834,6 +6834,318 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Check the type, order and icon name.'**
   String get contentsErrorInvalid;
+
+  /// No description provided for @adminGroupMarketplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Marketplace'**
+  String get adminGroupMarketplace;
+
+  /// No description provided for @moderationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review moderation'**
+  String get moderationTitle;
+
+  /// No description provided for @moderationHubHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Check reported Secondhand reviews and hide or show them'**
+  String get moderationHubHelp;
+
+  /// No description provided for @moderationHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews can\'t be edited or deleted. Hide a review that breaks the rules: members no longer see it and it no longer counts toward ratings. The reviewer and the reporters are notified.'**
+  String get moderationHelp;
+
+  /// No description provided for @moderationFilterReported.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported'**
+  String get moderationFilterReported;
+
+  /// No description provided for @moderationFilterHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden'**
+  String get moderationFilterHidden;
+
+  /// No description provided for @moderationFilterRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'All reviews'**
+  String get moderationFilterRecent;
+
+  /// No description provided for @moderationGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get moderationGood;
+
+  /// No description provided for @moderationBad.
+  ///
+  /// In en, this message translates to:
+  /// **'Bad'**
+  String get moderationBad;
+
+  /// No description provided for @moderationHiddenBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden from members'**
+  String get moderationHiddenBadge;
+
+  /// No description provided for @moderationVisible.
+  ///
+  /// In en, this message translates to:
+  /// **'Shown to members'**
+  String get moderationVisible;
+
+  /// No description provided for @moderationPendingReports.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} reports waiting'**
+  String moderationPendingReports(int count);
+
+  /// No description provided for @moderationVerdict.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating'**
+  String get moderationVerdict;
+
+  /// No description provided for @moderationReviewer.
+  ///
+  /// In en, this message translates to:
+  /// **'Written by'**
+  String get moderationReviewer;
+
+  /// No description provided for @moderationReviewee.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get moderationReviewee;
+
+  /// No description provided for @moderationRoleBuyer.
+  ///
+  /// In en, this message translates to:
+  /// **'buyer'**
+  String get moderationRoleBuyer;
+
+  /// No description provided for @moderationRoleSeller.
+  ///
+  /// In en, this message translates to:
+  /// **'seller'**
+  String get moderationRoleSeller;
+
+  /// No description provided for @moderationOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Order'**
+  String get moderationOrder;
+
+  /// No description provided for @moderationWrittenAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Written on'**
+  String get moderationWrittenAt;
+
+  /// No description provided for @moderationPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready-made message'**
+  String get moderationPreset;
+
+  /// No description provided for @moderationComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get moderationComment;
+
+  /// No description provided for @moderationVisibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility'**
+  String get moderationVisibility;
+
+  /// No description provided for @moderationHiddenBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden by'**
+  String get moderationHiddenBy;
+
+  /// No description provided for @moderationHiddenReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for hiding'**
+  String get moderationHiddenReason;
+
+  /// No description provided for @moderationReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get moderationReports;
+
+  /// No description provided for @moderationNoReports.
+  ///
+  /// In en, this message translates to:
+  /// **'No reports on this review'**
+  String get moderationNoReports;
+
+  /// No description provided for @moderationReportPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get moderationReportPending;
+
+  /// No description provided for @moderationReportUpheld.
+  ///
+  /// In en, this message translates to:
+  /// **'Upheld, review hidden'**
+  String get moderationReportUpheld;
+
+  /// No description provided for @moderationReportDismissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismissed, review kept'**
+  String get moderationReportDismissed;
+
+  /// No description provided for @moderationReasonAbusive.
+  ///
+  /// In en, this message translates to:
+  /// **'Rude or abusive'**
+  String get moderationReasonAbusive;
+
+  /// No description provided for @moderationReasonPersonalInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Shares personal information'**
+  String get moderationReasonPersonalInfo;
+
+  /// No description provided for @moderationReasonFalseInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Not true'**
+  String get moderationReasonFalseInfo;
+
+  /// No description provided for @moderationReasonSpam.
+  ///
+  /// In en, this message translates to:
+  /// **'Spam or advertising'**
+  String get moderationReasonSpam;
+
+  /// No description provided for @moderationReasonOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get moderationReasonOther;
+
+  /// No description provided for @moderationNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note to the reviewer'**
+  String get moderationNote;
+
+  /// No description provided for @moderationNoteHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Required to hide (3 to 500 characters). The reviewer sees it in their notification.'**
+  String get moderationNoteHelp;
+
+  /// No description provided for @moderationHide.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide review'**
+  String get moderationHide;
+
+  /// No description provided for @moderationKeep.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep showing'**
+  String get moderationKeep;
+
+  /// No description provided for @moderationShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show again'**
+  String get moderationShow;
+
+  /// No description provided for @moderationHideConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide this review from members? Waiting reports are marked as upheld.'**
+  String get moderationHideConfirm;
+
+  /// No description provided for @moderationKeepConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep this review shown? Waiting reports are dismissed.'**
+  String get moderationKeepConfirm;
+
+  /// No description provided for @moderationShowConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Show this review to members again?'**
+  String get moderationShowConfirm;
+
+  /// No description provided for @moderationDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved. The reviewer and the reporters have been notified.'**
+  String get moderationDone;
+
+  /// No description provided for @moderationErrorOwn.
+  ///
+  /// In en, this message translates to:
+  /// **'You can\'t moderate a review you wrote or received.'**
+  String get moderationErrorOwn;
+
+  /// No description provided for @moderationErrorNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a note of at least 3 characters to hide a review.'**
+  String get moderationErrorNote;
+
+  /// No description provided for @moderationErrorGone.
+  ///
+  /// In en, this message translates to:
+  /// **'This review no longer exists.'**
+  String get moderationErrorGone;
+
+  /// No description provided for @contentsCategoryPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Review preset'**
+  String get contentsCategoryPreset;
+
+  /// No description provided for @contentsPresetRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Shown in the form of'**
+  String get contentsPresetRole;
+
+  /// No description provided for @contentsPresetRoleBuyer.
+  ///
+  /// In en, this message translates to:
+  /// **'Buyers rating the seller'**
+  String get contentsPresetRoleBuyer;
+
+  /// No description provided for @contentsPresetRoleSeller.
+  ///
+  /// In en, this message translates to:
+  /// **'Sellers rating the buyer'**
+  String get contentsPresetRoleSeller;
+
+  /// No description provided for @contentsPresetRoleAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Both sides'**
+  String get contentsPresetRoleAny;
+
+  /// No description provided for @contentsPresetHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Title is the chip label; the text is the sentence saved with the review (up to 300 characters). Presets are only offered with \"Good\".'**
+  String get contentsPresetHelp;
 }
 
 class _AppLocalizationsDelegate

@@ -25,6 +25,7 @@ import '../widgets/admin/admin_scaffold.dart';
 import '../widgets/admin/admin_stat_card.dart';
 import '../widgets/admin/pending_badge.dart';
 import 'owner_requests_page.dart';
+import 'review_moderation_page.dart';
 import 'system_contents_page.dart';
 import 'withdrawals_page.dart';
 
@@ -232,6 +233,25 @@ class _AdminHubPageState extends ConsumerState<AdminHubPage> with WidgetsBinding
       ],
     );
 
+    final marketplace = MenuPanel(
+      title: l.adminGroupMarketplace,
+      children: [
+        DashboardMenuTile(
+          icon: Icons.rate_review_outlined,
+          color: AppColors.kaoTeal,
+          tint: AppColors.kaoTealSoft,
+          title: l.moderationTitle,
+          subtitle: l.moderationHubHelp,
+          showDivider: false,
+          trailing: PendingTrailing(
+            count: AsyncData(PendingCount(tools.pendingReviewReports)),
+            color: AppColors.kaoTeal,
+          ),
+          onTap: () => _open(const ReviewModerationPage()),
+        ),
+      ],
+    );
+
     final security = MenuPanel(
       title: l.adminGroupSecurity,
       children: [
@@ -258,7 +278,12 @@ class _AdminHubPageState extends ConsumerState<AdminHubPage> with WidgetsBinding
     );
 
     final start = [if (canReview) reviews, if (canManage) people];
-    final end = [if (tools.any) finance, if (canManage) partners, security];
+    final end = [
+      if (tools.withdrawals || tools.contents) finance,
+      if (tools.reviews) marketplace,
+      if (canManage) partners,
+      security,
+    ];
 
     return AdminScaffold(
       actions: [

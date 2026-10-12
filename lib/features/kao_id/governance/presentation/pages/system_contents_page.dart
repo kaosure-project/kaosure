@@ -16,7 +16,15 @@ String contentCategoryText(AppLocalizations l, String category) => switch (categ
   'warning' => l.contentsCategoryWarning,
   'terms' => l.contentsCategoryTerms,
   'notice' => l.contentsCategoryNotice,
+  'preset' => l.contentsCategoryPreset,
   _ => category,
+};
+
+String contentPresetRoleText(AppLocalizations l, String role) => switch (role) {
+  'buyer' => l.contentsPresetRoleBuyer,
+  'seller' => l.contentsPresetRoleSeller,
+  'any' => l.contentsPresetRoleAny,
+  _ => role,
 };
 
 String contentAppText(AppLocalizations l, String app) => app == 'common' ? l.contentsCommon : app;

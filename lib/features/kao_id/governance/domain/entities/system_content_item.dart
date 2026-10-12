@@ -31,7 +31,13 @@ class SystemContentItem {
     updatedByName: json['updated_by_name'] as String?,
   );
 
-  static const categories = ['help', 'guide', 'rule', 'warning', 'terms', 'notice'];
+  static const categories = ['help', 'guide', 'rule', 'warning', 'terms', 'notice', 'preset'];
+
+  /// Whose review form shows a preset (`meta.role`).
+  static const presetRoles = ['buyer', 'seller', 'any'];
+
+  /// Presets are Secondhand review comments; the server only accepts them there.
+  static const presetApp = 'secondhand';
 
   /// Apps that read contents; `common` is shared by all of them.
   static const apps = ['secondhand', 'common'];
@@ -57,6 +63,8 @@ class SystemContentItem {
   final String? updatedByName;
 
   String get icon => meta['icon'] as String? ?? '';
+
+  String? get presetRole => meta['role'] as String?;
 }
 
 Map<String, String> _texts(Object? value) => {

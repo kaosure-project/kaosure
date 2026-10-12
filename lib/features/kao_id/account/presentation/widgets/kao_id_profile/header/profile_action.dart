@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 
 import '../../../../domain/entities/profile.dart';
-import 'package:kaosure/features/kao_id/router/kao_id_routes.dart';
+import 'package:kaosure/app/routes/kao_id_routes.dart';
 
 final class ProfileAction extends StatelessWidget {
   const ProfileAction({

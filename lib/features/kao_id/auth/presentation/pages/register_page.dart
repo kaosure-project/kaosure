@@ -9,7 +9,7 @@ import '../../../../../shared/widgets/cards/app_card.dart';
 import '../../../../../shared/widgets/forms/app_email_field.dart';
 import '../../../../../shared/widgets/forms/app_password_field.dart';
 import '../../application/providers/auth_provider.dart';
-import '../../../router/kao_id_routes.dart';
+import '../../../../../app/routes/kao_id_routes.dart';
 import '../widgets/auth_logo.dart';
 import '../widgets/password_requirements.dart';
 

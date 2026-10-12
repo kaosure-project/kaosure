@@ -17,7 +17,7 @@ import 'package:kaosure/features/kao_id/kyc/application/providers/kyc_provider.d
 import 'package:kaosure/features/kao_id/kyc/domain/entities/verification.dart';
 import 'package:kaosure/features/kao_id/kyc/domain/repositories/kyc_repository.dart';
 import 'package:kaosure/features/kao_id/kyc/presentation/screens/kyc_page.dart';
-import 'package:kaosure/features/kao_id/router/kao_id_routes.dart';
+import 'package:kaosure/app/routes/kao_id_routes.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 
 import 'auth_localization_r2_test.dart' show TestAuthNotifier;

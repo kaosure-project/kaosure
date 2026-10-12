@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../core/localization/locale_controller.dart';
-import '../features/kao_id/router/kao_id_routes.dart';
+import 'routes/kao_id_routes.dart';
 import '../l10n/app_localizations.dart';
 import '../features/kao_id/account/lifecycle/account_access_gate.dart';
 import 'router.dart';

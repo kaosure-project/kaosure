@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 
-import '../../../router/kao_id_routes.dart';
+import '../../../../../app/routes/kao_id_routes.dart';
 import '../widgets/auth_logo.dart';
 
 final class LandingPage extends StatelessWidget {

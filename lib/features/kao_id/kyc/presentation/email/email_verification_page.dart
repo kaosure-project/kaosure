@@ -1,6 +1,6 @@
 import '../../../auth/application/providers/email_verification_status_provider.dart';
-import 'package:kaosure/features/kao_id/contact_change/contact_change_page.dart';
-import 'package:kaosure/features/kao_id/contact_change/contact_change_repository.dart';
+import 'package:kaosure/features/kao_id/contact_change/presentation/pages/contact_change_page.dart';
+import 'package:kaosure/features/kao_id/contact_change/domain/entities/contact_snapshot.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

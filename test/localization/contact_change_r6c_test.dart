@@ -2,9 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kaosure/features/kao_id/contact_change/contact_change_controller.dart';
-import 'package:kaosure/features/kao_id/contact_change/contact_change_repository.dart';
-import 'package:kaosure/features/kao_id/contact_change/contact_change_page.dart';
+import 'package:kaosure/features/kao_id/contact_change/application/controllers/contact_change_controller.dart';
+import 'package:kaosure/features/kao_id/contact_change/domain/entities/contact_snapshot.dart';
+import 'package:kaosure/features/kao_id/contact_change/domain/repositories/contact_change_repository.dart';
+import 'package:kaosure/features/kao_id/contact_change/data/repositories/supabase_contact_change_repository.dart';
+import 'package:kaosure/features/kao_id/contact_change/presentation/pages/contact_change_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 
 class ChangeFixture implements ContactChangeRepository {

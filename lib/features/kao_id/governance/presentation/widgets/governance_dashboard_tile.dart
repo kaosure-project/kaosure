@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/providers/governance_provider.dart';
 import '../../../dashboard/presentation/widgets/security/dashboard_menu_tile.dart';
-import '../../../router/kao_id_routes.dart';
+import '../../../../../app/routes/kao_id_routes.dart';
 
 final class GovernanceDashboardTile
     extends ConsumerWidget {

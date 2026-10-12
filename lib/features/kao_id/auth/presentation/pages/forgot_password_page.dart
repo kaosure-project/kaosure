@@ -8,7 +8,7 @@ import '../../../../../shared/widgets/buttons/primary_button.dart';
 import '../../../../../shared/widgets/cards/app_card.dart';
 import '../../../../../shared/widgets/forms/app_email_field.dart';
 import '../../application/providers/auth_provider.dart';
-import '../../../router/kao_id_routes.dart';
+import '../../../../../app/routes/kao_id_routes.dart';
 import '../widgets/auth_logo.dart';
 
 class ForgotPasswordPage extends ConsumerStatefulWidget {

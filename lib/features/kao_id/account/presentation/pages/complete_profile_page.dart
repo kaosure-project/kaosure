@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/providers/profile_controller_provider.dart';
 import '../../../auth/application/kao_id_sso_handoff.dart';
-import '../../../router/kao_id_routes.dart';
+import '../../../../../app/routes/kao_id_routes.dart';
 
 final class CompleteProfilePage extends ConsumerStatefulWidget {
   const CompleteProfilePage({

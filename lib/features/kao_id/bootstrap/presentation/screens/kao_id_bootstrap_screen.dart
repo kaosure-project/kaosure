@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 
-import '../../auth/application/kao_id_sso_handoff.dart';
-import '../../router/kao_id_routes.dart';
-import '../providers/bootstrap_provider.dart';
-import '../states/bootstrap_state.dart';
+import '../../../auth/application/kao_id_sso_handoff.dart';
+import '../../../../../app/routes/kao_id_routes.dart';
+import '../../application/providers/bootstrap_provider.dart';
+import '../../application/states/bootstrap_state.dart';
 
 final class KaoIdBootstrapScreen extends ConsumerStatefulWidget {
   const KaoIdBootstrapScreen({super.key});

@@ -9,7 +9,7 @@ import '../core/config/supabase_config.dart';
 import '../core/localization/locale_controller.dart';
 import '../features/kao_id/auth/application/kao_id_sso_handoff.dart';
 import '../features/kao_id/auth/application/providers/password_recovery_provider.dart';
-import '../features/kao_id/router/kao_id_routes.dart';
+import 'routes/kao_id_routes.dart';
 import 'app.dart';
 
 Future<void> bootstrap() async {

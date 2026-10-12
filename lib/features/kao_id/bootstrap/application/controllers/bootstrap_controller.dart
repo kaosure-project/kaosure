@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../account/application/providers/account_providers.dart';
-import '../../auth/application/providers/auth_provider.dart';
-import '../../auth/domain/entities/user_entity.dart';
+import '../../../account/application/providers/account_providers.dart';
+import '../../../auth/application/providers/auth_provider.dart';
+import '../../../auth/domain/entities/user_entity.dart';
 import '../states/bootstrap_state.dart';
 
 final class BootstrapController extends StateNotifier<BootstrapStatus> {

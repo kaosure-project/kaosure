@@ -4,11 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:kaosure/features/kao_id/auth/application/providers/auth_provider.dart';
 import 'package:kaosure/features/kao_id/kyc/presentation/email/email_verification_page.dart';
-import 'package:kaosure/features/kao_id/phone_verification/providers/phone_verification_provider.dart';
+import 'package:kaosure/features/kao_id/phone_verification/application/providers/phone_verification_provider.dart';
 import 'package:kaosure/features/kao_id/phone_verification/presentation/pages/phone_verification_page.dart';
 import 'auth_localization_r2_test.dart' show TestAuthNotifier;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kaosure/features/kao_id/phone_verification/controllers/phone_verification_controller.dart';
+import 'package:kaosure/features/kao_id/phone_verification/application/controllers/phone_verification_controller.dart';
 import 'package:kaosure/features/kao_id/phone_verification/domain/phone_verification_repository.dart';
 
 class PhoneFixture implements PhoneVerificationRepository {

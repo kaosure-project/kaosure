@@ -11,8 +11,8 @@ import '../../../../governance/application/providers/governance_provider.dart';
 import '../../../../identity/presentation/providers/identity_controller_provider.dart';
 import '../../../../issuance/application/providers/kao_id_issuance_provider.dart';
 import '../../../../kyc/application/providers/kyc_provider.dart';
-import '../../../../phone_verification/providers/phone_verification_provider.dart';
-import '../../../../router/kao_id_routes.dart';
+import '../../../../phone_verification/application/providers/phone_verification_provider.dart';
+import '../../../../../../app/routes/kao_id_routes.dart';
 import '../../../../sessions/application/providers/session_controller_provider.dart';
 import '../../../application/providers/dashboard_provider.dart';
 

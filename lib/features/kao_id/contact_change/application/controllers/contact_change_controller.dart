@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'contact_change_repository.dart';
+import '../../domain/entities/contact_snapshot.dart';
+import '../../domain/failures/contact_change_failure.dart';
+import '../../domain/repositories/contact_change_repository.dart';
 
 class ContactChangeController extends ChangeNotifier {
   ContactChangeController(this.repository, this.kind, {DateTime Function()? clock})

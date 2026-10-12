@@ -13,7 +13,7 @@ import 'package:kaosure/features/kao_id/auth/presentation/pages/register_page.da
 import 'package:kaosure/features/kao_id/auth/presentation/pages/reset_password_page.dart';
 import 'package:kaosure/features/kao_id/auth/presentation/pages/verify_email_page.dart';
 import 'package:kaosure/features/kao_id/auth/presentation/widgets/password_requirements.dart';
-import 'package:kaosure/features/kao_id/bootstrap/screens/kao_id_bootstrap_screen.dart';
+import 'package:kaosure/features/kao_id/bootstrap/presentation/screens/kao_id_bootstrap_screen.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:kaosure/shared/widgets/buttons/primary_button.dart';
 

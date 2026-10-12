@@ -10,7 +10,7 @@ import 'package:kaosure/features/kao_id/auth/presentation/guards/auth_guard.dart
 import 'package:kaosure/features/kao_id/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:kaosure/features/kao_id/dashboard/presentation/widgets/dashboard_home_content.dart';
 import 'package:kaosure/features/kao_id/dashboard/presentation/widgets/kao_id_scaffold.dart';
-import 'package:kaosure/features/kao_id/router/kao_id_routes.dart';
+import 'package:kaosure/app/routes/kao_id_routes.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 
 final sampleProfile = Profile(

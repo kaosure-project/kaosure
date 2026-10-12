@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../application/states/phone_verification_state.dart';
-import '../domain/phone_verification_repository.dart';
+import '../states/phone_verification_state.dart';
+import '../../domain/phone_verification_repository.dart';
 
 final class PhoneVerificationController extends StateNotifier<PhoneVerificationState> {
   PhoneVerificationController(this._repository, {DateTime Function()? clock})

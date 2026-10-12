@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../../../core/services/image_picker_service.dart';
-import '../../application/providers/account_providers.dart';
+import '../providers/account_providers.dart';
 import '../../domain/entities/profile.dart';
 import '../states/profile_state.dart';
 

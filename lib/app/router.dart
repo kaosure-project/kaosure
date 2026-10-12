@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../features/kao_id/account/domain/entities/profile.dart';
 import '../features/kao_id/account/presentation/pages/edit_profile_page.dart';
-import '../features/kao_id/router/kao_id_routes.dart';
+import 'routes/kao_id_routes.dart';
 
 import '../features/kao_id/account/presentation/pages/complete_profile_page.dart';
 import '../features/kao_id/auth/presentation/guards/auth_guard.dart';
@@ -16,7 +16,7 @@ import '../features/kao_id/auth/presentation/pages/landing_page.dart';
 import '../features/kao_id/auth/presentation/pages/register_page.dart';
 import '../features/kao_id/auth/presentation/pages/reset_password_page.dart';
 import '../features/kao_id/auth/presentation/pages/verify_email_page.dart';
-import '../features/kao_id/bootstrap/screens/kao_id_bootstrap_screen.dart';
+import '../features/kao_id/bootstrap/presentation/screens/kao_id_bootstrap_screen.dart';
 import '../features/kao_id/business/presentation/pages/business_completed_page.dart';
 import '../features/kao_id/business/presentation/pages/business_document_page.dart';
 import '../features/kao_id/business/presentation/pages/business_information_page.dart';

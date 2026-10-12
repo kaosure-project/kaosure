@@ -4,7 +4,7 @@ import '../../../governance/members/member_page.dart';
 import 'package:flutter/material.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import '../../../account/domain/entities/profile.dart';
-import '../../../router/kao_id_routes.dart';
+import '../../../../../app/routes/kao_id_routes.dart';
 import 'profile/profile_status_chip.dart';
 
 class DashboardHomeContent extends StatelessWidget {

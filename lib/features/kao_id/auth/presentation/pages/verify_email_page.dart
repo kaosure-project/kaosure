@@ -7,7 +7,7 @@ import '../../../../../shared/widgets/app_bar/app_app_bar.dart';
 import '../../../../../shared/widgets/buttons/primary_button.dart';
 import '../../../../../shared/widgets/cards/app_card.dart';
 import '../../application/providers/auth_provider.dart';
-import '../../../router/kao_id_routes.dart';
+import '../../../../../app/routes/kao_id_routes.dart';
 import '../widgets/auth_logo.dart';
 
 class VerifyEmailPage extends ConsumerStatefulWidget {

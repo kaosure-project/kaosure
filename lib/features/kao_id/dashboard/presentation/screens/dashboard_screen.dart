@@ -8,7 +8,7 @@ import 'package:kaosure/l10n/app_localizations.dart';
 
 import '../../../account/presentation/pages/account_page.dart';
 import '../../../governance/presentation/widgets/governance_dashboard_tile.dart';
-import '../../../router/kao_id_routes.dart';
+import '../../../../../app/routes/kao_id_routes.dart';
 import '../../application/providers/dashboard_provider.dart';
 import '../widgets/dashboard_home_content.dart';
 import '../widgets/kao_id_scaffold.dart';

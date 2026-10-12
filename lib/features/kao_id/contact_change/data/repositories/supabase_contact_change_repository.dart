@@ -1,42 +1,11 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:kaosure/core/config/supabase_config.dart';
 import 'package:kaosure/core/providers/supabase_provider.dart';
-import '../phone_verification/domain/phone_verification_repository.dart';
-
-enum ContactKind { email, phone }
-
-class ContactSnapshot {
-  const ContactSnapshot(this.owner, this.value, this.confirmed, this.pending,
-      {this.factorIds = const []});
-  final String owner;
-  final String value;
-  final bool confirmed;
-  final String pending;
-  final List<String> factorIds;
-}
-
-class ContactChangeFailure implements Exception {
-  const ContactChangeFailure(this.code);
-  final String code;
-}
-
-abstract interface class ContactChangeRepository {
-  Future<ContactSnapshot> read(ContactKind kind);
-  Future<void> request(ContactKind kind, String owner, String target,
-      String password, {required bool resend, String? factorId, String? code});
-  Future<void> verifyPhone(String owner, String target, String token);
-}
-
-String? normalizeContact(ContactKind kind, String input) {
-  if (kind == ContactKind.phone) { return normalizePhone(input); }
-  final value = input.trim();
-  if (value.length > 254 || !RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(value)) {
-    return null;
-  }
-  return value.toLowerCase();
-}
+import 'package:kaosure/features/kao_id/contact_change/domain/entities/contact_snapshot.dart';
+import 'package:kaosure/features/kao_id/contact_change/domain/failures/contact_change_failure.dart';
+import 'package:kaosure/features/kao_id/contact_change/domain/repositories/contact_change_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 final contactChangeRepositoryProvider = Provider<ContactChangeRepository>((ref) {
   return SupabaseContactChangeRepository(ref.watch(supabaseClientProvider));

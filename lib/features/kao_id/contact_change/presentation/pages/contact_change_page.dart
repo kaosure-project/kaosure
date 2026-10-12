@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import 'contact_change_controller.dart';
-import 'contact_change_repository.dart';
+import '../../application/controllers/contact_change_controller.dart';
+import '../../domain/entities/contact_snapshot.dart';
+import '../../data/repositories/supabase_contact_change_repository.dart';
 
 class ContactChangePage extends ConsumerStatefulWidget {
   const ContactChangePage({super.key, required this.kind});

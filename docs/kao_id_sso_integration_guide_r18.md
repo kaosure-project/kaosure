@@ -41,6 +41,7 @@ Supported scopes: `openid email profile phone`; Secondhand requests `openid emai
    - Functions: `public.get_my_seller_readiness`, `public.create_personal_shop`, `public.create_marketplace_listing`.
    - Read-only tables: `public.products`, `public.product_images`, `public.categories`, `public.shops`, `public.banners`, `public.orders`, `public.recommendation_scores`, `public.profiles`, `public.wallets`, `public.wallet_transactions`.
    - Writable tables: `public.favorites:write`, `public.followers:write`, `public.notifications:write`, `public.recently_viewed:write`.
+   - App schema (R19b, exposed in API settings): `secondhand.member_profiles:write` and the function `secondhand.ensure_member_profile`. The market profile is created once with the Kao ID name and is independent afterwards; its avatar must be a copy in the member's own `secondhand-avatars/<uid>/` folder.
 4. **Hosting** — serve Kao ID's `index.html` for `/oauth/consent` (SPA fallback), like `/login`.
 5. Production: add the real HTTPS redirect URI to the client, then update the registry. Never register wildcard or `http` non-loopback redirects.
 

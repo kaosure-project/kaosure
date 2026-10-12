@@ -409,6 +409,15 @@ class AppLocalizationsLo extends AppLocalizations {
   String get authVerifyLater => 'ຢືນຢັນພາຍຫຼັງ';
 
   @override
+  String get authCurrentPassword => 'ລະຫັດຜ່ານປັດຈຸບັນ';
+
+  @override
+  String get authCurrentPasswordHint => 'ໃສ່ລະຫັດຜ່ານທີ່ໃຊ້ຢູ່ຕອນນີ້';
+
+  @override
+  String get authCurrentPasswordRequired => 'ໃສ່ລະຫັດຜ່ານປັດຈຸບັນ';
+
+  @override
   String get authNewPassword => 'ລະຫັດຜ່ານໃໝ່';
 
   @override

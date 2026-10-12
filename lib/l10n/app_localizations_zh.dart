@@ -402,6 +402,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get authVerifyLater => '稍后验证';
 
   @override
+  String get authCurrentPassword => '当前密码';
+
+  @override
+  String get authCurrentPasswordHint => '输入您现在使用的密码';
+
+  @override
+  String get authCurrentPasswordRequired => '请输入当前密码';
+
+  @override
   String get authNewPassword => '新密码';
 
   @override
@@ -3589,6 +3598,15 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get authVerifyLater => '稍后验证';
+
+  @override
+  String get authCurrentPassword => '当前密码';
+
+  @override
+  String get authCurrentPasswordHint => '输入您现在使用的密码';
+
+  @override
+  String get authCurrentPasswordRequired => '请输入当前密码';
 
   @override
   String get authNewPassword => '新密码';

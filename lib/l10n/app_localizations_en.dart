@@ -421,6 +421,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authVerifyLater => 'Verify later';
 
   @override
+  String get authCurrentPassword => 'Current password';
+
+  @override
+  String get authCurrentPasswordHint => 'Enter the password you use now';
+
+  @override
+  String get authCurrentPasswordRequired => 'Enter your current password';
+
+  @override
   String get authNewPassword => 'New password';
 
   @override

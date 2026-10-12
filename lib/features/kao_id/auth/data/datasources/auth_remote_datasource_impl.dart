@@ -118,6 +118,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<void> changePassword({
+    required String currentPassword,
     required String password,
     required String nonce,
   }) async {
@@ -139,6 +140,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
     await client.auth.updateUser(
       UserAttributes(
+        currentPassword: currentPassword,
         password: password,
         nonce: trimmedNonce,
       ),

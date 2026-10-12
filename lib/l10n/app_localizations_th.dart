@@ -417,6 +417,15 @@ class AppLocalizationsTh extends AppLocalizations {
   String get authVerifyLater => 'ยืนยันภายหลัง';
 
   @override
+  String get authCurrentPassword => 'รหัสผ่านปัจจุบัน';
+
+  @override
+  String get authCurrentPasswordHint => 'กรอกรหัสผ่านที่ใช้อยู่ตอนนี้';
+
+  @override
+  String get authCurrentPasswordRequired => 'กรุณากรอกรหัสผ่านปัจจุบัน';
+
+  @override
   String get authNewPassword => 'รหัสผ่านใหม่';
 
   @override

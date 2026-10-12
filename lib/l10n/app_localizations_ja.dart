@@ -404,6 +404,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get authVerifyLater => '後で確認';
 
   @override
+  String get authCurrentPassword => '現在のパスワード';
+
+  @override
+  String get authCurrentPasswordHint => '現在使用しているパスワードを入力';
+
+  @override
+  String get authCurrentPasswordRequired => '現在のパスワードを入力してください';
+
+  @override
   String get authNewPassword => '新しいパスワード';
 
   @override

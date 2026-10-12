@@ -418,6 +418,15 @@ class AppLocalizationsMy extends AppLocalizations {
   String get authVerifyLater => 'နောက်မှ အတည်ပြုရန်';
 
   @override
+  String get authCurrentPassword => 'လက်ရှိစကားဝှက်';
+
+  @override
+  String get authCurrentPasswordHint => 'ယခုအသုံးပြုနေသော စကားဝှက် ထည့်ပါ';
+
+  @override
+  String get authCurrentPasswordRequired => 'လက်ရှိစကားဝှက် ထည့်ပါ';
+
+  @override
   String get authNewPassword => 'စကားဝှက်အသစ်';
 
   @override

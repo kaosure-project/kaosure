@@ -88,6 +88,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<UserEntity?>> {
   }
 
   Future<void> changePassword({
+    required String currentPassword,
     required String password,
     required String nonce,
   }) async {
@@ -96,6 +97,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<UserEntity?>> {
     );
 
     await useCase(
+      currentPassword: currentPassword,
       password: password,
       nonce: nonce,
     );

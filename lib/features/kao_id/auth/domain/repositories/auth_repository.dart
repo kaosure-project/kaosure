@@ -26,8 +26,10 @@ abstract class AuthRepository {
   Future<void> reauthenticate();
 
   /// Changes the password for an authenticated user
-  /// after successful reauthentication.
+  /// after successful reauthentication. The current password is required
+  /// so a token issued to another app cannot change it.
   Future<void> changePassword({
+    required String currentPassword,
     required String password,
     required String nonce,
   });

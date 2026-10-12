@@ -8,10 +8,12 @@ class ChangePasswordUseCase {
   final AuthRepository repository;
 
   Future<void> call({
+    required String currentPassword,
     required String password,
     required String nonce,
   }) {
     return repository.changePassword(
+      currentPassword: currentPassword,
       password: password,
       nonce: nonce,
     );

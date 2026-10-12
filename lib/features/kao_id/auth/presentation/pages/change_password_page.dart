@@ -27,6 +27,7 @@ class _ChangePasswordPageState
   final _formKey = GlobalKey<FormState>();
 
   final _nonceController = TextEditingController();
+  final _currentPasswordController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
@@ -48,6 +49,7 @@ class _ChangePasswordPageState
     _confirmPasswordController.removeListener(_refreshPasswordState);
 
     _nonceController.dispose();
+    _currentPasswordController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
 
@@ -132,6 +134,7 @@ class _ChangePasswordPageState
 
     try {
       await ref.read(authProvider.notifier).changePassword(
+            currentPassword: _currentPasswordController.text,
             password: _passwordController.text,
             nonce: _nonceController.text.trim(),
           );
@@ -180,6 +183,14 @@ class _ChangePasswordPageState
   String? _validateNonce(String? value) {
     if (value == null || value.trim().isEmpty) {
       return AppLocalizations.of(context).authVerificationCodeRequired;
+    }
+
+    return null;
+  }
+
+  String? _validateCurrentPassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return AppLocalizations.of(context).authCurrentPasswordRequired;
     }
 
     return null;
@@ -328,6 +339,17 @@ class _ChangePasswordPageState
                     : AppLocalizations.of(context).authResendCode,
               ),
             ),
+          ),
+
+          const SizedBox(
+            height: AppSpacing.md,
+          ),
+
+          AppPasswordField(
+            controller: _currentPasswordController,
+            validator: _validateCurrentPassword,
+            label: AppLocalizations.of(context).authCurrentPassword,
+            hint: AppLocalizations.of(context).authCurrentPasswordHint,
           ),
 
           const SizedBox(

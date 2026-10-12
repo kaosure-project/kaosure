@@ -889,6 +889,24 @@ abstract class AppLocalizations {
   /// **'Verify later'**
   String get authVerifyLater;
 
+  /// No description provided for @authCurrentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get authCurrentPassword;
+
+  /// No description provided for @authCurrentPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the password you use now'**
+  String get authCurrentPasswordHint;
+
+  /// No description provided for @authCurrentPasswordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your current password'**
+  String get authCurrentPasswordRequired;
+
   /// No description provided for @authNewPassword.
   ///
   /// In en, this message translates to:

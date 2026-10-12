@@ -156,9 +156,10 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(TextFormField), findsNothing);
       await tapVisible(tester, find.byType(FilledButton));
-      expect(find.byType(TextFormField), findsNWidgets(3));
+      expect(find.byType(TextFormField), findsNWidgets(4));
       await tapVisible(tester, find.byType(FilledButton));
       expect(find.text(th ? 'กรุณากรอกรหัสยืนยัน' : 'Enter the verification code'), findsOneWidget);
+      expect(find.text(th ? 'กรุณากรอกรหัสผ่านปัจจุบัน' : 'Enter your current password'), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
 

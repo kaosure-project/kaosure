@@ -28,6 +28,7 @@ abstract class AuthRemoteDataSource {
   /// Changes the password for an authenticated user
   /// after successful reauthentication.
   Future<void> changePassword({
+    required String currentPassword,
     required String password,
     required String nonce,
   });

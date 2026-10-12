@@ -412,6 +412,15 @@ class AppLocalizationsVi extends AppLocalizations {
   String get authVerifyLater => 'Xác minh sau';
 
   @override
+  String get authCurrentPassword => 'Mật khẩu hiện tại';
+
+  @override
+  String get authCurrentPasswordHint => 'Nhập mật khẩu bạn đang dùng';
+
+  @override
+  String get authCurrentPasswordRequired => 'Nhập mật khẩu hiện tại';
+
+  @override
   String get authNewPassword => 'Mật khẩu mới';
 
   @override

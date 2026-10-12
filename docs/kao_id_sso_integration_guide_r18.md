@@ -201,7 +201,11 @@ Response shape (sections appear only when the app is registered for them):
 - [x] App tokens cannot write to the `identity-documents` or `avatars` storage buckets (restrictive storage policy `sso_app_storage_r18`). Storage, Realtime and Edge Functions do not run the PostgREST pre-request hook, so any new bucket or realtime table that holds Kao ID data must add the same `client_id` check.
 - [x] Suspending an app in the registry stops all its tokens at the next request.
 - [x] Consent page loads no remote logos and only follows https, loopback http or reverse-domain native redirects.
-- [ ] After enabling the OAuth server, confirm with a real app token that Supabase Auth's `/user` endpoints refuse profile, email and password changes; if not, route those through Kao ID only and record the result here.
+- [x] Checked 2026-10-12 with a real `secondhand_web` token: Supabase Auth accepts app tokens on `/auth/v1/user` (scopes do not limit it), so:
+  - Password: `security_update_password_require_current_password` is on; the app token got `400 current_password_required`. Kao ID's change-password page sends the current password; password recovery sessions are exempt by Supabase.
+  - Email: secure email change is on, so a change needs confirmation from both the old and the new address.
+  - `user_metadata`: writable by any user token; no Kao ID policy or function reads it, and none may.
+- [ ] Phone: an app token can still start a phone change (OTP goes to the new number). Route phone changes through Kao ID only before production, or keep phone off the claims an app can rely on.
 - [ ] Production: real HTTPS redirect URIs, MFA policy on for registry changes.
 
 ## 6. Checks

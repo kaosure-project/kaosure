@@ -38,11 +38,12 @@ Supported scopes: `openid email profile phone`; Secondhand requests `openid emai
    - App code `secondhand_web`, the client ID, name `Kao Secondhand`, Kao app on.
    - Claims: profile, verification, business.
    - Entries are `schema.name` (a bare name means `public`). Tables are read-only unless the entry ends with `:write`; functions have no `:write`.
-   - Functions: `public.get_my_seller_readiness`, `public.create_personal_shop`, `public.create_marketplace_listing`.
+   - Functions: `public.get_my_seller_readiness`, `public.create_personal_shop`. Since R20a listings go through `secondhand.create_listing` instead of `public.create_marketplace_listing`.
    - Read-only tables: `public.products`, `public.product_images`, `public.categories`, `public.shops`, `public.banners`, `public.orders`, `public.recommendation_scores`, `public.wallets`, `public.wallet_transactions`. Since R19e the app does not read `public.profiles`; it uses its own market profile and `kao_id_claims_r18`.
    - Writable tables: `public.favorites:write`, `public.followers:write`, `public.notifications:write`, `public.recently_viewed:write`.
    - App schema (R19b, exposed in API settings): `secondhand.member_profiles:write` and the function `secondhand.ensure_member_profile`. The market profile is created once with the Kao ID name and is independent afterwards; its avatar must be a copy in the member's own `secondhand-avatars/<uid>/` folder.
    - R19c: `secondhand.shipping_addresses:write` (owner only, max 10, one default), read-only `secondhand.reviews` and `secondhand.member_ratings`, and the functions `secondhand.submit_review` (one per side of a completed order, editable for 30 days) and `secondhand.reply_review`.
+   - R20a (listing form, THB): read-only `secondhand.market_settings`, `secondhand.thai_provinces`, `secondhand.shipping_partners`, `secondhand.shipping_options`, `secondhand.shipping_rates`, `secondhand.listings` (fee terms hidden) and `secondhand.first_sale_promotions` (own row), plus `secondhand.get_listing_terms` and `secondhand.create_listing` (1–20 photos, 10% fee, 0% on the seller's first listing). Shipping partners carry `integration_mode`/`provider_code` for a later aggregator or carrier API; credentials stay in Vault. Rollback E2E: `.tools/r20a_listing_e2e_block.sql`.
 4. **Hosting** — serve Kao ID's `index.html` for `/oauth/consent` (SPA fallback), like `/login`.
 5. Production: add the real HTTPS redirect URI to the client, then update the registry. Never register wildcard or `http` non-loopback redirects.
 

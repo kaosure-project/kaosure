@@ -20,9 +20,6 @@ import '../features/kao_id/bootstrap/presentation/screens/kao_id_bootstrap_scree
 import '../features/kao_id/business/presentation/pages/business_registration_page.dart';
 import '../features/kao_id/dashboard/presentation/screens/dashboard_screen.dart';
 import '../features/kao_id/kyc/presentation/screens/kyc_page.dart';
-import '../features/pudtan/presentation/screens/pudtan_chat_screen.dart';
-import '../features/secondhand/presentation/screens/landing_screen.dart';
-import '../features/secondhand/presentation/screens/secondhand_home_screen.dart';
 
 final class AppRouter {
   const AppRouter._();
@@ -39,14 +36,6 @@ final class AppRouter {
       // Entry Point
       // -----------------------------------------------------------------------
       case initialRoute:
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (_) => const LandingScreen(),
-        );
-
-      // -----------------------------------------------------------------------
-      // Kao ID Authentication
-      // -----------------------------------------------------------------------
       case KaoIdRoutes.kaoIdLanding:
         return MaterialPageRoute(
           settings: settings,
@@ -206,34 +195,12 @@ final class AppRouter {
         );
 
       // -----------------------------------------------------------------------
-      // KaoSure Secondhand Marketplace
-      // -----------------------------------------------------------------------
-      case '/home':
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (_) => const AuthGuard(
-            authenticatedChild: SecondhandHomeScreen(),
-          ),
-        );
-
-      // -----------------------------------------------------------------------
-      // Pudtan
-      // -----------------------------------------------------------------------
-      case '/pudtan':
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (_) => const AuthGuard(
-            authenticatedChild: PudtanChatScreen(),
-          ),
-        );
-
-      // -----------------------------------------------------------------------
       // Unknown Route
       // -----------------------------------------------------------------------
       default:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const LandingScreen(),
+          builder: (_) => const LandingPage(),
         );
     }
   }

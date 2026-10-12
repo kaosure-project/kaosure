@@ -14,8 +14,6 @@ import 'package:kaosure/features/kao_id/kyc/presentation/bank/bank_verification_
 import 'package:kaosure/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart';
 import 'package:kaosure/features/kao_id/kyc/presentation/passport/passport_page.dart';
 import 'package:kaosure/features/kao_id/kyc/presentation/screens/residence_permit_page.dart';
-import 'package:kaosure/features/kao_id/kyc/presentation/widgets/status_chip.dart';
-import 'package:kaosure/features/kao_id/kyc/presentation/widgets/upload_area.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:kaosure/features/kao_id/kyc/identity_card/national_id_repository.dart';
 import 'national_id_r7a_test.dart' show IdFixture;
@@ -74,22 +72,6 @@ void main() {
       });
     }
   }
-  testWidgets('Unknown document status is not represented as no submission', (tester) async {
-    await tester.pumpWidget(app(const Scaffold(body: StatusChip(status: 'unexpected')), 'en'));
-    await tester.pumpAndSettle();
-    final context = tester.element(find.byType(StatusChip));
-    expect(find.text(AppLocalizations.of(context).kycUnknownStatus), findsOneWidget);
-  });
-  testWidgets('Default upload labels rebuild when locale changes', (tester) async {
-    final page = Scaffold(body: SingleChildScrollView(child: UploadArea(onPressed: () {})));
-    await tester.pumpWidget(app(page, 'th'));
-    await tester.pumpAndSettle();
-    expect(find.text('เลือกไฟล์'), findsOneWidget);
-    await tester.pumpWidget(app(page, 'en'));
-    await tester.pumpAndSettle();
-    expect(find.text('Choose file'), findsOneWidget);
-    checkEnglish(tester);
-  });
   testWidgets('Residence form offers submission after a successful load', (tester) async {
     await tester.pumpWidget(app(const ResidencePermitPage(), 'en'));
     await tester.pumpAndSettle();

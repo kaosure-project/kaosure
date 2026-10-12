@@ -5742,6 +5742,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No requests match this filter'**
   String get businessReviewEmptyFilter;
+
+  /// No description provided for @kycForeignDocTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Thai documents for foreign residents'**
+  String get kycForeignDocTitle;
+
+  /// No description provided for @kycForeignDocIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'For foreigners living in Thailand. Use a document issued by the Thai government that shows your 13-digit personal number.'**
+  String get kycForeignDocIntro;
+
+  /// No description provided for @thaiDocKindLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Document type'**
+  String get thaiDocKindLabel;
+
+  /// No description provided for @thaiDocWorkPermit.
+  ///
+  /// In en, this message translates to:
+  /// **'Work permit'**
+  String get thaiDocWorkPermit;
+
+  /// No description provided for @thaiDocResidenceCertificate.
+  ///
+  /// In en, this message translates to:
+  /// **'Residence certificate / permanent residence book'**
+  String get thaiDocResidenceCertificate;
+
+  /// No description provided for @thaiDocPinkCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Non-Thai national ID card (pink card)'**
+  String get thaiDocPinkCard;
+
+  /// No description provided for @thaiDocTr13.
+  ///
+  /// In en, this message translates to:
+  /// **'Foreigner house registration (Tor.Ror.13)'**
+  String get thaiDocTr13;
+
+  /// No description provided for @thaiDocKindRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the document type'**
+  String get thaiDocKindRequired;
+
+  /// No description provided for @alienIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'13-digit personal number'**
+  String get alienIdLabel;
+
+  /// No description provided for @alienIdHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'The number the Thai government issued to you, printed on the document'**
+  String get alienIdHelp;
+
+  /// No description provided for @alienIdInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'This number is not valid. Check all 13 digits.'**
+  String get alienIdInvalid;
+
+  /// No description provided for @nationalityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Nationality'**
+  String get nationalityLabel;
+
+  /// No description provided for @passportNationalityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Nationality (passport issuing country)'**
+  String get passportNationalityLabel;
+
+  /// No description provided for @nationalityRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a nationality'**
+  String get nationalityRequired;
+
+  /// No description provided for @pickerSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get pickerSearch;
+
+  /// No description provided for @pickerNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No matches'**
+  String get pickerNoResults;
+
+  /// No description provided for @pickerChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose'**
+  String get pickerChoose;
+
+  /// No description provided for @passportNumberInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Use 5–20 English letters or digits'**
+  String get passportNumberInvalid;
+
+  /// No description provided for @thaiAddressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Address in Thailand'**
+  String get thaiAddressTitle;
+
+  /// No description provided for @thaiAddressHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you currently live in Thailand'**
+  String get thaiAddressHelp;
+
+  /// No description provided for @docAddressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Address on the document'**
+  String get docAddressTitle;
+
+  /// No description provided for @docAddressHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter it exactly as the Thai government document shows'**
+  String get docAddressHelp;
+
+  /// No description provided for @provinceRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a province'**
+  String get provinceRequired;
+
+  /// No description provided for @kycHolderSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Document holder'**
+  String get kycHolderSection;
+
+  /// No description provided for @kycDocumentSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Document details'**
+  String get kycDocumentSection;
+
+  /// No description provided for @kycImagesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Document images'**
+  String get kycImagesSection;
+
+  /// No description provided for @kycLatestSubmission.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest submission'**
+  String get kycLatestSubmission;
+
+  /// No description provided for @thaiDocCardFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Card with a front and a back'**
+  String get thaiDocCardFormat;
+
+  /// No description provided for @thaiDocFront.
+  ///
+  /// In en, this message translates to:
+  /// **'Front of the document'**
+  String get thaiDocFront;
+
+  /// No description provided for @thaiDocBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back of the document'**
+  String get thaiDocBack;
+
+  /// No description provided for @thaiDocPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Full page of the document'**
+  String get thaiDocPage;
+
+  /// No description provided for @thaiDocSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Send document for review'**
+  String get thaiDocSubmit;
+
+  /// No description provided for @thaiDocPendingHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending a document is not approval. An authorized officer must review it before your identity is verified.'**
+  String get thaiDocPendingHelp;
+
+  /// No description provided for @thaiDocCompleteForm.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sent yet. Check the document type, required fields, dates, address and images.'**
+  String get thaiDocCompleteForm;
+
+  /// No description provided for @thaiDocLegacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Residence document sent before this update'**
+  String get thaiDocLegacy;
 }
 
 class _AppLocalizationsDelegate

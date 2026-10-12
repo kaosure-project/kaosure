@@ -150,7 +150,7 @@ final class _KycPageState extends ConsumerState<KycPage> {
               Card(child: ExpansionTile(
                 title: Text(l10n.kycOtherGroup),
                 children: [
-                  entry('residence', Icons.description_outlined, l10n.kycResidenceTitle,
+                  entry('residence', Icons.description_outlined, l10n.kycForeignDocTitle,
                     documentStatusLabel(l10n, state, state.residencePermit), (_) => const ResidencePermitPage()),
                   entry('bank', Icons.account_balance_outlined, l10n.kycBankTitle,
                     state.isAvailable(KycResource.bank)

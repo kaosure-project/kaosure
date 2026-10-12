@@ -3079,4 +3079,116 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get businessReviewEmptyFilter => 'ไม่มีคำขอในตัวกรองนี้';
+
+  @override
+  String get kycForeignDocTitle => 'เอกสารราชการไทยสำหรับชาวต่างชาติ';
+
+  @override
+  String get kycForeignDocIntro =>
+      'สำหรับชาวต่างชาติที่อาศัยในประเทศไทย ใช้เอกสารที่ทางราชการไทยออกให้และมีเลขประจำตัว 13 หลัก';
+
+  @override
+  String get thaiDocKindLabel => 'ประเภทเอกสาร';
+
+  @override
+  String get thaiDocWorkPermit => 'ใบอนุญาตทำงาน (Work Permit)';
+
+  @override
+  String get thaiDocResidenceCertificate =>
+      'หนังสือรับรองถิ่นที่อยู่ / ใบสำคัญถิ่นที่อยู่';
+
+  @override
+  String get thaiDocPinkCard =>
+      'บัตรประจำตัวคนซึ่งไม่มีสัญชาติไทย (บัตรสีชมพู)';
+
+  @override
+  String get thaiDocTr13 => 'ทะเบียนบ้านคนต่างด้าว (ท.ร.13)';
+
+  @override
+  String get thaiDocKindRequired => 'กรุณาเลือกประเภทเอกสาร';
+
+  @override
+  String get alienIdLabel => 'เลขประจำตัว 13 หลัก';
+
+  @override
+  String get alienIdHelp =>
+      'เลขประจำตัวที่ทางราชการไทยออกให้ พิมพ์อยู่บนเอกสาร';
+
+  @override
+  String get alienIdInvalid => 'เลขประจำตัวไม่ถูกต้อง กรุณาตรวจสอบทั้ง 13 หลัก';
+
+  @override
+  String get nationalityLabel => 'สัญชาติ';
+
+  @override
+  String get passportNationalityLabel => 'สัญชาติ (ประเทศที่ออกหนังสือเดินทาง)';
+
+  @override
+  String get nationalityRequired => 'กรุณาเลือกสัญชาติ';
+
+  @override
+  String get pickerSearch => 'ค้นหา';
+
+  @override
+  String get pickerNoResults => 'ไม่พบรายการที่ค้นหา';
+
+  @override
+  String get pickerChoose => 'เลือก';
+
+  @override
+  String get passportNumberInvalid =>
+      'ใช้ตัวอักษรภาษาอังกฤษหรือตัวเลข 5–20 ตัว';
+
+  @override
+  String get thaiAddressTitle => 'ที่อยู่ในประเทศไทย';
+
+  @override
+  String get thaiAddressHelp => 'ที่อยู่ปัจจุบันที่คุณพักอาศัยในประเทศไทย';
+
+  @override
+  String get docAddressTitle => 'ที่อยู่ตามเอกสาร';
+
+  @override
+  String get docAddressHelp => 'กรอกให้ตรงกับที่ระบุในเอกสารราชการ';
+
+  @override
+  String get provinceRequired => 'กรุณาเลือกจังหวัด';
+
+  @override
+  String get kycHolderSection => 'ข้อมูลผู้ถือเอกสาร';
+
+  @override
+  String get kycDocumentSection => 'ข้อมูลเอกสาร';
+
+  @override
+  String get kycImagesSection => 'รูปเอกสาร';
+
+  @override
+  String get kycLatestSubmission => 'เอกสารที่ส่งล่าสุด';
+
+  @override
+  String get thaiDocCardFormat => 'เอกสารแบบบัตร มีด้านหน้าและด้านหลัง';
+
+  @override
+  String get thaiDocFront => 'ด้านหน้าเอกสาร';
+
+  @override
+  String get thaiDocBack => 'ด้านหลังเอกสาร';
+
+  @override
+  String get thaiDocPage => 'เอกสารเต็มหน้า';
+
+  @override
+  String get thaiDocSubmit => 'ส่งเอกสารเพื่อตรวจสอบ';
+
+  @override
+  String get thaiDocPendingHelp =>
+      'การส่งเอกสารยังไม่ถือว่ายืนยันตัวตนแล้ว ต้องผ่านการตรวจจากเจ้าหน้าที่ที่มีสิทธิ์ก่อน';
+
+  @override
+  String get thaiDocCompleteForm =>
+      'ยังไม่ได้ส่งเอกสาร กรุณาตรวจประเภทเอกสาร ช่องที่จำเป็น วันที่ ที่อยู่ และรูปภาพ';
+
+  @override
+  String get thaiDocLegacy => 'เอกสารพำนักที่ส่งไว้ก่อนการปรับปรุง';
 }

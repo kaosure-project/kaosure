@@ -66,15 +66,21 @@ class SupabaseResidenceRepository implements ResidenceRepository {
     await _check(draft.owner);
     String date(DateTime d) => '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
     try {
-      await client.rpc('submit_residence_r8b', params: {
-        'p_id': draft.id, 'p_number': draft.number, 'p_given': draft.given,
+      await client.rpc('submit_thai_foreign_document_r16b', params: {
+        'p_id': draft.id, 'p_kind': draft.kind.code, 'p_number': draft.number, 'p_given': draft.given,
         'p_family': draft.family, 'p_single': draft.singleName, 'p_family_first': draft.familyFirst,
-        'p_country': draft.country, 'p_format': draft.format, 'p_no_expiry': draft.noExpiry,
+        'p_nationality': draft.nationality, 'p_format': draft.format, 'p_no_expiry': draft.noExpiry,
         'p_issued': date(draft.issued), 'p_expiry': draft.expiry == null ? null : date(draft.expiry!),
         'p_front': front, 'p_back': back,
+        'p_address_line': draft.address.line, 'p_subdistrict': draft.address.subdistrict,
+        'p_district': draft.address.district, 'p_province': draft.address.province,
+        'p_postal_code': draft.address.postalCode,
       });
     } on PostgrestException catch (e) {
       if (e.message == 'review_already_active') { throw const NationalIdFailure('pending'); }
+      if (e.message == 'invalid_address' || e.message == 'invalid_residence') {
+        throw const NationalIdFailure('form');
+      }
       rethrow;
     }
     await _check(draft.owner);

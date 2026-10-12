@@ -80,7 +80,7 @@ class _DocumentHealthPageState extends ConsumerState<DocumentHealthPage> {
     String type(String value) => switch(value) {
       'thai_national_id' => l.kycIdCardTitle,
       'passport' => l.kycPassportTitle,
-      'residence_card' => l.kycResidenceTitle,
+      'residence_card' => l.kycForeignDocTitle,
       _ => value,
     };
     return Scaffold(appBar: AppBar(title: Text(l.documentHealthTitle)), body: SafeArea(child: Center(

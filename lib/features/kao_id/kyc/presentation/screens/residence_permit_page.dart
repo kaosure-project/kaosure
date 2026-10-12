@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
+import 'package:kaosure/shared/design_system/colors/app_colors.dart';
 import '../../../auth/application/providers/auth_provider.dart';
+import '../../../dashboard/presentation/widgets/kao_id_subpage_scaffold.dart';
+import '../../../dashboard/presentation/widgets/section/section_body.dart';
 import '../../domain/failures/national_id_failure.dart';
 import '../../domain/entities/id_image.dart';
 import '../../application/providers/id_image_picker_provider.dart';
 import '../../domain/entities/residence.dart';
+import '../../domain/entities/thai_document_kind.dart';
+import '../../domain/reference/countries.dart';
+import '../../domain/validators/alien_id_number.dart';
 import '../../data/repositories/supabase_residence_repository.dart';
+import '../widgets/form/kyc_form_parts.dart';
+import '../widgets/form/nationality_field.dart';
+import '../widgets/form/thai_address_fields.dart';
 import '../widgets/kyc_status_label.dart';
+import '../widgets/thai_document_kind_label.dart';
 
+/// Thai government documents for foreign residents. Residence documents sent
+/// before document kinds existed are still shown read-only.
 final class ResidencePermitPage extends ConsumerStatefulWidget {
   const ResidencePermitPage({super.key});
   @override
@@ -18,7 +31,10 @@ final class ResidencePermitPage extends ConsumerStatefulWidget {
 final class _ResidencePermitPageState extends ConsumerState<ResidencePermitPage> {
   final _form = GlobalKey<FormState>();
   final _given = TextEditingController(), _family = TextEditingController();
-  final _number = TextEditingController(), _country = TextEditingController();
+  final _number = TextEditingController();
+  final _address = ThaiAddressController();
+  ThaiDocumentKind? _kind;
+  String? _nationality;
   DateTime? _issued, _expiry;
   IdImage? _front, _back;
   bool _card = true, _noExpiry = false;
@@ -33,8 +49,11 @@ final class _ResidencePermitPageState extends ConsumerState<ResidencePermitPage>
   void initState() { super.initState(); Future.microtask(_load); }
   @override
   void dispose() {
-    _given.dispose(); _family.dispose(); _number.dispose(); _country.dispose();
+    _given.dispose(); _family.dispose(); _number.dispose(); _address.dispose();
     super.dispose();
+  }
+  void _clearForm() {
+    _given.clear(); _family.clear(); _number.clear(); _address.clear(); _nationality = null; _kind = null;
   }
   Future<void> _load() async {
     if (!mounted || _busy || _sessionChanged) { return; }
@@ -62,7 +81,7 @@ final class _ResidencePermitPageState extends ConsumerState<ResidencePermitPage>
     'file' => l.idFileInvalid,
     'preview' => l.idPreviewFailed,
     'pending' => l.residenceOtherPending,
-    'form' => l.residenceCompleteForm,
+    'form' => l.thaiDocCompleteForm,
     _ => l.idSaveFailed,
   };
   void _fail(String code) {
@@ -90,30 +109,30 @@ final class _ResidencePermitPageState extends ConsumerState<ResidencePermitPage>
       if (field == 'issued') { _issued = date; } else { _expiry = date; }
     });
   }
+  bool get _datesValid => _issued != null && (_noExpiry || (_expiry != null && _expiry!.isAfter(_issued!)));
   Future<void> _save() async {
     if (_busy || !_known || _owner == null || _sessionChanged) { return; }
     if (_attempt == null) {
       setState(() => _validate = true);
       final fieldsValid = _form.currentState!.validate();
-      if (!fieldsValid || _issued == null ||
-          (!_noExpiry && (_expiry == null || !_expiry!.isAfter(_issued!))) ||
-          _front == null || (_card && _back == null)) {
+      if (!fieldsValid || _kind == null || countryByCode(_nationality) == null || !_address.value.isValid ||
+          !_datesValid || _front == null || (_card && _back == null)) {
         _fail('form'); return;
       }
-      _attempt = ResidenceDraft(id: const Uuid().v4(), owner: _owner!,
+      _attempt = ResidenceDraft(id: const Uuid().v4(), owner: _owner!, kind: _kind!,
         number: _number.text.trim(), given: _given.text.trim(),
         family: _single ? '' : _family.text.trim(), singleName: _single,
-        familyFirst: _single ? false : _familyFirst, country: _country.text.trim(),
+        familyFirst: _single ? false : _familyFirst, nationality: _nationality!,
         format: _card ? 'card' : 'paper', noExpiry: _noExpiry,
-        issued: _issued!, expiry: _noExpiry ? null : _expiry, front: _front!, back: _card ? _back : null);
+        issued: _issued!, expiry: _noExpiry ? null : _expiry, address: _address.value,
+        front: _front!, back: _card ? _back : null);
     }
     FocusScope.of(context).unfocus();
     setState(() { _busy = true; _error = null; });
     try {
       final result = await ref.read(residenceRepositoryProvider).submit(_attempt!);
       if (mounted && !_sessionChanged) {
-        setState(() { _record = result; _pending = true; _attempt = null; _front = null; _back = null; });
-        _given.clear(); _family.clear(); _number.clear(); _country.clear();
+        setState(() { _record = result; _pending = true; _attempt = null; _front = null; _back = null; _clearForm(); });
       }
     } catch (e) { _fail(e is NationalIdFailure ? e.code : 'save'); }
     finally { if (mounted) { setState(() => _busy = false); } }
@@ -125,7 +144,7 @@ final class _ResidencePermitPageState extends ConsumerState<ResidencePermitPage>
       if (!mounted || _sessionChanged) { return; }
       final l = AppLocalizations.of(context);
       await showDialog<void>(context: context, builder: (c) => AlertDialog(
-        title: Text(l.kycResidencePermit),
+        title: Text(l.kycForeignDocTitle),
         content: SizedBox(width: 600, height: 400, child: Consumer(builder: (context, ref, child) {
           final current = ref.watch(authProvider).asData?.value?.id;
           if (_sessionChanged || current != _owner) { return Text(l.contactSessionChanged); }
@@ -137,6 +156,47 @@ final class _ResidencePermitPageState extends ConsumerState<ResidencePermitPage>
     } catch (_) { _fail('preview'); }
     finally { if (mounted) { setState(() => _busy = false); } }
   }
+
+  Widget _statusPanel(AppLocalizations l, bool showForm) {
+    final record = _record;
+    final language = l.localeName.split('_').first;
+    String date(DateTime? d) => d == null ? l.kycSelectDate : MaterialLocalizations.of(context).formatMediumDate(d);
+    final kind = record?.kind;
+    return KycFormPanel(title: l.kycLatestSubmission, icon: Icons.history, color: AppColors.kaoSlate, children: [
+      if (_busy) const Padding(padding: EdgeInsets.only(bottom: 12), child: LinearProgressIndicator()),
+      if (_error != null && !showForm) KycFormMessage(message: _message(l, _error!)),
+      if (_known && record == null) Text(l.kycNoDocumentSubmitted,
+        style: const TextStyle(color: AppColors.textSecondary)),
+      if (record != null) ...[
+        Text(kind == null ? l.thaiDocLegacy : thaiDocumentKindLabel(l, kind),
+          style: const TextStyle(color: AppColors.textSecondary)),
+        Text(kycStatusLabel(l, record.status), style: Theme.of(context).textTheme.titleSmall
+          ?.copyWith(fontWeight: FontWeight.w700)),
+        if (record.data['full_name'] != null) Text(record.data['full_name'] as String),
+        if (countryByCode(record.nationality) case final country?)
+          Text('${l.nationalityLabel}: ${country.name(language)}')
+        else if (kind == null && record.data['issuing_country'] != null)
+          Text('${l.residenceIssuingCountry}: ${record.data['issuing_country']}'),
+        Text('${l.kycExpiryDate}: ${record.data['no_expiry'] == true ? l.residenceNoExpiry : date(record.expiry)}'),
+        if (record.rejection?.isNotEmpty == true) Text(record.rejection!,
+          style: const TextStyle(color: AppColors.error)),
+        for (final path in record.paths) Align(alignment: AlignmentDirectional.centerStart,
+          child: TextButton.icon(onPressed: _busy ? null : () => _preview(path),
+            icon: const Icon(Icons.visibility_outlined),
+            label: Text(path.endsWith('/back.jpg') ? l.residenceViewBack : l.residenceViewFront))),
+        if (const {'pending', 'pending_review', 'under_review', 'submitted'}.contains(record.status))
+          Text(l.thaiDocPendingHelp, style: const TextStyle(color: AppColors.textSecondary)),
+      ],
+      if (_known && _pending && (record == null || record.canResubmit)) ...[
+        const SizedBox(height: 8),
+        KycFormMessage(message: l.residenceOtherPending, error: false),
+      ],
+      const SizedBox(height: 8),
+      Align(alignment: AlignmentDirectional.centerStart, child: OutlinedButton.icon(
+        onPressed: _busy ? null : _load, icon: const Icon(Icons.refresh), label: Text(l.authCheckAgain))),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.listen(authProvider, (previous, next) {
@@ -144,100 +204,115 @@ final class _ResidencePermitPageState extends ConsumerState<ResidencePermitPage>
       final nextId = next.asData?.value?.id;
       if (_owner != null && (previousId == _owner || nextId != null) && nextId != _owner) {
         setState(() {
-          _sessionChanged = true; _record = null; _attempt = null; _front = null; _back = null;
-          _given.clear(); _family.clear(); _number.clear(); _country.clear();
+          _sessionChanged = true; _record = null; _attempt = null; _front = null; _back = null; _clearForm();
         });
       }
     });
     final l = AppLocalizations.of(context);
-    if (_sessionChanged) { return Scaffold(appBar: AppBar(title: Text(l.kycResidencePermit)), body: Center(child: Text(l.contactSessionChanged))); }
+    Widget frame(Widget child) => KaoIdSubpageScaffold(
+      badgeIcon: Icons.verified_user_outlined, badgeLabel: l.kycIdentityVerification, child: child);
+    if (_sessionChanged) { return frame(Center(child: Text(l.contactSessionChanged))); }
     final editable = !_busy && _attempt == null;
     final showForm = _known && !_pending && (_record == null || _record!.canResubmit);
-    String date(DateTime? d) => d == null ? l.kycSelectDate : MaterialLocalizations.of(context).formatMediumDate(d);
-    Widget field(String key, TextEditingController controller, String label, int max) => Padding(
-      padding: const EdgeInsets.only(bottom: 16), child: TextFormField(
+    Widget field(String key, TextEditingController controller, String label, int max,
+        {String? helper, bool digits = false, String? Function(String)? check}) => Padding(
+      padding: const EdgeInsets.only(bottom: 8), child: TextFormField(
         key: ValueKey(key), controller: controller, enabled: editable, maxLength: max,
         textInputAction: TextInputAction.next,
-        decoration: InputDecoration(labelText: label, border: const OutlineInputBorder()),
+        keyboardType: digits ? TextInputType.number : null,
+        inputFormatters: digits ? [FilteringTextInputFormatter.digitsOnly] : null,
+        decoration: InputDecoration(labelText: label, helperText: helper, helperMaxLines: 2,
+          border: const OutlineInputBorder()),
         validator: (value) {
           if (value == null || value.trim().isEmpty) { return l.passportRequired; }
-          if (key == 'residence-country' && value.trim().length < 2) { return l.passportCountryInvalid; }
-          return null;
+          return check?.call(value.trim());
         },
       ));
-    Widget dateButton(String key, String label, DateTime? value) => OutlinedButton(
-      key: ValueKey('residence-$key'), onPressed: editable ? () => _date(key) : null,
-      child: Text('$label: ${date(value)}'));
-    Widget picker(bool front) {
-      final image = front ? _front : _back;
-      return Card(child: Padding(padding: const EdgeInsets.all(12), child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Text(front ? (_card ? l.residenceFront : l.residencePage) : l.residenceBack),
-          if (image != null) ...[Image.memory(image.bytes, height: 160), Text(image.name)],
-          OutlinedButton(key: ValueKey(front ? 'residence-front' : 'residence-back'),
-            onPressed: editable ? () => _pick(front) : null, child: Text(l.kycChooseFile)),
-          if (_validate && image == null) Text(l.residenceImageRequired),
-        ])));
-    }
-    return PopScope(canPop: !_busy, child: Scaffold(appBar: AppBar(title: Text(l.kycResidencePermit)),
-      body: SafeArea(child: Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 760),
-        child: Form(key: _form, autovalidateMode: _validate ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
-          child: ListView(padding: const EdgeInsets.all(20), children: [
-            Text(l.residenceIntro), const SizedBox(height: 16),
-            if (_busy) const LinearProgressIndicator(),
-            if (_error != null && !showForm) Semantics(liveRegion: true, child: Text(_message(l, _error!))),
-            OutlinedButton(onPressed: _busy ? null : _load, child: Text(l.authCheckAgain)),
-            if (_known && _record == null) Text(l.kycNoDocumentSubmitted),
-            if (_record != null) Card(child: Padding(padding: const EdgeInsets.all(16), child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                Text(kycStatusLabel(l, _record!.status)),
-                if (_record!.data['full_name'] != null) Text(_record!.data['full_name'] as String),
-                if (_record!.data['issuing_country'] != null) Text('${l.residenceIssuingCountry}: ${_record!.data['issuing_country']}'),
-                Text('${l.kycExpiryDate}: ${_record!.data['no_expiry'] == true ? l.residenceNoExpiry : date(_record!.expiry)}'),
-                if (_record!.rejection?.isNotEmpty == true) Text(_record!.rejection!),
-                for (final path in _record!.paths) TextButton(onPressed: _busy ? null : () => _preview(path), child: Text(path.endsWith('/back.jpg') ? l.residenceViewBack : l.residenceViewFront)),
-                if (const {'pending', 'pending_review', 'under_review', 'submitted'}.contains(_record!.status))
-                  Text(l.residencePendingHelp),
-              ]))),
-            if (_known && _pending && (_record == null || _record!.canResubmit)) Text(l.residenceOtherPending),
-            if (showForm) ...[
-              const SizedBox(height: 16),
-              SwitchListTile(key: const ValueKey('residence-card'), value: _card,
+    Widget picker(bool front) => KycImagePicker(
+      buttonKey: front ? 'residence-front' : 'residence-back',
+      title: front ? (_card ? l.thaiDocFront : l.thaiDocPage) : l.thaiDocBack,
+      image: front ? _front : _back,
+      onPick: editable ? () => _pick(front) : null,
+      errorText: _validate && (front ? _front : _back) == null ? l.residenceImageRequired : null);
+    final text = Theme.of(context).textTheme;
+    return PopScope(canPop: !_busy, child: frame(Form(key: _form,
+      autovalidateMode: _validate ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
+      child: SectionBody(
+        icon: Icons.assignment_ind_outlined, color: AppColors.kaoBlue, tint: AppColors.kaoBlueSoft,
+        title: l.kycForeignDocTitle, description: l.kycForeignDocIntro,
+        top: [_statusPanel(l, showForm)],
+        start: [
+          if (showForm) KycFormPanel(title: l.kycDocumentSection, icon: Icons.badge_outlined, children: [
+            Text(l.thaiDocKindLabel, style: text.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
+            const SizedBox(height: 8),
+            Wrap(spacing: 8, runSpacing: 8, children: [
+              for (final kind in ThaiDocumentKind.values)
+                ChoiceChip(
+                  key: ValueKey('residence-kind-${kind.code}'),
+                  label: Text(thaiDocumentKindLabel(l, kind)),
+                  selected: _kind == kind,
+                  onSelected: editable ? (_) => setState(() { _kind = kind; _card = kind.cardByDefault; }) : null,
+                ),
+            ]),
+            if (_validate && _kind == null) Padding(padding: const EdgeInsets.only(top: 6),
+              child: Text(l.thaiDocKindRequired, style: const TextStyle(color: AppColors.error))),
+            const SizedBox(height: 20),
+            field('residence-number', _number, l.alienIdLabel, 13, helper: l.alienIdHelp, digits: true,
+              check: (value) => isValidThaiPersonalNumber(value) ? null : l.alienIdInvalid),
+            const SizedBox(height: 8),
+            KycDateField(fieldKey: 'residence-issued', label: l.kycIssueDate, value: _issued,
+              onTap: editable ? () => _date('issued') : null,
+              errorText: _validate && _issued == null ? l.residenceDatesInvalid : null),
+            CheckboxListTile(key: const ValueKey('residence-no-expiry'), value: _noExpiry,
+              contentPadding: EdgeInsets.zero, controlAffinity: ListTileControlAffinity.leading,
+              onChanged: editable ? (v) => setState(() => _noExpiry = v ?? false) : null,
+              title: Text(l.residenceNoExpiry)),
+            if (!_noExpiry) Padding(padding: const EdgeInsets.only(top: 8), child: KycDateField(
+              fieldKey: 'residence-expiry', label: l.kycExpiryDate, value: _expiry,
+              onTap: editable ? () => _date('expiry') : null,
+              errorText: _validate && _issued != null && !_datesValid ? l.residenceDatesInvalid : null)),
+          ]),
+          if (showForm) KycFormPanel(title: l.kycHolderSection, icon: Icons.person_outline, children: [
+            CheckboxListTile(key: const ValueKey('residence-single'), value: _single,
+              contentPadding: EdgeInsets.zero, controlAffinity: ListTileControlAffinity.leading,
+              onChanged: editable ? (v) => setState(() => _single = v ?? false) : null,
+              title: Text(l.residenceSingleName)),
+            const SizedBox(height: 8),
+            field('residence-given', _given, _single ? l.residenceOnlyName : l.passportGiven, 100),
+            if (!_single) field('residence-family', _family, l.passportFamily, 100),
+            if (!_single) CheckboxListTile(value: _familyFirst,
+              contentPadding: EdgeInsets.zero, controlAffinity: ListTileControlAffinity.leading,
+              onChanged: editable ? (v) => setState(() => _familyFirst = v ?? false) : null,
+              title: Text(l.passportFamilyFirst)),
+            const SizedBox(height: 8),
+            NationalityField(fieldKey: 'residence-nationality', label: l.nationalityLabel,
+              value: _nationality, enabled: editable, showError: _validate,
+              onChanged: (code) => setState(() => _nationality = code)),
+          ]),
+        ],
+        end: [
+          if (showForm) KycFormPanel(title: l.docAddressTitle, subtitle: l.docAddressHelp,
+            icon: Icons.home_outlined, color: AppColors.kaoGreen, children: [
+              ThaiAddressFields(controller: _address, keyPrefix: 'residence', enabled: editable,
+                showErrors: _validate, onChanged: () => setState(() {})),
+            ]),
+          if (showForm) KycFormPanel(title: l.kycImagesSection, subtitle: l.idFileHelp,
+            icon: Icons.photo_camera_outlined, children: [
+              SwitchListTile(key: const ValueKey('residence-card'), value: _card, contentPadding: EdgeInsets.zero,
                 onChanged: editable ? (v) => setState(() => _card = v) : null,
-                title: Text(l.residenceCardFormat), subtitle: Text(_card ? l.residenceTwoSides : l.residenceOnePage)),
-              CheckboxListTile(key: const ValueKey('residence-single'), value: _single,
-                onChanged: editable ? (v) => setState(() => _single = v ?? false) : null,
-                title: Text(l.residenceSingleName)),
-              field('residence-given', _given, _single ? l.residenceOnlyName : l.passportGiven, 100),
-              if (!_single) field('residence-family', _family, l.passportFamily, 100),
-              if (!_single) CheckboxListTile(value: _familyFirst,
-                onChanged: editable ? (v) => setState(() => _familyFirst = v ?? false) : null,
-                title: Text(l.passportFamilyFirst)),
-              field('residence-number', _number, l.residenceNumber, 30),
-              field('residence-country', _country, l.residenceIssuingCountry, 100),
-              dateButton('issued', l.kycIssueDate, _issued),
-              CheckboxListTile(key: const ValueKey('residence-no-expiry'), value: _noExpiry,
-                onChanged: editable ? (v) => setState(() => _noExpiry = v ?? false) : null,
-                title: Text(l.residenceNoExpiry)),
-              if (!_noExpiry) dateButton('expiry', l.kycExpiryDate, _expiry),
-              if (_validate && (_issued == null || (!_noExpiry && (_expiry == null ||
-                (_issued != null && !_expiry!.isAfter(_issued!)))))) Text(l.residenceDatesInvalid),
-              const SizedBox(height: 16),
-              Text(l.idFileHelp),
+                title: Text(l.thaiDocCardFormat), subtitle: Text(_card ? l.residenceTwoSides : l.residenceOnePage)),
+              const SizedBox(height: 8),
               picker(true),
               if (_card) picker(false),
-              const SizedBox(height: 16),
-              if (_error != null) Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: Semantics(liveRegion: true, child: Text(_message(l, _error!),
-                  style: TextStyle(color: Theme.of(context).colorScheme.error)))),
-              if (_busy) Text(l.idSubmitting),
-              FilledButton(key: const ValueKey('residence-submit'), onPressed: _busy ? null : _save,
-                child: Text(_attempt == null ? l.residenceSubmit : l.idRetrySubmission)),
-            ],
-          ]),
-        ),
-      ))),
-    ));
+              const SizedBox(height: 4),
+              if (_error != null) KycFormMessage(message: _message(l, _error!)),
+              if (_busy) Padding(padding: const EdgeInsets.only(bottom: 12), child: Text(l.idSubmitting)),
+              FilledButton.icon(key: const ValueKey('residence-submit'), onPressed: _busy ? null : _save,
+                icon: const Icon(Icons.send_outlined),
+                label: Text(_attempt == null ? l.thaiDocSubmit : l.idRetrySubmission)),
+            ]),
+        ],
+      ),
+    )));
   }
 }

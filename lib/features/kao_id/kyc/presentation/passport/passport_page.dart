@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
+import 'package:kaosure/shared/design_system/colors/app_colors.dart';
 import '../../../auth/application/providers/auth_provider.dart';
+import '../../../dashboard/presentation/widgets/kao_id_subpage_scaffold.dart';
+import '../../../dashboard/presentation/widgets/section/section_body.dart';
 import '../../domain/failures/national_id_failure.dart';
 import '../../domain/entities/id_image.dart';
 import '../../application/providers/id_image_picker_provider.dart';
 import '../../domain/entities/passport.dart';
+import '../../domain/reference/countries.dart';
 import '../../data/repositories/supabase_passport_repository.dart';
+import '../widgets/form/kyc_form_parts.dart';
+import '../widgets/form/nationality_field.dart';
+import '../widgets/form/thai_address_fields.dart';
 import '../widgets/kyc_status_label.dart';
 
 final class PassportPage extends ConsumerStatefulWidget {
@@ -18,7 +25,9 @@ final class PassportPage extends ConsumerStatefulWidget {
 final class _PassportPageState extends ConsumerState<PassportPage> {
   final _form = GlobalKey<FormState>();
   final _given = TextEditingController(), _family = TextEditingController();
-  final _number = TextEditingController(), _country = TextEditingController();
+  final _number = TextEditingController();
+  final _address = ThaiAddressController();
+  String? _nationality;
   DateTime? _birth, _issued, _expiry;
   IdImage? _image;
   PassportRecord? _record;
@@ -32,8 +41,11 @@ final class _PassportPageState extends ConsumerState<PassportPage> {
   void initState() { super.initState(); Future.microtask(_load); }
   @override
   void dispose() {
-    _given.dispose(); _family.dispose(); _number.dispose(); _country.dispose();
+    _given.dispose(); _family.dispose(); _number.dispose(); _address.dispose();
     super.dispose();
+  }
+  void _clearForm() {
+    _given.clear(); _family.clear(); _number.clear(); _address.clear(); _nationality = null;
   }
   Future<void> _load() async {
     if (!mounted || _busy || _sessionChanged) { return; }
@@ -90,28 +102,29 @@ final class _PassportPageState extends ConsumerState<PassportPage> {
       else if (field == 'issued') { _issued = date; } else { _expiry = date; }
     });
   }
+  bool get _datesValid => _birth != null && _issued != null && _expiry != null &&
+      !_issued!.isBefore(_birth!) && _expiry!.isAfter(_issued!);
   Future<void> _save() async {
     if (_busy || !_known || _owner == null || _sessionChanged) { return; }
     if (_attempt == null) {
       setState(() => _validate = true);
       final fieldsValid = _form.currentState!.validate();
-      if (!fieldsValid || _birth == null || _issued == null || _expiry == null ||
-          _issued!.isBefore(_birth!) || !_expiry!.isAfter(_issued!) || _image == null) {
+      if (!fieldsValid || countryByCode(_nationality) == null || !_address.value.isValid ||
+          !_datesValid || _image == null) {
         _fail('form'); return;
       }
       _attempt = PassportDraft(id: const Uuid().v4(), owner: _owner!,
-        number: _number.text.trim(), given: _given.text.trim(),
+        number: normalizePassportNumber(_number.text), given: _given.text.trim(),
         family: _single ? '' : _family.text.trim(), singleName: _single,
-        familyFirst: _single ? false : _familyFirst, country: _country.text.trim(),
-        birth: _birth!, issued: _issued!, expiry: _expiry!, image: _image!);
+        familyFirst: _single ? false : _familyFirst, nationality: _nationality!,
+        birth: _birth!, issued: _issued!, expiry: _expiry!, address: _address.value, image: _image!);
     }
     FocusScope.of(context).unfocus();
     setState(() { _busy = true; _error = null; });
     try {
       final result = await ref.read(passportRepositoryProvider).submit(_attempt!);
       if (mounted && !_sessionChanged) {
-        setState(() { _record = result; _pending = true; _attempt = null; _image = null; });
-        _given.clear(); _family.clear(); _number.clear(); _country.clear();
+        setState(() { _record = result; _pending = true; _attempt = null; _image = null; _clearForm(); });
       }
     } catch (e) { _fail(e is NationalIdFailure ? e.code : 'save'); }
     finally { if (mounted) { setState(() => _busy = false); } }
@@ -135,92 +148,124 @@ final class _PassportPageState extends ConsumerState<PassportPage> {
     } catch (_) { _fail('preview'); }
     finally { if (mounted) { setState(() => _busy = false); } }
   }
+
+  Widget _statusPanel(AppLocalizations l, bool showForm) {
+    final record = _record;
+    final language = l.localeName.split('_').first;
+    String date(DateTime? d) => d == null ? l.kycSelectDate : MaterialLocalizations.of(context).formatMediumDate(d);
+    return KycFormPanel(title: l.kycLatestSubmission, icon: Icons.history, color: AppColors.kaoSlate, children: [
+      if (_busy) const Padding(padding: EdgeInsets.only(bottom: 12), child: LinearProgressIndicator()),
+      if (_error != null && !showForm) KycFormMessage(message: _message(l, _error!)),
+      if (_known && record == null) Text(l.kycNoDocumentSubmitted,
+        style: const TextStyle(color: AppColors.textSecondary)),
+      if (record != null) ...[
+        Text(kycStatusLabel(l, record.status), style: Theme.of(context).textTheme.titleSmall
+          ?.copyWith(fontWeight: FontWeight.w700)),
+        if (record.data['full_name'] != null) Text(record.data['full_name'] as String),
+        if (countryByCode(record.nationality) case final country?)
+          Text('${l.nationalityLabel}: ${country.name(language)}'),
+        Text('${l.kycExpiryDate}: ${date(record.expiry)}'),
+        if (record.rejection?.isNotEmpty == true) Text(record.rejection!,
+          style: const TextStyle(color: AppColors.error)),
+        for (final path in record.paths) Align(alignment: AlignmentDirectional.centerStart,
+          child: TextButton.icon(onPressed: _busy ? null : () => _preview(path),
+            icon: const Icon(Icons.visibility_outlined), label: Text(l.idViewDocument))),
+        if (const {'pending', 'pending_review', 'under_review', 'submitted'}.contains(record.status))
+          Text(l.passportPendingHelp, style: const TextStyle(color: AppColors.textSecondary)),
+      ],
+      if (_known && _pending && (record == null || record.canResubmit)) ...[
+        const SizedBox(height: 8),
+        KycFormMessage(message: l.passportOtherPending, error: false),
+      ],
+      const SizedBox(height: 8),
+      Align(alignment: AlignmentDirectional.centerStart, child: OutlinedButton.icon(
+        onPressed: _busy ? null : _load, icon: const Icon(Icons.refresh), label: Text(l.authCheckAgain))),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.listen(authProvider, (previous, next) {
       final previousId = previous?.asData?.value?.id;
       final nextId = next.asData?.value?.id;
       if (_owner != null && (previousId == _owner || nextId != null) && nextId != _owner) {
-        setState(() {
-          _sessionChanged = true; _record = null; _attempt = null; _image = null;
-          _given.clear(); _family.clear(); _number.clear(); _country.clear();
-        });
+        setState(() { _sessionChanged = true; _record = null; _attempt = null; _image = null; _clearForm(); });
       }
     });
     final l = AppLocalizations.of(context);
-    if (_sessionChanged) { return Scaffold(appBar: AppBar(title: Text(l.kycPassport)), body: Center(child: Text(l.contactSessionChanged))); }
+    Widget frame(Widget child) => KaoIdSubpageScaffold(
+      badgeIcon: Icons.verified_user_outlined, badgeLabel: l.kycIdentityVerification, child: child);
+    if (_sessionChanged) { return frame(Center(child: Text(l.contactSessionChanged))); }
     final editable = !_busy && _attempt == null;
     final showForm = _known && !_pending && (_record == null || _record!.canResubmit);
-    String date(DateTime? d) => d == null ? l.kycSelectDate : MaterialLocalizations.of(context).formatMediumDate(d);
-    Widget field(String key, TextEditingController controller, String label, int max) => Padding(
-      padding: const EdgeInsets.only(bottom: 16), child: TextFormField(
+    Widget field(String key, TextEditingController controller, String label, int max,
+        {String? Function(String)? check}) => Padding(
+      padding: const EdgeInsets.only(bottom: 8), child: TextFormField(
         key: ValueKey(key), controller: controller, enabled: editable, maxLength: max,
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(labelText: label, border: const OutlineInputBorder()),
         validator: (value) {
           if (value == null || value.trim().isEmpty) { return l.passportRequired; }
-          if (key == 'passport-country' && value.trim().length < 2) { return l.passportCountryInvalid; }
-          return null;
+          return check?.call(value);
         },
       ));
-    Widget dateButton(String key, String label, DateTime? value) => OutlinedButton(
-      key: ValueKey('passport-$key'), onPressed: editable ? () => _date(key) : null,
-      child: Text('$label: ${date(value)}'));
-    return PopScope(canPop: !_busy, child: Scaffold(appBar: AppBar(title: Text(l.kycPassport)),
-      body: SafeArea(child: Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 760),
-        child: Form(key: _form, autovalidateMode: _validate ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
-          child: ListView(padding: const EdgeInsets.all(20), children: [
-            Text(l.passportIntro), const SizedBox(height: 16),
-            if (_busy) const LinearProgressIndicator(),
-            if (_error != null && !showForm) Semantics(liveRegion: true, child: Text(_message(l, _error!))),
-            OutlinedButton(onPressed: _busy ? null : _load, child: Text(l.authCheckAgain)),
-            if (_known && _record == null) Text(l.kycNoDocumentSubmitted),
-            if (_record != null) Card(child: Padding(padding: const EdgeInsets.all(16), child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                Text(kycStatusLabel(l, _record!.status)),
-                if (_record!.data['full_name'] != null) Text(_record!.data['full_name'] as String),
-                Text('${l.kycExpiryDate}: ${date(_record!.expiry)}'),
-                if (_record!.rejection?.isNotEmpty == true) Text(_record!.rejection!),
-                for (final path in _record!.paths) TextButton(onPressed: _busy ? null : () => _preview(path), child: Text(l.idViewDocument)),
-                if (const {'pending', 'pending_review', 'under_review', 'submitted'}.contains(_record!.status))
-                  Text(l.passportPendingHelp),
-              ]))),
-            if (_known && _pending && (_record == null || _record!.canResubmit)) Text(l.passportOtherPending),
-            if (showForm) ...[
-              const SizedBox(height: 16),
-              CheckboxListTile(key: const ValueKey('passport-single'), value: _single,
-                onChanged: editable ? (v) => setState(() => _single = v ?? false) : null,
-                title: Text(l.passportSingleName)),
-              field('passport-given', _given, _single ? l.passportOnlyName : l.passportGiven, 100),
-              if (!_single) field('passport-family', _family, l.passportFamily, 100),
-              if (!_single) CheckboxListTile(value: _familyFirst,
-                onChanged: editable ? (v) => setState(() => _familyFirst = v ?? false) : null,
-                title: Text(l.passportFamilyFirst)),
-              field('passport-number', _number, l.kycPassportNumber, 30),
-              field('passport-country', _country, l.passportIssuingCountry, 100),
-              dateButton('birth', l.passportBirth, _birth),
-              dateButton('issued', l.kycIssueDate, _issued),
-              dateButton('expiry', l.kycExpiryDate, _expiry),
-              if (_validate && (_birth == null || _issued == null || _expiry == null ||
-                (_issued != null && _birth != null && _issued!.isBefore(_birth!)) ||
-                (_expiry != null && _issued != null && !_expiry!.isAfter(_issued!)))) Text(l.passportDatesInvalid),
-              const SizedBox(height: 16),
-              Text(l.kycPassportDocument), Text(l.idFileHelp),
-              if (_image != null) ...[Image.memory(_image!.bytes, height: 180), Text(_image!.name)],
-              OutlinedButton(key: const ValueKey('passport-image'), onPressed: editable ? _pick : null, child: Text(l.kycChooseFile)),
-              if (_validate && _image == null) Text(l.kycSelectAPassportImage),
-              const SizedBox(height: 16),
-              if (_error != null) Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: Semantics(liveRegion: true, child: Text(_message(l, _error!),
-                  style: TextStyle(color: Theme.of(context).colorScheme.error)))),
-              if (_busy) Text(l.idSubmitting),
-              FilledButton(key: const ValueKey('passport-submit'), onPressed: _busy ? null : _save,
-                child: Text(_attempt == null ? l.passportSubmit : l.idRetrySubmission)),
-            ],
+    final datesError = _validate && !_datesValid ? l.passportDatesInvalid : null;
+    return PopScope(canPop: !_busy, child: frame(Form(key: _form,
+      autovalidateMode: _validate ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
+      child: SectionBody(
+        icon: Icons.menu_book_outlined, color: AppColors.kaoBlue, tint: AppColors.kaoBlueSoft,
+        title: l.kycPassport, description: l.passportIntro,
+        top: [_statusPanel(l, showForm)],
+        start: [
+          if (showForm) KycFormPanel(title: l.kycHolderSection, icon: Icons.person_outline, children: [
+            CheckboxListTile(key: const ValueKey('passport-single'), value: _single, contentPadding: EdgeInsets.zero,
+              controlAffinity: ListTileControlAffinity.leading,
+              onChanged: editable ? (v) => setState(() => _single = v ?? false) : null,
+              title: Text(l.passportSingleName)),
+            const SizedBox(height: 8),
+            field('passport-given', _given, _single ? l.passportOnlyName : l.passportGiven, 100),
+            if (!_single) field('passport-family', _family, l.passportFamily, 100),
+            if (!_single) CheckboxListTile(value: _familyFirst, contentPadding: EdgeInsets.zero,
+              controlAffinity: ListTileControlAffinity.leading,
+              onChanged: editable ? (v) => setState(() => _familyFirst = v ?? false) : null,
+              title: Text(l.passportFamilyFirst)),
+            const SizedBox(height: 8),
+            Padding(padding: const EdgeInsets.only(bottom: 16), child: NationalityField(
+              fieldKey: 'passport-nationality', label: l.passportNationalityLabel,
+              value: _nationality, enabled: editable, showError: _validate,
+              onChanged: (code) => setState(() => _nationality = code))),
+            KycDateField(fieldKey: 'passport-birth', label: l.passportBirth, value: _birth,
+              onTap: editable ? () => _date('birth') : null),
           ]),
-        ),
-      ))),
-    ));
+          if (showForm) KycFormPanel(title: l.kycDocumentSection, icon: Icons.badge_outlined, children: [
+            field('passport-number', _number, l.kycPassportNumber, 20,
+              check: (value) => isValidPassportNumber(value) ? null : l.passportNumberInvalid),
+            KycDateField(fieldKey: 'passport-issued', label: l.kycIssueDate, value: _issued,
+              onTap: editable ? () => _date('issued') : null),
+            KycDateField(fieldKey: 'passport-expiry', label: l.kycExpiryDate, value: _expiry,
+              onTap: editable ? () => _date('expiry') : null, errorText: datesError),
+          ]),
+        ],
+        end: [
+          if (showForm) KycFormPanel(title: l.thaiAddressTitle, subtitle: l.thaiAddressHelp,
+            icon: Icons.home_outlined, color: AppColors.kaoGreen, children: [
+              ThaiAddressFields(controller: _address, keyPrefix: 'passport', enabled: editable,
+                showErrors: _validate, onChanged: () => setState(() {})),
+            ]),
+          if (showForm) KycFormPanel(title: l.kycImagesSection, subtitle: l.idFileHelp,
+            icon: Icons.photo_camera_outlined, children: [
+              KycImagePicker(buttonKey: 'passport-image', title: l.kycPassportDocument, image: _image,
+                onPick: editable ? _pick : null,
+                errorText: _validate && _image == null ? l.kycSelectAPassportImage : null),
+              const SizedBox(height: 4),
+              if (_error != null) KycFormMessage(message: _message(l, _error!)),
+              if (_busy) Padding(padding: const EdgeInsets.only(bottom: 12), child: Text(l.idSubmitting)),
+              FilledButton.icon(key: const ValueKey('passport-submit'), onPressed: _busy ? null : _save,
+                icon: const Icon(Icons.send_outlined),
+                label: Text(_attempt == null ? l.passportSubmit : l.idRetrySubmission)),
+            ]),
+        ],
+      ),
+    )));
   }
 }

@@ -33,7 +33,7 @@ class _VerificationHistoryPageState extends ConsumerState<VerificationHistoryPag
       'phone_confirmed' => '${l10n.kycPhoneTitle} · ${l10n.kycVerifiedStatus}',
       'submit:thai_national_id' => '${l10n.kycActionSubmit} · ${l10n.kycIdCardTitle}',
       'submit:passport' => '${l10n.kycActionSubmit} · ${l10n.kycPassportTitle}',
-      'submit:residence_card' => '${l10n.kycActionSubmit} · ${l10n.kycResidenceTitle}',
+      'submit:residence_card' => '${l10n.kycActionSubmit} · ${l10n.kycForeignDocTitle}',
       'submit:bank' => '${l10n.kycActionSubmit} · ${l10n.kycBankTitle}',
       'submit:document' || 'submitted' => l10n.kycActionSubmit,
       'approve' => l10n.kycActionApprove,

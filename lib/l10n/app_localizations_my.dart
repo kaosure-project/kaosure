@@ -3109,4 +3109,121 @@ class AppLocalizationsMy extends AppLocalizations {
   @override
   String get businessReviewEmptyFilter =>
       'ဤစစ်ထုတ်မှုနှင့် ကိုက်ညီသော တောင်းဆိုချက် မရှိပါ';
+
+  @override
+  String get kycForeignDocTitle =>
+      'နိုင်ငံခြားသားများအတွက် ထိုင်းအစိုးရစာရွက်စာတမ်း';
+
+  @override
+  String get kycForeignDocIntro =>
+      'ထိုင်းနိုင်ငံတွင် နေထိုင်သော နိုင်ငံခြားသားများအတွက်ဖြစ်သည်။ ဂဏန်း ၁၃ လုံးပါ ကိုယ်ပိုင်နံပါတ်ပါသော ထိုင်းအစိုးရထုတ်ပေးသည့် စာရွက်စာတမ်းကို အသုံးပြုပါ။';
+
+  @override
+  String get thaiDocKindLabel => 'စာရွက်စာတမ်း အမျိုးအစား';
+
+  @override
+  String get thaiDocWorkPermit => 'အလုပ်လုပ်ခွင့်ပါမစ်';
+
+  @override
+  String get thaiDocResidenceCertificate =>
+      'နေထိုင်ခွင့် လက်မှတ် / အမြဲတမ်းနေထိုင်ခွင့် စာအုပ်';
+
+  @override
+  String get thaiDocPinkCard =>
+      'ထိုင်းနိုင်ငံသားမဟုတ်သူ မှတ်ပုံတင်ကတ် (ပန်းရောင်ကတ်)';
+
+  @override
+  String get thaiDocTr13 => 'နိုင်ငံခြားသား အိမ်ထောင်စုစာရင်း (Tor.Ror.13)';
+
+  @override
+  String get thaiDocKindRequired => 'စာရွက်စာတမ်း အမျိုးအစားကို ရွေးပါ';
+
+  @override
+  String get alienIdLabel => 'ဂဏန်း ၁၃ လုံး ကိုယ်ပိုင်နံပါတ်';
+
+  @override
+  String get alienIdHelp =>
+      'ထိုင်းအစိုးရက ထုတ်ပေးပြီး စာရွက်စာတမ်းပေါ်တွင် ရိုက်နှိပ်ထားသော နံပါတ်';
+
+  @override
+  String get alienIdInvalid =>
+      'နံပါတ် မမှန်ကန်ပါ။ ဂဏန်း ၁၃ လုံးလုံးကို စစ်ဆေးပါ။';
+
+  @override
+  String get nationalityLabel => 'နိုင်ငံသား';
+
+  @override
+  String get passportNationalityLabel =>
+      'နိုင်ငံသား (နိုင်ငံကူးလက်မှတ် ထုတ်ပေးသည့်နိုင်ငံ)';
+
+  @override
+  String get nationalityRequired => 'နိုင်ငံသားကို ရွေးပါ';
+
+  @override
+  String get pickerSearch => 'ရှာဖွေရန်';
+
+  @override
+  String get pickerNoResults => 'ကိုက်ညီမှု မရှိပါ';
+
+  @override
+  String get pickerChoose => 'ရွေးပါ';
+
+  @override
+  String get passportNumberInvalid =>
+      'အင်္ဂလိပ်စာလုံး သို့မဟုတ် ဂဏန်း ၅–၂၀ လုံး သုံးပါ';
+
+  @override
+  String get thaiAddressTitle => 'ထိုင်းနိုင်ငံရှိ လိပ်စာ';
+
+  @override
+  String get thaiAddressHelp => 'ထိုင်းနိုင်ငံတွင် လက်ရှိနေထိုင်သည့်နေရာ';
+
+  @override
+  String get docAddressTitle => 'စာရွက်စာတမ်းပေါ်ရှိ လိပ်စာ';
+
+  @override
+  String get docAddressHelp =>
+      'ထိုင်းအစိုးရ စာရွက်စာတမ်းတွင် ဖော်ပြထားသည့်အတိုင်း ဖြည့်ပါ';
+
+  @override
+  String get provinceRequired => 'ပြည်နယ်ကို ရွေးပါ';
+
+  @override
+  String get kycHolderSection => 'စာရွက်စာတမ်း ကိုင်ဆောင်သူ';
+
+  @override
+  String get kycDocumentSection => 'စာရွက်စာတမ်း အသေးစိတ်';
+
+  @override
+  String get kycImagesSection => 'စာရွက်စာတမ်း ပုံများ';
+
+  @override
+  String get kycLatestSubmission => 'နောက်ဆုံး တင်သွင်းမှု';
+
+  @override
+  String get thaiDocCardFormat => 'အရှေ့နှင့် အနောက်ဘက်ပါသော ကတ်';
+
+  @override
+  String get thaiDocFront => 'စာရွက်စာတမ်း၏ အရှေ့ဘက်';
+
+  @override
+  String get thaiDocBack => 'စာရွက်စာတမ်း၏ နောက်ဘက်';
+
+  @override
+  String get thaiDocPage => 'စာရွက်စာတမ်း စာမျက်နှာအပြည့်';
+
+  @override
+  String get thaiDocSubmit => 'စစ်ဆေးရန် စာရွက်စာတမ်း ပို့ပါ';
+
+  @override
+  String get thaiDocPendingHelp =>
+      'စာရွက်စာတမ်း ပို့ခြင်းသည် အတည်ပြုခြင်း မဟုတ်ပါ။ ခွင့်ပြုထားသော တာဝန်ရှိသူ စစ်ဆေးပြီးမှ အတည်ပြုမည်။';
+
+  @override
+  String get thaiDocCompleteForm =>
+      'မပို့ရသေးပါ။ စာရွက်အမျိုးအစား၊ လိုအပ်သောအကွက်များ၊ ရက်စွဲ၊ လိပ်စာနှင့် ပုံများကို စစ်ဆေးပါ။';
+
+  @override
+  String get thaiDocLegacy =>
+      'ဤအပ်ဒိတ်မတိုင်မီ ပို့ထားသော နေထိုင်ခွင့် စာရွက်စာတမ်း';
 }

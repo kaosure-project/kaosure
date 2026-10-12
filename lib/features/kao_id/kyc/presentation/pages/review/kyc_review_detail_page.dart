@@ -10,7 +10,10 @@ import '../../../../governance/application/services/access_refresh.dart';
 import '../../../application/providers/kyc_review_providers.dart';
 import '../../../data/repositories/supabase_kyc_review_repository.dart';
 import '../../../data/services/id_image_preparer.dart';
+import '../../../domain/entities/thai_document_kind.dart';
+import '../../../domain/reference/countries.dart';
 import '../../utils/review_failure_message.dart';
+import '../../widgets/thai_document_kind_label.dart';
 
 class KycReviewDetailPage extends ConsumerStatefulWidget {
   const KycReviewDetailPage({super.key, required this.row});
@@ -148,11 +151,16 @@ class _KycReviewDetailPageState extends ConsumerState<KycReviewDetailPage> with 
             const Divider(),
           ],
           Text(reviewTypeLabel(l, row['document_type'])),
+          if (ThaiDocumentKind.parse(row['thai_document_kind'] as String?) case final kind?)
+            Text('${l.thaiDocKindLabel}: ${thaiDocumentKindLabel(l, kind)}'),
           Text('${l.idFullName}: ${row['full_name'] ?? '—'}'),
-          if (row['issuing_country'] != null) Text('${l.residenceIssuingCountry}: ${row['issuing_country']}'),
+          if (row['nationality'] case final String code)
+            Text('${l.nationalityLabel}: ${countryByCode(code)?.name(l.localeName.split('_').first) ?? code} ($code)')
+          else if (row['issuing_country'] != null)
+            Text('${l.residenceIssuingCountry}: ${row['issuing_country']}'),
           if (row['bank_name'] != null) Text('${l.bankInstitutionName}: ${row['bank_name']}'),
           if (row['document_type'] == 'bank') Text('${l.reviewIdentityName}: ${row['identity_name'] ?? l.kycUnknownStatus}'),
-          SelectableText('${row['document_type'] == 'passport' ? l.kycPassportNumber : row['document_type'] == 'residence_card' ? l.residenceNumber : row['document_type'] == 'bank' ? l.bankAccountNumber : l.idNumber}: ${row['document_number'] ?? '—'}'),
+          SelectableText('${row['document_type'] == 'passport' ? l.kycPassportNumber : row['document_type'] == 'residence_card' ? (row['thai_document_kind'] != null ? l.alienIdLabel : l.residenceNumber) : row['document_type'] == 'bank' ? l.bankAccountNumber : l.idNumber}: ${row['document_number'] ?? '—'}'),
           if (row['address_line'] != null) SelectableText('${l.piAddressTitle}: ${[row['address_line'],
             row['address_subdistrict'], row['address_district'], row['address_province'],
             row['address_postal_code']].whereType<String>().join(' ')}'),

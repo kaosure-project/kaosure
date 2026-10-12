@@ -2869,6 +2869,111 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get businessReviewEmptyFilter => '没有符合此筛选条件的申请';
+
+  @override
+  String get kycForeignDocTitle => '外国居民的泰国官方证件';
+
+  @override
+  String get kycForeignDocIntro => '适用于居住在泰国的外国人。请使用泰国政府签发并载有13位个人号码的证件。';
+
+  @override
+  String get thaiDocKindLabel => '证件类型';
+
+  @override
+  String get thaiDocWorkPermit => '工作许可证';
+
+  @override
+  String get thaiDocResidenceCertificate => '居留证明 / 永久居留证';
+
+  @override
+  String get thaiDocPinkCard => '非泰籍人士身份证(粉红卡)';
+
+  @override
+  String get thaiDocTr13 => '外国人户籍登记(Tor.Ror.13)';
+
+  @override
+  String get thaiDocKindRequired => '请选择证件类型';
+
+  @override
+  String get alienIdLabel => '13位个人号码';
+
+  @override
+  String get alienIdHelp => '泰国政府签发并印在证件上的号码';
+
+  @override
+  String get alienIdInvalid => '号码无效,请检查全部13位数字。';
+
+  @override
+  String get nationalityLabel => '国籍';
+
+  @override
+  String get passportNationalityLabel => '国籍(护照签发国)';
+
+  @override
+  String get nationalityRequired => '请选择国籍';
+
+  @override
+  String get pickerSearch => '搜索';
+
+  @override
+  String get pickerNoResults => '没有匹配项';
+
+  @override
+  String get pickerChoose => '选择';
+
+  @override
+  String get passportNumberInvalid => '请使用5–20位英文字母或数字';
+
+  @override
+  String get thaiAddressTitle => '泰国地址';
+
+  @override
+  String get thaiAddressHelp => '您目前在泰国的居住地址';
+
+  @override
+  String get docAddressTitle => '证件上的地址';
+
+  @override
+  String get docAddressHelp => '请按泰国官方证件上的内容填写';
+
+  @override
+  String get provinceRequired => '请选择府';
+
+  @override
+  String get kycHolderSection => '证件持有人';
+
+  @override
+  String get kycDocumentSection => '证件信息';
+
+  @override
+  String get kycImagesSection => '证件图片';
+
+  @override
+  String get kycLatestSubmission => '最近提交';
+
+  @override
+  String get thaiDocCardFormat => '有正反两面的卡片';
+
+  @override
+  String get thaiDocFront => '证件正面';
+
+  @override
+  String get thaiDocBack => '证件背面';
+
+  @override
+  String get thaiDocPage => '证件完整页面';
+
+  @override
+  String get thaiDocSubmit => '提交证件审核';
+
+  @override
+  String get thaiDocPendingHelp => '提交证件不等于通过审核，须经授权人员审核后才完成身份验证。';
+
+  @override
+  String get thaiDocCompleteForm => '尚未提交。请检查证件类型、必填项、日期、地址和图片。';
+
+  @override
+  String get thaiDocLegacy => '本次更新前提交的居留证件';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -5736,4 +5841,109 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get businessReviewEmptyFilter => '没有符合此筛选条件的申请';
+
+  @override
+  String get kycForeignDocTitle => '外国居民的泰国官方证件';
+
+  @override
+  String get kycForeignDocIntro => '适用于居住在泰国的外国人。请使用泰国政府签发并载有13位个人号码的证件。';
+
+  @override
+  String get thaiDocKindLabel => '证件类型';
+
+  @override
+  String get thaiDocWorkPermit => '工作许可证';
+
+  @override
+  String get thaiDocResidenceCertificate => '居留证明 / 永久居留证';
+
+  @override
+  String get thaiDocPinkCard => '非泰籍人士身份证(粉红卡)';
+
+  @override
+  String get thaiDocTr13 => '外国人户籍登记(Tor.Ror.13)';
+
+  @override
+  String get thaiDocKindRequired => '请选择证件类型';
+
+  @override
+  String get alienIdLabel => '13位个人号码';
+
+  @override
+  String get alienIdHelp => '泰国政府签发并印在证件上的号码';
+
+  @override
+  String get alienIdInvalid => '号码无效,请检查全部13位数字。';
+
+  @override
+  String get nationalityLabel => '国籍';
+
+  @override
+  String get passportNationalityLabel => '国籍(护照签发国)';
+
+  @override
+  String get nationalityRequired => '请选择国籍';
+
+  @override
+  String get pickerSearch => '搜索';
+
+  @override
+  String get pickerNoResults => '没有匹配项';
+
+  @override
+  String get pickerChoose => '选择';
+
+  @override
+  String get passportNumberInvalid => '请使用5–20位英文字母或数字';
+
+  @override
+  String get thaiAddressTitle => '泰国地址';
+
+  @override
+  String get thaiAddressHelp => '您目前在泰国的居住地址';
+
+  @override
+  String get docAddressTitle => '证件上的地址';
+
+  @override
+  String get docAddressHelp => '请按泰国官方证件上的内容填写';
+
+  @override
+  String get provinceRequired => '请选择府';
+
+  @override
+  String get kycHolderSection => '证件持有人';
+
+  @override
+  String get kycDocumentSection => '证件信息';
+
+  @override
+  String get kycImagesSection => '证件图片';
+
+  @override
+  String get kycLatestSubmission => '最近提交';
+
+  @override
+  String get thaiDocCardFormat => '有正反两面的卡片';
+
+  @override
+  String get thaiDocFront => '证件正面';
+
+  @override
+  String get thaiDocBack => '证件背面';
+
+  @override
+  String get thaiDocPage => '证件完整页面';
+
+  @override
+  String get thaiDocSubmit => '提交证件审核';
+
+  @override
+  String get thaiDocPendingHelp => '提交证件不等于通过审核，须经授权人员审核后才完成身份验证。';
+
+  @override
+  String get thaiDocCompleteForm => '尚未提交。请检查证件类型、必填项、日期、地址和图片。';
+
+  @override
+  String get thaiDocLegacy => '本次更新前提交的居留证件';
 }

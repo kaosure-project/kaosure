@@ -3094,4 +3094,115 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get businessReviewEmptyFilter => 'Không có yêu cầu phù hợp bộ lọc này';
+
+  @override
+  String get kycForeignDocTitle => 'Giấy tờ Thái Lan cho người nước ngoài';
+
+  @override
+  String get kycForeignDocIntro =>
+      'Dành cho người nước ngoài sống tại Thái Lan. Dùng giấy tờ do chính phủ Thái Lan cấp có mã số cá nhân 13 chữ số.';
+
+  @override
+  String get thaiDocKindLabel => 'Loại giấy tờ';
+
+  @override
+  String get thaiDocWorkPermit => 'Giấy phép lao động';
+
+  @override
+  String get thaiDocResidenceCertificate =>
+      'Giấy chứng nhận cư trú / sổ thường trú';
+
+  @override
+  String get thaiDocPinkCard =>
+      'Thẻ căn cước người không quốc tịch Thái (thẻ hồng)';
+
+  @override
+  String get thaiDocTr13 => 'Sổ hộ khẩu người nước ngoài (Tor.Ror.13)';
+
+  @override
+  String get thaiDocKindRequired => 'Hãy chọn loại giấy tờ';
+
+  @override
+  String get alienIdLabel => 'Mã số cá nhân 13 chữ số';
+
+  @override
+  String get alienIdHelp => 'Số do chính phủ Thái Lan cấp, in trên giấy tờ';
+
+  @override
+  String get alienIdInvalid => 'Số không hợp lệ. Hãy kiểm tra đủ 13 chữ số.';
+
+  @override
+  String get nationalityLabel => 'Quốc tịch';
+
+  @override
+  String get passportNationalityLabel => 'Quốc tịch (nước cấp hộ chiếu)';
+
+  @override
+  String get nationalityRequired => 'Hãy chọn quốc tịch';
+
+  @override
+  String get pickerSearch => 'Tìm kiếm';
+
+  @override
+  String get pickerNoResults => 'Không có kết quả';
+
+  @override
+  String get pickerChoose => 'Chọn';
+
+  @override
+  String get passportNumberInvalid => 'Dùng 5–20 chữ cái tiếng Anh hoặc chữ số';
+
+  @override
+  String get thaiAddressTitle => 'Địa chỉ tại Thái Lan';
+
+  @override
+  String get thaiAddressHelp => 'Nơi bạn đang sống tại Thái Lan';
+
+  @override
+  String get docAddressTitle => 'Địa chỉ trên giấy tờ';
+
+  @override
+  String get docAddressHelp =>
+      'Nhập đúng như trên giấy tờ của chính phủ Thái Lan';
+
+  @override
+  String get provinceRequired => 'Hãy chọn tỉnh';
+
+  @override
+  String get kycHolderSection => 'Người sở hữu giấy tờ';
+
+  @override
+  String get kycDocumentSection => 'Thông tin giấy tờ';
+
+  @override
+  String get kycImagesSection => 'Ảnh giấy tờ';
+
+  @override
+  String get kycLatestSubmission => 'Lần gửi gần nhất';
+
+  @override
+  String get thaiDocCardFormat => 'Thẻ có mặt trước và mặt sau';
+
+  @override
+  String get thaiDocFront => 'Mặt trước giấy tờ';
+
+  @override
+  String get thaiDocBack => 'Mặt sau giấy tờ';
+
+  @override
+  String get thaiDocPage => 'Toàn bộ trang giấy tờ';
+
+  @override
+  String get thaiDocSubmit => 'Gửi giấy tờ để xét duyệt';
+
+  @override
+  String get thaiDocPendingHelp =>
+      'Gửi giấy tờ chưa phải là được duyệt. Nhân viên có thẩm quyền phải xét duyệt trước khi xác minh danh tính.';
+
+  @override
+  String get thaiDocCompleteForm =>
+      'Chưa gửi. Hãy kiểm tra loại giấy tờ, các trường bắt buộc, ngày, địa chỉ và hình ảnh.';
+
+  @override
+  String get thaiDocLegacy => 'Giấy tờ cư trú đã gửi trước bản cập nhật này';
 }

@@ -3037,4 +3037,113 @@ class AppLocalizationsLo extends AppLocalizations {
 
   @override
   String get businessReviewEmptyFilter => 'ບໍ່ມີຄຳຂໍໃນຕົວກອງນີ້';
+
+  @override
+  String get kycForeignDocTitle => 'ເອກະສານລາຊະການໄທສຳລັບຄົນຕ່າງປະເທດ';
+
+  @override
+  String get kycForeignDocIntro =>
+      'ສຳລັບຄົນຕ່າງປະເທດທີ່ອາໄສຢູ່ໃນປະເທດໄທ ໃຊ້ເອກະສານທີ່ລາຊະການໄທອອກໃຫ້ ແລະ ມີເລກປະຈຳຕົວ 13 ຫຼັກ';
+
+  @override
+  String get thaiDocKindLabel => 'ປະເພດເອກະສານ';
+
+  @override
+  String get thaiDocWorkPermit => 'ໃບອະນຸຍາດເຮັດວຽກ';
+
+  @override
+  String get thaiDocResidenceCertificate =>
+      'ໜັງສືຢັ້ງຢືນທີ່ຢູ່ / ໃບສຳຄັນທີ່ຢູ່';
+
+  @override
+  String get thaiDocPinkCard => 'ບັດປະຈຳຕົວຄົນທີ່ບໍ່ມີສັນຊາດໄທ (ບັດສີບົວ)';
+
+  @override
+  String get thaiDocTr13 => 'ທະບຽນບ້ານຄົນຕ່າງດ້າວ (ທ.ຣ.13)';
+
+  @override
+  String get thaiDocKindRequired => 'ກະລຸນາເລືອກປະເພດເອກະສານ';
+
+  @override
+  String get alienIdLabel => 'ເລກປະຈຳຕົວ 13 ຫຼັກ';
+
+  @override
+  String get alienIdHelp => 'ເລກປະຈຳຕົວທີ່ລາຊະການໄທອອກໃຫ້ ພິມຢູ່ເທິງເອກະສານ';
+
+  @override
+  String get alienIdInvalid => 'ເລກປະຈຳຕົວບໍ່ຖືກຕ້ອງ ກະລຸນາກວດສອບທັງ 13 ຫຼັກ';
+
+  @override
+  String get nationalityLabel => 'ສັນຊາດ';
+
+  @override
+  String get passportNationalityLabel => 'ສັນຊາດ (ປະເທດທີ່ອອກໜັງສືຜ່ານແດນ)';
+
+  @override
+  String get nationalityRequired => 'ກະລຸນາເລືອກສັນຊາດ';
+
+  @override
+  String get pickerSearch => 'ຄົ້ນຫາ';
+
+  @override
+  String get pickerNoResults => 'ບໍ່ພົບລາຍການທີ່ຄົ້ນຫາ';
+
+  @override
+  String get pickerChoose => 'ເລືອກ';
+
+  @override
+  String get passportNumberInvalid => 'ໃຊ້ຕົວອັກສອນອັງກິດ ຫຼື ຕົວເລກ 5–20 ຕົວ';
+
+  @override
+  String get thaiAddressTitle => 'ທີ່ຢູ່ໃນປະເທດໄທ';
+
+  @override
+  String get thaiAddressHelp => 'ທີ່ຢູ່ປັດຈຸບັນທີ່ທ່ານພັກອາໄສໃນປະເທດໄທ';
+
+  @override
+  String get docAddressTitle => 'ທີ່ຢູ່ຕາມເອກະສານ';
+
+  @override
+  String get docAddressHelp => 'ປ້ອນໃຫ້ກົງກັບທີ່ລະບຸໃນເອກະສານລາຊະການ';
+
+  @override
+  String get provinceRequired => 'ກະລຸນາເລືອກແຂວງ';
+
+  @override
+  String get kycHolderSection => 'ຂໍ້ມູນຜູ້ຖືເອກະສານ';
+
+  @override
+  String get kycDocumentSection => 'ຂໍ້ມູນເອກະສານ';
+
+  @override
+  String get kycImagesSection => 'ຮູບເອກະສານ';
+
+  @override
+  String get kycLatestSubmission => 'ເອກະສານທີ່ສົ່ງລ່າສຸດ';
+
+  @override
+  String get thaiDocCardFormat => 'ບັດທີ່ມີດ້ານໜ້າ ແລະ ດ້ານຫຼັງ';
+
+  @override
+  String get thaiDocFront => 'ດ້ານໜ້າເອກະສານ';
+
+  @override
+  String get thaiDocBack => 'ດ້ານຫຼັງເອກະສານ';
+
+  @override
+  String get thaiDocPage => 'ເອກະສານເຕັມໜ້າ';
+
+  @override
+  String get thaiDocSubmit => 'ສົ່ງເອກະສານເພື່ອກວດສອບ';
+
+  @override
+  String get thaiDocPendingHelp =>
+      'ການສົ່ງເອກະສານຍັງບໍ່ແມ່ນການຢືນຢັນຕົວຕົນ ຕ້ອງຜ່ານການກວດຈາກເຈົ້າໜ້າທີ່ທີ່ມີສິດກ່ອນ';
+
+  @override
+  String get thaiDocCompleteForm =>
+      'ຍັງບໍ່ໄດ້ສົ່ງ ກະລຸນາກວດປະເພດເອກະສານ ຊ່ອງທີ່ຈຳເປັນ ວັນທີ ທີ່ຢູ່ ແລະ ຮູບພາບ';
+
+  @override
+  String get thaiDocLegacy => 'ເອກະສານພັກເຊົາທີ່ສົ່ງໄວ້ກ່ອນການປັບປຸງ';
 }

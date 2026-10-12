@@ -12,6 +12,7 @@ import 'package:kaosure/features/kao_id/kyc/data/repositories/supabase_passport_
 import 'package:kaosure/features/kao_id/kyc/presentation/passport/passport_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'auth_localization_r2_test.dart' show TestAuthNotifier;
+import 'kyc_form_helpers.dart';
 import 'national_id_r7a_test.dart' show imageBytes;
 
 class PassportFixture implements PassportRepository {
@@ -85,8 +86,9 @@ void main() {
       await tap(tester, 'passport-single');
       expect(find.byKey(const ValueKey('passport-family')), findsNothing);
       await enter(tester, 'passport-given', 'Élodie');
-      await enter(tester, 'passport-number', 'EXAMPLE001');
-      await enter(tester, 'passport-country', 'Example authority');
+      await enter(tester, 'passport-number', 'ex ample001');
+      await choosePickerOption(tester, 'passport-nationality', 'Japan', 'JPN');
+      await fillThaiAddress(tester, 'passport');
       for (final key in ['passport-birth', 'passport-issued']) {
         await tap(tester, key);
         final l = MaterialLocalizations.of(tester.element(find.byType(DatePickerDialog)));
@@ -114,6 +116,10 @@ void main() {
       expect(repo.submitted.last.given, 'Élodie');
       expect(repo.submitted.last.family, isEmpty);
       expect(repo.submitted.last.singleName, isTrue);
+      expect(repo.submitted.last.number, 'EXAMPLE001');
+      expect(repo.submitted.last.nationality, 'JPN');
+      expect(repo.submitted.last.address.district, 'Khlong Toei');
+      expect(repo.submitted.last.address.province, 'กรุงเทพมหานคร');
       expect(find.byKey(const ValueKey('passport-submit')), findsNothing);
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pumpWidget(passportApp(repo, language));

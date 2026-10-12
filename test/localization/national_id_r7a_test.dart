@@ -12,6 +12,7 @@ import 'package:kaosure/features/kao_id/kyc/domain/repositories/national_id_repo
 import 'package:kaosure/features/kao_id/kyc/data/repositories/supabase_national_id_repository.dart';
 import 'package:kaosure/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
+import 'kyc_form_helpers.dart';
 
 class IdFixture implements NationalIdRepository {
   NationalIdRecord? record;
@@ -73,12 +74,7 @@ Future<void> fillForm(WidgetTester tester) async {
   await tester.enterText(find.byKey(const ValueKey('id-name')), 'Test');
   await tester.enterText(find.byKey(const ValueKey('id-surname')), 'Account');
   await tester.enterText(find.byKey(const ValueKey('id-number')), '0000000000000');
-  for (final (key, value) in const [('id-address_line', '99/1 Moo 4'), ('id-subdistrict', 'Khlong Tan'),
-      ('id-district', 'Khlong Toei'), ('id-province', 'Bangkok'), ('id-postal_code', '10110')]) {
-    await tester.enterText(find.byKey(ValueKey(key)), value);
-  }
-  tester.testTextInput.hide();
-  await tester.pumpAndSettle();
+  await fillThaiAddress(tester, 'id');
   await tapKey(tester, 'id-issued');
   final dialog = find.byType(DatePickerDialog);
   final ok = MaterialLocalizations.of(tester.element(dialog)).okButtonLabel;

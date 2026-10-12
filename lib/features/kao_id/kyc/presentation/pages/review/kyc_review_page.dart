@@ -16,7 +16,7 @@ int requiredEvidenceCount(Map<String, dynamic> row) => switch(row['document_type
 };
 
 String reviewTypeLabel(AppLocalizations l, dynamic type) => switch(type) {
-  'passport' => l.kycPassportTitle, 'residence_card' => l.kycResidenceTitle,
+  'passport' => l.kycPassportTitle, 'residence_card' => l.kycForeignDocTitle,
   'bank' => l.kycBankTitle, null || 'thai_national_id' => l.kycIdCardTitle,
   _ => l.kycUnknownStatus,
 };

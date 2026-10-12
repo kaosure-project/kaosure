@@ -60,7 +60,7 @@ void main() {
       await tester.pumpAndSettle();
       final l = AppLocalizations.of(tester.element(find.byType(Scaffold)));
       expect(reviewTypeLabel(l, 'passport'), l.kycPassportTitle);
-      expect(reviewTypeLabel(l, 'residence_card'), l.kycResidenceTitle);
+      expect(reviewTypeLabel(l, 'residence_card'), l.kycForeignDocTitle);
       expect(reviewTypeLabel(l, 'bank'), l.kycBankTitle);
       expect(reviewFailureMessage(l,
         const PostgrestException(message: 'bank_verified_name_required'),

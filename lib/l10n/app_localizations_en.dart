@@ -3116,4 +3116,116 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get businessReviewEmptyFilter => 'No requests match this filter';
+
+  @override
+  String get kycForeignDocTitle => 'Thai documents for foreign residents';
+
+  @override
+  String get kycForeignDocIntro =>
+      'For foreigners living in Thailand. Use a document issued by the Thai government that shows your 13-digit personal number.';
+
+  @override
+  String get thaiDocKindLabel => 'Document type';
+
+  @override
+  String get thaiDocWorkPermit => 'Work permit';
+
+  @override
+  String get thaiDocResidenceCertificate =>
+      'Residence certificate / permanent residence book';
+
+  @override
+  String get thaiDocPinkCard => 'Non-Thai national ID card (pink card)';
+
+  @override
+  String get thaiDocTr13 => 'Foreigner house registration (Tor.Ror.13)';
+
+  @override
+  String get thaiDocKindRequired => 'Choose the document type';
+
+  @override
+  String get alienIdLabel => '13-digit personal number';
+
+  @override
+  String get alienIdHelp =>
+      'The number the Thai government issued to you, printed on the document';
+
+  @override
+  String get alienIdInvalid => 'This number is not valid. Check all 13 digits.';
+
+  @override
+  String get nationalityLabel => 'Nationality';
+
+  @override
+  String get passportNationalityLabel =>
+      'Nationality (passport issuing country)';
+
+  @override
+  String get nationalityRequired => 'Choose a nationality';
+
+  @override
+  String get pickerSearch => 'Search';
+
+  @override
+  String get pickerNoResults => 'No matches';
+
+  @override
+  String get pickerChoose => 'Choose';
+
+  @override
+  String get passportNumberInvalid => 'Use 5–20 English letters or digits';
+
+  @override
+  String get thaiAddressTitle => 'Address in Thailand';
+
+  @override
+  String get thaiAddressHelp => 'Where you currently live in Thailand';
+
+  @override
+  String get docAddressTitle => 'Address on the document';
+
+  @override
+  String get docAddressHelp =>
+      'Enter it exactly as the Thai government document shows';
+
+  @override
+  String get provinceRequired => 'Choose a province';
+
+  @override
+  String get kycHolderSection => 'Document holder';
+
+  @override
+  String get kycDocumentSection => 'Document details';
+
+  @override
+  String get kycImagesSection => 'Document images';
+
+  @override
+  String get kycLatestSubmission => 'Latest submission';
+
+  @override
+  String get thaiDocCardFormat => 'Card with a front and a back';
+
+  @override
+  String get thaiDocFront => 'Front of the document';
+
+  @override
+  String get thaiDocBack => 'Back of the document';
+
+  @override
+  String get thaiDocPage => 'Full page of the document';
+
+  @override
+  String get thaiDocSubmit => 'Send document for review';
+
+  @override
+  String get thaiDocPendingHelp =>
+      'Sending a document is not approval. An authorized officer must review it before your identity is verified.';
+
+  @override
+  String get thaiDocCompleteForm =>
+      'Not sent yet. Check the document type, required fields, dates, address and images.';
+
+  @override
+  String get thaiDocLegacy => 'Residence document sent before this update';
 }

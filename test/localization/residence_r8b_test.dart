@@ -7,11 +7,13 @@ import 'package:kaosure/features/kao_id/kyc/domain/failures/national_id_failure.
 import 'package:kaosure/features/kao_id/kyc/domain/entities/id_image.dart';
 import 'package:kaosure/features/kao_id/kyc/application/providers/id_image_picker_provider.dart';
 import 'package:kaosure/features/kao_id/kyc/domain/entities/residence.dart';
+import 'package:kaosure/features/kao_id/kyc/domain/entities/thai_document_kind.dart';
 import 'package:kaosure/features/kao_id/kyc/domain/repositories/residence_repository.dart';
 import 'package:kaosure/features/kao_id/kyc/data/repositories/supabase_residence_repository.dart';
 import 'package:kaosure/features/kao_id/kyc/presentation/screens/residence_permit_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'auth_localization_r2_test.dart' show TestAuthNotifier;
+import 'kyc_form_helpers.dart';
 import 'national_id_r7a_test.dart' show imageBytes;
 
 class ResidenceFixture implements ResidenceRepository {
@@ -67,11 +69,13 @@ Future<void> enter(WidgetTester tester, String key, String value) async {
   await tester.pumpAndSettle();
 }
 Future<void> fill(WidgetTester tester, {bool paper = false}) async {
+  await tap(tester, 'residence-kind-work_permit');
   if (paper) { await tap(tester, 'residence-card'); }
   await tap(tester, 'residence-single');
   await enter(tester, 'residence-given', 'Élodie');
-  await enter(tester, 'residence-number', 'EXAMPLE001');
-  await enter(tester, 'residence-country', 'Example authority');
+  await enter(tester, 'residence-number', validAlienId);
+  await choosePickerOption(tester, 'residence-nationality', 'Japan', 'JPN');
+  await fillThaiAddress(tester, 'residence');
   await tap(tester, 'residence-issued');
   final l = MaterialLocalizations.of(tester.element(find.byType(DatePickerDialog)));
   await tester.tap(find.widgetWithText(TextButton, l.okButtonLabel));
@@ -103,7 +107,7 @@ void main() {
       await tap(tester, 'residence-submit');
       expect(repo.submitted, isEmpty);
       final l = AppLocalizations.of(tester.element(find.byType(ResidencePermitPage)));
-      expect(find.text(l.residenceCompleteForm), findsOneWidget);
+      expect(find.text(l.thaiDocCompleteForm), findsOneWidget);
       await tap(tester, 'residence-back', delta: -180);
       await tap(tester, 'residence-submit');
       expect(repo.submitted.length, 1);
@@ -136,6 +140,31 @@ void main() {
       expect(draft.back, isNull);
       expect(draft.noExpiry, isTrue);
       expect(draft.expiry, isNull);
+      expect(draft.kind, ThaiDocumentKind.workPermit);
+      expect(draft.number, validAlienId);
+      expect(draft.nationality, 'JPN');
+      expect(draft.address.province, 'กรุงเทพมหานคร');
+      expect(draft.address.postalCode, '10110');
+    });
+    testWidgets('Rejects a 13-digit number with a wrong check digit: $language', (tester) async {
+      final repo = ResidenceFixture();
+      await tester.pumpWidget(residenceApp(repo, language));
+      await tester.pumpAndSettle();
+      await fill(tester);
+      await enter(tester, 'residence-number', '6100000000001');
+      await tap(tester, 'residence-back');
+      await tap(tester, 'residence-submit');
+      expect(repo.submitted, isEmpty);
+      final l = AppLocalizations.of(tester.element(find.byType(ResidencePermitPage)));
+      expect(find.text(l.alienIdInvalid), findsOneWidget);
+    });
+    testWidgets('Choosing a book-type document switches to a single page: $language', (tester) async {
+      await tester.pumpWidget(residenceApp(ResidenceFixture(), language));
+      await tester.pumpAndSettle();
+      await tap(tester, 'residence-kind-house_registration_tr13');
+      expect(find.byKey(const ValueKey('residence-back')), findsNothing);
+      await tap(tester, 'residence-kind-pink_card');
+      expect(find.byKey(const ValueKey('residence-back')), findsOneWidget);
     });
   }
 }

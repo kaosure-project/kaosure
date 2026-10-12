@@ -2917,4 +2917,110 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get businessReviewEmptyFilter => 'この条件に一致する申請はありません';
+
+  @override
+  String get kycForeignDocTitle => '外国人向けタイ公的書類';
+
+  @override
+  String get kycForeignDocIntro =>
+      'タイに住む外国人向けです。13桁の個人番号が記載されたタイ政府発行の書類を使用してください。';
+
+  @override
+  String get thaiDocKindLabel => '書類の種類';
+
+  @override
+  String get thaiDocWorkPermit => '労働許可証';
+
+  @override
+  String get thaiDocResidenceCertificate => '居住証明書 / 永住許可証';
+
+  @override
+  String get thaiDocPinkCard => '非タイ国籍者身分証(ピンクカード)';
+
+  @override
+  String get thaiDocTr13 => '外国人住居登録(Tor.Ror.13)';
+
+  @override
+  String get thaiDocKindRequired => '書類の種類を選択してください';
+
+  @override
+  String get alienIdLabel => '13桁の個人番号';
+
+  @override
+  String get alienIdHelp => 'タイ政府が発行し、書類に記載されている番号';
+
+  @override
+  String get alienIdInvalid => '番号が正しくありません。13桁すべてを確認してください。';
+
+  @override
+  String get nationalityLabel => '国籍';
+
+  @override
+  String get passportNationalityLabel => '国籍(旅券発行国)';
+
+  @override
+  String get nationalityRequired => '国籍を選択してください';
+
+  @override
+  String get pickerSearch => '検索';
+
+  @override
+  String get pickerNoResults => '該当なし';
+
+  @override
+  String get pickerChoose => '選択';
+
+  @override
+  String get passportNumberInvalid => '英字または数字5~20文字で入力してください';
+
+  @override
+  String get thaiAddressTitle => 'タイ国内の住所';
+
+  @override
+  String get thaiAddressHelp => '現在お住まいのタイ国内の住所';
+
+  @override
+  String get docAddressTitle => '書類記載の住所';
+
+  @override
+  String get docAddressHelp => 'タイの公的書類の記載どおりに入力してください';
+
+  @override
+  String get provinceRequired => '県を選択してください';
+
+  @override
+  String get kycHolderSection => '書類の所持者';
+
+  @override
+  String get kycDocumentSection => '書類の詳細';
+
+  @override
+  String get kycImagesSection => '書類の画像';
+
+  @override
+  String get kycLatestSubmission => '最新の提出';
+
+  @override
+  String get thaiDocCardFormat => '表面と裏面があるカード';
+
+  @override
+  String get thaiDocFront => '書類の表面';
+
+  @override
+  String get thaiDocBack => '書類の裏面';
+
+  @override
+  String get thaiDocPage => '書類のページ全体';
+
+  @override
+  String get thaiDocSubmit => '書類を審査に送信';
+
+  @override
+  String get thaiDocPendingHelp => '送信しただけでは承認されません。権限のある担当者の審査後に本人確認が完了します。';
+
+  @override
+  String get thaiDocCompleteForm => 'まだ送信されていません。書類の種類、必須項目、日付、住所、画像を確認してください。';
+
+  @override
+  String get thaiDocLegacy => 'この更新前に送信された在留書類';
 }

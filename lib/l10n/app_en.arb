@@ -1146,7 +1146,8 @@
   "ssoAppName": "Name shown to members",
   "ssoAppNameHelp": "2–80 characters",
   "ssoAppFirstPartyHelp": "Marked as a Kao app on the consent screen. It grants no extra access.",
-  "ssoAppNamesHelp": "Lowercase names separated by commas or new lines. Kao ID admin, KYC and security names are rejected.",
+  "ssoAppNamesHelp": "Lowercase schema.name entries separated by commas or new lines; a name without a schema means public. Kao ID admin, KYC and security names are rejected.",
+  "ssoAppTablesHelp": "Same format as functions. Tables are read-only; add :write (for example public.favorites:write) to let the app add, change and delete rows.",
   "ssoAppSaved": "App saved",
   "ssoAppNone": "None"
 }

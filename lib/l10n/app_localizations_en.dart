@@ -3463,7 +3463,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ssoAppNamesHelp =>
-      'Lowercase names separated by commas or new lines. Kao ID admin, KYC and security names are rejected.';
+      'Lowercase schema.name entries separated by commas or new lines; a name without a schema means public. Kao ID admin, KYC and security names are rejected.';
+
+  @override
+  String get ssoAppTablesHelp =>
+      'Same format as functions. Tables are read-only; add :write (for example public.favorites:write) to let the app add, change and delete rows.';
 
   @override
   String get ssoAppSaved => 'App saved';

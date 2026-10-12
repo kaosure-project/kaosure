@@ -177,13 +177,13 @@ void main() {
       await tester.enterText(find.byKey(const Key('sso-app-client-id')), secondhandClientId);
       await tester.enterText(find.byKey(const Key('sso-app-name')), 'Kao Secondhand');
       await tester.enterText(find.byKey(const Key('sso-app-rpcs')), 'get_my_seller_readiness\ncreate_personal_shop');
-      await tester.enterText(find.byKey(const Key('sso-app-tables')), 'products, shops');
+      await tester.enterText(find.byKey(const Key('sso-app-tables')), 'products, public.favorites:write');
       await tap(tester, find.byKey(const Key('sso-app-claim-verification')));
       await tap(tester, find.byKey(const Key('sso-app-save')));
       final saved = registry.saved.single;
       expect(saved.appCode, 'secondhand_web');
-      expect(saved.rpcs, ['get_my_seller_readiness', 'create_personal_shop']);
-      expect(saved.tables, ['products', 'shops']);
+      expect(saved.rpcs, ['public.get_my_seller_readiness', 'public.create_personal_shop']);
+      expect(saved.tables, ['public.products', 'public.favorites:write']);
       expect(saved.claims.map((claim) => claim.name), ['verification']);
       expect(find.text(l10n.ssoAppSaved), findsOneWidget);
     });

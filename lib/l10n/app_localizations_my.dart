@@ -3461,7 +3461,11 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get ssoAppNamesHelp =>
-      'ကော်မာ သို့မဟုတ် စာကြောင်းအသစ်ဖြင့် ခွဲထားသော စာလုံးအသေးအမည်များ။ Kao ID စီမံခန့်ခွဲမှု၊ KYC နှင့် လုံခြုံရေးအမည်များကို ငြင်းပယ်သည်။';
+      'ကော်မာ သို့မဟုတ် စာကြောင်းအသစ်ဖြင့် ခွဲထားသော schema.name ပုံစံ စာလုံးအသေးအမည်များ။ schema မပါပါက public ဟု မှတ်ယူသည်။ Kao ID စီမံခန့်ခွဲမှု၊ KYC နှင့် လုံခြုံရေးအမည်များကို ငြင်းပယ်သည်။';
+
+  @override
+  String get ssoAppTablesHelp =>
+      'function များနှင့် ပုံစံတူသည်။ ဇယားများကို ဖတ်ရန်သာ ခွင့်ပြုသည်။ အက်ပ်က အတန်းများ ထည့်၊ ပြင်၊ ဖျက်နိုင်ရန် :write (ဥပမာ public.favorites:write) ထည့်ပါ။';
 
   @override
   String get ssoAppSaved => 'အက်ပ်ကို သိမ်းဆည်းပြီးပါပြီ';

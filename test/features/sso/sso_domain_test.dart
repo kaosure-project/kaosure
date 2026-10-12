@@ -28,7 +28,20 @@ void main() {
       final normalized = value.normalized();
       expect(normalized.appCode, 'secondhand_web');
       expect(normalized.clientId, secondhandClientId);
-      expect(normalized.rpcs, ['create_personal_shop']);
+      expect(normalized.rpcs, ['public.create_personal_shop']);
+    });
+
+    test('qualifies names with a schema and keeps :write for tables only', () {
+      final value = draft(rpcs: const ['secondhand.open_shop'],
+          tables: const ['products', 'Public.Favorites:write', 'secondhand.member_profiles:write']);
+      expect(value.isValid, isTrue);
+      expect(value.normalized().tables,
+          ['public.products', 'public.favorites:write', 'secondhand.member_profiles:write']);
+      expect(draft(rpcs: const ['create_personal_shop:write']).invalidFields, {AppClientField.rpcs});
+      expect(draft(tables: const ['products:read']).invalidFields, {AppClientField.tables});
+      for (final table in ['auth.users', 'storage.objects', 'kaoid_private.app_clients_r18']) {
+        expect(draft(tables: [table]).invalidFields, {AppClientField.tables}, reason: table);
+      }
     });
 
     test('flags each invalid field', () {
@@ -43,7 +56,8 @@ void main() {
           'security_events', 'mfa_reset']) {
         expect(draft(rpcs: [name]).invalidFields, {AppClientField.rpcs}, reason: name);
       }
-      for (final table in ['identity_documents', 'verification_requests', 'company_owners']) {
+      for (final table in ['identity_documents', 'verification_requests', 'public.company_owners:write',
+          'secondhand.identity_documents']) {
         expect(draft(tables: [table]).invalidFields, {AppClientField.tables}, reason: table);
       }
     });
@@ -125,7 +139,8 @@ void main() {
       final client = AppClientModel.fromJson({
         'app_code': 'secondhand_web', 'client_id': secondhandClientId,
         'display_name': 'Kao Secondhand', 'status': 'suspended', 'first_party': false,
-        'claims': ['verification'], 'rpcs': ['create_personal_shop'], 'tables': [],
+        'claims': ['verification'], 'rpcs': ['public.create_personal_shop'],
+        'tables': ['public.products', 'public.favorites:write'],
         'redirect_uris': 'http://localhost:5000/auth/callback, https://secondhand.kaosure.com/cb',
         'oauth_registered': true, 'members': 2,
       });

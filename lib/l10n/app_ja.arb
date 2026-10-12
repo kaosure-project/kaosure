@@ -1052,7 +1052,8 @@
   "ssoAppName": "メンバーに表示する名前",
   "ssoAppNameHelp": "2〜80 文字",
   "ssoAppFirstPartyHelp": "許可画面で Kao グループのアプリとして表示されます。アクセス権は増えません。",
-  "ssoAppNamesHelp": "小文字の名前をカンマまたは改行で区切ります。Kao ID の管理・KYC・セキュリティ関連の名前は拒否されます。",
+  "ssoAppNamesHelp": "小文字の schema.name をカンマまたは改行で区切ります。スキーマを省略すると public になります。Kao ID の管理・KYC・セキュリティ関連の名前は拒否されます。",
+  "ssoAppTablesHelp": "関数と同じ形式です。テーブルは読み取り専用です。:write を付けると（例: public.favorites:write）アプリが行を追加・変更・削除できます。",
   "ssoAppSaved": "アプリを保存しました",
   "ssoAppNone": "なし"
 }

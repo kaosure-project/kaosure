@@ -3193,7 +3193,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get ssoAppFirstPartyHelp => '在授权页面标记为 Kao 旗下应用，不会增加任何访问权限。';
 
   @override
-  String get ssoAppNamesHelp => '小写名称，以逗号或换行分隔。Kao ID 管理、KYC 和安全相关名称会被拒绝。';
+  String get ssoAppNamesHelp =>
+      '小写的 schema.name，以逗号或换行分隔；未写 schema 时视为 public。Kao ID 管理、KYC 和安全相关名称会被拒绝。';
+
+  @override
+  String get ssoAppTablesHelp =>
+      '格式与函数相同。数据表默认只读；加上 :write（例如 public.favorites:write）后应用才能新增、修改和删除行。';
 
   @override
   String get ssoAppSaved => '应用已保存';
@@ -6391,7 +6396,12 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
   String get ssoAppFirstPartyHelp => '在授权页面标记为 Kao 旗下应用，不会增加任何访问权限。';
 
   @override
-  String get ssoAppNamesHelp => '小写名称，以逗号或换行分隔。Kao ID 管理、KYC 和安全相关名称会被拒绝。';
+  String get ssoAppNamesHelp =>
+      '小写的 schema.name，以逗号或换行分隔；未写 schema 时视为 public。Kao ID 管理、KYC 和安全相关名称会被拒绝。';
+
+  @override
+  String get ssoAppTablesHelp =>
+      '格式与函数相同。数据表默认只读；加上 :write（例如 public.favorites:write）后应用才能新增、修改和删除行。';
 
   @override
   String get ssoAppSaved => '应用已保存';

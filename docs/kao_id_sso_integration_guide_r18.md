@@ -37,8 +37,10 @@ Supported scopes: `openid email profile phone`; Secondhand requests `openid emai
 3. **Register it in Kao ID** — Admin Center › Partners › Apps signing in with Kao ID › Register app (company owner, MFA when the policy is on):
    - App code `secondhand_web`, the client ID, name `Kao Secondhand`, Kao app on.
    - Claims: profile, verification, business.
-   - Functions: `get_my_seller_readiness`, `create_personal_shop`, `create_marketplace_listing`.
-   - Tables: `products`, `product_images`, `categories`, `shops`, `banners`, `favorites`, `followers`, `notifications`, `orders`, `recently_viewed`, `recommendation_scores`, `profiles`, `wallets`, `wallet_transactions`.
+   - Entries are `schema.name` (a bare name means `public`). Tables are read-only unless the entry ends with `:write`; functions have no `:write`.
+   - Functions: `public.get_my_seller_readiness`, `public.create_personal_shop`, `public.create_marketplace_listing`.
+   - Read-only tables: `public.products`, `public.product_images`, `public.categories`, `public.shops`, `public.banners`, `public.orders`, `public.recommendation_scores`, `public.profiles`, `public.wallets`, `public.wallet_transactions`.
+   - Writable tables: `public.favorites:write`, `public.followers:write`, `public.notifications:write`, `public.recently_viewed:write`.
 4. **Hosting** — serve Kao ID's `index.html` for `/oauth/consent` (SPA fallback), like `/login`.
 5. Production: add the real HTTPS redirect URI to the client, then update the registry. Never register wildcard or `http` non-loopback redirects.
 
@@ -198,6 +200,9 @@ Response shape (sections appear only when the app is registered for them):
 - [x] `id_token` verified against JWKS: signature, `iss`, `aud`, `exp`, `nonce`.
 - [x] Access token lifetime is the project JWT expiry; refresh tokens rotate.
 - [x] App tokens are restricted by the request guard (default deny) and RLS still applies to the member.
+- [x] The guard checks the schema (`Accept-Profile` for GET/HEAD, `Content-Profile` otherwise; default `public`) and the method: POST/PATCH/PUT/DELETE on a table need a `:write` entry (R19a).
+- [x] Kao ID's `profiles` row is read-only for every app token, also at the RLS level (restrictive policies `kao_id_profile_*_r19a`).
+- [x] Orders, escrow, payments, wallets and withdrawals have no client write grants or open write policies; money moves only through server-side functions.
 - [x] App tokens cannot write to the `identity-documents` or `avatars` storage buckets (restrictive storage policy `sso_app_storage_r18`). Storage, Realtime and Edge Functions do not run the PostgREST pre-request hook, so any new bucket or realtime table that holds Kao ID data must add the same `client_id` check.
 - [x] Suspending an app in the registry stops all its tokens at the next request.
 - [x] Consent page loads no remote logos and only follows https, loopback http or reverse-domain native redirects.
@@ -216,4 +221,4 @@ flutter analyze
 flutter test
 ```
 
-Database: `.tools/sso_r18_e2e_block.sql` runs after the migration inside a transaction that always rolls back (owner-only registry, protected-name rejection, guard allow/deny, suspended and unknown clients, storage buckets, legacy tables).
+Database: `.tools/sso_r18_e2e_block.sql` runs after the migration inside a transaction that always rolls back (owner-only registry, protected-name rejection, guard allow/deny, suspended and unknown clients, storage buckets, legacy tables). `.tools/r19a_scope_e2e_block.sql` covers schema and method scoping, read-only `profiles` and the money tables.

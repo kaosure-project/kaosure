@@ -154,7 +154,7 @@ class _AppClientFormDialogState extends State<AppClientFormDialog> {
               enabled: !_saving,
               minLines: 2,
               maxLines: 6,
-              decoration: decoration(l10n.ssoAppAllowedTables, l10n.ssoAppNamesHelp, AppClientField.tables),
+              decoration: decoration(l10n.ssoAppAllowedTables, l10n.ssoAppTablesHelp, AppClientField.tables),
               onChanged: (_) => setState(() {}),
             ),
             if (_failure case final failure?) ...[

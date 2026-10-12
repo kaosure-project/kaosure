@@ -3440,7 +3440,11 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get ssoAppNamesHelp =>
-      'Tên chữ thường, phân tách bằng dấu phẩy hoặc xuống dòng. Tên liên quan quản trị, KYC và bảo mật của Kao ID sẽ bị từ chối.';
+      'Tên dạng schema.name chữ thường, phân tách bằng dấu phẩy hoặc xuống dòng; không ghi schema thì hiểu là public. Tên liên quan quản trị, KYC và bảo mật của Kao ID sẽ bị từ chối.';
+
+  @override
+  String get ssoAppTablesHelp =>
+      'Cùng định dạng với hàm. Bảng chỉ được đọc; thêm :write (ví dụ public.favorites:write) để ứng dụng được thêm, sửa và xóa dòng.';
 
   @override
   String get ssoAppSaved => 'Đã lưu ứng dụng';

@@ -51,6 +51,9 @@ enum AppClientField { appCode, clientId, displayName, rpcs, tables }
 
 /// Input for registering or updating an app. Mirrors the server checks in
 /// `app_client_save_r18` so the form can explain problems before saving.
+///
+/// Allow-list entries are `schema.name`; a bare name means `public`. Tables are
+/// read-only unless the entry ends with [writeSuffix].
 final class AppClientDraft {
   const AppClientDraft({
     required this.appCode,
@@ -65,7 +68,14 @@ final class AppClientDraft {
   static final RegExp _appCode = RegExp(r'^[a-z][a-z0-9_]{2,39}$');
   static final RegExp _uuid = RegExp(
       r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$');
-  static final RegExp _name = RegExp(r'^[a-z_][a-z0-9_]{0,62}$');
+  static final RegExp _rpc = RegExp(r'^[a-z_][a-z0-9_]{0,62}\.[a-z_][a-z0-9_]{0,62}$');
+  static final RegExp _table = RegExp(r'^[a-z_][a-z0-9_]{0,62}\.[a-z_][a-z0-9_]{0,62}(:write)?$');
+  static const String writeSuffix = ':write';
+  static const Set<String> _reservedSchemas = {
+    'auth', 'storage', 'kaoid_private', 'extensions', 'vault', 'pgsodium', 'realtime', 'graphql',
+    'graphql_public', 'supabase_functions', 'supabase_migrations', 'net', 'cron', 'pg_catalog',
+    'information_schema',
+  };
   static final RegExp _never = RegExp(
       r'^(app_client|admin|governance|kyc_|business_review|security_|enable_security|revoke_session|sessions_|lifecycle_|prepare_recovery|submit_recovery|reveal_|issue_|enable_mfa|mfa_)');
   static const Set<String> _neverTables = {
@@ -89,9 +99,17 @@ final class AppClientDraft {
           if (part.trim().isNotEmpty) part.trim().toLowerCase(),
       }.toList();
 
-  /// Kao ID functions and tables an app may never reach.
-  static bool isProtectedName(String name) =>
-      _never.hasMatch(name) || _neverTables.contains(name);
+  /// Kao ID functions and tables an app may never reach, whatever the schema.
+  static bool isProtectedName(String name) {
+    final bare = name.split(':').first.split('.').last;
+    return _never.hasMatch(bare) || _neverTables.contains(bare) ||
+        (name.contains('.') && _reservedSchemas.contains(name.split('.').first));
+  }
+
+  static List<String> _qualified(List<String> names) => {
+        for (final name in parseNames(names.join(',')))
+          if (name.contains('.')) name else 'public.$name',
+      }.toList();
 
   AppClientDraft normalized() => AppClientDraft(
         appCode: appCode.trim().toLowerCase(),
@@ -99,20 +117,20 @@ final class AppClientDraft {
         displayName: displayName.trim(),
         firstParty: firstParty,
         claims: claims,
-        rpcs: parseNames(rpcs.join(',')),
-        tables: parseNames(tables.join(',')),
+        rpcs: _qualified(rpcs),
+        tables: _qualified(tables),
       );
 
   Set<AppClientField> get invalidFields {
     final draft = normalized();
-    bool badNames(List<String> names) => names.length > maxNames ||
-        names.any((name) => !_name.hasMatch(name) || isProtectedName(name));
+    bool badNames(List<String> names, RegExp format) => names.length > maxNames ||
+        names.any((name) => !format.hasMatch(name) || isProtectedName(name));
     return {
       if (!_appCode.hasMatch(draft.appCode)) AppClientField.appCode,
       if (!_uuid.hasMatch(draft.clientId)) AppClientField.clientId,
       if (draft.displayName.length < 2 || draft.displayName.length > 80) AppClientField.displayName,
-      if (badNames(draft.rpcs)) AppClientField.rpcs,
-      if (badNames(draft.tables)) AppClientField.tables,
+      if (badNames(draft.rpcs, _rpc)) AppClientField.rpcs,
+      if (badNames(draft.tables, _table)) AppClientField.tables,
     };
   }
 

@@ -6340,8 +6340,14 @@ abstract class AppLocalizations {
   /// No description provided for @ssoAppNamesHelp.
   ///
   /// In en, this message translates to:
-  /// **'Lowercase names separated by commas or new lines. Kao ID admin, KYC and security names are rejected.'**
+  /// **'Lowercase schema.name entries separated by commas or new lines; a name without a schema means public. Kao ID admin, KYC and security names are rejected.'**
   String get ssoAppNamesHelp;
+
+  /// No description provided for @ssoAppTablesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Same format as functions. Tables are read-only; add :write (for example public.favorites:write) to let the app add, change and delete rows.'**
+  String get ssoAppTablesHelp;
 
   /// No description provided for @ssoAppSaved.
   ///

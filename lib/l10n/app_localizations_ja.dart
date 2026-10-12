@@ -3246,7 +3246,11 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get ssoAppNamesHelp =>
-      '小文字の名前をカンマまたは改行で区切ります。Kao ID の管理・KYC・セキュリティ関連の名前は拒否されます。';
+      '小文字の schema.name をカンマまたは改行で区切ります。スキーマを省略すると public になります。Kao ID の管理・KYC・セキュリティ関連の名前は拒否されます。';
+
+  @override
+  String get ssoAppTablesHelp =>
+      '関数と同じ形式です。テーブルは読み取り専用です。:write を付けると（例: public.favorites:write）アプリが行を追加・変更・削除できます。';
 
   @override
   String get ssoAppSaved => 'アプリを保存しました';

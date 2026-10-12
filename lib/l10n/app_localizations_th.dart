@@ -3425,7 +3425,11 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get ssoAppNamesHelp =>
-      'ชื่อตัวพิมพ์เล็ก คั่นด้วยจุลภาคหรือขึ้นบรรทัดใหม่ ชื่อของงานผู้ดูแล KYC และความปลอดภัยของ Kao ID จะไม่ได้รับอนุญาต';
+      'ชื่อตัวพิมพ์เล็กแบบ schema.name คั่นด้วยจุลภาคหรือขึ้นบรรทัดใหม่ ถ้าไม่ระบุ schema จะถือเป็น public ชื่อของงานผู้ดูแล KYC และความปลอดภัยของ Kao ID จะไม่ได้รับอนุญาต';
+
+  @override
+  String get ssoAppTablesHelp =>
+      'รูปแบบเดียวกับฟังก์ชัน ตารางจะอ่านได้อย่างเดียว เติม :write (เช่น public.favorites:write) เพื่อให้แอปเพิ่ม แก้ไข และลบแถวได้';
 
   @override
   String get ssoAppSaved => 'บันทึกแอปแล้ว';

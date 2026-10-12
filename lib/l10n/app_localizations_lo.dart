@@ -3380,7 +3380,11 @@ class AppLocalizationsLo extends AppLocalizations {
 
   @override
   String get ssoAppNamesHelp =>
-      'ຊື່ຕົວພິມນ້ອຍ ຄັ່ນດ້ວຍຈຸດ ຫຼື ຂຶ້ນແຖວໃໝ່ ຊື່ຂອງວຽກຜູ້ດູແລ, KYC ແລະ ຄວາມປອດໄພຂອງ Kao ID ຈະບໍ່ໄດ້ຮັບອະນຸຍາດ';
+      'ຊື່ຕົວພິມນ້ອຍແບບ schema.name ຄັ່ນດ້ວຍຈຸດ ຫຼື ຂຶ້ນແຖວໃໝ່ ຖ້າບໍ່ລະບຸ schema ຈະຖືວ່າເປັນ public ຊື່ຂອງວຽກຜູ້ດູແລ, KYC ແລະ ຄວາມປອດໄພຂອງ Kao ID ຈະບໍ່ໄດ້ຮັບອະນຸຍາດ';
+
+  @override
+  String get ssoAppTablesHelp =>
+      'ຮູບແບບດຽວກັບຟັງຊັນ ຕາຕະລາງອ່ານໄດ້ຢ່າງດຽວ ເພີ່ມ :write (ເຊັ່ນ public.favorites:write) ເພື່ອໃຫ້ແອັບເພີ່ມ, ແກ້ໄຂ ແລະ ລຶບແຖວໄດ້';
 
   @override
   String get ssoAppSaved => 'ບັນທຶກແອັບແລ້ວ';

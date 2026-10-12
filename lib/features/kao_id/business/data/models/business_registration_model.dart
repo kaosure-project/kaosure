@@ -16,6 +16,7 @@ class BusinessRegistrationModel extends BusinessRegistration {
     super.createdAt,
     super.updatedAt,
     super.submittedAt,
+    super.reviewReason,
   });
 
   factory BusinessRegistrationModel.fromJson(
@@ -60,6 +61,7 @@ class BusinessRegistrationModel extends BusinessRegistration {
           _dateTimeFromJson(json['updated_at']),
       submittedAt:
           _dateTimeFromJson(json['submitted_at']),
+      reviewReason: json['review_reason']?.toString(),
     );
   }
 
@@ -81,6 +83,7 @@ class BusinessRegistrationModel extends BusinessRegistration {
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       submittedAt: entity.submittedAt,
+      reviewReason: entity.reviewReason,
     );
   }
 

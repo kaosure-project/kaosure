@@ -30,6 +30,7 @@ class BusinessRegistration {
     this.createdAt,
     this.updatedAt,
     this.submittedAt,
+    this.reviewReason,
   });
 
   final String? id;
@@ -68,6 +69,9 @@ class BusinessRegistration {
   final DateTime? updatedAt;
   final DateTime? submittedAt;
 
+  /// Reviewer's note shown to the owner, required when the registration is rejected.
+  final String? reviewReason;
+
   BusinessRegistration copyWith({
     String? id,
     String? organizationId,
@@ -83,6 +87,7 @@ class BusinessRegistration {
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? submittedAt,
+    String? reviewReason,
   }) {
     return BusinessRegistration(
       id: id ?? this.id,
@@ -103,6 +108,7 @@ class BusinessRegistration {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       submittedAt: submittedAt ?? this.submittedAt,
+      reviewReason: reviewReason ?? this.reviewReason,
     );
   }
 

@@ -5,6 +5,8 @@ import 'package:kaosure/l10n/app_localizations.dart';
 import '../../../account/presentation/pages/security/mfa_page.dart';
 import '../../../auth/application/providers/auth_provider.dart';
 import '../../../governance/application/services/access_refresh.dart';
+import '../../../business/data/models/business_review_item_model.dart';
+import '../../../business/presentation/pages/review/business_review_detail_page.dart';
 import '../../../kyc/presentation/pages/review/kyc_review_detail_page.dart';
 
 class NoticeTargetPage extends ConsumerStatefulWidget {
@@ -30,7 +32,7 @@ class _NoticeTargetPageState extends ConsumerState<NoticeTargetPage>
   @override
   void refreshAccess() {
     // Review detail owns its live permission refresh; preserve the in-progress form.
-    if (_data?['kind'] != 'review') { _load(); }
+    if (!const {'review', 'business_review'}.contains(_data?['kind'])) { _load(); }
   }
   Future<void> _load() async {
     if (!mounted) { return; }
@@ -53,6 +55,10 @@ class _NoticeTargetPageState extends ConsumerState<NoticeTargetPage>
     }
     if (!_busy && !_failed && _data?['kind'] == 'review' && _data?['row'] is Map) {
       return KycReviewDetailPage(row: Map<String, dynamic>.from(_data!['row'] as Map));
+    }
+    if (!_busy && !_failed && _data?['kind'] == 'business_review' && _data?['row'] is Map) {
+      return BusinessReviewDetailPage(
+          item: BusinessReviewItemModel.fromJson(Map<String, dynamic>.from(_data!['row'] as Map)));
     }
     final status = _data?['status'];
     final statusLabel = switch (status) {

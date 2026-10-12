@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import '../../../auth/application/providers/auth_provider.dart';
+import '../../../business/presentation/pages/review/business_review_queue_page.dart';
 import '../../../kyc/presentation/pages/review/kyc_review_page.dart';
 import '../../../kyc/application/providers/kyc_review_providers.dart';
 import '../../application/providers/member_access_provider.dart';
@@ -74,6 +75,9 @@ class _AdminHubPageState extends ConsumerState<AdminHubPage>
           if (canReview) entry(Icons.fact_check_outlined, l.reviewTitle, l.adminHubReviewHelp,
             () => Navigator.of(context).push(MaterialPageRoute<void>(
               builder: (_) => const KycReviewPage()))),
+          if (canReview) entry(Icons.storefront_outlined, l.businessReviewTitle, l.businessReviewHubHelp,
+            () => Navigator.of(context).push(MaterialPageRoute<void>(
+              builder: (_) => const BusinessReviewQueuePage()))),
           if (canManage) entry(Icons.handshake_outlined, l.partnerTitle, l.partnerHelp,
             () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const PartnerPage()))),
           if (canManage) entry(Icons.local_shipping_outlined, l.carrierTitle, l.partnerHelp,

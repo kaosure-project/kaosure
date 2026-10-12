@@ -25,6 +25,11 @@ String noticeLabel(AppLocalizations l, String code) => switch(code) {
   'rejected' => l.noticeRejected,
   'bank_approved' => l.noticeBankApproved,
   'bank_rejected' => l.noticeBankRejected,
+  'business_review_new' => l.noticeBusinessReviewNew,
+  'business_review_second' => l.noticeBusinessReviewSecond,
+  'business_review_restart' => l.noticeBusinessReviewRestart,
+  'business_approved' => l.noticeBusinessApproved,
+  'business_rejected' => l.noticeBusinessRejected,
   'suspended' => l.noticeSuspended,
   'restored' => l.noticeRestored,
   _ => l.noticeUpdated,
@@ -56,7 +61,8 @@ class NotificationCenter extends ConsumerWidget {
                   final date = DateTime.tryParse(row['created_at']?.toString() ?? '')?.toLocal();
                   return date == null ? '' : '${MaterialLocalizations.of(context).formatMediumDate(date)} ${MaterialLocalizations.of(context).formatTimeOfDay(TimeOfDay.fromDateTime(date))}';
                 }()),
-                trailing: const {'review_new', 'review_second', 'review_restart', 'role_assigned', 'role_revoked', 'submitted', 'approved', 'rejected', 'bank_approved', 'bank_rejected'}.contains(row['message'])
+                trailing: const {'review_new', 'review_second', 'review_restart', 'role_assigned', 'role_revoked', 'submitted', 'approved', 'rejected', 'bank_approved', 'bank_rejected',
+                    'business_review_new', 'business_review_second', 'business_review_restart', 'business_approved', 'business_rejected'}.contains(row['message'])
                     ? IconButton(tooltip: l.noticeOpenItem, icon: const Icon(Icons.open_in_new), onPressed: () async {
                         try {
                           await ref.read(noticeRepositoryProvider).read(row['id'] as String);

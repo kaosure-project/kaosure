@@ -53,6 +53,26 @@ class RegistrationStatusView extends StatelessWidget {
         const SizedBox(height: 16),
         Text(registration.businessName, textAlign: TextAlign.center,
             style: theme.textTheme.titleSmall),
+        if (registration.isRejected && (registration.reviewReason?.trim().isNotEmpty ?? false)) ...[
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: scheme.errorContainer,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.businessRegStatusReasonLabel,
+                    style: theme.textTheme.labelLarge?.copyWith(color: scheme.onErrorContainer)),
+                const SizedBox(height: 4),
+                SelectableText(registration.reviewReason!.trim(),
+                    style: theme.textTheme.bodyMedium?.copyWith(color: scheme.onErrorContainer)),
+              ],
+            ),
+          ),
+        ],
         const SizedBox(height: 32),
         if (registration.isRejected)
           FilledButton(onPressed: onStartNew, child: Text(l10n.businessRegStartNew))

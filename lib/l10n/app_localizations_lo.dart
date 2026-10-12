@@ -3427,4 +3427,239 @@ class AppLocalizationsLo extends AppLocalizations {
 
   @override
   String get ssoAppNone => 'ບໍ່ມີ';
+
+  @override
+  String get adminGroupFinance => 'ການເງິນ ແລະ ເນື້ອຫາ';
+
+  @override
+  String get withdrawalsTitle => 'ຄຳຂໍຖອນເງິນ';
+
+  @override
+  String get withdrawalsHelp =>
+      'ໂອນເງິນຈາກບັນຊີບໍລິສັດເຂົ້າບັນຊີທະນາຄານທີ່ຢືນຢັນແລ້ວຂອງສະມາຊິກ ແລ້ວບັນທຶກເລກອ້າງອີງການໂອນຢູ່ບ່ອນນີ້. ຖ້າປະຕິເສດ ຍອດເງິນຈະຄືນເຂົ້າກະເປົາຂອງສະມາຊິກ.';
+
+  @override
+  String get withdrawalsHubHelp =>
+      'ໂອນເງິນເຂົ້າບັນຊີສະມາຊິກ ແລະ ບັນທຶກເລກອ້າງອີງ';
+
+  @override
+  String get withdrawalStatusPending => 'ລໍຖ້າໂອນ';
+
+  @override
+  String get withdrawalStatusPaid => 'ໂອນແລ້ວ';
+
+  @override
+  String get withdrawalStatusRejected => 'ປະຕິເສດແລ້ວ';
+
+  @override
+  String get withdrawalStatusCancelled => 'ສະມາຊິກຍົກເລີກ';
+
+  @override
+  String get withdrawalAmount => 'ຈຳນວນເງິນ';
+
+  @override
+  String get withdrawalBank => 'ທະນາຄານ';
+
+  @override
+  String get withdrawalAccountName => 'ຊື່ບັນຊີ';
+
+  @override
+  String get withdrawalAccountNumber => 'ເລກບັນຊີ';
+
+  @override
+  String get withdrawalBranch => 'ສາຂາ';
+
+  @override
+  String get withdrawalRequestedAt => 'ວັນທີຂໍ';
+
+  @override
+  String get withdrawalReviewer => 'ຜູ້ກວດ';
+
+  @override
+  String get withdrawalReference => 'ເລກອ້າງອີງການໂອນ';
+
+  @override
+  String get withdrawalReferenceHelp =>
+      'ເລກລາຍການຈາກທະນາຄານ 3 ຫາ 100 ຕົວອັກສອນ';
+
+  @override
+  String get withdrawalRejectReason => 'ເຫດຜົນທີ່ປະຕິເສດ';
+
+  @override
+  String get withdrawalReasonHelp =>
+      '3 ຫາ 500 ຕົວອັກສອນ. ສະມາຊິກຈະເຫັນເຫດຜົນນີ້.';
+
+  @override
+  String get withdrawalMarkPaid => 'ຢືນຢັນການໂອນ';
+
+  @override
+  String get withdrawalReject => 'ປະຕິເສດ ແລະ ຄືນເງິນເຂົ້າກະເປົາ';
+
+  @override
+  String withdrawalPaidConfirm(String amount, String bank, String account) {
+    return 'ຢືນຢັນວ່າໂອນ $amount ເຂົ້າ $bank $account ແລ້ວບໍ? ລະບົບຈະແຈ້ງສະມາຊິກ.';
+  }
+
+  @override
+  String withdrawalRejectConfirm(String amount) {
+    return 'ປະຕິເສດຄຳຂໍນີ້ບໍ? ຍອດ $amount ຈະຄືນເຂົ້າກະເປົາຂອງສະມາຊິກ ແລະ ລະບົບຈະແຈ້ງສະມາຊິກ.';
+  }
+
+  @override
+  String get withdrawalPaidDone => 'ບັນທຶກການໂອນແລ້ວ';
+
+  @override
+  String get withdrawalRejectedDone => 'ປະຕິເສດຄຳຂໍ ແລະ ຄືນເງິນແລ້ວ';
+
+  @override
+  String get withdrawalBankChanged =>
+      'ບັນຊີທະນາຄານທີ່ຢືນຢັນຂອງສະມາຊິກປ່ຽນແລ້ວ. ກະລຸນາປະຕິເສດຄຳຂໍນີ້ ເພື່ອໃຫ້ສະມາຊິກສົ່ງຄຳຂໍໃໝ່.';
+
+  @override
+  String get withdrawalDetailLogged =>
+      'ການເປີດໜ້ານີ້ຖືກບັນທຶກໃນປະຫວັດການໃຊ້ງານ.';
+
+  @override
+  String get withdrawalWallet => 'ຍອດໃນກະເປົາ / ກຳລັງໂອນ';
+
+  @override
+  String get withdrawalErrorOwn => 'ບໍ່ສາມາດກວດຄຳຂໍຖອນເງິນຂອງຕົນເອງໄດ້.';
+
+  @override
+  String get withdrawalErrorNotPending =>
+      'ຄຳຂໍນີ້ຖືກດຳເນີນການແລ້ວ. ກະລຸນາໂຫຼດລາຍການໃໝ່.';
+
+  @override
+  String get withdrawalErrorWallet =>
+      'ຍອດໃນກະເປົາບໍ່ກົງກັບຄຳຂໍນີ້. ກະລຸນາກວດກະເປົາກ່ອນດຳເນີນການຕໍ່.';
+
+  @override
+  String get staffToolDenied => 'ທ່ານບໍ່ມີສິດໃຊ້ເຄື່ອງມືນີ້.';
+
+  @override
+  String get staffActionFailed =>
+      'ດຳເນີນການບໍ່ສຳເລັດ. ກະລຸນາໂຫຼດໃໝ່ເພື່ອກວດວ່າບັນທຶກແລ້ວຫຼືຍັງ.';
+
+  @override
+  String get contentsTitle => 'ສູນຈັດການຂໍ້ຄວາມ ແລະ ຂໍ້ຕົກລົງ';
+
+  @override
+  String get contentsHelp =>
+      'ຂໍ້ຄວາມແນະນຳ ກົດລະບຽບ ຄຳເຕືອນ ຂໍ້ຕົກລົງ ແລະ ຄວາມຊ່ວຍເຫຼືອທີ່ສະແດງໃນແອັບ. ການແກ້ໄຂຈະສະແດງເມື່ອເປີດໜ້າຄັ້ງຕໍ່ໄປ ແລະ ທຸກການປ່ຽນແປງຖືກເກັບໄວ້ໃນປະຫວັດ.';
+
+  @override
+  String get contentsHubHelp =>
+      'ແກ້ໄຂຂໍ້ຄວາມແນະນຳ ກົດລະບຽບ ຄຳເຕືອນ ແລະ ຄວາມຊ່ວຍເຫຼືອໃນແອັບ';
+
+  @override
+  String get contentsAdd => 'ເພີ່ມຂໍ້ຄວາມ';
+
+  @override
+  String get contentsAllApps => 'ທຸກແອັບ';
+
+  @override
+  String get contentsCommon => 'ໃຊ້ຮ່ວມກັນທຸກແອັບ';
+
+  @override
+  String get contentsKey => 'ລະຫັດຂໍ້ຄວາມ';
+
+  @override
+  String get contentsKeyHelp =>
+      'ຄຳພາສາອັງກິດຕົວນ້ອຍເຊື່ອມດ້ວຍຈຸດ ເຊັ່ນ secondhand.help.buying. ແກ້ໄຂບໍ່ໄດ້ຫຼັງບັນທຶກ.';
+
+  @override
+  String get contentsApp => 'ແອັບ';
+
+  @override
+  String get contentsCategory => 'ປະເພດ';
+
+  @override
+  String get contentsCategoryHelp => 'ຊ່ວຍເຫຼືອ';
+
+  @override
+  String get contentsCategoryGuide => 'ຄຳແນະນຳ';
+
+  @override
+  String get contentsCategoryRule => 'ກົດລະບຽບ';
+
+  @override
+  String get contentsCategoryWarning => 'ຄຳເຕືອນ';
+
+  @override
+  String get contentsCategoryTerms => 'ຂໍ້ຕົກລົງ';
+
+  @override
+  String get contentsCategoryNotice => 'ການແຈ້ງເຕືອນ';
+
+  @override
+  String get contentsTitleTh => 'ຫົວຂໍ້ (ໄທ)';
+
+  @override
+  String get contentsTitleEn => 'ຫົວຂໍ້ (ອັງກິດ)';
+
+  @override
+  String get contentsBodyTh => 'ເນື້ອຫາ (ໄທ)';
+
+  @override
+  String get contentsBodyEn => 'ເນື້ອຫາ (ອັງກິດ)';
+
+  @override
+  String get contentsBodyHelp =>
+      'ແຖວລະໜຶ່ງຂໍ້. ຕ້ອງມີພາສາໄທ ສ່ວນພາສາອັງກິດຈະສະແດງໃຫ້ສະມາຊິກທີ່ໃຊ້ພາສາອັງກິດ.';
+
+  @override
+  String get contentsPlaceholderHelp =>
+      'ຂໍ້ຄວາມແຈ້ງເຕືອນທີ່ລະບົບສົ່ງ. ໃຫ້ຄົງຊື່ໃນວົງເລັບປີກກາ ເຊັ່ນ amount, bank ແລະ reason ໄວ້ ລະບົບຈະເຕີມຄ່າໃຫ້ສະມາຊິກແຕ່ລະຄົນ.';
+
+  @override
+  String get contentsIcon => 'ຊື່ໄອຄອນ (ບໍ່ບັງຄັບ)';
+
+  @override
+  String get contentsSort => 'ລຳດັບ';
+
+  @override
+  String get contentsActive => 'ສະແດງໃນແອັບ';
+
+  @override
+  String get contentsHidden => 'ເຊື່ອງໄວ້';
+
+  @override
+  String contentsVersion(int version) {
+    return 'ເວີຊັນ $version';
+  }
+
+  @override
+  String get contentsSaved => 'ບັນທຶກຂໍ້ຄວາມແລ້ວ';
+
+  @override
+  String get contentsDeleted => 'ລຶບຂໍ້ຄວາມແລ້ວ';
+
+  @override
+  String get contentsDelete => 'ລຶບ';
+
+  @override
+  String contentsDeleteConfirm(String key) {
+    return 'ລຶບ $key ບໍ? ແອັບຈະຢຸດສະແດງທັນທີ ແລະ ຍັງເກັບສຳເນົາໄວ້ໃນປະຫວັດ.';
+  }
+
+  @override
+  String get contentsErrorChanged =>
+      'ມີຄົນບັນທຶກຂໍ້ຄວາມນີ້ຫຼັງຈາກທ່ານເປີດ. ກະລຸນາກັບຄືນ ເປີດໃໝ່ ແລ້ວແກ້ໄຂອີກຄັ້ງ.';
+
+  @override
+  String get contentsErrorKeyTaken => 'ລະຫັດຂໍ້ຄວາມນີ້ຖືກໃຊ້ແລ້ວ.';
+
+  @override
+  String get contentsErrorKey =>
+      'ກວດລະຫັດຂໍ້ຄວາມ: ໃຊ້ຕົວອັກສອນອັງກິດຕົວນ້ອຍ ຕົວເລກ ແລະ _ ໂດຍມີຈຸດຢ່າງໜ້ອຍໜຶ່ງຈຸດ.';
+
+  @override
+  String get contentsErrorThai => 'ຕ້ອງໃສ່ຫົວຂໍ້ ແລະ ເນື້ອຫາພາສາໄທ.';
+
+  @override
+  String get contentsErrorTooLong =>
+      'ຫົວຂໍ້ຍາວໄດ້ບໍ່ເກີນ 200 ຕົວອັກສອນ ແລະ ເນື້ອຫາບໍ່ເກີນ 20,000 ຕົວອັກສອນ.';
+
+  @override
+  String get contentsErrorInvalid => 'ກວດປະເພດ ລຳດັບ ແລະ ຊື່ໄອຄອນ.';
 }

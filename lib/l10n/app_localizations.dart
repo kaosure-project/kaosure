@@ -6414,6 +6414,426 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'None'**
   String get ssoAppNone;
+
+  /// No description provided for @adminGroupFinance.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance and content'**
+  String get adminGroupFinance;
+
+  /// No description provided for @withdrawalsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdrawal requests'**
+  String get withdrawalsTitle;
+
+  /// No description provided for @withdrawalsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer each amount to the member\'s verified bank account from the company account, then record the bank reference here. Rejecting returns the money to the member\'s wallet.'**
+  String get withdrawalsHelp;
+
+  /// No description provided for @withdrawalsHubHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer to members\' banks and record the reference'**
+  String get withdrawalsHubHelp;
+
+  /// No description provided for @withdrawalStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for transfer'**
+  String get withdrawalStatusPending;
+
+  /// No description provided for @withdrawalStatusPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Transferred'**
+  String get withdrawalStatusPaid;
+
+  /// No description provided for @withdrawalStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get withdrawalStatusRejected;
+
+  /// No description provided for @withdrawalStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled by member'**
+  String get withdrawalStatusCancelled;
+
+  /// No description provided for @withdrawalAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get withdrawalAmount;
+
+  /// No description provided for @withdrawalBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get withdrawalBank;
+
+  /// No description provided for @withdrawalAccountName.
+  ///
+  /// In en, this message translates to:
+  /// **'Account name'**
+  String get withdrawalAccountName;
+
+  /// No description provided for @withdrawalAccountNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Account number'**
+  String get withdrawalAccountNumber;
+
+  /// No description provided for @withdrawalBranch.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get withdrawalBranch;
+
+  /// No description provided for @withdrawalRequestedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get withdrawalRequestedAt;
+
+  /// No description provided for @withdrawalReviewer.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewed by'**
+  String get withdrawalReviewer;
+
+  /// No description provided for @withdrawalReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer reference'**
+  String get withdrawalReference;
+
+  /// No description provided for @withdrawalReferenceHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'The bank\'s transaction number, 3 to 100 characters'**
+  String get withdrawalReferenceHelp;
+
+  /// No description provided for @withdrawalRejectReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for rejecting'**
+  String get withdrawalRejectReason;
+
+  /// No description provided for @withdrawalReasonHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'3 to 500 characters. The member sees this reason.'**
+  String get withdrawalReasonHelp;
+
+  /// No description provided for @withdrawalMarkPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm transfer'**
+  String get withdrawalMarkPaid;
+
+  /// No description provided for @withdrawalReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject and refund to wallet'**
+  String get withdrawalReject;
+
+  /// No description provided for @withdrawalPaidConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm that {amount} was transferred to {bank} {account}? The member will be notified.'**
+  String withdrawalPaidConfirm(String amount, String bank, String account);
+
+  /// No description provided for @withdrawalRejectConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject this request? {amount} returns to the member\'s wallet and they will be notified.'**
+  String withdrawalRejectConfirm(String amount);
+
+  /// No description provided for @withdrawalPaidDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer recorded'**
+  String get withdrawalPaidDone;
+
+  /// No description provided for @withdrawalRejectedDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Request rejected and refunded'**
+  String get withdrawalRejectedDone;
+
+  /// No description provided for @withdrawalBankChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'The member\'s verified bank account has changed. Reject this request so they can request again.'**
+  String get withdrawalBankChanged;
+
+  /// No description provided for @withdrawalDetailLogged.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening this page is recorded in the activity log.'**
+  String get withdrawalDetailLogged;
+
+  /// No description provided for @withdrawalWallet.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet balance / being transferred'**
+  String get withdrawalWallet;
+
+  /// No description provided for @withdrawalErrorOwn.
+  ///
+  /// In en, this message translates to:
+  /// **'You can\'t review your own withdrawal.'**
+  String get withdrawalErrorOwn;
+
+  /// No description provided for @withdrawalErrorNotPending.
+  ///
+  /// In en, this message translates to:
+  /// **'This request has already been handled. Refresh the list.'**
+  String get withdrawalErrorNotPending;
+
+  /// No description provided for @withdrawalErrorWallet.
+  ///
+  /// In en, this message translates to:
+  /// **'The wallet doesn\'t match this request. Check the wallet before continuing.'**
+  String get withdrawalErrorWallet;
+
+  /// No description provided for @staffToolDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have permission to use this tool.'**
+  String get staffToolDenied;
+
+  /// No description provided for @staffActionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t complete this action. Refresh to check whether it was already saved.'**
+  String get staffActionFailed;
+
+  /// No description provided for @contentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages and terms'**
+  String get contentsTitle;
+
+  /// No description provided for @contentsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Guidance, rules, warnings, terms and help text shown in the apps. Changes appear the next time a page opens, and every change is kept in the revision history.'**
+  String get contentsHelp;
+
+  /// No description provided for @contentsHubHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit guidance, rules, warnings and help shown in the apps'**
+  String get contentsHubHelp;
+
+  /// No description provided for @contentsAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add content'**
+  String get contentsAdd;
+
+  /// No description provided for @contentsAllApps.
+  ///
+  /// In en, this message translates to:
+  /// **'All apps'**
+  String get contentsAllApps;
+
+  /// No description provided for @contentsCommon.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared by all apps'**
+  String get contentsCommon;
+
+  /// No description provided for @contentsKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Content key'**
+  String get contentsKey;
+
+  /// No description provided for @contentsKeyHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowercase words joined by dots, for example secondhand.help.buying. The key can\'t be changed after saving.'**
+  String get contentsKeyHelp;
+
+  /// No description provided for @contentsApp.
+  ///
+  /// In en, this message translates to:
+  /// **'App'**
+  String get contentsApp;
+
+  /// No description provided for @contentsCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get contentsCategory;
+
+  /// No description provided for @contentsCategoryHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get contentsCategoryHelp;
+
+  /// No description provided for @contentsCategoryGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'Guide'**
+  String get contentsCategoryGuide;
+
+  /// No description provided for @contentsCategoryRule.
+  ///
+  /// In en, this message translates to:
+  /// **'Rule'**
+  String get contentsCategoryRule;
+
+  /// No description provided for @contentsCategoryWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get contentsCategoryWarning;
+
+  /// No description provided for @contentsCategoryTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms'**
+  String get contentsCategoryTerms;
+
+  /// No description provided for @contentsCategoryNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification'**
+  String get contentsCategoryNotice;
+
+  /// No description provided for @contentsTitleTh.
+  ///
+  /// In en, this message translates to:
+  /// **'Title (Thai)'**
+  String get contentsTitleTh;
+
+  /// No description provided for @contentsTitleEn.
+  ///
+  /// In en, this message translates to:
+  /// **'Title (English)'**
+  String get contentsTitleEn;
+
+  /// No description provided for @contentsBodyTh.
+  ///
+  /// In en, this message translates to:
+  /// **'Text (Thai)'**
+  String get contentsBodyTh;
+
+  /// No description provided for @contentsBodyEn.
+  ///
+  /// In en, this message translates to:
+  /// **'Text (English)'**
+  String get contentsBodyEn;
+
+  /// No description provided for @contentsBodyHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'One point per line. Thai is required; the English version is shown to members using English.'**
+  String get contentsBodyHelp;
+
+  /// No description provided for @contentsPlaceholderHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification text sent by the system. Keep the names in curly braces, such as amount, bank and reason; they are filled in for each member.'**
+  String get contentsPlaceholderHelp;
+
+  /// No description provided for @contentsIcon.
+  ///
+  /// In en, this message translates to:
+  /// **'Icon name (optional)'**
+  String get contentsIcon;
+
+  /// No description provided for @contentsSort.
+  ///
+  /// In en, this message translates to:
+  /// **'Order'**
+  String get contentsSort;
+
+  /// No description provided for @contentsActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Show in apps'**
+  String get contentsActive;
+
+  /// No description provided for @contentsHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden'**
+  String get contentsHidden;
+
+  /// No description provided for @contentsVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String contentsVersion(int version);
+
+  /// No description provided for @contentsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Content saved'**
+  String get contentsSaved;
+
+  /// No description provided for @contentsDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Content deleted'**
+  String get contentsDeleted;
+
+  /// No description provided for @contentsDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get contentsDelete;
+
+  /// No description provided for @contentsDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {key}? Apps stop showing it right away. A copy stays in the revision history.'**
+  String contentsDeleteConfirm(String key);
+
+  /// No description provided for @contentsErrorChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone saved this content after you opened it. Go back, reopen it and make your change again.'**
+  String get contentsErrorChanged;
+
+  /// No description provided for @contentsErrorKeyTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'This content key is already used.'**
+  String get contentsErrorKeyTaken;
+
+  /// No description provided for @contentsErrorKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the content key: lowercase letters, numbers and _, with at least one dot.'**
+  String get contentsErrorKey;
+
+  /// No description provided for @contentsErrorThai.
+  ///
+  /// In en, this message translates to:
+  /// **'The Thai title and text are required.'**
+  String get contentsErrorThai;
+
+  /// No description provided for @contentsErrorTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Titles can be up to 200 characters and text up to 20,000.'**
+  String get contentsErrorTooLong;
+
+  /// No description provided for @contentsErrorInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the type, order and icon name.'**
+  String get contentsErrorInvalid;
 }
 
 class _AppLocalizationsDelegate

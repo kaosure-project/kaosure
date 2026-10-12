@@ -3472,4 +3472,236 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get ssoAppNone => 'ไม่มี';
+
+  @override
+  String get adminGroupFinance => 'การเงินและเนื้อหา';
+
+  @override
+  String get withdrawalsTitle => 'คำขอถอนเงิน';
+
+  @override
+  String get withdrawalsHelp =>
+      'โอนเงินจากบัญชีบริษัทเข้าบัญชีธนาคารที่ยืนยันแล้วของสมาชิก แล้วบันทึกเลขอ้างอิงการโอนที่นี่ หากปฏิเสธ ยอดเงินจะคืนเข้ากระเป๋าของสมาชิก';
+
+  @override
+  String get withdrawalsHubHelp => 'โอนเงินเข้าบัญชีสมาชิกและบันทึกเลขอ้างอิง';
+
+  @override
+  String get withdrawalStatusPending => 'รอโอน';
+
+  @override
+  String get withdrawalStatusPaid => 'โอนแล้ว';
+
+  @override
+  String get withdrawalStatusRejected => 'ปฏิเสธแล้ว';
+
+  @override
+  String get withdrawalStatusCancelled => 'สมาชิกยกเลิก';
+
+  @override
+  String get withdrawalAmount => 'จำนวนเงิน';
+
+  @override
+  String get withdrawalBank => 'ธนาคาร';
+
+  @override
+  String get withdrawalAccountName => 'ชื่อบัญชี';
+
+  @override
+  String get withdrawalAccountNumber => 'เลขที่บัญชี';
+
+  @override
+  String get withdrawalBranch => 'สาขา';
+
+  @override
+  String get withdrawalRequestedAt => 'วันที่ขอ';
+
+  @override
+  String get withdrawalReviewer => 'ผู้ตรวจ';
+
+  @override
+  String get withdrawalReference => 'เลขอ้างอิงการโอน';
+
+  @override
+  String get withdrawalReferenceHelp => 'เลขรายการจากธนาคาร 3 ถึง 100 ตัวอักษร';
+
+  @override
+  String get withdrawalRejectReason => 'เหตุผลที่ปฏิเสธ';
+
+  @override
+  String get withdrawalReasonHelp => '3 ถึง 500 ตัวอักษร สมาชิกจะเห็นเหตุผลนี้';
+
+  @override
+  String get withdrawalMarkPaid => 'ยืนยันการโอน';
+
+  @override
+  String get withdrawalReject => 'ปฏิเสธและคืนเงินเข้ากระเป๋า';
+
+  @override
+  String withdrawalPaidConfirm(String amount, String bank, String account) {
+    return 'ยืนยันว่าโอน $amount เข้า $bank $account แล้วใช่ไหม ระบบจะแจ้งสมาชิก';
+  }
+
+  @override
+  String withdrawalRejectConfirm(String amount) {
+    return 'ปฏิเสธคำขอนี้ใช่ไหม ยอด $amount จะคืนเข้ากระเป๋าของสมาชิก และระบบจะแจ้งสมาชิก';
+  }
+
+  @override
+  String get withdrawalPaidDone => 'บันทึกการโอนแล้ว';
+
+  @override
+  String get withdrawalRejectedDone => 'ปฏิเสธคำขอและคืนเงินแล้ว';
+
+  @override
+  String get withdrawalBankChanged =>
+      'บัญชีธนาคารที่ยืนยันของสมาชิกเปลี่ยนไปแล้ว กรุณาปฏิเสธคำขอนี้เพื่อให้สมาชิกส่งคำขอใหม่';
+
+  @override
+  String get withdrawalDetailLogged =>
+      'การเปิดหน้านี้ถูกบันทึกในประวัติการใช้งาน';
+
+  @override
+  String get withdrawalWallet => 'ยอดในกระเป๋า / กำลังโอน';
+
+  @override
+  String get withdrawalErrorOwn => 'ตรวจคำขอถอนเงินของตัวเองไม่ได้';
+
+  @override
+  String get withdrawalErrorNotPending =>
+      'คำขอนี้ถูกดำเนินการไปแล้ว กรุณารีเฟรชรายการ';
+
+  @override
+  String get withdrawalErrorWallet =>
+      'ยอดในกระเป๋าไม่ตรงกับคำขอนี้ กรุณาตรวจกระเป๋าก่อนดำเนินการต่อ';
+
+  @override
+  String get staffToolDenied => 'คุณไม่มีสิทธิ์ใช้เครื่องมือนี้';
+
+  @override
+  String get staffActionFailed =>
+      'ดำเนินการไม่สำเร็จ กรุณารีเฟรชเพื่อตรวจว่าบันทึกไปแล้วหรือยัง';
+
+  @override
+  String get contentsTitle => 'ศูนย์จัดการข้อความและข้อตกลง';
+
+  @override
+  String get contentsHelp =>
+      'ข้อความแนะนำ กฎ คำเตือน ข้อตกลง และศูนย์ช่วยเหลือที่แสดงในแอป การแก้ไขจะแสดงเมื่อเปิดหน้าครั้งถัดไป และทุกการเปลี่ยนแปลงถูกเก็บไว้ในประวัติ';
+
+  @override
+  String get contentsHubHelp =>
+      'แก้ข้อความแนะนำ กฎ คำเตือน และศูนย์ช่วยเหลือในแอป';
+
+  @override
+  String get contentsAdd => 'เพิ่มข้อความ';
+
+  @override
+  String get contentsAllApps => 'ทุกแอป';
+
+  @override
+  String get contentsCommon => 'ใช้ร่วมกันทุกแอป';
+
+  @override
+  String get contentsKey => 'รหัสข้อความ';
+
+  @override
+  String get contentsKeyHelp =>
+      'คำภาษาอังกฤษตัวเล็กคั่นด้วยจุด เช่น secondhand.help.buying และแก้รหัสไม่ได้หลังบันทึก';
+
+  @override
+  String get contentsApp => 'แอป';
+
+  @override
+  String get contentsCategory => 'ประเภท';
+
+  @override
+  String get contentsCategoryHelp => 'ช่วยเหลือ';
+
+  @override
+  String get contentsCategoryGuide => 'คำแนะนำ';
+
+  @override
+  String get contentsCategoryRule => 'กฎ';
+
+  @override
+  String get contentsCategoryWarning => 'คำเตือน';
+
+  @override
+  String get contentsCategoryTerms => 'ข้อตกลง';
+
+  @override
+  String get contentsCategoryNotice => 'การแจ้งเตือน';
+
+  @override
+  String get contentsTitleTh => 'หัวข้อ (ไทย)';
+
+  @override
+  String get contentsTitleEn => 'หัวข้อ (อังกฤษ)';
+
+  @override
+  String get contentsBodyTh => 'เนื้อหา (ไทย)';
+
+  @override
+  String get contentsBodyEn => 'เนื้อหา (อังกฤษ)';
+
+  @override
+  String get contentsBodyHelp =>
+      'บรรทัดละหนึ่งข้อ ต้องมีภาษาไทย ส่วนภาษาอังกฤษจะแสดงให้สมาชิกที่ใช้ภาษาอังกฤษ';
+
+  @override
+  String get contentsPlaceholderHelp =>
+      'ข้อความแจ้งเตือนที่ระบบส่ง ให้คงชื่อในวงเล็บปีกกา เช่น amount, bank และ reason ไว้ ระบบจะเติมค่าให้สมาชิกแต่ละคน';
+
+  @override
+  String get contentsIcon => 'ชื่อไอคอน (ไม่บังคับ)';
+
+  @override
+  String get contentsSort => 'ลำดับ';
+
+  @override
+  String get contentsActive => 'แสดงในแอป';
+
+  @override
+  String get contentsHidden => 'ซ่อนอยู่';
+
+  @override
+  String contentsVersion(int version) {
+    return 'เวอร์ชัน $version';
+  }
+
+  @override
+  String get contentsSaved => 'บันทึกข้อความแล้ว';
+
+  @override
+  String get contentsDeleted => 'ลบข้อความแล้ว';
+
+  @override
+  String get contentsDelete => 'ลบ';
+
+  @override
+  String contentsDeleteConfirm(String key) {
+    return 'ลบ $key ใช่ไหม แอปจะหยุดแสดงทันที และยังเก็บสำเนาไว้ในประวัติ';
+  }
+
+  @override
+  String get contentsErrorChanged =>
+      'มีผู้บันทึกข้อความนี้หลังจากคุณเปิด กรุณาย้อนกลับ เปิดใหม่ แล้วแก้อีกครั้ง';
+
+  @override
+  String get contentsErrorKeyTaken => 'รหัสข้อความนี้ถูกใช้แล้ว';
+
+  @override
+  String get contentsErrorKey =>
+      'ตรวจรหัสข้อความ: ใช้ตัวอักษรอังกฤษตัวเล็ก ตัวเลข และ _ โดยมีจุดอย่างน้อยหนึ่งจุด';
+
+  @override
+  String get contentsErrorThai => 'ต้องกรอกหัวข้อและเนื้อหาภาษาไทย';
+
+  @override
+  String get contentsErrorTooLong =>
+      'หัวข้อยาวได้ไม่เกิน 200 ตัวอักษร และเนื้อหาไม่เกิน 20,000 ตัวอักษร';
+
+  @override
+  String get contentsErrorInvalid => 'ตรวจประเภท ลำดับ และชื่อไอคอน';
 }

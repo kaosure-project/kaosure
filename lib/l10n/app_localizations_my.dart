@@ -3508,4 +3508,244 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get ssoAppNone => 'မရှိပါ';
+
+  @override
+  String get adminGroupFinance => 'ငွေကြေးနှင့် အကြောင်းအရာ';
+
+  @override
+  String get withdrawalsTitle => 'ငွေထုတ်တောင်းဆိုမှုများ';
+
+  @override
+  String get withdrawalsHelp =>
+      'ကုမ္ပဏီအကောင့်မှ အဖွဲ့ဝင်၏ အတည်ပြုပြီး ဘဏ်အကောင့်သို့ ငွေလွှဲပြီး ဘဏ်ငွေလွှဲနံပါတ်ကို ဤနေရာတွင် မှတ်တမ်းတင်ပါ။ ငြင်းပယ်ပါက ငွေပမာဏကို အဖွဲ့ဝင်၏ ပိုက်ဆံအိတ်သို့ ပြန်ထည့်ပါမည်။';
+
+  @override
+  String get withdrawalsHubHelp =>
+      'အဖွဲ့ဝင်ဘဏ်သို့ ငွေလွှဲပြီး နံပါတ်မှတ်တမ်းတင်ရန်';
+
+  @override
+  String get withdrawalStatusPending => 'ငွေလွှဲရန် စောင့်ဆိုင်း';
+
+  @override
+  String get withdrawalStatusPaid => 'ငွေလွှဲပြီး';
+
+  @override
+  String get withdrawalStatusRejected => 'ငြင်းပယ်ပြီး';
+
+  @override
+  String get withdrawalStatusCancelled => 'အဖွဲ့ဝင် ပယ်ဖျက်ခဲ့';
+
+  @override
+  String get withdrawalAmount => 'ပမာဏ';
+
+  @override
+  String get withdrawalBank => 'ဘဏ်';
+
+  @override
+  String get withdrawalAccountName => 'အကောင့်အမည်';
+
+  @override
+  String get withdrawalAccountNumber => 'အကောင့်နံပါတ်';
+
+  @override
+  String get withdrawalBranch => 'ဘဏ်ခွဲ';
+
+  @override
+  String get withdrawalRequestedAt => 'တောင်းဆိုသည့်အချိန်';
+
+  @override
+  String get withdrawalReviewer => 'စစ်ဆေးသူ';
+
+  @override
+  String get withdrawalReference => 'ငွေလွှဲနံပါတ်';
+
+  @override
+  String get withdrawalReferenceHelp =>
+      'ဘဏ်၏ ငွေလွှဲနံပါတ်၊ စာလုံး 3 မှ 100 အထိ';
+
+  @override
+  String get withdrawalRejectReason => 'ငြင်းပယ်ရသည့် အကြောင်းရင်း';
+
+  @override
+  String get withdrawalReasonHelp =>
+      'စာလုံး 3 မှ 500 အထိ။ အဖွဲ့ဝင်က ဤအကြောင်းရင်းကို မြင်ရပါမည်။';
+
+  @override
+  String get withdrawalMarkPaid => 'ငွေလွှဲမှု အတည်ပြုရန်';
+
+  @override
+  String get withdrawalReject => 'ငြင်းပယ်ပြီး ပိုက်ဆံအိတ်သို့ ပြန်အမ်းရန်';
+
+  @override
+  String withdrawalPaidConfirm(String amount, String bank, String account) {
+    return '$amount ကို $bank $account သို့ လွှဲပြီးကြောင်း အတည်ပြုမလား။ အဖွဲ့ဝင်ထံ အသိပေးပါမည်။';
+  }
+
+  @override
+  String withdrawalRejectConfirm(String amount) {
+    return 'ဤတောင်းဆိုမှုကို ငြင်းပယ်မလား။ $amount ကို အဖွဲ့ဝင်၏ ပိုက်ဆံအိတ်သို့ ပြန်ထည့်ပြီး အသိပေးပါမည်။';
+  }
+
+  @override
+  String get withdrawalPaidDone => 'ငွေလွှဲမှု မှတ်တမ်းတင်ပြီး';
+
+  @override
+  String get withdrawalRejectedDone =>
+      'တောင်းဆိုမှုကို ငြင်းပယ်ပြီး ငွေပြန်အမ်းပြီး';
+
+  @override
+  String get withdrawalBankChanged =>
+      'အဖွဲ့ဝင်၏ အတည်ပြုပြီး ဘဏ်အကောင့် ပြောင်းသွားပါပြီ။ ပြန်လည်တောင်းဆိုနိုင်ရန် ဤတောင်းဆိုမှုကို ငြင်းပယ်ပါ။';
+
+  @override
+  String get withdrawalDetailLogged =>
+      'ဤစာမျက်နှာကို ဖွင့်ခြင်းကို လုပ်ဆောင်မှုမှတ်တမ်းတွင် မှတ်သားထားပါသည်။';
+
+  @override
+  String get withdrawalWallet => 'ပိုက်ဆံအိတ် လက်ကျန် / လွှဲနေဆဲ';
+
+  @override
+  String get withdrawalErrorOwn =>
+      'ကိုယ်ပိုင် ငွေထုတ်တောင်းဆိုမှုကို စစ်ဆေး၍ မရပါ။';
+
+  @override
+  String get withdrawalErrorNotPending =>
+      'ဤတောင်းဆိုမှုကို ကိုင်တွယ်ပြီးပါပြီ။ စာရင်းကို ပြန်လည်ဖွင့်ပါ။';
+
+  @override
+  String get withdrawalErrorWallet =>
+      'ပိုက်ဆံအိတ်ပမာဏသည် ဤတောင်းဆိုမှုနှင့် မကိုက်ညီပါ။ ဆက်မလုပ်မီ ပိုက်ဆံအိတ်ကို စစ်ဆေးပါ။';
+
+  @override
+  String get staffToolDenied => 'ဤကိရိယာကို အသုံးပြုခွင့် မရှိပါ။';
+
+  @override
+  String get staffActionFailed =>
+      'ဤလုပ်ဆောင်ချက်ကို မပြီးမြောက်နိုင်ပါ။ သိမ်းပြီးသားလား စစ်ရန် ပြန်လည်ဖွင့်ပါ။';
+
+  @override
+  String get contentsTitle => 'စာသားနှင့် စည်းကမ်းချက် စီမံရာ';
+
+  @override
+  String get contentsHelp =>
+      'အက်ပ်များတွင် ပြသသည့် လမ်းညွှန်၊ စည်းမျဉ်း၊ သတိပေးချက်၊ စည်းကမ်းချက်နှင့် အကူအညီ စာသားများ။ ပြင်ဆင်ချက်များသည် နောက်တစ်ကြိမ် စာမျက်နှာဖွင့်ချိန်တွင် ပေါ်ပြီး ပြောင်းလဲမှုတိုင်းကို မှတ်တမ်းတွင် သိမ်းထားပါသည်။';
+
+  @override
+  String get contentsHubHelp =>
+      'အက်ပ်ရှိ လမ်းညွှန်၊ စည်းမျဉ်း၊ သတိပေးချက်နှင့် အကူအညီကို ပြင်ရန်';
+
+  @override
+  String get contentsAdd => 'အကြောင်းအရာ ထည့်ရန်';
+
+  @override
+  String get contentsAllApps => 'အက်ပ်အားလုံး';
+
+  @override
+  String get contentsCommon => 'အက်ပ်အားလုံး မျှသုံး';
+
+  @override
+  String get contentsKey => 'အကြောင်းအရာ ကီး';
+
+  @override
+  String get contentsKeyHelp =>
+      'အင်္ဂလိပ်စာလုံးအသေး စကားလုံးများကို အစက်ဖြင့် ဆက်ပါ၊ ဥပမာ secondhand.help.buying။ သိမ်းပြီးနောက် ပြောင်း၍ မရပါ။';
+
+  @override
+  String get contentsApp => 'အက်ပ်';
+
+  @override
+  String get contentsCategory => 'အမျိုးအစား';
+
+  @override
+  String get contentsCategoryHelp => 'အကူအညီ';
+
+  @override
+  String get contentsCategoryGuide => 'လမ်းညွှန်';
+
+  @override
+  String get contentsCategoryRule => 'စည်းမျဉ်း';
+
+  @override
+  String get contentsCategoryWarning => 'သတိပေးချက်';
+
+  @override
+  String get contentsCategoryTerms => 'စည်းကမ်းချက်';
+
+  @override
+  String get contentsCategoryNotice => 'အသိပေးချက်';
+
+  @override
+  String get contentsTitleTh => 'ခေါင်းစဉ် (ထိုင်း)';
+
+  @override
+  String get contentsTitleEn => 'ခေါင်းစဉ် (အင်္ဂလိပ်)';
+
+  @override
+  String get contentsBodyTh => 'စာသား (ထိုင်း)';
+
+  @override
+  String get contentsBodyEn => 'စာသား (အင်္ဂလိပ်)';
+
+  @override
+  String get contentsBodyHelp =>
+      'တစ်ကြောင်းလျှင် အချက်တစ်ချက်။ ထိုင်းဘာသာ မဖြစ်မနေ လိုအပ်ပြီး အင်္ဂလိပ်ဘာသာကို အင်္ဂလိပ်သုံးသော အဖွဲ့ဝင်များထံ ပြသပါမည်။';
+
+  @override
+  String get contentsPlaceholderHelp =>
+      'စနစ်မှ ပို့သော အသိပေးစာသား။ amount၊ bank နှင့် reason ကဲ့သို့ တွန့်ကွင်းထဲရှိ အမည်များကို မပြောင်းဘဲ ထားပါ၊ အဖွဲ့ဝင်တစ်ဦးချင်းအတွက် စနစ်က ဖြည့်ပေးပါမည်။';
+
+  @override
+  String get contentsIcon => 'အိုင်ကွန်အမည် (ရွေးချယ်နိုင်)';
+
+  @override
+  String get contentsSort => 'အစီအစဉ်';
+
+  @override
+  String get contentsActive => 'အက်ပ်တွင် ပြသရန်';
+
+  @override
+  String get contentsHidden => 'ဝှက်ထားသည်';
+
+  @override
+  String contentsVersion(int version) {
+    return 'ဗားရှင်း $version';
+  }
+
+  @override
+  String get contentsSaved => 'အကြောင်းအရာ သိမ်းပြီး';
+
+  @override
+  String get contentsDeleted => 'အကြောင်းအရာ ဖျက်ပြီး';
+
+  @override
+  String get contentsDelete => 'ဖျက်ရန်';
+
+  @override
+  String contentsDeleteConfirm(String key) {
+    return '$key ကို ဖျက်မလား။ အက်ပ်များတွင် ချက်ချင်း ပြသခြင်း ရပ်မည်ဖြစ်ပြီး မိတ္တူကို မှတ်တမ်းတွင် ထားပါမည်။';
+  }
+
+  @override
+  String get contentsErrorChanged =>
+      'သင်ဖွင့်ပြီးနောက် တစ်စုံတစ်ဦးက ဤအကြောင်းအရာကို သိမ်းခဲ့သည်။ နောက်ပြန်သွားပြီး ပြန်ဖွင့်ကာ ထပ်ပြင်ပါ။';
+
+  @override
+  String get contentsErrorKeyTaken =>
+      'ဤအကြောင်းအရာ ကီးကို အသုံးပြုပြီးဖြစ်သည်။';
+
+  @override
+  String get contentsErrorKey =>
+      'အကြောင်းအရာ ကီးကို စစ်ပါ- စာလုံးအသေး၊ ဂဏန်းနှင့် _ ကို သုံးပြီး အစက် အနည်းဆုံး တစ်ခု ပါရမည်။';
+
+  @override
+  String get contentsErrorThai =>
+      'ထိုင်းခေါင်းစဉ်နှင့် စာသား မဖြစ်မနေ လိုအပ်သည်။';
+
+  @override
+  String get contentsErrorTooLong =>
+      'ခေါင်းစဉ် စာလုံး 200 နှင့် စာသား စာလုံး 20,000 အထိ ရေးနိုင်သည်။';
+
+  @override
+  String get contentsErrorInvalid =>
+      'အမျိုးအစား၊ အစီအစဉ်နှင့် အိုင်ကွန်အမည်ကို စစ်ပါ။';
 }

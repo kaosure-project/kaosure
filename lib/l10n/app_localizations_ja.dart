@@ -3291,4 +3291,229 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get ssoAppNone => 'なし';
+
+  @override
+  String get adminGroupFinance => '財務とコンテンツ';
+
+  @override
+  String get withdrawalsTitle => '出金申請';
+
+  @override
+  String get withdrawalsHelp =>
+      '会社口座から会員の確認済み銀行口座へ振り込み、銀行の取引番号をここに記録します。却下すると金額は会員のウォレットに戻ります。';
+
+  @override
+  String get withdrawalsHubHelp => '会員の口座へ振り込み、取引番号を記録';
+
+  @override
+  String get withdrawalStatusPending => '振込待ち';
+
+  @override
+  String get withdrawalStatusPaid => '振込済み';
+
+  @override
+  String get withdrawalStatusRejected => '却下';
+
+  @override
+  String get withdrawalStatusCancelled => '会員が取り消し';
+
+  @override
+  String get withdrawalAmount => '金額';
+
+  @override
+  String get withdrawalBank => '銀行';
+
+  @override
+  String get withdrawalAccountName => '口座名義';
+
+  @override
+  String get withdrawalAccountNumber => '口座番号';
+
+  @override
+  String get withdrawalBranch => '支店';
+
+  @override
+  String get withdrawalRequestedAt => '申請日時';
+
+  @override
+  String get withdrawalReviewer => '確認者';
+
+  @override
+  String get withdrawalReference => '振込の取引番号';
+
+  @override
+  String get withdrawalReferenceHelp => '銀行の取引番号（3〜100文字）';
+
+  @override
+  String get withdrawalRejectReason => '却下の理由';
+
+  @override
+  String get withdrawalReasonHelp => '3〜500文字。会員に表示されます。';
+
+  @override
+  String get withdrawalMarkPaid => '振込を確定';
+
+  @override
+  String get withdrawalReject => '却下してウォレットへ返金';
+
+  @override
+  String withdrawalPaidConfirm(String amount, String bank, String account) {
+    return '$amount を $bank $account へ振り込みましたか？会員に通知されます。';
+  }
+
+  @override
+  String withdrawalRejectConfirm(String amount) {
+    return 'この申請を却下しますか？$amount は会員のウォレットに戻り、会員に通知されます。';
+  }
+
+  @override
+  String get withdrawalPaidDone => '振込を記録しました';
+
+  @override
+  String get withdrawalRejectedDone => '申請を却下して返金しました';
+
+  @override
+  String get withdrawalBankChanged =>
+      '会員の確認済み銀行口座が変更されました。再申請できるよう、この申請を却下してください。';
+
+  @override
+  String get withdrawalDetailLogged => 'このページを開いた記録はアクティビティログに残ります。';
+
+  @override
+  String get withdrawalWallet => 'ウォレット残高 / 振込中';
+
+  @override
+  String get withdrawalErrorOwn => '自分の出金申請は確認できません。';
+
+  @override
+  String get withdrawalErrorNotPending => 'この申請はすでに処理されています。一覧を更新してください。';
+
+  @override
+  String get withdrawalErrorWallet =>
+      'ウォレットの金額がこの申請と一致しません。続ける前にウォレットを確認してください。';
+
+  @override
+  String get staffToolDenied => 'このツールを使う権限がありません。';
+
+  @override
+  String get staffActionFailed => '操作を完了できませんでした。更新して保存済みか確認してください。';
+
+  @override
+  String get contentsTitle => 'メッセージと規約の管理';
+
+  @override
+  String get contentsHelp =>
+      'アプリに表示する案内、ルール、注意、規約、ヘルプです。変更は次にページを開いたときに反映され、すべての変更は履歴に残ります。';
+
+  @override
+  String get contentsHubHelp => 'アプリの案内、ルール、注意、ヘルプを編集';
+
+  @override
+  String get contentsAdd => 'コンテンツを追加';
+
+  @override
+  String get contentsAllApps => 'すべてのアプリ';
+
+  @override
+  String get contentsCommon => '全アプリ共通';
+
+  @override
+  String get contentsKey => 'コンテンツキー';
+
+  @override
+  String get contentsKeyHelp =>
+      '小文字の英単語をドットでつなぎます（例: secondhand.help.buying）。保存後は変更できません。';
+
+  @override
+  String get contentsApp => 'アプリ';
+
+  @override
+  String get contentsCategory => '種類';
+
+  @override
+  String get contentsCategoryHelp => 'ヘルプ';
+
+  @override
+  String get contentsCategoryGuide => '案内';
+
+  @override
+  String get contentsCategoryRule => 'ルール';
+
+  @override
+  String get contentsCategoryWarning => '注意';
+
+  @override
+  String get contentsCategoryTerms => '規約';
+
+  @override
+  String get contentsCategoryNotice => '通知';
+
+  @override
+  String get contentsTitleTh => 'タイトル（タイ語）';
+
+  @override
+  String get contentsTitleEn => 'タイトル（英語）';
+
+  @override
+  String get contentsBodyTh => '本文（タイ語）';
+
+  @override
+  String get contentsBodyEn => '本文（英語）';
+
+  @override
+  String get contentsBodyHelp => '1行に1項目。タイ語は必須で、英語は英語を使う会員に表示されます。';
+
+  @override
+  String get contentsPlaceholderHelp =>
+      'システムが送る通知文です。amount、bank、reason など波かっこ内の名前はそのまま残してください。会員ごとに値が入ります。';
+
+  @override
+  String get contentsIcon => 'アイコン名（任意）';
+
+  @override
+  String get contentsSort => '表示順';
+
+  @override
+  String get contentsActive => 'アプリに表示';
+
+  @override
+  String get contentsHidden => '非表示';
+
+  @override
+  String contentsVersion(int version) {
+    return 'バージョン $version';
+  }
+
+  @override
+  String get contentsSaved => 'コンテンツを保存しました';
+
+  @override
+  String get contentsDeleted => 'コンテンツを削除しました';
+
+  @override
+  String get contentsDelete => '削除';
+
+  @override
+  String contentsDeleteConfirm(String key) {
+    return '$key を削除しますか？アプリでの表示はすぐに止まり、コピーは履歴に残ります。';
+  }
+
+  @override
+  String get contentsErrorChanged =>
+      '開いた後に別の人がこのコンテンツを保存しました。戻って開き直し、もう一度変更してください。';
+
+  @override
+  String get contentsErrorKeyTaken => 'このコンテンツキーはすでに使われています。';
+
+  @override
+  String get contentsErrorKey => 'コンテンツキーを確認してください。小文字、数字、_ を使い、ドットを1つ以上含めます。';
+
+  @override
+  String get contentsErrorThai => 'タイ語のタイトルと本文は必須です。';
+
+  @override
+  String get contentsErrorTooLong => 'タイトルは200文字まで、本文は20,000文字までです。';
+
+  @override
+  String get contentsErrorInvalid => '種類、表示順、アイコン名を確認してください。';
 }

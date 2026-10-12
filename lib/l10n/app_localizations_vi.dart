@@ -3487,4 +3487,240 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get ssoAppNone => 'Không có';
+
+  @override
+  String get adminGroupFinance => 'Tài chính và nội dung';
+
+  @override
+  String get withdrawalsTitle => 'Yêu cầu rút tiền';
+
+  @override
+  String get withdrawalsHelp =>
+      'Chuyển khoản từ tài khoản công ty vào tài khoản ngân hàng đã xác minh của thành viên, rồi ghi lại mã giao dịch ngân hàng tại đây. Nếu từ chối, số tiền sẽ được hoàn vào ví của thành viên.';
+
+  @override
+  String get withdrawalsHubHelp =>
+      'Chuyển tiền cho thành viên và ghi mã giao dịch';
+
+  @override
+  String get withdrawalStatusPending => 'Chờ chuyển khoản';
+
+  @override
+  String get withdrawalStatusPaid => 'Đã chuyển khoản';
+
+  @override
+  String get withdrawalStatusRejected => 'Đã từ chối';
+
+  @override
+  String get withdrawalStatusCancelled => 'Thành viên đã hủy';
+
+  @override
+  String get withdrawalAmount => 'Số tiền';
+
+  @override
+  String get withdrawalBank => 'Ngân hàng';
+
+  @override
+  String get withdrawalAccountName => 'Tên tài khoản';
+
+  @override
+  String get withdrawalAccountNumber => 'Số tài khoản';
+
+  @override
+  String get withdrawalBranch => 'Chi nhánh';
+
+  @override
+  String get withdrawalRequestedAt => 'Thời gian yêu cầu';
+
+  @override
+  String get withdrawalReviewer => 'Người duyệt';
+
+  @override
+  String get withdrawalReference => 'Mã giao dịch chuyển khoản';
+
+  @override
+  String get withdrawalReferenceHelp =>
+      'Mã giao dịch của ngân hàng, từ 3 đến 100 ký tự';
+
+  @override
+  String get withdrawalRejectReason => 'Lý do từ chối';
+
+  @override
+  String get withdrawalReasonHelp =>
+      'Từ 3 đến 500 ký tự. Thành viên sẽ thấy lý do này.';
+
+  @override
+  String get withdrawalMarkPaid => 'Xác nhận đã chuyển';
+
+  @override
+  String get withdrawalReject => 'Từ chối và hoàn vào ví';
+
+  @override
+  String withdrawalPaidConfirm(String amount, String bank, String account) {
+    return 'Xác nhận đã chuyển $amount vào $bank $account? Thành viên sẽ được thông báo.';
+  }
+
+  @override
+  String withdrawalRejectConfirm(String amount) {
+    return 'Từ chối yêu cầu này? $amount sẽ được hoàn vào ví của thành viên và thành viên sẽ được thông báo.';
+  }
+
+  @override
+  String get withdrawalPaidDone => 'Đã ghi nhận chuyển khoản';
+
+  @override
+  String get withdrawalRejectedDone => 'Đã từ chối và hoàn tiền';
+
+  @override
+  String get withdrawalBankChanged =>
+      'Tài khoản ngân hàng đã xác minh của thành viên đã thay đổi. Hãy từ chối yêu cầu này để họ gửi lại.';
+
+  @override
+  String get withdrawalDetailLogged =>
+      'Việc mở trang này được ghi vào nhật ký hoạt động.';
+
+  @override
+  String get withdrawalWallet => 'Số dư ví / đang chuyển';
+
+  @override
+  String get withdrawalErrorOwn =>
+      'Bạn không thể duyệt yêu cầu rút tiền của chính mình.';
+
+  @override
+  String get withdrawalErrorNotPending =>
+      'Yêu cầu này đã được xử lý. Hãy làm mới danh sách.';
+
+  @override
+  String get withdrawalErrorWallet =>
+      'Số tiền trong ví không khớp với yêu cầu này. Hãy kiểm tra ví trước khi tiếp tục.';
+
+  @override
+  String get staffToolDenied => 'Bạn không có quyền dùng công cụ này.';
+
+  @override
+  String get staffActionFailed =>
+      'Không thể hoàn tất thao tác. Hãy làm mới để kiểm tra xem đã được lưu chưa.';
+
+  @override
+  String get contentsTitle => 'Quản lý thông điệp và điều khoản';
+
+  @override
+  String get contentsHelp =>
+      'Hướng dẫn, quy định, cảnh báo, điều khoản và trợ giúp hiển thị trong ứng dụng. Thay đổi sẽ hiển thị khi mở trang lần sau và mọi thay đổi đều được lưu trong lịch sử.';
+
+  @override
+  String get contentsHubHelp =>
+      'Sửa hướng dẫn, quy định, cảnh báo và trợ giúp trong ứng dụng';
+
+  @override
+  String get contentsAdd => 'Thêm nội dung';
+
+  @override
+  String get contentsAllApps => 'Tất cả ứng dụng';
+
+  @override
+  String get contentsCommon => 'Dùng chung cho mọi ứng dụng';
+
+  @override
+  String get contentsKey => 'Mã nội dung';
+
+  @override
+  String get contentsKeyHelp =>
+      'Các từ tiếng Anh viết thường nối bằng dấu chấm, ví dụ secondhand.help.buying. Không thể đổi sau khi lưu.';
+
+  @override
+  String get contentsApp => 'Ứng dụng';
+
+  @override
+  String get contentsCategory => 'Loại';
+
+  @override
+  String get contentsCategoryHelp => 'Trợ giúp';
+
+  @override
+  String get contentsCategoryGuide => 'Hướng dẫn';
+
+  @override
+  String get contentsCategoryRule => 'Quy định';
+
+  @override
+  String get contentsCategoryWarning => 'Cảnh báo';
+
+  @override
+  String get contentsCategoryTerms => 'Điều khoản';
+
+  @override
+  String get contentsCategoryNotice => 'Thông báo';
+
+  @override
+  String get contentsTitleTh => 'Tiêu đề (tiếng Thái)';
+
+  @override
+  String get contentsTitleEn => 'Tiêu đề (tiếng Anh)';
+
+  @override
+  String get contentsBodyTh => 'Nội dung (tiếng Thái)';
+
+  @override
+  String get contentsBodyEn => 'Nội dung (tiếng Anh)';
+
+  @override
+  String get contentsBodyHelp =>
+      'Mỗi dòng một ý. Bắt buộc có tiếng Thái; bản tiếng Anh hiển thị cho thành viên dùng tiếng Anh.';
+
+  @override
+  String get contentsPlaceholderHelp =>
+      'Nội dung thông báo do hệ thống gửi. Giữ nguyên các tên trong ngoặc nhọn như amount, bank và reason; hệ thống sẽ điền cho từng thành viên.';
+
+  @override
+  String get contentsIcon => 'Tên biểu tượng (không bắt buộc)';
+
+  @override
+  String get contentsSort => 'Thứ tự';
+
+  @override
+  String get contentsActive => 'Hiển thị trong ứng dụng';
+
+  @override
+  String get contentsHidden => 'Đang ẩn';
+
+  @override
+  String contentsVersion(int version) {
+    return 'Phiên bản $version';
+  }
+
+  @override
+  String get contentsSaved => 'Đã lưu nội dung';
+
+  @override
+  String get contentsDeleted => 'Đã xóa nội dung';
+
+  @override
+  String get contentsDelete => 'Xóa';
+
+  @override
+  String contentsDeleteConfirm(String key) {
+    return 'Xóa $key? Ứng dụng sẽ ngừng hiển thị ngay và bản sao vẫn được giữ trong lịch sử.';
+  }
+
+  @override
+  String get contentsErrorChanged =>
+      'Có người đã lưu nội dung này sau khi bạn mở. Hãy quay lại, mở lại và sửa lần nữa.';
+
+  @override
+  String get contentsErrorKeyTaken => 'Mã nội dung này đã được dùng.';
+
+  @override
+  String get contentsErrorKey =>
+      'Kiểm tra mã nội dung: dùng chữ thường, số và _, có ít nhất một dấu chấm.';
+
+  @override
+  String get contentsErrorThai => 'Bắt buộc có tiêu đề và nội dung tiếng Thái.';
+
+  @override
+  String get contentsErrorTooLong =>
+      'Tiêu đề tối đa 200 ký tự và nội dung tối đa 20.000 ký tự.';
+
+  @override
+  String get contentsErrorInvalid => 'Kiểm tra loại, thứ tự và tên biểu tượng.';
 }

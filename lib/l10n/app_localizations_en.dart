@@ -3510,4 +3510,239 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ssoAppNone => 'None';
+
+  @override
+  String get adminGroupFinance => 'Finance and content';
+
+  @override
+  String get withdrawalsTitle => 'Withdrawal requests';
+
+  @override
+  String get withdrawalsHelp =>
+      'Transfer each amount to the member\'s verified bank account from the company account, then record the bank reference here. Rejecting returns the money to the member\'s wallet.';
+
+  @override
+  String get withdrawalsHubHelp =>
+      'Transfer to members\' banks and record the reference';
+
+  @override
+  String get withdrawalStatusPending => 'Waiting for transfer';
+
+  @override
+  String get withdrawalStatusPaid => 'Transferred';
+
+  @override
+  String get withdrawalStatusRejected => 'Rejected';
+
+  @override
+  String get withdrawalStatusCancelled => 'Cancelled by member';
+
+  @override
+  String get withdrawalAmount => 'Amount';
+
+  @override
+  String get withdrawalBank => 'Bank';
+
+  @override
+  String get withdrawalAccountName => 'Account name';
+
+  @override
+  String get withdrawalAccountNumber => 'Account number';
+
+  @override
+  String get withdrawalBranch => 'Branch';
+
+  @override
+  String get withdrawalRequestedAt => 'Requested';
+
+  @override
+  String get withdrawalReviewer => 'Reviewed by';
+
+  @override
+  String get withdrawalReference => 'Transfer reference';
+
+  @override
+  String get withdrawalReferenceHelp =>
+      'The bank\'s transaction number, 3 to 100 characters';
+
+  @override
+  String get withdrawalRejectReason => 'Reason for rejecting';
+
+  @override
+  String get withdrawalReasonHelp =>
+      '3 to 500 characters. The member sees this reason.';
+
+  @override
+  String get withdrawalMarkPaid => 'Confirm transfer';
+
+  @override
+  String get withdrawalReject => 'Reject and refund to wallet';
+
+  @override
+  String withdrawalPaidConfirm(String amount, String bank, String account) {
+    return 'Confirm that $amount was transferred to $bank $account? The member will be notified.';
+  }
+
+  @override
+  String withdrawalRejectConfirm(String amount) {
+    return 'Reject this request? $amount returns to the member\'s wallet and they will be notified.';
+  }
+
+  @override
+  String get withdrawalPaidDone => 'Transfer recorded';
+
+  @override
+  String get withdrawalRejectedDone => 'Request rejected and refunded';
+
+  @override
+  String get withdrawalBankChanged =>
+      'The member\'s verified bank account has changed. Reject this request so they can request again.';
+
+  @override
+  String get withdrawalDetailLogged =>
+      'Opening this page is recorded in the activity log.';
+
+  @override
+  String get withdrawalWallet => 'Wallet balance / being transferred';
+
+  @override
+  String get withdrawalErrorOwn => 'You can\'t review your own withdrawal.';
+
+  @override
+  String get withdrawalErrorNotPending =>
+      'This request has already been handled. Refresh the list.';
+
+  @override
+  String get withdrawalErrorWallet =>
+      'The wallet doesn\'t match this request. Check the wallet before continuing.';
+
+  @override
+  String get staffToolDenied => 'You don\'t have permission to use this tool.';
+
+  @override
+  String get staffActionFailed =>
+      'Couldn\'t complete this action. Refresh to check whether it was already saved.';
+
+  @override
+  String get contentsTitle => 'Messages and terms';
+
+  @override
+  String get contentsHelp =>
+      'Guidance, rules, warnings, terms and help text shown in the apps. Changes appear the next time a page opens, and every change is kept in the revision history.';
+
+  @override
+  String get contentsHubHelp =>
+      'Edit guidance, rules, warnings and help shown in the apps';
+
+  @override
+  String get contentsAdd => 'Add content';
+
+  @override
+  String get contentsAllApps => 'All apps';
+
+  @override
+  String get contentsCommon => 'Shared by all apps';
+
+  @override
+  String get contentsKey => 'Content key';
+
+  @override
+  String get contentsKeyHelp =>
+      'Lowercase words joined by dots, for example secondhand.help.buying. The key can\'t be changed after saving.';
+
+  @override
+  String get contentsApp => 'App';
+
+  @override
+  String get contentsCategory => 'Type';
+
+  @override
+  String get contentsCategoryHelp => 'Help';
+
+  @override
+  String get contentsCategoryGuide => 'Guide';
+
+  @override
+  String get contentsCategoryRule => 'Rule';
+
+  @override
+  String get contentsCategoryWarning => 'Warning';
+
+  @override
+  String get contentsCategoryTerms => 'Terms';
+
+  @override
+  String get contentsCategoryNotice => 'Notification';
+
+  @override
+  String get contentsTitleTh => 'Title (Thai)';
+
+  @override
+  String get contentsTitleEn => 'Title (English)';
+
+  @override
+  String get contentsBodyTh => 'Text (Thai)';
+
+  @override
+  String get contentsBodyEn => 'Text (English)';
+
+  @override
+  String get contentsBodyHelp =>
+      'One point per line. Thai is required; the English version is shown to members using English.';
+
+  @override
+  String get contentsPlaceholderHelp =>
+      'Notification text sent by the system. Keep the names in curly braces, such as amount, bank and reason; they are filled in for each member.';
+
+  @override
+  String get contentsIcon => 'Icon name (optional)';
+
+  @override
+  String get contentsSort => 'Order';
+
+  @override
+  String get contentsActive => 'Show in apps';
+
+  @override
+  String get contentsHidden => 'Hidden';
+
+  @override
+  String contentsVersion(int version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get contentsSaved => 'Content saved';
+
+  @override
+  String get contentsDeleted => 'Content deleted';
+
+  @override
+  String get contentsDelete => 'Delete';
+
+  @override
+  String contentsDeleteConfirm(String key) {
+    return 'Delete $key? Apps stop showing it right away. A copy stays in the revision history.';
+  }
+
+  @override
+  String get contentsErrorChanged =>
+      'Someone saved this content after you opened it. Go back, reopen it and make your change again.';
+
+  @override
+  String get contentsErrorKeyTaken => 'This content key is already used.';
+
+  @override
+  String get contentsErrorKey =>
+      'Check the content key: lowercase letters, numbers and _, with at least one dot.';
+
+  @override
+  String get contentsErrorThai => 'The Thai title and text are required.';
+
+  @override
+  String get contentsErrorTooLong =>
+      'Titles can be up to 200 characters and text up to 20,000.';
+
+  @override
+  String get contentsErrorInvalid => 'Check the type, order and icon name.';
 }

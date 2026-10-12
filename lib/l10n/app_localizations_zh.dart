@@ -3234,6 +3234,228 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get ssoAppNone => '无';
+
+  @override
+  String get adminGroupFinance => '财务与内容';
+
+  @override
+  String get withdrawalsTitle => '提现申请';
+
+  @override
+  String get withdrawalsHelp =>
+      '从公司账户将金额转入会员已验证的银行账户，然后在此记录银行交易号。拒绝后，金额将退回会员钱包。';
+
+  @override
+  String get withdrawalsHubHelp => '向会员银行账户转账并记录交易号';
+
+  @override
+  String get withdrawalStatusPending => '待转账';
+
+  @override
+  String get withdrawalStatusPaid => '已转账';
+
+  @override
+  String get withdrawalStatusRejected => '已拒绝';
+
+  @override
+  String get withdrawalStatusCancelled => '会员已取消';
+
+  @override
+  String get withdrawalAmount => '金额';
+
+  @override
+  String get withdrawalBank => '银行';
+
+  @override
+  String get withdrawalAccountName => '账户名';
+
+  @override
+  String get withdrawalAccountNumber => '账号';
+
+  @override
+  String get withdrawalBranch => '支行';
+
+  @override
+  String get withdrawalRequestedAt => '申请时间';
+
+  @override
+  String get withdrawalReviewer => '审核人';
+
+  @override
+  String get withdrawalReference => '转账交易号';
+
+  @override
+  String get withdrawalReferenceHelp => '银行交易号，3 至 100 个字符';
+
+  @override
+  String get withdrawalRejectReason => '拒绝原因';
+
+  @override
+  String get withdrawalReasonHelp => '3 至 500 个字符，会员会看到此原因。';
+
+  @override
+  String get withdrawalMarkPaid => '确认已转账';
+
+  @override
+  String get withdrawalReject => '拒绝并退回钱包';
+
+  @override
+  String withdrawalPaidConfirm(String amount, String bank, String account) {
+    return '确认已将 $amount 转入 $bank $account？系统会通知会员。';
+  }
+
+  @override
+  String withdrawalRejectConfirm(String amount) {
+    return '拒绝此申请？$amount 将退回会员钱包，系统会通知会员。';
+  }
+
+  @override
+  String get withdrawalPaidDone => '已记录转账';
+
+  @override
+  String get withdrawalRejectedDone => '已拒绝申请并退款';
+
+  @override
+  String get withdrawalBankChanged => '会员已验证的银行账户已更改。请拒绝此申请，以便会员重新申请。';
+
+  @override
+  String get withdrawalDetailLogged => '打开此页面会记录在活动日志中。';
+
+  @override
+  String get withdrawalWallet => '钱包余额 / 转账中';
+
+  @override
+  String get withdrawalErrorOwn => '不能审核自己的提现申请。';
+
+  @override
+  String get withdrawalErrorNotPending => '此申请已处理。请刷新列表。';
+
+  @override
+  String get withdrawalErrorWallet => '钱包金额与此申请不符。请先检查钱包再继续。';
+
+  @override
+  String get staffToolDenied => '你没有使用此工具的权限。';
+
+  @override
+  String get staffActionFailed => '无法完成此操作。请刷新以确认是否已保存。';
+
+  @override
+  String get contentsTitle => '消息与条款管理';
+
+  @override
+  String get contentsHelp =>
+      '应用中显示的指南、规则、警告、条款和帮助内容。修改会在下次打开页面时显示，所有修改都保存在历史记录中。';
+
+  @override
+  String get contentsHubHelp => '编辑应用中的指南、规则、警告和帮助';
+
+  @override
+  String get contentsAdd => '添加内容';
+
+  @override
+  String get contentsAllApps => '所有应用';
+
+  @override
+  String get contentsCommon => '所有应用共用';
+
+  @override
+  String get contentsKey => '内容键';
+
+  @override
+  String get contentsKeyHelp =>
+      '用点连接的小写英文单词，例如 secondhand.help.buying。保存后不能更改。';
+
+  @override
+  String get contentsApp => '应用';
+
+  @override
+  String get contentsCategory => '类型';
+
+  @override
+  String get contentsCategoryHelp => '帮助';
+
+  @override
+  String get contentsCategoryGuide => '指南';
+
+  @override
+  String get contentsCategoryRule => '规则';
+
+  @override
+  String get contentsCategoryWarning => '警告';
+
+  @override
+  String get contentsCategoryTerms => '条款';
+
+  @override
+  String get contentsCategoryNotice => '通知';
+
+  @override
+  String get contentsTitleTh => '标题（泰语）';
+
+  @override
+  String get contentsTitleEn => '标题（英语）';
+
+  @override
+  String get contentsBodyTh => '正文（泰语）';
+
+  @override
+  String get contentsBodyEn => '正文（英语）';
+
+  @override
+  String get contentsBodyHelp => '每行一条。泰语必填，英语版本会显示给使用英语的会员。';
+
+  @override
+  String get contentsPlaceholderHelp =>
+      '系统发送的通知文字。请保留花括号中的名称，如 amount、bank 和 reason，系统会为每位会员填入。';
+
+  @override
+  String get contentsIcon => '图标名称（可选）';
+
+  @override
+  String get contentsSort => '顺序';
+
+  @override
+  String get contentsActive => '在应用中显示';
+
+  @override
+  String get contentsHidden => '已隐藏';
+
+  @override
+  String contentsVersion(int version) {
+    return '版本 $version';
+  }
+
+  @override
+  String get contentsSaved => '内容已保存';
+
+  @override
+  String get contentsDeleted => '内容已删除';
+
+  @override
+  String get contentsDelete => '删除';
+
+  @override
+  String contentsDeleteConfirm(String key) {
+    return '删除 $key？应用会立即停止显示，副本保留在历史记录中。';
+  }
+
+  @override
+  String get contentsErrorChanged => '你打开后有人保存了此内容。请返回并重新打开，再修改一次。';
+
+  @override
+  String get contentsErrorKeyTaken => '此内容键已被使用。';
+
+  @override
+  String get contentsErrorKey => '请检查内容键：使用小写字母、数字和 _，并至少包含一个点。';
+
+  @override
+  String get contentsErrorThai => '泰语标题和正文为必填项。';
+
+  @override
+  String get contentsErrorTooLong => '标题最多 200 个字符，正文最多 20,000 个字符。';
+
+  @override
+  String get contentsErrorInvalid => '请检查类型、顺序和图标名称。';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -6466,4 +6688,226 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get ssoAppNone => '无';
+
+  @override
+  String get adminGroupFinance => '财务与内容';
+
+  @override
+  String get withdrawalsTitle => '提现申请';
+
+  @override
+  String get withdrawalsHelp =>
+      '从公司账户将金额转入会员已验证的银行账户，然后在此记录银行交易号。拒绝后，金额将退回会员钱包。';
+
+  @override
+  String get withdrawalsHubHelp => '向会员银行账户转账并记录交易号';
+
+  @override
+  String get withdrawalStatusPending => '待转账';
+
+  @override
+  String get withdrawalStatusPaid => '已转账';
+
+  @override
+  String get withdrawalStatusRejected => '已拒绝';
+
+  @override
+  String get withdrawalStatusCancelled => '会员已取消';
+
+  @override
+  String get withdrawalAmount => '金额';
+
+  @override
+  String get withdrawalBank => '银行';
+
+  @override
+  String get withdrawalAccountName => '账户名';
+
+  @override
+  String get withdrawalAccountNumber => '账号';
+
+  @override
+  String get withdrawalBranch => '支行';
+
+  @override
+  String get withdrawalRequestedAt => '申请时间';
+
+  @override
+  String get withdrawalReviewer => '审核人';
+
+  @override
+  String get withdrawalReference => '转账交易号';
+
+  @override
+  String get withdrawalReferenceHelp => '银行交易号，3 至 100 个字符';
+
+  @override
+  String get withdrawalRejectReason => '拒绝原因';
+
+  @override
+  String get withdrawalReasonHelp => '3 至 500 个字符，会员会看到此原因。';
+
+  @override
+  String get withdrawalMarkPaid => '确认已转账';
+
+  @override
+  String get withdrawalReject => '拒绝并退回钱包';
+
+  @override
+  String withdrawalPaidConfirm(String amount, String bank, String account) {
+    return '确认已将 $amount 转入 $bank $account？系统会通知会员。';
+  }
+
+  @override
+  String withdrawalRejectConfirm(String amount) {
+    return '拒绝此申请？$amount 将退回会员钱包，系统会通知会员。';
+  }
+
+  @override
+  String get withdrawalPaidDone => '已记录转账';
+
+  @override
+  String get withdrawalRejectedDone => '已拒绝申请并退款';
+
+  @override
+  String get withdrawalBankChanged => '会员已验证的银行账户已更改。请拒绝此申请，以便会员重新申请。';
+
+  @override
+  String get withdrawalDetailLogged => '打开此页面会记录在活动日志中。';
+
+  @override
+  String get withdrawalWallet => '钱包余额 / 转账中';
+
+  @override
+  String get withdrawalErrorOwn => '不能审核自己的提现申请。';
+
+  @override
+  String get withdrawalErrorNotPending => '此申请已处理。请刷新列表。';
+
+  @override
+  String get withdrawalErrorWallet => '钱包金额与此申请不符。请先检查钱包再继续。';
+
+  @override
+  String get staffToolDenied => '你没有使用此工具的权限。';
+
+  @override
+  String get staffActionFailed => '无法完成此操作。请刷新以确认是否已保存。';
+
+  @override
+  String get contentsTitle => '消息与条款管理';
+
+  @override
+  String get contentsHelp =>
+      '应用中显示的指南、规则、警告、条款和帮助内容。修改会在下次打开页面时显示，所有修改都保存在历史记录中。';
+
+  @override
+  String get contentsHubHelp => '编辑应用中的指南、规则、警告和帮助';
+
+  @override
+  String get contentsAdd => '添加内容';
+
+  @override
+  String get contentsAllApps => '所有应用';
+
+  @override
+  String get contentsCommon => '所有应用共用';
+
+  @override
+  String get contentsKey => '内容键';
+
+  @override
+  String get contentsKeyHelp =>
+      '用点连接的小写英文单词，例如 secondhand.help.buying。保存后不能更改。';
+
+  @override
+  String get contentsApp => '应用';
+
+  @override
+  String get contentsCategory => '类型';
+
+  @override
+  String get contentsCategoryHelp => '帮助';
+
+  @override
+  String get contentsCategoryGuide => '指南';
+
+  @override
+  String get contentsCategoryRule => '规则';
+
+  @override
+  String get contentsCategoryWarning => '警告';
+
+  @override
+  String get contentsCategoryTerms => '条款';
+
+  @override
+  String get contentsCategoryNotice => '通知';
+
+  @override
+  String get contentsTitleTh => '标题（泰语）';
+
+  @override
+  String get contentsTitleEn => '标题（英语）';
+
+  @override
+  String get contentsBodyTh => '正文（泰语）';
+
+  @override
+  String get contentsBodyEn => '正文（英语）';
+
+  @override
+  String get contentsBodyHelp => '每行一条。泰语必填，英语版本会显示给使用英语的会员。';
+
+  @override
+  String get contentsPlaceholderHelp =>
+      '系统发送的通知文字。请保留花括号中的名称，如 amount、bank 和 reason，系统会为每位会员填入。';
+
+  @override
+  String get contentsIcon => '图标名称（可选）';
+
+  @override
+  String get contentsSort => '顺序';
+
+  @override
+  String get contentsActive => '在应用中显示';
+
+  @override
+  String get contentsHidden => '已隐藏';
+
+  @override
+  String contentsVersion(int version) {
+    return '版本 $version';
+  }
+
+  @override
+  String get contentsSaved => '内容已保存';
+
+  @override
+  String get contentsDeleted => '内容已删除';
+
+  @override
+  String get contentsDelete => '删除';
+
+  @override
+  String contentsDeleteConfirm(String key) {
+    return '删除 $key？应用会立即停止显示，副本保留在历史记录中。';
+  }
+
+  @override
+  String get contentsErrorChanged => '你打开后有人保存了此内容。请返回并重新打开，再修改一次。';
+
+  @override
+  String get contentsErrorKeyTaken => '此内容键已被使用。';
+
+  @override
+  String get contentsErrorKey => '请检查内容键：使用小写字母、数字和 _，并至少包含一个点。';
+
+  @override
+  String get contentsErrorThai => '泰语标题和正文为必填项。';
+
+  @override
+  String get contentsErrorTooLong => '标题最多 200 个字符，正文最多 20,000 个字符。';
+
+  @override
+  String get contentsErrorInvalid => '请检查类型、顺序和图标名称。';
 }

@@ -1,25 +1,17 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kaosure/core/providers/supabase_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/features/wallet/data/repositories/supabase_linked_wallet_repository.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../kao_id/account/data/repositories/supabase_account_access_repository.dart';
-import '../kao_id/governance/presentation/widgets/admin_display.dart';
-abstract class LinkedWalletRepository {
-  Future<List<Map<String,dynamic>>> load(String user,String? profile);
-}
-final linkedWalletRepositoryProvider=Provider<LinkedWalletRepository>((ref)=>_LinkedWalletRepository(ref));
-class _LinkedWalletRepository implements LinkedWalletRepository {
-  _LinkedWalletRepository(this.ref);final Ref ref;
-  @override
-  Future<List<Map<String,dynamic>>> load(String user,String? profile) async =>
-    (await ref.read(supabaseClientProvider).rpc('linked_wallets_r12c',params:{'p_user':user,'p_profile':profile}) as List).map((r)=>Map<String,dynamic>.from(r as Map)).toList();
-}
+import '../../../kao_id/account/data/repositories/supabase_account_access_repository.dart';
+import '../../../kao_id/governance/presentation/widgets/admin_display.dart';
+
 class LinkedWalletsPage extends ConsumerStatefulWidget {
   const LinkedWalletsPage({super.key,this.profile});final String? profile;
   @override
   ConsumerState<LinkedWalletsPage> createState()=>_LinkedWalletsPageState();
 }
+
 class _LinkedWalletsPageState extends ConsumerState<LinkedWalletsPage> with WidgetsBindingObserver {
   List<Map<String,dynamic>> _rows=[];bool _busy=true,_failed=false;String? _user;int _generation=0;StreamSubscription<void>? _subscription;
   bool get _same=>_user!=null && ref.read(accountAccessRepositoryProvider).userId==_user;

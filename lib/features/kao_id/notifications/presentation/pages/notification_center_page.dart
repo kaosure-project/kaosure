@@ -1,37 +1,11 @@
-import 'notice_target_page.dart';
-import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:kaosure/core/providers/supabase_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/features/kao_id/notifications/application/providers/notice_inbox_provider.dart';
+import 'package:kaosure/features/kao_id/notifications/data/repositories/supabase_notice_repository.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../auth/application/providers/auth_provider.dart';
+import '../../../auth/application/providers/auth_provider.dart';
+import 'notice_target_page.dart';
 
-abstract interface class NoticeRepository {
-  Future<Map<String, dynamic>> inbox();
-  Future<void> read(String id);
-}
-final noticeRepositoryProvider = Provider<NoticeRepository>((ref) => _Notices(ref.watch(supabaseClientProvider)));
-class _Notices implements NoticeRepository {
-  _Notices(this.client);
-  final SupabaseClient client;
-  Future<dynamic> call(String name, [Map<String, dynamic>? params]) async {
-    final id = client.auth.currentUser?.id;
-    if (id == null) { throw StateError('session'); }
-    final result = await client.rpc(name, params: params);
-    if (id != client.auth.currentUser?.id) { throw StateError('session'); }
-    return result;
-  }
-  @override
-  Future<Map<String, dynamic>> inbox() async => Map<String, dynamic>.from(await call('kaoid_inbox_r10a') as Map);
-  @override
-  Future<void> read(String id) async { await call('kaoid_read_notice_r10a', {'p_id': id}); }
-}
-final noticeInboxProvider = FutureProvider.autoDispose<Map<String, dynamic>>((ref) async {
-  final id = ref.watch(authProvider.select((s) => s.asData?.value?.id));
-  if (id == null) { return {'unread': 0, 'items': []}; }
-  return ref.watch(noticeRepositoryProvider).inbox();
-});
 String noticeLabel(AppLocalizations l, String code) => switch(code) {
   'review_new' => l.noticeReviewNew,
   'review_second' => l.noticeReviewSecond,
@@ -55,39 +29,7 @@ String noticeLabel(AppLocalizations l, String code) => switch(code) {
   'restored' => l.noticeRestored,
   _ => l.noticeUpdated,
 };
-class NotificationBell extends ConsumerStatefulWidget {
-  const NotificationBell({super.key});
-  @override
-  ConsumerState<NotificationBell> createState() => _NotificationBellState();
-}
-class _NotificationBellState extends ConsumerState<NotificationBell> with WidgetsBindingObserver {
-  Timer? _timer;
-  @override
-  void initState() {
-    super.initState(); WidgetsBinding.instance.addObserver(this);
-    _timer = Timer.periodic(const Duration(seconds: 60), (_) {
-      if (mounted && WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed) { ref.invalidate(noticeInboxProvider); }
-    });
-  }
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) { ref.invalidate(noticeInboxProvider); }
-  }
-  @override
-  void dispose() { _timer?.cancel(); WidgetsBinding.instance.removeObserver(this); super.dispose(); }
-  @override
-  Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
-    final state = ref.watch(noticeInboxProvider);
-    final count = state.asData?.value['unread'] ?? 0;
-    return OutlinedButton.icon(icon: const Icon(Icons.notifications_outlined),
-      label: Text('${l.noticeTitle}${state.hasError ? ' · !' : count == 0 ? '' : ' ($count)'}'),
-      onPressed: () async {
-        await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const NotificationCenter()));
-        if (mounted) { ref.invalidate(noticeInboxProvider); }
-      });
-  }
-}
+
 class NotificationCenter extends ConsumerWidget {
   const NotificationCenter({super.key});
   @override

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kaosure/features/kao_id/account/data/repositories/supabase_account_access_repository.dart';
-import 'package:kaosure/features/wallet/partners/partner_page.dart';
-import 'package:kaosure/features/wallet/partners/partner_repository.dart';
+import 'package:kaosure/features/wallet/presentation/pages/partner_page.dart';
+import 'package:kaosure/features/wallet/domain/repositories/partner_repository.dart';
+import 'package:kaosure/features/wallet/data/repositories/supabase_partner_repository.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'closure_r10d_test.dart' show AccessFixture;
 class PartnerFixture implements PartnerRepository {

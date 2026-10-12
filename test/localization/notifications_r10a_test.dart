@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kaosure/features/kao_id/auth/application/providers/auth_provider.dart';
-import 'package:kaosure/features/kao_id/notifications/notification_center.dart';
+import 'package:kaosure/features/kao_id/notifications/domain/repositories/notice_repository.dart';
+import 'package:kaosure/features/kao_id/notifications/data/repositories/supabase_notice_repository.dart';
+import 'package:kaosure/features/kao_id/notifications/presentation/widgets/notification_bell.dart';
+import 'package:kaosure/features/kao_id/notifications/presentation/pages/notification_center_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'auth_localization_r2_test.dart' show TestAuthNotifier;
 class NoticeFixture implements NoticeRepository {

@@ -1,15 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/core/providers/supabase_provider.dart';
+import 'package:kaosure/features/wallet/domain/repositories/partner_repository.dart';
 
-abstract class PartnerRepository {
-  Future<List<Map<String, dynamic>>> list(String user);
-  Future<void> create(String user, String code, String name, String environment, List<String> capabilities);
-  Future<void> decide(String user, String id, int revision, String action, String reason);
-}
-final partnerRepositoryProvider = Provider<PartnerRepository>((ref) => _PartnerRepository(ref));
-final shippingPartnerRepositoryProvider = Provider<PartnerRepository>((ref) => _PartnerRepository(ref, kind: 'shipping'));
-class _PartnerRepository implements PartnerRepository {
-  _PartnerRepository(this.ref, {this.kind = 'finance'});
+final partnerRepositoryProvider = Provider<PartnerRepository>((ref) => SupabasePartnerRepository(ref));
+
+final shippingPartnerRepositoryProvider = Provider<PartnerRepository>((ref) => SupabasePartnerRepository(ref, kind: 'shipping'));
+
+class SupabasePartnerRepository implements PartnerRepository {
+  SupabasePartnerRepository(this.ref, {this.kind = 'finance'});
   final String kind;
   final Ref ref;
   @override

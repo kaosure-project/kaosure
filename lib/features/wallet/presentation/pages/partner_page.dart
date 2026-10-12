@@ -1,12 +1,15 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../kao_id/account/presentation/pages/security/mfa_page.dart';
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/features/wallet/presentation/widgets/partner_decision_dialog.dart';
+import 'package:kaosure/features/wallet/presentation/widgets/partner_form.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../../kao_id/account/data/repositories/supabase_account_access_repository.dart';
-import '../../kao_id/governance/presentation/widgets/admin_display.dart';
-import 'partner_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../kao_id/account/data/repositories/supabase_account_access_repository.dart';
+import '../../../kao_id/account/presentation/pages/security/mfa_page.dart';
+import '../../../kao_id/governance/presentation/widgets/admin_display.dart';
+import '../../data/repositories/supabase_partner_repository.dart';
+import '../../domain/repositories/partner_repository.dart';
 
 String partnerLabel(AppLocalizations l,String code) => switch(code) {
   'sandbox'=>l.partnerSandbox,'live'=>l.partnerLive,
@@ -16,12 +19,14 @@ String partnerLabel(AppLocalizations l,String code) => switch(code) {
   'quote'=>l.carrierQuote,'shipment'=>l.carrierShipment,'tracking'=>l.carrierTracking,'cancel_shipment'=>l.carrierCancel,
   'create'=>l.partnerAdd,'readiness'=>l.partnerReadiness,_=>code,
 };
+
 class PartnerPage extends ConsumerStatefulWidget {
   const PartnerPage({super.key,this.shipping=false});
   final bool shipping;
   @override
   ConsumerState<PartnerPage> createState()=>_PartnerPageState();
 }
+
 class _PartnerPageState extends ConsumerState<PartnerPage> with WidgetsBindingObserver {
   List<Map<String,dynamic>> _rows=[];
   bool _busy=true,_failed=false,_mfaRequired=false;
@@ -60,13 +65,13 @@ class _PartnerPageState extends ConsumerState<PartnerPage> with WidgetsBindingOb
     catch(e){if(mounted && _same) {setState((){_failed=true;_mfaRequired=e is PostgrestException && e.message=='mfa_required';_rows=[];_busy=false;});}}
   }
   Future<void> _add() async {
-    final draft=await showDialog<_PartnerDraft>(context:context,builder:(_)=>_PartnerForm(shipping:widget.shipping));
+    final draft=await showDialog<PartnerDraft>(context:context,builder:(_)=>PartnerForm(shipping:widget.shipping));
     if(!mounted || !_same || draft==null) {return;}
     await _save(()=>_repository.create(_user!,draft.code,draft.name,draft.environment,draft.capabilities));
   }
   Future<void> _decide(Map<String,dynamic> row,String action) async {
     final l=AppLocalizations.of(context);
-    final reason=await showDialog<String>(context:context,builder:(_)=>_DecisionDialog(
+    final reason=await showDialog<String>(context:context,builder:(_)=>PartnerDecisionDialog(
       title:partnerLabel(l,action),name:'${realValue(row['name'])} · ${partnerLabel(l,row['environment'] as String)}'));
     if(!mounted || !_same || reason==null) {return;}
     await _save(()=>_repository.decide(_user!,row['id'] as String,row['revision'] as int,action,reason));
@@ -125,46 +130,4 @@ class _PartnerPageState extends ConsumerState<PartnerPage> with WidgetsBindingOb
         ],
       ])))));
   }
-}
-class _PartnerDraft {
-  _PartnerDraft(this.code,this.name,this.environment,this.capabilities);
-  final String code,name,environment;
-  final List<String> capabilities;
-}
-class _PartnerForm extends StatefulWidget {
-  const _PartnerForm({required this.shipping});
-  final bool shipping;
-  @override
-  State<_PartnerForm> createState()=>_PartnerFormState();
-}
-class _PartnerFormState extends State<_PartnerForm> {
-  final _code=TextEditingController(),_name=TextEditingController();
-  String _environment='sandbox';final _caps=<String>{};
-  bool get _valid=>RegExp(r'^[a-z][a-z0-9_-]{1,39}$').hasMatch(_code.text.trim()) && _name.text.trim().length>=2 && _caps.isNotEmpty;
-  @override
-  void dispose(){_code.dispose();_name.dispose();super.dispose();}
-  @override
-  Widget build(BuildContext context){final l=AppLocalizations.of(context);return AlertDialog(title:Text(l.partnerAdd),content:SizedBox(width:480,child:SingleChildScrollView(child:Column(mainAxisSize:MainAxisSize.min,crossAxisAlignment:CrossAxisAlignment.stretch,children:[
-    Text(l.partnerFormHelp),
-    TextField(controller:_code,maxLength:40,decoration:InputDecoration(labelText:l.partnerCode),onChanged:(_)=>setState((){})),
-    TextField(controller:_name,maxLength:120,decoration:InputDecoration(labelText:l.partnerName),onChanged:(_)=>setState((){})),
-    DropdownButton<String>(value:_environment,isExpanded:true,items:[for(final mode in ['sandbox','live']) DropdownMenuItem(value:mode,child:Text(partnerLabel(l,mode)))],onChanged:(v){if(v!=null) {setState(()=>_environment=v);}}),
-    Text(l.partnerCapabilities),
-    for(final cap in (widget.shipping?['quote','shipment','tracking','cancel_shipment']:['balance','payment','refund','payout','topup'])) CheckboxListTile(contentPadding:EdgeInsets.zero,title:Text(partnerLabel(l,cap)),value:_caps.contains(cap),onChanged:(v)=>setState((){if(v==true){_caps.add(cap);}else{_caps.remove(cap);}})),
-  ]))),actions:[TextButton(onPressed:()=>Navigator.pop(context),child:Text(l.cancel)),FilledButton(onPressed:_valid?()=>Navigator.pop(context,_PartnerDraft(_code.text.trim(),_name.text.trim(),_environment,_caps.toList())):null,child:Text(l.partnerAdd))]);}
-}
-class _DecisionDialog extends StatefulWidget {
-  const _DecisionDialog({required this.title,required this.name});
-  final String title,name;
-  @override
-  State<_DecisionDialog> createState()=>_DecisionDialogState();
-}
-class _DecisionDialogState extends State<_DecisionDialog>{
-  final _reason=TextEditingController();
-  @override
-  void dispose(){_reason.dispose();super.dispose();}
-  @override
-  Widget build(BuildContext context){final l=AppLocalizations.of(context);return AlertDialog(title:Text(widget.title),content:SingleChildScrollView(child:Column(mainAxisSize:MainAxisSize.min,children:[
-    Text(widget.name),Text(l.partnerConfirm),TextField(controller:_reason,maxLength:500,decoration:InputDecoration(labelText:l.partnerReason),onChanged:(_)=>setState((){})),
-  ])),actions:[TextButton(onPressed:()=>Navigator.pop(context),child:Text(l.cancel)),FilledButton(onPressed:_reason.text.trim().length>=3?()=>Navigator.pop(context,_reason.text.trim()):null,child:Text(l.continueLabel))]);}
 }

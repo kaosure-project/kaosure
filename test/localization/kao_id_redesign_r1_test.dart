@@ -1,4 +1,4 @@
-import 'package:kaosure/features/kao_id/notifications/notification_center.dart';
+import 'package:kaosure/features/kao_id/notifications/application/providers/notice_inbox_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/features/kao_id/governance/application/providers/member_access_provider.dart';
 import 'package:flutter/material.dart';

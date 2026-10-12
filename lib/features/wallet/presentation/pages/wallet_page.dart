@@ -1,31 +1,18 @@
-import 'linked_wallets_page.dart';
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kaosure/core/providers/supabase_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/features/wallet/data/repositories/supabase_wallet_repository.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../kao_id/account/data/repositories/supabase_account_access_repository.dart';
-import '../kao_id/governance/presentation/widgets/admin_display.dart';
-
-abstract class WalletRepository {
-  Future<Map<String, dynamic>> load(String user, {String? time, String? id});
-}
-final walletRepositoryProvider = Provider<WalletRepository>((ref) => _WalletRepository(ref));
-class _WalletRepository implements WalletRepository {
-  _WalletRepository(this.ref);
-  final Ref ref;
-  @override
-  Future<Map<String, dynamic>> load(String user, {String? time, String? id}) async =>
-    Map<String, dynamic>.from(await ref.read(supabaseClientProvider).rpc('wallet_snapshot_r12a', params: {
-      'p_expected_user': user, 'p_before_time': time, 'p_before_id': id,
-    }) as Map);
-}
+import '../../../kao_id/account/data/repositories/supabase_account_access_repository.dart';
+import '../../../kao_id/governance/presentation/widgets/admin_display.dart';
+import 'linked_wallets_page.dart';
 
 class WalletPage extends ConsumerStatefulWidget {
   const WalletPage({super.key});
   @override
   ConsumerState<WalletPage> createState() => _WalletPageState();
 }
+
 class _WalletPageState extends ConsumerState<WalletPage> with WidgetsBindingObserver {
   Map<String, dynamic>? _wallet;
   List<Map<String, dynamic>> _rows = [];

@@ -1,7 +1,7 @@
 import '../../../account/presentation/pages/security/security_operations_page.dart';
 import '../../../account/presentation/pages/security/mfa_page.dart';
 import '../../application/services/access_refresh.dart';
-import 'package:kaosure/features/wallet/partners/partner_page.dart';
+import 'package:kaosure/features/wallet/presentation/pages/partner_page.dart';
 import 'owner_requests_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

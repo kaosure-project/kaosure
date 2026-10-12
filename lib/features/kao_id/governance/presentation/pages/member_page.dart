@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:kaosure/features/wallet/linked_wallets_page.dart';
+import 'package:kaosure/features/wallet/presentation/pages/linked_wallets_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import '../../../auth/application/providers/auth_provider.dart';
 import '../../../kyc/presentation/pages/document_health_page.dart';

@@ -1,5 +1,5 @@
-import 'package:kaosure/features/wallet/wallet_page.dart';
-import '../../../notifications/notification_center.dart';
+import 'package:kaosure/features/wallet/presentation/pages/wallet_page.dart';
+import '../../../notifications/presentation/widgets/notification_bell.dart';
 import '../../../governance/domain/entities/member_admin_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:kaosure/l10n/app_localizations.dart';

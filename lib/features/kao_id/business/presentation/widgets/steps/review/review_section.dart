@@ -39,8 +39,10 @@ class ReviewSection extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(label, style: theme.textTheme.bodySmall?.copyWith(color: muted)),
-                  const SizedBox(height: 2),
+                  if (label.isNotEmpty) ...[
+                    Text(label, style: theme.textTheme.bodySmall?.copyWith(color: muted)),
+                    const SizedBox(height: 2),
+                  ],
                   Text(value, style: theme.textTheme.bodyLarge),
                 ],
               ),

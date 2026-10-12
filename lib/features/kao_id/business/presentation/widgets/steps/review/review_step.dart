@@ -62,7 +62,7 @@ class _ReviewStepState extends State<ReviewStep> {
         ReviewSection(
           title: l10n.businessRegStepDocument,
           onEdit: () => widget.onEdit(BusinessRegistrationStep.document),
-          rows: [(l10n.businessRegDocumentUploaded, widget.documentName ?? '✓')],
+          rows: [('', widget.documentName ?? l10n.businessRegDocumentUploaded)],
         ),
         const Divider(height: 1),
         ReviewSection(

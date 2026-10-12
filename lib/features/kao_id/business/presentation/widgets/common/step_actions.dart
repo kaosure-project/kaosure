@@ -36,8 +36,7 @@ class StepActions extends StatelessWidget {
               onPressed: busy ? null : onBack,
               child: Text(l10n.businessRegBack),
             ),
-          const Spacer(),
-          Flexible(flex: 3, child: primary),
+          Expanded(child: Align(alignment: AlignmentDirectional.centerEnd, child: primary)),
         ],
       ),
     );

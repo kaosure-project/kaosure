@@ -840,5 +840,59 @@
   "businessRegErrorBankRequired": "A verified bank account is required before you submit.",
   "businessRegErrorFile": "This file can't be used. Choose a JPG, PNG or PDF up to 10 MB.",
   "businessRegErrorDuplicate": "This registration number is already registered.",
-  "businessRegHubDescription": "Verify your business to open a store and receive payouts."
+  "businessRegHubDescription": "Verify your business to open a store and receive payouts.",
+  "businessReviewTitle": "Business review",
+  "businessReviewHubHelp": "Approve or reject business registrations from other accounts. Approval issues a Business Kao ID.",
+  "businessReviewQueueHelp": "The 50 oldest registrations waiting for review. You can't review your own registration.",
+  "businessReviewEmpty": "No business registrations are waiting for review.",
+  "businessReviewSubmittedOn": "Submitted {date}",
+  "@businessReviewSubmittedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "businessReviewApplicant": "Applicant",
+  "businessReviewOwnerKaoId": "Personal Kao ID",
+  "businessReviewOwnerName": "Verified name",
+  "businessReviewDescription": "Description",
+  "businessReviewBankName": "Bank",
+  "businessReviewBankAccount": "Account number",
+  "businessReviewBankAccountEnding": "Ending in {last4}",
+  "@businessReviewBankAccountEnding": {
+    "placeholders": {
+      "last4": {
+        "type": "String"
+      }
+    }
+  },
+  "businessReviewBankAccountName": "Account name",
+  "businessReviewNotAvailable": "Not available",
+  "businessReviewOpenDocument": "Open",
+  "businessReviewDocumentViewed": "Viewed",
+  "businessReviewDecisionHeading": "Decision",
+  "businessReviewChecked": "I checked that the document matches the business name, registration number and applicant.",
+  "businessReviewReason": "Note to applicant (required to reject)",
+  "businessReviewViewAllHint": "Open every document before approving.",
+  "businessReviewApprove": "Approve",
+  "businessReviewReject": "Reject",
+  "businessReviewApproveConfirmTitle": "Approve this business?",
+  "businessReviewApproveConfirmBody": "A Business Kao ID will be issued and the applicant will be notified. This is recorded in the audit log.",
+  "businessReviewRejectConfirmTitle": "Reject this registration?",
+  "businessReviewRejectConfirmBody": "The applicant will see your note and can submit a new registration.",
+  "businessReviewApprovedMessage": "Business approved. Business Kao ID issued.",
+  "businessReviewRejectedMessage": "Registration rejected. The applicant has been notified.",
+  "businessReviewAwaitingSecond": "Your decision is recorded. Another reviewer must confirm it.",
+  "businessReviewErrorDocumentMissing": "The registration document is missing. Reject so the applicant can upload it again.",
+  "businessReviewErrorDocumentOpen": "Couldn't open the document. Check your permission and try again.",
+  "businessReviewErrorOwnerKaoId": "The applicant no longer has an active personal Kao ID, so this business can't be approved.",
+  "businessReviewErrorOwnerBank": "The applicant's verified bank account is no longer available, so this business can't be approved.",
+  "businessReviewErrorApplicantInactive": "The applicant's account isn't active, so this business can't be approved.",
+  "noticeBusinessReviewNew": "New business registration to review",
+  "noticeBusinessReviewSecond": "Business registration awaiting a second reviewer",
+  "noticeBusinessReviewRestart": "Reviewers disagreed on a business registration; review again",
+  "noticeBusinessApproved": "Your business is verified",
+  "noticeBusinessRejected": "Business registration not approved. View the reason.",
+  "businessRegStatusReasonLabel": "Reviewer's note"
 }

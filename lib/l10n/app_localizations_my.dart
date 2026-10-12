@@ -2697,4 +2697,148 @@ class AppLocalizationsMy extends AppLocalizations {
   @override
   String get businessRegHubDescription =>
       'စတိုးဖွင့်ရန်နှင့် ငွေလက်ခံရန် သင့်လုပ်ငန်းကို အတည်ပြုပါ။';
+
+  @override
+  String get businessReviewTitle => 'လုပ်ငန်းစိစစ်ခြင်း';
+
+  @override
+  String get businessReviewHubHelp =>
+      'အခြားအကောင့်များ၏ လုပ်ငန်းမှတ်ပုံတင်မှုကို အတည်ပြု သို့မဟုတ် ငြင်းပယ်ပါ။ အတည်ပြုပါက Business Kao ID ထုတ်ပေးပါမည်။';
+
+  @override
+  String get businessReviewQueueHelp =>
+      'စိစစ်ရန်စောင့်နေသော အဟောင်းဆုံး မှတ်ပုံတင်မှု ၅၀ ခု။ ကိုယ်ပိုင်မှတ်ပုံတင်မှုကို စိစစ်၍မရပါ။';
+
+  @override
+  String get businessReviewEmpty =>
+      'စိစစ်ရန်စောင့်နေသော လုပ်ငန်းမှတ်ပုံတင်မှု မရှိပါ။';
+
+  @override
+  String businessReviewSubmittedOn(String date) {
+    return '$date တွင် တင်သွင်းခဲ့သည်';
+  }
+
+  @override
+  String get businessReviewApplicant => 'လျှောက်ထားသူ';
+
+  @override
+  String get businessReviewOwnerKaoId => 'ကိုယ်ပိုင် Kao ID';
+
+  @override
+  String get businessReviewOwnerName => 'အတည်ပြုထားသော အမည်';
+
+  @override
+  String get businessReviewDescription => 'ဖော်ပြချက်';
+
+  @override
+  String get businessReviewBankName => 'ဘဏ်';
+
+  @override
+  String get businessReviewBankAccount => 'အကောင့်နံပါတ်';
+
+  @override
+  String businessReviewBankAccountEnding(String last4) {
+    return 'နောက်ဆုံး $last4';
+  }
+
+  @override
+  String get businessReviewBankAccountName => 'အကောင့်အမည်';
+
+  @override
+  String get businessReviewNotAvailable => 'အချက်အလက် မရှိပါ';
+
+  @override
+  String get businessReviewOpenDocument => 'ဖွင့်ရန်';
+
+  @override
+  String get businessReviewDocumentViewed => 'ကြည့်ပြီး';
+
+  @override
+  String get businessReviewDecisionHeading => 'ဆုံးဖြတ်ချက်';
+
+  @override
+  String get businessReviewChecked =>
+      'စာရွက်စာတမ်းသည် လုပ်ငန်းအမည်၊ မှတ်ပုံတင်နံပါတ်နှင့် လျှောက်ထားသူနှင့် ကိုက်ညီကြောင်း စစ်ဆေးပြီးပါပြီ။';
+
+  @override
+  String get businessReviewReason =>
+      'လျှောက်ထားသူထံ မှတ်ချက် (ငြင်းပယ်ပါက လိုအပ်သည်)';
+
+  @override
+  String get businessReviewViewAllHint =>
+      'အတည်မပြုမီ စာရွက်စာတမ်းအားလုံးကို ဖွင့်ကြည့်ပါ။';
+
+  @override
+  String get businessReviewApprove => 'အတည်ပြုရန်';
+
+  @override
+  String get businessReviewReject => 'ငြင်းပယ်ရန်';
+
+  @override
+  String get businessReviewApproveConfirmTitle => 'ဤလုပ်ငန်းကို အတည်ပြုမလား။';
+
+  @override
+  String get businessReviewApproveConfirmBody =>
+      'Business Kao ID ထုတ်ပေးပြီး လျှောက်ထားသူကို အကြောင်းကြားပါမည်။ စစ်ဆေးမှတ်တမ်းတွင် မှတ်တမ်းတင်ပါမည်။';
+
+  @override
+  String get businessReviewRejectConfirmTitle =>
+      'ဤမှတ်ပုံတင်မှုကို ငြင်းပယ်မလား။';
+
+  @override
+  String get businessReviewRejectConfirmBody =>
+      'လျှောက်ထားသူသည် သင့်မှတ်ချက်ကို မြင်ရပြီး အသစ်ပြန်လည်တင်သွင်းနိုင်ပါသည်။';
+
+  @override
+  String get businessReviewApprovedMessage =>
+      'လုပ်ငန်းကို အတည်ပြုပြီး Business Kao ID ထုတ်ပေးပြီးပါပြီ။';
+
+  @override
+  String get businessReviewRejectedMessage =>
+      'မှတ်ပုံတင်မှုကို ငြင်းပယ်ပြီး လျှောက်ထားသူကို အကြောင်းကြားပြီးပါပြီ။';
+
+  @override
+  String get businessReviewAwaitingSecond =>
+      'သင့်ဆုံးဖြတ်ချက်ကို မှတ်တမ်းတင်ပြီးပါပြီ။ အခြားစိစစ်သူ အတည်ပြုရန် လိုအပ်ပါသည်။';
+
+  @override
+  String get businessReviewErrorDocumentMissing =>
+      'မှတ်ပုံတင်စာရွက်စာတမ်း မရှိပါ။ လျှောက်ထားသူ ပြန်တင်နိုင်ရန် ငြင်းပယ်ပါ။';
+
+  @override
+  String get businessReviewErrorDocumentOpen =>
+      'စာရွက်စာတမ်းကို ဖွင့်၍မရပါ။ ခွင့်ပြုချက်ကို စစ်ဆေးပြီး ထပ်စမ်းကြည့်ပါ။';
+
+  @override
+  String get businessReviewErrorOwnerKaoId =>
+      'လျှောက်ထားသူတွင် အသုံးပြုနိုင်သော ကိုယ်ပိုင် Kao ID မရှိတော့သဖြင့် ဤလုပ်ငန်းကို အတည်ပြု၍မရပါ။';
+
+  @override
+  String get businessReviewErrorOwnerBank =>
+      'လျှောက်ထားသူ၏ အတည်ပြုထားသော ဘဏ်အကောင့် မရှိတော့သဖြင့် ဤလုပ်ငန်းကို အတည်ပြု၍မရပါ။';
+
+  @override
+  String get businessReviewErrorApplicantInactive =>
+      'လျှောက်ထားသူ၏ အကောင့် အသုံးပြုနေခြင်းမရှိသဖြင့် ဤလုပ်ငန်းကို အတည်ပြု၍မရပါ။';
+
+  @override
+  String get noticeBusinessReviewNew => 'စိစစ်ရန် လုပ်ငန်းမှတ်ပုံတင်မှုအသစ်';
+
+  @override
+  String get noticeBusinessReviewSecond =>
+      'လုပ်ငန်းမှတ်ပုံတင်မှုသည် ဒုတိယစိစစ်သူကို စောင့်နေသည်';
+
+  @override
+  String get noticeBusinessReviewRestart =>
+      'လုပ်ငန်းမှတ်ပုံတင်မှုတွင် စိစစ်သူများ သဘောမတူပါ၊ ပြန်စိစစ်ပါ';
+
+  @override
+  String get noticeBusinessApproved => 'သင့်လုပ်ငန်းကို အတည်ပြုပြီးပါပြီ';
+
+  @override
+  String get noticeBusinessRejected =>
+      'လုပ်ငန်းမှတ်ပုံတင်မှု အတည်မပြုပါ။ အကြောင်းရင်းကို ကြည့်ပါ။';
+
+  @override
+  String get businessRegStatusReasonLabel => 'စိစစ်သူ၏ မှတ်ချက်';
 }

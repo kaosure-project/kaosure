@@ -2631,4 +2631,145 @@ class AppLocalizationsLo extends AppLocalizations {
   @override
   String get businessRegHubDescription =>
       'ຢືນຢັນທຸລະກິດເພື່ອເປີດຮ້ານຄ້າ ແລະ ຮັບເງິນ.';
+
+  @override
+  String get businessReviewTitle => 'ກວດຄຳຂໍທຸລະກິດ';
+
+  @override
+  String get businessReviewHubHelp =>
+      'ອະນຸມັດ ຫຼື ປະຕິເສດຄຳຂໍລົງທະບຽນທຸລະກິດຂອງບັນຊີອື່ນ. ການອະນຸມັດຈະອອກ Business Kao ID ໃຫ້ທັນທີ.';
+
+  @override
+  String get businessReviewQueueHelp =>
+      'ຄຳຂໍທີ່ລໍຖ້າກວດ 50 ລາຍການທີ່ເກົ່າທີ່ສຸດ. ທ່ານບໍ່ສາມາດກວດຄຳຂໍຂອງຕົນເອງໄດ້.';
+
+  @override
+  String get businessReviewEmpty => 'ບໍ່ມີຄຳຂໍທຸລະກິດທີ່ລໍຖ້າກວດ.';
+
+  @override
+  String businessReviewSubmittedOn(String date) {
+    return 'ສົ່ງເມື່ອ $date';
+  }
+
+  @override
+  String get businessReviewApplicant => 'ຜູ້ຍື່ນຄຳຂໍ';
+
+  @override
+  String get businessReviewOwnerKaoId => 'Kao ID ສ່ວນບຸກຄົນ';
+
+  @override
+  String get businessReviewOwnerName => 'ຊື່ທີ່ຢືນຢັນແລ້ວ';
+
+  @override
+  String get businessReviewDescription => 'ລາຍລະອຽດທຸລະກິດ';
+
+  @override
+  String get businessReviewBankName => 'ທະນາຄານ';
+
+  @override
+  String get businessReviewBankAccount => 'ເລກບັນຊີ';
+
+  @override
+  String businessReviewBankAccountEnding(String last4) {
+    return 'ລົງທ້າຍດ້ວຍ $last4';
+  }
+
+  @override
+  String get businessReviewBankAccountName => 'ຊື່ບັນຊີ';
+
+  @override
+  String get businessReviewNotAvailable => 'ບໍ່ມີຂໍ້ມູນ';
+
+  @override
+  String get businessReviewOpenDocument => 'ເປີດເບິ່ງ';
+
+  @override
+  String get businessReviewDocumentViewed => 'ເປີດເບິ່ງແລ້ວ';
+
+  @override
+  String get businessReviewDecisionHeading => 'ຜົນການກວດ';
+
+  @override
+  String get businessReviewChecked =>
+      'ຂ້ອຍກວດແລ້ວວ່າເອກະສານກົງກັບຊື່ທຸລະກິດ, ເລກທະບຽນ ແລະ ຜູ້ຍື່ນຄຳຂໍ.';
+
+  @override
+  String get businessReviewReason =>
+      'ໝາຍເຫດເຖິງຜູ້ຍື່ນຄຳຂໍ (ຈຳເປັນເມື່ອປະຕິເສດ)';
+
+  @override
+  String get businessReviewViewAllHint =>
+      'ກະລຸນາເປີດເບິ່ງເອກະສານທຸກໄຟລ໌ກ່ອນອະນຸມັດ.';
+
+  @override
+  String get businessReviewApprove => 'ອະນຸມັດ';
+
+  @override
+  String get businessReviewReject => 'ປະຕິເສດ';
+
+  @override
+  String get businessReviewApproveConfirmTitle => 'ອະນຸມັດທຸລະກິດນີ້ບໍ?';
+
+  @override
+  String get businessReviewApproveConfirmBody =>
+      'ລະບົບຈະອອກ Business Kao ID ແລະ ແຈ້ງຜູ້ຍື່ນຄຳຂໍ ພ້ອມບັນທຶກລົງປະຫວັດການກວດສອບ.';
+
+  @override
+  String get businessReviewRejectConfirmTitle => 'ປະຕິເສດຄຳຂໍນີ້ບໍ?';
+
+  @override
+  String get businessReviewRejectConfirmBody =>
+      'ຜູ້ຍື່ນຄຳຂໍຈະເຫັນໝາຍເຫດຂອງທ່ານ ແລະ ສາມາດຍື່ນຄຳຂໍໃໝ່ໄດ້.';
+
+  @override
+  String get businessReviewApprovedMessage =>
+      'ອະນຸມັດທຸລະກິດແລ້ວ ແລະ ອອກ Business Kao ID ຮຽບຮ້ອຍ.';
+
+  @override
+  String get businessReviewRejectedMessage =>
+      'ປະຕິເສດຄຳຂໍແລ້ວ ແລະ ແຈ້ງຜູ້ຍື່ນຄຳຂໍຮຽບຮ້ອຍ.';
+
+  @override
+  String get businessReviewAwaitingSecond =>
+      'ບັນທຶກຜົນຂອງທ່ານແລ້ວ ຕ້ອງລໍຖ້າຜູ້ກວດອີກຄົນຢືນຢັນ.';
+
+  @override
+  String get businessReviewErrorDocumentMissing =>
+      'ບໍ່ພົບໄຟລ໌ເອກະສານຈົດທະບຽນ ກະລຸນາປະຕິເສດເພື່ອໃຫ້ຜູ້ຍື່ນອັບໂຫຼດໃໝ່.';
+
+  @override
+  String get businessReviewErrorDocumentOpen =>
+      'ເປີດເອກະສານບໍ່ໄດ້ ກະລຸນາກວດສອບສິດແລ້ວລອງອີກຄັ້ງ.';
+
+  @override
+  String get businessReviewErrorOwnerKaoId =>
+      'ຜູ້ຍື່ນຄຳຂໍບໍ່ມີ Kao ID ສ່ວນບຸກຄົນທີ່ໃຊ້ງານໄດ້ແລ້ວ ຈຶ່ງອະນຸມັດທຸລະກິດນີ້ບໍ່ໄດ້.';
+
+  @override
+  String get businessReviewErrorOwnerBank =>
+      'ບັນຊີທະນາຄານທີ່ຢືນຢັນແລ້ວຂອງຜູ້ຍື່ນຄຳຂໍໃຊ້ງານບໍ່ໄດ້ແລ້ວ ຈຶ່ງອະນຸມັດທຸລະກິດນີ້ບໍ່ໄດ້.';
+
+  @override
+  String get businessReviewErrorApplicantInactive =>
+      'ບັນຊີຂອງຜູ້ຍື່ນຄຳຂໍບໍ່ໄດ້ຢູ່ໃນສະຖານະໃຊ້ງານ ຈຶ່ງອະນຸມັດທຸລະກິດນີ້ບໍ່ໄດ້.';
+
+  @override
+  String get noticeBusinessReviewNew => 'ມີຄຳຂໍທຸລະກິດໃໝ່ລໍຖ້າກວດ';
+
+  @override
+  String get noticeBusinessReviewSecond => 'ຄຳຂໍທຸລະກິດລໍຖ້າຜູ້ກວດຄົນທີສອງ';
+
+  @override
+  String get noticeBusinessReviewRestart =>
+      'ຜູ້ກວດເຫັນບໍ່ກົງກັນໃນຄຳຂໍທຸລະກິດ ກະລຸນາກວດໃໝ່';
+
+  @override
+  String get noticeBusinessApproved => 'ທຸລະກິດຂອງທ່ານໄດ້ຮັບການຢືນຢັນແລ້ວ';
+
+  @override
+  String get noticeBusinessRejected =>
+      'ຄຳຂໍທຸລະກິດບໍ່ຜ່ານການອະນຸມັດ ເບິ່ງເຫດຜົນໄດ້.';
+
+  @override
+  String get businessRegStatusReasonLabel => 'ໝາຍເຫດຈາກຜູ້ກວດ';
 }

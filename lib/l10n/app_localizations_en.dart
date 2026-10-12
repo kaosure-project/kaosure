@@ -2705,4 +2705,146 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get businessRegHubDescription =>
       'Verify your business to open a store and receive payouts.';
+
+  @override
+  String get businessReviewTitle => 'Business review';
+
+  @override
+  String get businessReviewHubHelp =>
+      'Approve or reject business registrations from other accounts. Approval issues a Business Kao ID.';
+
+  @override
+  String get businessReviewQueueHelp =>
+      'The 50 oldest registrations waiting for review. You can\'t review your own registration.';
+
+  @override
+  String get businessReviewEmpty =>
+      'No business registrations are waiting for review.';
+
+  @override
+  String businessReviewSubmittedOn(String date) {
+    return 'Submitted $date';
+  }
+
+  @override
+  String get businessReviewApplicant => 'Applicant';
+
+  @override
+  String get businessReviewOwnerKaoId => 'Personal Kao ID';
+
+  @override
+  String get businessReviewOwnerName => 'Verified name';
+
+  @override
+  String get businessReviewDescription => 'Description';
+
+  @override
+  String get businessReviewBankName => 'Bank';
+
+  @override
+  String get businessReviewBankAccount => 'Account number';
+
+  @override
+  String businessReviewBankAccountEnding(String last4) {
+    return 'Ending in $last4';
+  }
+
+  @override
+  String get businessReviewBankAccountName => 'Account name';
+
+  @override
+  String get businessReviewNotAvailable => 'Not available';
+
+  @override
+  String get businessReviewOpenDocument => 'Open';
+
+  @override
+  String get businessReviewDocumentViewed => 'Viewed';
+
+  @override
+  String get businessReviewDecisionHeading => 'Decision';
+
+  @override
+  String get businessReviewChecked =>
+      'I checked that the document matches the business name, registration number and applicant.';
+
+  @override
+  String get businessReviewReason => 'Note to applicant (required to reject)';
+
+  @override
+  String get businessReviewViewAllHint =>
+      'Open every document before approving.';
+
+  @override
+  String get businessReviewApprove => 'Approve';
+
+  @override
+  String get businessReviewReject => 'Reject';
+
+  @override
+  String get businessReviewApproveConfirmTitle => 'Approve this business?';
+
+  @override
+  String get businessReviewApproveConfirmBody =>
+      'A Business Kao ID will be issued and the applicant will be notified. This is recorded in the audit log.';
+
+  @override
+  String get businessReviewRejectConfirmTitle => 'Reject this registration?';
+
+  @override
+  String get businessReviewRejectConfirmBody =>
+      'The applicant will see your note and can submit a new registration.';
+
+  @override
+  String get businessReviewApprovedMessage =>
+      'Business approved. Business Kao ID issued.';
+
+  @override
+  String get businessReviewRejectedMessage =>
+      'Registration rejected. The applicant has been notified.';
+
+  @override
+  String get businessReviewAwaitingSecond =>
+      'Your decision is recorded. Another reviewer must confirm it.';
+
+  @override
+  String get businessReviewErrorDocumentMissing =>
+      'The registration document is missing. Reject so the applicant can upload it again.';
+
+  @override
+  String get businessReviewErrorDocumentOpen =>
+      'Couldn\'t open the document. Check your permission and try again.';
+
+  @override
+  String get businessReviewErrorOwnerKaoId =>
+      'The applicant no longer has an active personal Kao ID, so this business can\'t be approved.';
+
+  @override
+  String get businessReviewErrorOwnerBank =>
+      'The applicant\'s verified bank account is no longer available, so this business can\'t be approved.';
+
+  @override
+  String get businessReviewErrorApplicantInactive =>
+      'The applicant\'s account isn\'t active, so this business can\'t be approved.';
+
+  @override
+  String get noticeBusinessReviewNew => 'New business registration to review';
+
+  @override
+  String get noticeBusinessReviewSecond =>
+      'Business registration awaiting a second reviewer';
+
+  @override
+  String get noticeBusinessReviewRestart =>
+      'Reviewers disagreed on a business registration; review again';
+
+  @override
+  String get noticeBusinessApproved => 'Your business is verified';
+
+  @override
+  String get noticeBusinessRejected =>
+      'Business registration not approved. View the reason.';
+
+  @override
+  String get businessRegStatusReasonLabel => 'Reviewer\'s note';
 }

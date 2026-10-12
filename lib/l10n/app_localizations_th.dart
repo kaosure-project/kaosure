@@ -2675,4 +2675,144 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get businessRegHubDescription =>
       'ยืนยันธุรกิจเพื่อเปิดร้านค้าและรับเงิน';
+
+  @override
+  String get businessReviewTitle => 'ตรวจคำขอธุรกิจ';
+
+  @override
+  String get businessReviewHubHelp =>
+      'อนุมัติหรือปฏิเสธคำขอลงทะเบียนธุรกิจของบัญชีอื่น การอนุมัติจะออก Business Kao ID ให้ทันที';
+
+  @override
+  String get businessReviewQueueHelp =>
+      'คำขอที่รอตรวจ 50 รายการที่เก่าที่สุด คุณไม่สามารถตรวจคำขอของตัวเองได้';
+
+  @override
+  String get businessReviewEmpty => 'ไม่มีคำขอธุรกิจที่รอตรวจ';
+
+  @override
+  String businessReviewSubmittedOn(String date) {
+    return 'ส่งเมื่อ $date';
+  }
+
+  @override
+  String get businessReviewApplicant => 'ผู้ยื่นคำขอ';
+
+  @override
+  String get businessReviewOwnerKaoId => 'Kao ID ส่วนบุคคล';
+
+  @override
+  String get businessReviewOwnerName => 'ชื่อที่ยืนยันตัวตนแล้ว';
+
+  @override
+  String get businessReviewDescription => 'รายละเอียดธุรกิจ';
+
+  @override
+  String get businessReviewBankName => 'ธนาคาร';
+
+  @override
+  String get businessReviewBankAccount => 'เลขบัญชี';
+
+  @override
+  String businessReviewBankAccountEnding(String last4) {
+    return 'ลงท้ายด้วย $last4';
+  }
+
+  @override
+  String get businessReviewBankAccountName => 'ชื่อบัญชี';
+
+  @override
+  String get businessReviewNotAvailable => 'ไม่มีข้อมูล';
+
+  @override
+  String get businessReviewOpenDocument => 'เปิดดู';
+
+  @override
+  String get businessReviewDocumentViewed => 'เปิดดูแล้ว';
+
+  @override
+  String get businessReviewDecisionHeading => 'ผลการตรวจ';
+
+  @override
+  String get businessReviewChecked =>
+      'ฉันตรวจแล้วว่าเอกสารตรงกับชื่อกิจการ เลขทะเบียน และผู้ยื่นคำขอ';
+
+  @override
+  String get businessReviewReason =>
+      'หมายเหตุถึงผู้ยื่นคำขอ (จำเป็นเมื่อปฏิเสธ)';
+
+  @override
+  String get businessReviewViewAllHint => 'กรุณาเปิดดูเอกสารทุกไฟล์ก่อนอนุมัติ';
+
+  @override
+  String get businessReviewApprove => 'อนุมัติ';
+
+  @override
+  String get businessReviewReject => 'ปฏิเสธ';
+
+  @override
+  String get businessReviewApproveConfirmTitle => 'อนุมัติธุรกิจนี้ใช่ไหม';
+
+  @override
+  String get businessReviewApproveConfirmBody =>
+      'ระบบจะออก Business Kao ID และแจ้งผู้ยื่นคำขอ พร้อมบันทึกลงประวัติการตรวจสอบ';
+
+  @override
+  String get businessReviewRejectConfirmTitle => 'ปฏิเสธคำขอนี้ใช่ไหม';
+
+  @override
+  String get businessReviewRejectConfirmBody =>
+      'ผู้ยื่นคำขอจะเห็นหมายเหตุของคุณ และสามารถยื่นคำขอใหม่ได้';
+
+  @override
+  String get businessReviewApprovedMessage =>
+      'อนุมัติธุรกิจแล้ว ออก Business Kao ID เรียบร้อย';
+
+  @override
+  String get businessReviewRejectedMessage =>
+      'ปฏิเสธคำขอแล้ว และแจ้งผู้ยื่นคำขอเรียบร้อย';
+
+  @override
+  String get businessReviewAwaitingSecond =>
+      'บันทึกผลของคุณแล้ว ต้องรอผู้ตรวจอีกคนยืนยัน';
+
+  @override
+  String get businessReviewErrorDocumentMissing =>
+      'ไม่พบไฟล์เอกสารจดทะเบียน กรุณาปฏิเสธเพื่อให้ผู้ยื่นอัปโหลดใหม่';
+
+  @override
+  String get businessReviewErrorDocumentOpen =>
+      'เปิดเอกสารไม่ได้ กรุณาตรวจสอบสิทธิ์แล้วลองอีกครั้ง';
+
+  @override
+  String get businessReviewErrorOwnerKaoId =>
+      'ผู้ยื่นคำขอไม่มี Kao ID ส่วนบุคคลที่ใช้งานได้แล้ว จึงอนุมัติธุรกิจนี้ไม่ได้';
+
+  @override
+  String get businessReviewErrorOwnerBank =>
+      'บัญชีธนาคารที่ยืนยันแล้วของผู้ยื่นคำขอใช้งานไม่ได้แล้ว จึงอนุมัติธุรกิจนี้ไม่ได้';
+
+  @override
+  String get businessReviewErrorApplicantInactive =>
+      'บัญชีของผู้ยื่นคำขอไม่ได้อยู่ในสถานะใช้งาน จึงอนุมัติธุรกิจนี้ไม่ได้';
+
+  @override
+  String get noticeBusinessReviewNew => 'มีคำขอธุรกิจใหม่รอตรวจ';
+
+  @override
+  String get noticeBusinessReviewSecond => 'คำขอธุรกิจรอผู้ตรวจคนที่สอง';
+
+  @override
+  String get noticeBusinessReviewRestart =>
+      'ผู้ตรวจเห็นไม่ตรงกันในคำขอธุรกิจ กรุณาตรวจใหม่';
+
+  @override
+  String get noticeBusinessApproved => 'ธุรกิจของคุณได้รับการยืนยันแล้ว';
+
+  @override
+  String get noticeBusinessRejected =>
+      'คำขอธุรกิจไม่ผ่านการอนุมัติ ดูเหตุผลได้';
+
+  @override
+  String get businessRegStatusReasonLabel => 'หมายเหตุจากผู้ตรวจ';
 }

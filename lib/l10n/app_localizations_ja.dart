@@ -2529,4 +2529,135 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get businessRegHubDescription => 'ビジネスを確認して、ストアの開設と売上の受け取りを始めましょう。';
+
+  @override
+  String get businessReviewTitle => 'ビジネス審査';
+
+  @override
+  String get businessReviewHubHelp =>
+      '他のアカウントのビジネス登録を承認または却下します。承認すると Business Kao ID が発行されます。';
+
+  @override
+  String get businessReviewQueueHelp => '審査待ちの古い順に50件を表示します。自分の登録は審査できません。';
+
+  @override
+  String get businessReviewEmpty => '審査待ちのビジネス登録はありません。';
+
+  @override
+  String businessReviewSubmittedOn(String date) {
+    return '$date に送信';
+  }
+
+  @override
+  String get businessReviewApplicant => '申請者';
+
+  @override
+  String get businessReviewOwnerKaoId => '個人 Kao ID';
+
+  @override
+  String get businessReviewOwnerName => '確認済みの氏名';
+
+  @override
+  String get businessReviewDescription => '事業内容';
+
+  @override
+  String get businessReviewBankName => '銀行';
+
+  @override
+  String get businessReviewBankAccount => '口座番号';
+
+  @override
+  String businessReviewBankAccountEnding(String last4) {
+    return '末尾 $last4';
+  }
+
+  @override
+  String get businessReviewBankAccountName => '口座名義';
+
+  @override
+  String get businessReviewNotAvailable => '情報なし';
+
+  @override
+  String get businessReviewOpenDocument => '開く';
+
+  @override
+  String get businessReviewDocumentViewed => '確認済み';
+
+  @override
+  String get businessReviewDecisionHeading => '審査結果';
+
+  @override
+  String get businessReviewChecked => '書類が事業者名・登記番号・申請者と一致することを確認しました。';
+
+  @override
+  String get businessReviewReason => '申請者へのメモ（却下時は必須）';
+
+  @override
+  String get businessReviewViewAllHint => '承認する前にすべての書類を開いてください。';
+
+  @override
+  String get businessReviewApprove => '承認';
+
+  @override
+  String get businessReviewReject => '却下';
+
+  @override
+  String get businessReviewApproveConfirmTitle => 'このビジネスを承認しますか？';
+
+  @override
+  String get businessReviewApproveConfirmBody =>
+      'Business Kao ID が発行され、申請者に通知されます。監査ログに記録されます。';
+
+  @override
+  String get businessReviewRejectConfirmTitle => 'この登録を却下しますか？';
+
+  @override
+  String get businessReviewRejectConfirmBody => '申請者はあなたのメモを確認でき、新しい登録を送信できます。';
+
+  @override
+  String get businessReviewApprovedMessage =>
+      'ビジネスを承認し、Business Kao ID を発行しました。';
+
+  @override
+  String get businessReviewRejectedMessage => '登録を却下し、申請者に通知しました。';
+
+  @override
+  String get businessReviewAwaitingSecond => 'あなたの判断を記録しました。別の審査者の確認が必要です。';
+
+  @override
+  String get businessReviewErrorDocumentMissing =>
+      '登記書類が見つかりません。申請者が再アップロードできるよう却下してください。';
+
+  @override
+  String get businessReviewErrorDocumentOpen => '書類を開けませんでした。権限を確認して再試行してください。';
+
+  @override
+  String get businessReviewErrorOwnerKaoId =>
+      '申請者の個人 Kao ID が有効でないため、このビジネスは承認できません。';
+
+  @override
+  String get businessReviewErrorOwnerBank =>
+      '申請者の確認済み銀行口座が利用できないため、このビジネスは承認できません。';
+
+  @override
+  String get businessReviewErrorApplicantInactive =>
+      '申請者のアカウントが有効でないため、このビジネスは承認できません。';
+
+  @override
+  String get noticeBusinessReviewNew => '新しいビジネス登録の審査依頼';
+
+  @override
+  String get noticeBusinessReviewSecond => 'ビジネス登録が2人目の審査者を待っています';
+
+  @override
+  String get noticeBusinessReviewRestart => 'ビジネス登録の審査結果が一致しませんでした。再審査してください';
+
+  @override
+  String get noticeBusinessApproved => 'ビジネスが確認されました';
+
+  @override
+  String get noticeBusinessRejected => 'ビジネス登録は承認されませんでした。理由を確認してください。';
+
+  @override
+  String get businessRegStatusReasonLabel => '審査者からのメモ';
 }

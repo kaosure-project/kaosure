@@ -5010,6 +5010,246 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Verify your business to open a store and receive payouts.'**
   String get businessRegHubDescription;
+
+  /// No description provided for @businessReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Business review'**
+  String get businessReviewTitle;
+
+  /// No description provided for @businessReviewHubHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve or reject business registrations from other accounts. Approval issues a Business Kao ID.'**
+  String get businessReviewHubHelp;
+
+  /// No description provided for @businessReviewQueueHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'The 50 oldest registrations waiting for review. You can\'t review your own registration.'**
+  String get businessReviewQueueHelp;
+
+  /// No description provided for @businessReviewEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No business registrations are waiting for review.'**
+  String get businessReviewEmpty;
+
+  /// No description provided for @businessReviewSubmittedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted {date}'**
+  String businessReviewSubmittedOn(String date);
+
+  /// No description provided for @businessReviewApplicant.
+  ///
+  /// In en, this message translates to:
+  /// **'Applicant'**
+  String get businessReviewApplicant;
+
+  /// No description provided for @businessReviewOwnerKaoId.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Kao ID'**
+  String get businessReviewOwnerKaoId;
+
+  /// No description provided for @businessReviewOwnerName.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified name'**
+  String get businessReviewOwnerName;
+
+  /// No description provided for @businessReviewDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get businessReviewDescription;
+
+  /// No description provided for @businessReviewBankName.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get businessReviewBankName;
+
+  /// No description provided for @businessReviewBankAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account number'**
+  String get businessReviewBankAccount;
+
+  /// No description provided for @businessReviewBankAccountEnding.
+  ///
+  /// In en, this message translates to:
+  /// **'Ending in {last4}'**
+  String businessReviewBankAccountEnding(String last4);
+
+  /// No description provided for @businessReviewBankAccountName.
+  ///
+  /// In en, this message translates to:
+  /// **'Account name'**
+  String get businessReviewBankAccountName;
+
+  /// No description provided for @businessReviewNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Not available'**
+  String get businessReviewNotAvailable;
+
+  /// No description provided for @businessReviewOpenDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get businessReviewOpenDocument;
+
+  /// No description provided for @businessReviewDocumentViewed.
+  ///
+  /// In en, this message translates to:
+  /// **'Viewed'**
+  String get businessReviewDocumentViewed;
+
+  /// No description provided for @businessReviewDecisionHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Decision'**
+  String get businessReviewDecisionHeading;
+
+  /// No description provided for @businessReviewChecked.
+  ///
+  /// In en, this message translates to:
+  /// **'I checked that the document matches the business name, registration number and applicant.'**
+  String get businessReviewChecked;
+
+  /// No description provided for @businessReviewReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Note to applicant (required to reject)'**
+  String get businessReviewReason;
+
+  /// No description provided for @businessReviewViewAllHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Open every document before approving.'**
+  String get businessReviewViewAllHint;
+
+  /// No description provided for @businessReviewApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get businessReviewApprove;
+
+  /// No description provided for @businessReviewReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get businessReviewReject;
+
+  /// No description provided for @businessReviewApproveConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve this business?'**
+  String get businessReviewApproveConfirmTitle;
+
+  /// No description provided for @businessReviewApproveConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A Business Kao ID will be issued and the applicant will be notified. This is recorded in the audit log.'**
+  String get businessReviewApproveConfirmBody;
+
+  /// No description provided for @businessReviewRejectConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject this registration?'**
+  String get businessReviewRejectConfirmTitle;
+
+  /// No description provided for @businessReviewRejectConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The applicant will see your note and can submit a new registration.'**
+  String get businessReviewRejectConfirmBody;
+
+  /// No description provided for @businessReviewApprovedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Business approved. Business Kao ID issued.'**
+  String get businessReviewApprovedMessage;
+
+  /// No description provided for @businessReviewRejectedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration rejected. The applicant has been notified.'**
+  String get businessReviewRejectedMessage;
+
+  /// No description provided for @businessReviewAwaitingSecond.
+  ///
+  /// In en, this message translates to:
+  /// **'Your decision is recorded. Another reviewer must confirm it.'**
+  String get businessReviewAwaitingSecond;
+
+  /// No description provided for @businessReviewErrorDocumentMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'The registration document is missing. Reject so the applicant can upload it again.'**
+  String get businessReviewErrorDocumentMissing;
+
+  /// No description provided for @businessReviewErrorDocumentOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the document. Check your permission and try again.'**
+  String get businessReviewErrorDocumentOpen;
+
+  /// No description provided for @businessReviewErrorOwnerKaoId.
+  ///
+  /// In en, this message translates to:
+  /// **'The applicant no longer has an active personal Kao ID, so this business can\'t be approved.'**
+  String get businessReviewErrorOwnerKaoId;
+
+  /// No description provided for @businessReviewErrorOwnerBank.
+  ///
+  /// In en, this message translates to:
+  /// **'The applicant\'s verified bank account is no longer available, so this business can\'t be approved.'**
+  String get businessReviewErrorOwnerBank;
+
+  /// No description provided for @businessReviewErrorApplicantInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'The applicant\'s account isn\'t active, so this business can\'t be approved.'**
+  String get businessReviewErrorApplicantInactive;
+
+  /// No description provided for @noticeBusinessReviewNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New business registration to review'**
+  String get noticeBusinessReviewNew;
+
+  /// No description provided for @noticeBusinessReviewSecond.
+  ///
+  /// In en, this message translates to:
+  /// **'Business registration awaiting a second reviewer'**
+  String get noticeBusinessReviewSecond;
+
+  /// No description provided for @noticeBusinessReviewRestart.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewers disagreed on a business registration; review again'**
+  String get noticeBusinessReviewRestart;
+
+  /// No description provided for @noticeBusinessApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Your business is verified'**
+  String get noticeBusinessApproved;
+
+  /// No description provided for @noticeBusinessRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Business registration not approved. View the reason.'**
+  String get noticeBusinessRejected;
+
+  /// No description provided for @businessRegStatusReasonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewer\'s note'**
+  String get businessRegStatusReasonLabel;
 }
 
 class _AppLocalizationsDelegate

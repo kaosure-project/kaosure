@@ -2685,4 +2685,147 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get businessRegHubDescription =>
       'Xác minh doanh nghiệp để mở cửa hàng và nhận tiền.';
+
+  @override
+  String get businessReviewTitle => 'Duyệt doanh nghiệp';
+
+  @override
+  String get businessReviewHubHelp =>
+      'Phê duyệt hoặc từ chối đăng ký doanh nghiệp của tài khoản khác. Khi phê duyệt, Business Kao ID sẽ được cấp.';
+
+  @override
+  String get businessReviewQueueHelp =>
+      '50 đăng ký cũ nhất đang chờ duyệt. Bạn không thể duyệt đăng ký của chính mình.';
+
+  @override
+  String get businessReviewEmpty =>
+      'Không có đăng ký doanh nghiệp nào đang chờ duyệt.';
+
+  @override
+  String businessReviewSubmittedOn(String date) {
+    return 'Gửi ngày $date';
+  }
+
+  @override
+  String get businessReviewApplicant => 'Người đăng ký';
+
+  @override
+  String get businessReviewOwnerKaoId => 'Kao ID cá nhân';
+
+  @override
+  String get businessReviewOwnerName => 'Tên đã xác minh';
+
+  @override
+  String get businessReviewDescription => 'Mô tả';
+
+  @override
+  String get businessReviewBankName => 'Ngân hàng';
+
+  @override
+  String get businessReviewBankAccount => 'Số tài khoản';
+
+  @override
+  String businessReviewBankAccountEnding(String last4) {
+    return 'Kết thúc bằng $last4';
+  }
+
+  @override
+  String get businessReviewBankAccountName => 'Tên tài khoản';
+
+  @override
+  String get businessReviewNotAvailable => 'Không có thông tin';
+
+  @override
+  String get businessReviewOpenDocument => 'Mở';
+
+  @override
+  String get businessReviewDocumentViewed => 'Đã xem';
+
+  @override
+  String get businessReviewDecisionHeading => 'Quyết định';
+
+  @override
+  String get businessReviewChecked =>
+      'Tôi đã kiểm tra giấy tờ khớp với tên doanh nghiệp, mã số đăng ký và người đăng ký.';
+
+  @override
+  String get businessReviewReason =>
+      'Ghi chú cho người đăng ký (bắt buộc khi từ chối)';
+
+  @override
+  String get businessReviewViewAllHint =>
+      'Hãy mở tất cả giấy tờ trước khi phê duyệt.';
+
+  @override
+  String get businessReviewApprove => 'Phê duyệt';
+
+  @override
+  String get businessReviewReject => 'Từ chối';
+
+  @override
+  String get businessReviewApproveConfirmTitle => 'Phê duyệt doanh nghiệp này?';
+
+  @override
+  String get businessReviewApproveConfirmBody =>
+      'Business Kao ID sẽ được cấp và người đăng ký sẽ được thông báo. Thao tác được ghi vào nhật ký kiểm toán.';
+
+  @override
+  String get businessReviewRejectConfirmTitle => 'Từ chối đăng ký này?';
+
+  @override
+  String get businessReviewRejectConfirmBody =>
+      'Người đăng ký sẽ thấy ghi chú của bạn và có thể gửi đăng ký mới.';
+
+  @override
+  String get businessReviewApprovedMessage =>
+      'Đã phê duyệt doanh nghiệp và cấp Business Kao ID.';
+
+  @override
+  String get businessReviewRejectedMessage =>
+      'Đã từ chối đăng ký và thông báo cho người đăng ký.';
+
+  @override
+  String get businessReviewAwaitingSecond =>
+      'Đã ghi nhận quyết định của bạn. Cần một người duyệt khác xác nhận.';
+
+  @override
+  String get businessReviewErrorDocumentMissing =>
+      'Thiếu giấy đăng ký. Hãy từ chối để người đăng ký tải lên lại.';
+
+  @override
+  String get businessReviewErrorDocumentOpen =>
+      'Không mở được giấy tờ. Hãy kiểm tra quyền và thử lại.';
+
+  @override
+  String get businessReviewErrorOwnerKaoId =>
+      'Người đăng ký không còn Kao ID cá nhân hoạt động nên không thể phê duyệt doanh nghiệp này.';
+
+  @override
+  String get businessReviewErrorOwnerBank =>
+      'Tài khoản ngân hàng đã xác minh của người đăng ký không còn khả dụng nên không thể phê duyệt.';
+
+  @override
+  String get businessReviewErrorApplicantInactive =>
+      'Tài khoản của người đăng ký không hoạt động nên không thể phê duyệt doanh nghiệp này.';
+
+  @override
+  String get noticeBusinessReviewNew => 'Có đăng ký doanh nghiệp mới cần duyệt';
+
+  @override
+  String get noticeBusinessReviewSecond =>
+      'Đăng ký doanh nghiệp đang chờ người duyệt thứ hai';
+
+  @override
+  String get noticeBusinessReviewRestart =>
+      'Người duyệt không thống nhất về đăng ký doanh nghiệp; hãy duyệt lại';
+
+  @override
+  String get noticeBusinessApproved => 'Doanh nghiệp của bạn đã được xác minh';
+
+  @override
+  String get noticeBusinessRejected =>
+      'Đăng ký doanh nghiệp không được phê duyệt. Xem lý do.';
+
+  @override
+  String get businessRegStatusReasonLabel => 'Ghi chú của người duyệt';
 }

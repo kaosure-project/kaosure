@@ -2487,6 +2487,131 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get businessRegHubDescription => '验证您的企业以开设店铺并接收款项。';
+
+  @override
+  String get businessReviewTitle => '企业审核';
+
+  @override
+  String get businessReviewHubHelp => '批准或拒绝其他账户的企业注册。批准后将签发 Business Kao ID。';
+
+  @override
+  String get businessReviewQueueHelp => '显示最早的 50 个待审核注册。您不能审核自己的注册。';
+
+  @override
+  String get businessReviewEmpty => '暂无待审核的企业注册。';
+
+  @override
+  String businessReviewSubmittedOn(String date) {
+    return '提交于 $date';
+  }
+
+  @override
+  String get businessReviewApplicant => '申请人';
+
+  @override
+  String get businessReviewOwnerKaoId => '个人 Kao ID';
+
+  @override
+  String get businessReviewOwnerName => '已验证姓名';
+
+  @override
+  String get businessReviewDescription => '企业简介';
+
+  @override
+  String get businessReviewBankName => '银行';
+
+  @override
+  String get businessReviewBankAccount => '账号';
+
+  @override
+  String businessReviewBankAccountEnding(String last4) {
+    return '尾号 $last4';
+  }
+
+  @override
+  String get businessReviewBankAccountName => '账户名';
+
+  @override
+  String get businessReviewNotAvailable => '无信息';
+
+  @override
+  String get businessReviewOpenDocument => '打开';
+
+  @override
+  String get businessReviewDocumentViewed => '已查看';
+
+  @override
+  String get businessReviewDecisionHeading => '审核决定';
+
+  @override
+  String get businessReviewChecked => '我已核实文件与企业名称、注册号和申请人一致。';
+
+  @override
+  String get businessReviewReason => '给申请人的备注（拒绝时必填）';
+
+  @override
+  String get businessReviewViewAllHint => '批准前请打开所有文件。';
+
+  @override
+  String get businessReviewApprove => '批准';
+
+  @override
+  String get businessReviewReject => '拒绝';
+
+  @override
+  String get businessReviewApproveConfirmTitle => '批准此企业？';
+
+  @override
+  String get businessReviewApproveConfirmBody =>
+      '将签发 Business Kao ID 并通知申请人。此操作会记录在审计日志中。';
+
+  @override
+  String get businessReviewRejectConfirmTitle => '拒绝此注册？';
+
+  @override
+  String get businessReviewRejectConfirmBody => '申请人将看到您的备注，并可以重新提交注册。';
+
+  @override
+  String get businessReviewApprovedMessage => '企业已批准，Business Kao ID 已签发。';
+
+  @override
+  String get businessReviewRejectedMessage => '注册已拒绝，已通知申请人。';
+
+  @override
+  String get businessReviewAwaitingSecond => '已记录您的决定，需要另一位审核员确认。';
+
+  @override
+  String get businessReviewErrorDocumentMissing => '缺少注册文件。请拒绝，以便申请人重新上传。';
+
+  @override
+  String get businessReviewErrorDocumentOpen => '无法打开文件。请检查权限后重试。';
+
+  @override
+  String get businessReviewErrorOwnerKaoId => '申请人已无有效的个人 Kao ID，无法批准此企业。';
+
+  @override
+  String get businessReviewErrorOwnerBank => '申请人已验证的银行账户不再可用，无法批准此企业。';
+
+  @override
+  String get businessReviewErrorApplicantInactive => '申请人的账户未处于活跃状态，无法批准此企业。';
+
+  @override
+  String get noticeBusinessReviewNew => '有新的企业注册待审核';
+
+  @override
+  String get noticeBusinessReviewSecond => '企业注册等待第二位审核员';
+
+  @override
+  String get noticeBusinessReviewRestart => '审核员对企业注册意见不一致，请重新审核';
+
+  @override
+  String get noticeBusinessApproved => '您的企业已通过验证';
+
+  @override
+  String get noticeBusinessRejected => '企业注册未获批准，请查看原因。';
+
+  @override
+  String get businessRegStatusReasonLabel => '审核员备注';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -4972,4 +5097,129 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get businessRegHubDescription => '验证您的企业以开设店铺并接收款项。';
+
+  @override
+  String get businessReviewTitle => '企业审核';
+
+  @override
+  String get businessReviewHubHelp => '批准或拒绝其他账户的企业注册。批准后将签发 Business Kao ID。';
+
+  @override
+  String get businessReviewQueueHelp => '显示最早的 50 个待审核注册。您不能审核自己的注册。';
+
+  @override
+  String get businessReviewEmpty => '暂无待审核的企业注册。';
+
+  @override
+  String businessReviewSubmittedOn(String date) {
+    return '提交于 $date';
+  }
+
+  @override
+  String get businessReviewApplicant => '申请人';
+
+  @override
+  String get businessReviewOwnerKaoId => '个人 Kao ID';
+
+  @override
+  String get businessReviewOwnerName => '已验证姓名';
+
+  @override
+  String get businessReviewDescription => '企业简介';
+
+  @override
+  String get businessReviewBankName => '银行';
+
+  @override
+  String get businessReviewBankAccount => '账号';
+
+  @override
+  String businessReviewBankAccountEnding(String last4) {
+    return '尾号 $last4';
+  }
+
+  @override
+  String get businessReviewBankAccountName => '账户名';
+
+  @override
+  String get businessReviewNotAvailable => '无信息';
+
+  @override
+  String get businessReviewOpenDocument => '打开';
+
+  @override
+  String get businessReviewDocumentViewed => '已查看';
+
+  @override
+  String get businessReviewDecisionHeading => '审核决定';
+
+  @override
+  String get businessReviewChecked => '我已核实文件与企业名称、注册号和申请人一致。';
+
+  @override
+  String get businessReviewReason => '给申请人的备注（拒绝时必填）';
+
+  @override
+  String get businessReviewViewAllHint => '批准前请打开所有文件。';
+
+  @override
+  String get businessReviewApprove => '批准';
+
+  @override
+  String get businessReviewReject => '拒绝';
+
+  @override
+  String get businessReviewApproveConfirmTitle => '批准此企业？';
+
+  @override
+  String get businessReviewApproveConfirmBody =>
+      '将签发 Business Kao ID 并通知申请人。此操作会记录在审计日志中。';
+
+  @override
+  String get businessReviewRejectConfirmTitle => '拒绝此注册？';
+
+  @override
+  String get businessReviewRejectConfirmBody => '申请人将看到您的备注，并可以重新提交注册。';
+
+  @override
+  String get businessReviewApprovedMessage => '企业已批准，Business Kao ID 已签发。';
+
+  @override
+  String get businessReviewRejectedMessage => '注册已拒绝，已通知申请人。';
+
+  @override
+  String get businessReviewAwaitingSecond => '已记录您的决定，需要另一位审核员确认。';
+
+  @override
+  String get businessReviewErrorDocumentMissing => '缺少注册文件。请拒绝，以便申请人重新上传。';
+
+  @override
+  String get businessReviewErrorDocumentOpen => '无法打开文件。请检查权限后重试。';
+
+  @override
+  String get businessReviewErrorOwnerKaoId => '申请人已无有效的个人 Kao ID，无法批准此企业。';
+
+  @override
+  String get businessReviewErrorOwnerBank => '申请人已验证的银行账户不再可用，无法批准此企业。';
+
+  @override
+  String get businessReviewErrorApplicantInactive => '申请人的账户未处于活跃状态，无法批准此企业。';
+
+  @override
+  String get noticeBusinessReviewNew => '有新的企业注册待审核';
+
+  @override
+  String get noticeBusinessReviewSecond => '企业注册等待第二位审核员';
+
+  @override
+  String get noticeBusinessReviewRestart => '审核员对企业注册意见不一致，请重新审核';
+
+  @override
+  String get noticeBusinessApproved => '您的企业已通过验证';
+
+  @override
+  String get noticeBusinessRejected => '企业注册未获批准，请查看原因。';
+
+  @override
+  String get businessRegStatusReasonLabel => '审核员备注';
 }

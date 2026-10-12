@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import '../../../kyc/identity_card/national_id_repository.dart';
+import '../../../kyc/domain/entities/id_image.dart';
 
 abstract class RecoveryRepository {
   Future<List<Map<String, dynamic>>> snapshot();

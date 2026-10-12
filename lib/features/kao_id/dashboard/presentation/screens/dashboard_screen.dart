@@ -1,6 +1,6 @@
 import '../../../account/presentation/pages/security/mfa_page.dart';
 import '../../../account/presentation/pages/security/sessions_page.dart';
-import '../../../kyc/maintenance/document_health_page.dart';
+import '../../../kyc/presentation/pages/document_health_page.dart';
 import '../../../account/presentation/pages/lifecycle/lifecycle_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

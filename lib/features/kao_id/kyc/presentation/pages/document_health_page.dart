@@ -1,38 +1,23 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kaosure/core/providers/supabase_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/features/kao_id/kyc/data/repositories/supabase_document_health_repository.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../../account/data/repositories/supabase_account_access_repository.dart';
-import '../../governance/presentation/widgets/admin_display.dart';
-import '../presentation/widgets/kyc_status_label.dart';
-import '../presentation/identity_card/identity_card_page.dart';
-import '../presentation/passport/passport_page.dart';
-import '../presentation/screens/residence_permit_page.dart';
+import '../../../account/data/repositories/supabase_account_access_repository.dart';
+import '../../../governance/presentation/widgets/admin_display.dart';
+import '../identity_card/identity_card_page.dart';
+import '../passport/passport_page.dart';
+import '../screens/residence_permit_page.dart';
+import '../widgets/kyc_status_label.dart';
 
-abstract class DocumentHealthRepository {
-  Future<Map<String, dynamic>> load(String? profile);
-  Future<void> revoke(String document, String reason);
-}
-final documentHealthRepositoryProvider = Provider<DocumentHealthRepository>((ref) => _DocumentHealthRepository(ref));
-class _DocumentHealthRepository implements DocumentHealthRepository {
-  _DocumentHealthRepository(this.ref);
-  final Ref ref;
-  @override
-  Future<Map<String, dynamic>> load(String? profile) async => Map<String, dynamic>.from(
-    await ref.read(supabaseClientProvider).rpc('document_health_r11a', params: {'p_profile': profile}) as Map);
-  @override
-  Future<void> revoke(String document, String reason) async {
-    await ref.read(supabaseClientProvider).rpc('revoke_document_r11a', params: {'p_document': document, 'p_reason': reason});
-  }
-}
 class DocumentHealthPage extends ConsumerStatefulWidget {
   const DocumentHealthPage({super.key, this.profile});
   final String? profile;
   @override
   ConsumerState<DocumentHealthPage> createState() => _DocumentHealthPageState();
 }
+
 class _DocumentHealthPageState extends ConsumerState<DocumentHealthPage> {
   Map<String, dynamic>? _data;
   bool _busy = true, _failed = false;

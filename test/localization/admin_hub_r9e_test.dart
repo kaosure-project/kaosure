@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kaosure/features/kao_id/auth/application/providers/auth_provider.dart';
 import 'package:kaosure/features/kao_id/governance/presentation/pages/admin_hub_page.dart';
 import 'package:kaosure/features/kao_id/governance/application/providers/member_access_provider.dart';
-import 'package:kaosure/features/kao_id/kyc/review/kyc_review_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/application/providers/kyc_review_providers.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'auth_localization_r2_test.dart' show TestAuthNotifier;
 

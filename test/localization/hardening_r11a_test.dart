@@ -6,9 +6,11 @@ import 'package:kaosure/features/kao_id/account/presentation/widgets/account_acc
 import 'package:kaosure/features/kao_id/account/domain/repositories/sessions_repository.dart';
 import 'package:kaosure/features/kao_id/account/data/repositories/supabase_sessions_repository.dart';
 import 'package:kaosure/features/kao_id/account/presentation/pages/security/sessions_page.dart';
-import 'package:kaosure/features/kao_id/kyc/maintenance/document_health_page.dart';
-import 'package:kaosure/features/kao_id/kyc/identity_card/national_id_repository.dart';
-import 'package:kaosure/features/kao_id/kyc/passport/passport_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/domain/repositories/document_health_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/data/repositories/supabase_document_health_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/presentation/pages/document_health_page.dart';
+import 'package:kaosure/features/kao_id/kyc/domain/entities/national_id.dart';
+import 'package:kaosure/features/kao_id/kyc/domain/entities/passport.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'closure_r10d_test.dart' show AccessFixture;
 

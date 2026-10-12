@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kaosure/features/wallet/linked_wallets_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import '../../../auth/application/providers/auth_provider.dart';
-import '../../../kyc/maintenance/document_health_page.dart';
+import '../../../kyc/presentation/pages/document_health_page.dart';
 import '../../../kyc/presentation/widgets/kyc_status_label.dart';
 import '../../application/providers/member_access_provider.dart';
 import '../../application/services/access_refresh.dart';

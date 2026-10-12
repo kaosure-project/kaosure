@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart' as img;
-import 'package:kaosure/features/kao_id/kyc/identity_card/national_id_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/domain/failures/national_id_failure.dart';
+import 'package:kaosure/features/kao_id/kyc/domain/entities/id_image.dart';
+import 'package:kaosure/features/kao_id/kyc/data/services/id_image_preparer.dart';
+import 'package:kaosure/features/kao_id/kyc/application/providers/id_image_picker_provider.dart';
+import 'package:kaosure/features/kao_id/kyc/domain/entities/national_id.dart';
+import 'package:kaosure/features/kao_id/kyc/domain/repositories/national_id_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/data/repositories/supabase_national_id_repository.dart';
 import 'package:kaosure/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 

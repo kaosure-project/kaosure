@@ -1,9 +1,9 @@
-import 'package:kaosure/features/kao_id/kyc/bank/bank_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/data/repositories/supabase_bank_repository.dart';
 import 'bank_r8c_test.dart' show BankFixture;
-import 'package:kaosure/features/kao_id/kyc/residence/residence_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/data/repositories/supabase_residence_repository.dart';
 import 'residence_r8b_test.dart' show ResidenceFixture;
 import 'package:kaosure/features/kao_id/auth/application/providers/auth_provider.dart';
-import 'package:kaosure/features/kao_id/kyc/passport/passport_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/data/repositories/supabase_passport_repository.dart';
 import 'auth_localization_r2_test.dart' show TestAuthNotifier;
 import 'passport_r8a_test.dart' show PassportFixture;
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ import 'package:kaosure/features/kao_id/kyc/presentation/identity_card/identity_
 import 'package:kaosure/features/kao_id/kyc/presentation/passport/passport_page.dart';
 import 'package:kaosure/features/kao_id/kyc/presentation/screens/residence_permit_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import 'package:kaosure/features/kao_id/kyc/identity_card/national_id_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/data/repositories/supabase_national_id_repository.dart';
 import 'national_id_r7a_test.dart' show IdFixture;
 import 'kyc_sections_r5_test.dart' show KycFixture;
 

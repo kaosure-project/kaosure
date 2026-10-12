@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:kaosure/features/kao_id/account/data/repositories/supabase_recovery_repository.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import '../../../../auth/application/providers/auth_provider.dart';
-import '../../../../kyc/identity_card/national_id_repository.dart';
+import '../../../../kyc/domain/entities/id_image.dart';
+import '../../../../kyc/application/providers/id_image_picker_provider.dart';
 
 class RecoveryEvidencePage extends ConsumerStatefulWidget {
   const RecoveryEvidencePage({super.key, required this.requestId});

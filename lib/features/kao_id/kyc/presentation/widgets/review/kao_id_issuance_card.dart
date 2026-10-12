@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 
-import 'kyc_review_repository.dart';
-import 'review_failure_message.dart';
+import '../../../data/repositories/supabase_kyc_review_repository.dart';
+import '../../../application/providers/kyc_review_providers.dart';
+import '../../utils/review_failure_message.dart';
 
 class KaoIdIssuanceCard extends ConsumerStatefulWidget {
   const KaoIdIssuanceCard({super.key, required this.eligible});

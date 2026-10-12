@@ -1,6 +1,6 @@
-import '../../review/kyc_review_repository.dart';
-import '../../review/kyc_review_page.dart';
-import '../../review/kao_id_issuance_card.dart';
+import '../../application/providers/kyc_review_providers.dart';
+import '../pages/review/kyc_review_page.dart';
+import '../widgets/review/kao_id_issuance_card.dart';
 import '../../../auth/application/providers/auth_provider.dart';
 import '../../../auth/application/providers/email_verification_status_provider.dart';
 import 'package:flutter/material.dart';

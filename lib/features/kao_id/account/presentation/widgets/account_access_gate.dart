@@ -6,7 +6,7 @@ import 'package:kaosure/l10n/app_localizations.dart';
 import '../../../auth/application/providers/auth_provider.dart';
 import '../../../auth/presentation/pages/reset_password_page.dart';
 import '../../../governance/application/providers/member_access_provider.dart';
-import '../../../kyc/review/kyc_review_repository.dart';
+import '../../../kyc/application/providers/kyc_review_providers.dart';
 import '../pages/lifecycle/lifecycle_page.dart';
 
 /// The server enforces closure; this gate hides stale screens and explains it.

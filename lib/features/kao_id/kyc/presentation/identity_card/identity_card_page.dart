@@ -3,7 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../../identity_card/national_id_repository.dart';
+import '../../domain/failures/national_id_failure.dart';
+import '../../domain/entities/id_image.dart';
+import '../../application/providers/id_image_picker_provider.dart';
+import '../../domain/entities/national_id.dart';
+import '../../data/repositories/supabase_national_id_repository.dart';
 import '../widgets/kyc_status_label.dart';
 
 final class IdentityCardPage extends ConsumerStatefulWidget {

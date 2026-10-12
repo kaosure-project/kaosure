@@ -4,8 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import '../../../auth/application/providers/auth_provider.dart';
-import '../../bank/bank_repository.dart';
-import '../../identity_card/national_id_repository.dart';
+import '../../domain/entities/bank_account.dart';
+import '../../data/repositories/supabase_bank_repository.dart';
+import '../../domain/failures/national_id_failure.dart';
+import '../../domain/entities/id_image.dart';
+import '../../application/providers/id_image_picker_provider.dart';
 import '../widgets/kyc_status_label.dart';
 
 final class BankVerificationPage extends ConsumerStatefulWidget {

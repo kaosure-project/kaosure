@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import '../../../auth/application/providers/auth_provider.dart';
-import '../../../kyc/review/kyc_review_page.dart';
-import '../../../kyc/review/kyc_review_repository.dart';
+import '../../../kyc/presentation/pages/review/kyc_review_page.dart';
+import '../../../kyc/application/providers/kyc_review_providers.dart';
 import '../../application/providers/member_access_provider.dart';
 
 class AdminHubPage extends ConsumerStatefulWidget {

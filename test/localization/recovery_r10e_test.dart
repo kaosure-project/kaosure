@@ -1,4 +1,4 @@
-import 'package:kaosure/features/kao_id/kyc/review/kyc_review_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/application/providers/kyc_review_providers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,8 +7,8 @@ import 'package:kaosure/features/kao_id/account/domain/repositories/recovery_rep
 import 'package:kaosure/features/kao_id/account/data/repositories/supabase_recovery_repository.dart';
 import 'package:kaosure/features/kao_id/account/presentation/pages/lifecycle/recovery_evidence_page.dart';
 import 'package:kaosure/features/kao_id/auth/application/providers/auth_provider.dart';
-import 'package:kaosure/features/kao_id/kyc/identity_card/national_id_repository.dart';
-import 'package:kaosure/features/kao_id/kyc/review/kyc_review_page.dart';
+import 'package:kaosure/features/kao_id/kyc/domain/entities/id_image.dart';
+import 'package:kaosure/features/kao_id/kyc/presentation/pages/review/kyc_review_detail_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'auth_localization_r2_test.dart' show TestAuthNotifier;
 

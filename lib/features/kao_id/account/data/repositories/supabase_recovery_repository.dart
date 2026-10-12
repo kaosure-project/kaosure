@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:kaosure/core/providers/supabase_provider.dart';
 import 'package:kaosure/features/kao_id/account/domain/repositories/recovery_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../kyc/identity_card/national_id_repository.dart';
+import '../../../kyc/domain/entities/id_image.dart';
 
 final recoveryRepositoryProvider = Provider<RecoveryRepository>((ref) =>
   SupabaseRecoveryRepository(ref.read(supabaseClientProvider)));

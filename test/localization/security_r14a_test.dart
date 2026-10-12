@@ -7,8 +7,8 @@ import 'package:kaosure/features/kao_id/account/domain/repositories/mfa_reposito
 import 'package:kaosure/features/kao_id/account/data/repositories/supabase_mfa_repository.dart';
 import 'package:kaosure/features/kao_id/account/application/providers/security_operations_provider.dart';
 import 'package:kaosure/features/kao_id/account/presentation/pages/security/security_operations_page.dart';
-import 'package:kaosure/features/kao_id/kyc/review/kyc_review_page.dart';
-import 'package:kaosure/features/kao_id/kyc/review/kyc_review_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/presentation/pages/review/kyc_review_detail_page.dart';
+import 'package:kaosure/features/kao_id/kyc/application/providers/kyc_review_providers.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'auth_localization_r2_test.dart' show TestAuthNotifier;
 

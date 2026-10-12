@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kaosure/features/kao_id/auth/application/providers/auth_provider.dart';
-import 'package:kaosure/features/kao_id/kyc/review/kyc_review_repository.dart';
-import 'package:kaosure/features/kao_id/kyc/review/kyc_review_page.dart';
-import 'package:kaosure/features/kao_id/kyc/review/kao_id_issuance_card.dart';
+import 'package:kaosure/features/kao_id/kyc/domain/repositories/kyc_review_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/data/repositories/supabase_kyc_review_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/presentation/pages/review/kyc_review_page.dart';
+import 'package:kaosure/features/kao_id/kyc/presentation/pages/review/kyc_review_detail_page.dart';
+import 'package:kaosure/features/kao_id/kyc/presentation/widgets/review/kao_id_issuance_card.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'auth_localization_r2_test.dart' show TestAuthNotifier;
 

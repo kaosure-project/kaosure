@@ -5,7 +5,7 @@ import 'package:kaosure/l10n/app_localizations.dart';
 import '../auth/application/providers/auth_provider.dart';
 import '../account/presentation/pages/security/mfa_page.dart';
 import '../governance/application/services/access_refresh.dart';
-import '../kyc/review/kyc_review_page.dart';
+import '../kyc/presentation/pages/review/kyc_review_detail_page.dart';
 
 abstract interface class NoticeTargetRepository {
   Future<Map<String, dynamic>> open(String id);

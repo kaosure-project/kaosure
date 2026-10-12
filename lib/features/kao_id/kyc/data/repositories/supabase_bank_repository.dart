@@ -1,37 +1,14 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:kaosure/core/providers/supabase_provider.dart';
-import '../identity_card/national_id_repository.dart';
+import 'package:kaosure/features/kao_id/kyc/domain/entities/bank_account.dart';
+import 'package:kaosure/features/kao_id/kyc/domain/repositories/bank_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../domain/failures/national_id_failure.dart';
 
-class BankDraft {
-  const BankDraft({required this.id, required this.owner, required this.bank,
-    required this.name, required this.number, required this.branch,
-    required this.type, required this.evidence});
-  final String id, owner, bank, name, number, branch, type;
-  final IdImage evidence;
-}
-class BankRecord {
-  BankRecord(this.data);
-  final Map<String, dynamic> data;
-  String get id => data['id'] as String;
-  String get status => data['status'] as String? ?? 'unknown';
-  bool get pending => status == 'pending' || status == 'manual_review';
-  String? get evidence => data['evidence_path'] as String?;
-  // Mask again as defense in depth, including old fixture/API responses.
-  String get maskedNumber {
-    final number = data['account_number'] as String? ?? '';
-    return number.length >= 4 ? '•••• ${number.substring(number.length - 4)}' : '••••';
-  }
-}
-abstract interface class BankRepository {
-  Future<String> owner();
-  Future<List<BankRecord>> list(String owner);
-  Future<BankRecord> submit(BankDraft draft);
-  Future<Uint8List> preview(String owner, String path);
-}
 final bankRepositoryProvider = Provider<BankRepository>((ref) =>
     SupabaseBankRepository(ref.watch(supabaseClientProvider)));
+
 class SupabaseBankRepository implements BankRepository {
   SupabaseBankRepository(this.client);
   final SupabaseClient client;

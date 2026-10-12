@@ -1,27 +1,12 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:kaosure/core/providers/supabase_provider.dart';
-import '../../auth/application/providers/auth_provider.dart';
+import 'package:kaosure/features/kao_id/kyc/domain/repositories/kyc_review_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-abstract interface class KycReviewRepository {
-  Future<bool> canReview();
-  Future<List<Map<String, dynamic>>> queue();
-  Future<Uint8List> preview(String path);
-  Future<void> decide(String request, bool approve, String reason);
-  Future<Map<String, dynamic>?> myIdentity();
-  Future<String> issue();
-}
 final kycReviewRepositoryProvider = Provider<KycReviewRepository>((ref) =>
   SupabaseKycReviewRepository(ref.watch(supabaseClientProvider)));
-final kycReviewerAccessProvider = FutureProvider.autoDispose<bool>((ref) {
-  ref.watch(authProvider.select((s) => s.asData?.value?.id));
-  return ref.watch(kycReviewRepositoryProvider).canReview();
-});
-final myKaoIdR7cProvider = FutureProvider.autoDispose<Map<String, dynamic>?>((ref) {
-  ref.watch(authProvider.select((s) => s.asData?.value?.id));
-  return ref.watch(kycReviewRepositoryProvider).myIdentity();
-});
+
 class SupabaseKycReviewRepository implements KycReviewRepository {
   SupabaseKycReviewRepository(this.client);
   final SupabaseClient client;

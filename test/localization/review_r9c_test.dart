@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:kaosure/features/kao_id/kyc/review/kyc_review_page.dart';
-import 'package:kaosure/features/kao_id/kyc/review/review_failure_message.dart';
+import 'package:kaosure/features/kao_id/kyc/presentation/pages/review/kyc_review_page.dart';
+import 'package:kaosure/features/kao_id/kyc/presentation/utils/review_failure_message.dart';
 import 'package:kaosure/features/kao_id/kyc/data/models/verification_timeline.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 

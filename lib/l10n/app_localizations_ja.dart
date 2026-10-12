@@ -3676,4 +3676,158 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get contentsPresetHelp =>
       'タイトルはボタン名、本文は評価と一緒に保存される文章です（300文字以内）。「良い」を選んだときだけ表示されます。';
+
+  @override
+  String get ssoChooseAccountTitle => 'アプリに進む';
+
+  @override
+  String get ssoChooseAccountBody =>
+      'このアプリが Kao ID でのログインを求めています。使用するアカウントを選んでください。';
+
+  @override
+  String ssoContinueAs(String account) {
+    return '$account として続行';
+  }
+
+  @override
+  String get ssoUseAnotherAccount => '別のアカウントを使用';
+
+  @override
+  String get ssoSigningOut => 'ログアウトしています…';
+
+  @override
+  String get orderIssuesTitle => '注文トラブル';
+
+  @override
+  String get orderIssuesHubHelp =>
+      'Secondhandの購入者が発送後に報告した問題を判断します：購入者へ返金、出品者へ支払い、または取引継続';
+
+  @override
+  String get orderIssuesHelp =>
+      '報告が未解決の間、代金はエスクローで保留され、自動受取も止まります。履歴を確認してから判断してください。判断には双方が見るメモが必要です。';
+
+  @override
+  String get orderIssuesFilterOpen => '判断待ち';
+
+  @override
+  String get orderIssuesFilterClosed => '終了';
+
+  @override
+  String get orderIssueKindNotArrived => '商品が届かない';
+
+  @override
+  String get orderIssueKindNotAsDescribed => '破損・説明と違う';
+
+  @override
+  String get orderIssueKindCancelRequest => 'キャンセル希望';
+
+  @override
+  String get orderIssueStatusOpen => '判断待ち';
+
+  @override
+  String get orderIssueStatusWithdrawn => '購入者が取り下げ';
+
+  @override
+  String get orderIssueStatusRefunded => '購入者へ返金済み';
+
+  @override
+  String get orderIssueStatusReleased => '出品者へ支払い済み';
+
+  @override
+  String get orderIssueStatusDismissed => '取引継続';
+
+  @override
+  String get orderIssueStatus => '状態';
+
+  @override
+  String get orderIssueReportedAt => '報告日時';
+
+  @override
+  String get orderIssueDetail => '購入者の説明';
+
+  @override
+  String get orderIssueResolvedBy => '対応者';
+
+  @override
+  String get orderIssueResolution => '判断メモ';
+
+  @override
+  String get orderIssueProduct => '商品';
+
+  @override
+  String get orderIssueAmount => '金額';
+
+  @override
+  String get orderIssuePayment => '支払い方法';
+
+  @override
+  String get orderIssuePaymentMock => 'テスト決済（実際のお金ではありません）';
+
+  @override
+  String get orderIssueEscrow => 'エスクロー';
+
+  @override
+  String get orderIssueShipping => '配送';
+
+  @override
+  String get orderIssueEscrowHolding => '保留中';
+
+  @override
+  String get orderIssueEscrowDisputed => '保留中（問題報告あり）';
+
+  @override
+  String get orderIssueEscrowReleased => '出品者へ支払い済み';
+
+  @override
+  String get orderIssueEscrowRefunded => '購入者へ返金済み';
+
+  @override
+  String get orderIssueEvents => '注文履歴';
+
+  @override
+  String get orderIssueHistory => '過去の報告';
+
+  @override
+  String get orderIssueDecide => '判断する';
+
+  @override
+  String get orderIssueNote => '購入者と出品者へのメモ';
+
+  @override
+  String get orderIssueNoteHelp => '3文字以上。双方の通知に表示されます。';
+
+  @override
+  String get orderIssueRefund => '購入者へ返金';
+
+  @override
+  String get orderIssueRelease => '出品者へ支払う';
+
+  @override
+  String get orderIssueDismiss => '取引を継続';
+
+  @override
+  String get orderIssueRefundConfirm => '注文をキャンセルし、購入者へ全額をすぐに返金します。元に戻せません。';
+
+  @override
+  String get orderIssueReleaseConfirm =>
+      '注文を完了し、手数料を差し引いた代金をすぐに出品者へ支払います。元に戻せません。';
+
+  @override
+  String get orderIssueDismissConfirm =>
+      'お金を動かさずに報告を閉じます。取引は継続し、購入者には受取確認の期間が新たに与えられます。';
+
+  @override
+  String get orderIssueDone => '判断を保存し、双方に通知しました。';
+
+  @override
+  String get orderIssueClosedNote => 'この報告は終了しています。';
+
+  @override
+  String get orderIssueErrorOwn => '自分の注文は判断できません。';
+
+  @override
+  String get orderIssueErrorClosed => 'この報告はすでに終了しているか、注文が配送中ではありません。';
+
+  @override
+  String get orderIssueErrorGone => 'この報告は見つかりません。';
 }

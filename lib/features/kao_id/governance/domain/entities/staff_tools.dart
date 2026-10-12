@@ -5,16 +5,20 @@ class StaffTools {
     this.withdrawals = false,
     this.contents = false,
     this.reviews = false,
+    this.orderIssues = false,
     this.pendingWithdrawals = 0,
     this.pendingReviewReports = 0,
+    this.openOrderIssues = 0,
   });
 
   factory StaffTools.fromJson(Map<String, dynamic> json) => StaffTools(
     withdrawals: json['withdrawals'] == true,
     contents: json['contents'] == true,
     reviews: json['reviews'] == true,
+    orderIssues: json['order_issues'] == true,
     pendingWithdrawals: (json['pending_withdrawals'] as num?)?.toInt() ?? 0,
     pendingReviewReports: (json['pending_review_reports'] as num?)?.toInt() ?? 0,
+    openOrderIssues: (json['open_order_issues'] as num?)?.toInt() ?? 0,
   );
 
   static const none = StaffTools();
@@ -27,10 +31,18 @@ class StaffTools {
 
   /// `marketplace.reviews.moderate`.
   final bool reviews;
+
+  /// `marketplace.orders.resolve`.
+  final bool orderIssues;
   final int pendingWithdrawals;
 
   /// Reviews with at least one waiting report.
   final int pendingReviewReports;
 
-  bool get any => withdrawals || contents || reviews;
+  /// Secondhand order problems waiting for a decision.
+  final int openOrderIssues;
+
+  bool get marketplace => reviews || orderIssues;
+
+  bool get any => withdrawals || contents || marketplace;
 }

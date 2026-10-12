@@ -3871,4 +3871,161 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get contentsPresetHelp =>
       'หัวข้อคือชื่อปุ่ม ส่วนเนื้อหาคือประโยคที่บันทึกพร้อมรีวิว (ไม่เกิน 300 ตัวอักษร) แสดงเฉพาะเมื่อเลือก \"ดี\"';
+
+  @override
+  String get ssoChooseAccountTitle => 'ดำเนินการต่อไปยังแอป';
+
+  @override
+  String get ssoChooseAccountBody =>
+      'แอปนี้ขอให้คุณเข้าสู่ระบบด้วย Kao ID เลือกบัญชีที่ต้องการใช้';
+
+  @override
+  String ssoContinueAs(String account) {
+    return 'ดำเนินการต่อในชื่อ $account';
+  }
+
+  @override
+  String get ssoUseAnotherAccount => 'ใช้บัญชีอื่น';
+
+  @override
+  String get ssoSigningOut => 'กำลังออกจากระบบ…';
+
+  @override
+  String get orderIssuesTitle => 'ปัญหาคำสั่งซื้อ';
+
+  @override
+  String get orderIssuesHubHelp =>
+      'ตัดสินเรื่องที่ผู้ซื้อ Secondhand แจ้งหลังจัดส่ง: คืนเงินผู้ซื้อ ปล่อยเงินให้ผู้ขาย หรือให้คำสั่งซื้อดำเนินต่อ';
+
+  @override
+  String get orderIssuesHelp =>
+      'ระหว่างที่มีเรื่องเปิดอยู่ เงินจะถูกพักไว้ใน Escrow และระบบจะไม่ยืนยันรับสินค้าอัตโนมัติ ตรวจประวัติก่อนตัดสิน ทุกการตัดสินต้องมีหมายเหตุที่ทั้งสองฝ่ายเห็น';
+
+  @override
+  String get orderIssuesFilterOpen => 'รอตัดสิน';
+
+  @override
+  String get orderIssuesFilterClosed => 'ปิดแล้ว';
+
+  @override
+  String get orderIssueKindNotArrived => 'สินค้าไม่ถึงมือ';
+
+  @override
+  String get orderIssueKindNotAsDescribed => 'สินค้าชำรุด/ไม่ตรงปก';
+
+  @override
+  String get orderIssueKindCancelRequest => 'ขอยกเลิกคำสั่งซื้อ';
+
+  @override
+  String get orderIssueStatusOpen => 'รอตัดสิน';
+
+  @override
+  String get orderIssueStatusWithdrawn => 'ผู้ซื้อยกเลิกการแจ้ง';
+
+  @override
+  String get orderIssueStatusRefunded => 'คืนเงินผู้ซื้อแล้ว';
+
+  @override
+  String get orderIssueStatusReleased => 'ปล่อยเงินให้ผู้ขายแล้ว';
+
+  @override
+  String get orderIssueStatusDismissed => 'ให้คำสั่งซื้อดำเนินต่อ';
+
+  @override
+  String get orderIssueStatus => 'สถานะ';
+
+  @override
+  String get orderIssueReportedAt => 'แจ้งเมื่อ';
+
+  @override
+  String get orderIssueDetail => 'รายละเอียดจากผู้ซื้อ';
+
+  @override
+  String get orderIssueResolvedBy => 'ปิดเรื่องโดย';
+
+  @override
+  String get orderIssueResolution => 'หมายเหตุการตัดสิน';
+
+  @override
+  String get orderIssueProduct => 'สินค้า';
+
+  @override
+  String get orderIssueAmount => 'ยอดเงิน';
+
+  @override
+  String get orderIssuePayment => 'ชำระด้วย';
+
+  @override
+  String get orderIssuePaymentMock => 'ชำระเงินจำลอง (ไม่ใช่เงินจริง)';
+
+  @override
+  String get orderIssueEscrow => 'เงินพัก (Escrow)';
+
+  @override
+  String get orderIssueShipping => 'การจัดส่ง';
+
+  @override
+  String get orderIssueEscrowHolding => 'พักเงินไว้';
+
+  @override
+  String get orderIssueEscrowDisputed => 'พักเงินไว้ (มีเรื่องแจ้ง)';
+
+  @override
+  String get orderIssueEscrowReleased => 'โอนให้ผู้ขายแล้ว';
+
+  @override
+  String get orderIssueEscrowRefunded => 'คืนผู้ซื้อแล้ว';
+
+  @override
+  String get orderIssueEvents => 'ประวัติคำสั่งซื้อ';
+
+  @override
+  String get orderIssueHistory => 'เรื่องที่แจ้งก่อนหน้า';
+
+  @override
+  String get orderIssueDecide => 'ตัดสิน';
+
+  @override
+  String get orderIssueNote => 'หมายเหตุถึงผู้ซื้อและผู้ขาย';
+
+  @override
+  String get orderIssueNoteHelp =>
+      'อย่างน้อย 3 ตัวอักษร ทั้งสองฝ่ายจะเห็นข้อความนี้ในการแจ้งเตือน';
+
+  @override
+  String get orderIssueRefund => 'คืนเงินผู้ซื้อ';
+
+  @override
+  String get orderIssueRelease => 'ปล่อยเงินให้ผู้ขาย';
+
+  @override
+  String get orderIssueDismiss => 'ให้คำสั่งซื้อดำเนินต่อ';
+
+  @override
+  String get orderIssueRefundConfirm =>
+      'ยกเลิกคำสั่งซื้อและคืนเงินเต็มจำนวนให้ผู้ซื้อทันที ย้อนกลับไม่ได้';
+
+  @override
+  String get orderIssueReleaseConfirm =>
+      'ปิดคำสั่งซื้อและโอนเงิน (หลังหักค่าธรรมเนียม) ให้ผู้ขายทันที ย้อนกลับไม่ได้';
+
+  @override
+  String get orderIssueDismissConfirm =>
+      'ปิดเรื่องโดยไม่ย้ายเงิน คำสั่งซื้อดำเนินต่อ และผู้ซื้อได้เวลายืนยันรับสินค้าใหม่';
+
+  @override
+  String get orderIssueDone => 'บันทึกการตัดสินและแจ้งทั้งสองฝ่ายแล้ว';
+
+  @override
+  String get orderIssueClosedNote => 'เรื่องนี้ปิดแล้ว';
+
+  @override
+  String get orderIssueErrorOwn => 'คุณตัดสินคำสั่งซื้อของตัวเองไม่ได้';
+
+  @override
+  String get orderIssueErrorClosed =>
+      'เรื่องนี้ปิดไปแล้ว หรือคำสั่งซื้อไม่ได้อยู่ระหว่างจัดส่ง';
+
+  @override
+  String get orderIssueErrorGone => 'ไม่พบเรื่องนี้';
 }

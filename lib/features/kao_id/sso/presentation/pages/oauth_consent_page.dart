@@ -9,6 +9,7 @@ import '../../../../../app/routes/kao_id_routes.dart';
 import '../../../auth/application/kao_id_sso_handoff.dart';
 import '../../../auth/application/providers/auth_provider.dart';
 import '../../../dashboard/presentation/widgets/kao_id_scaffold.dart';
+import '../../../dashboard/presentation/widgets/settings/sign_out_action.dart';
 import '../../application/providers/sso_providers.dart';
 import '../../application/states/consent_state.dart';
 import '../../domain/entities/authorization_request.dart';
@@ -34,8 +35,16 @@ class _OAuthConsentPageState extends ConsumerState<OAuthConsentPage> {
     unawaited(KaoIdSsoHandoff.takePendingConsent());
   }
 
-  void _goToKaoId() => Navigator.of(context)
-      .pushNamedAndRemoveUntil(KaoIdRoutes.dashboard, (_) => false);
+  void _goToKaoId() => Navigator.of(context).pushNamedAndRemoveUntil(KaoIdRoutes.dashboard, (_) => false);
+
+  void _switchAccount(AuthorizationRequest request) {
+    final container = ProviderScope.containerOf(context, listen: false);
+    unawaited(
+      ref
+          .read(consentControllerProvider(widget.authorizationId).notifier)
+          .switchAccount(request, signOut: () => clearKaoIdSession(container)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,59 +53,71 @@ class _OAuthConsentPageState extends ConsumerState<OAuthConsentPage> {
     final request = ref.watch(authorizationRequestProvider(id));
     final consent = ref.watch(consentControllerProvider(id));
     final controller = ref.read(consentControllerProvider(id).notifier);
-    ref.listen(authorizationRequestProvider(id), (_, next) {
-      if (next.valueOrNull case final ConsentAlreadyGiven given) {
-        unawaited(controller.continueApproved(given));
-      }
-    });
+    final account = ref.watch(authProvider.select((s) => s.asData?.value?.email)) ?? '';
 
     Widget message(SsoFailureCode code) => ConsentMessage(
-          icon: Icons.lock_outline,
-          message: l10n.ssoFailureMessage(code),
-          action: OutlinedButton(onPressed: _goToKaoId, child: Text(l10n.ssoBackToKaoId)),
-        );
+      icon: Icons.lock_outline,
+      message: l10n.ssoFailureMessage(code),
+      action: OutlinedButton(onPressed: _goToKaoId, child: Text(l10n.ssoBackToKaoId)),
+    );
 
-    final Widget body = consent.phase == ConsentPhase.redirecting
-        ? ConsentMessage(icon: Icons.open_in_new, message: l10n.ssoConsentRedirecting, busy: true)
-        : request.when(
-            loading: () => const Padding(
-              padding: EdgeInsets.all(48),
-              child: Center(child: CircularProgressIndicator()),
-            ),
-            error: (error, _) => message(ssoFailureCodeOf(error)),
-            data: (value) => switch (value) {
-              ConsentAlreadyGiven() => consent.failure == null
-                  ? ConsentMessage(icon: Icons.open_in_new, message: l10n.ssoConsentRedirecting, busy: true)
-                  : message(consent.failure!),
-              ConsentRequest() => ConsentCard(
-                  request: value,
-                  account: ref.watch(authProvider.select((s) => s.asData?.value?.email)) ?? '',
-                  state: consent,
-                  onAllow: () => controller.approve(value),
-                  onDeny: () => controller.deny(value),
-                ),
-            },
-          );
+    final Widget body = switch (consent.phase) {
+      ConsentPhase.redirecting => ConsentMessage(
+        icon: Icons.open_in_new,
+        message: l10n.ssoConsentRedirecting,
+        busy: true,
+      ),
+      ConsentPhase.switching => ConsentMessage(icon: Icons.logout, message: l10n.ssoSigningOut, busy: true),
+      _ => request.when(
+        loading: () => const Padding(
+          padding: EdgeInsets.all(48),
+          child: Center(child: CircularProgressIndicator()),
+        ),
+        error: (error, _) => message(ssoFailureCodeOf(error)),
+        data: (value) => switch (value) {
+          ConsentAlreadyGiven() => ConsentAccountChooser(
+            account: account,
+            state: consent,
+            onContinue: () => controller.continueApproved(value),
+            onSwitchAccount: () => _switchAccount(value),
+          ),
+          ConsentRequest() => ConsentCard(
+            request: value,
+            account: account,
+            state: consent,
+            onAllow: () => controller.approve(value),
+            onDeny: () => controller.deny(value),
+            onSwitchAccount: () => _switchAccount(value),
+          ),
+        },
+      ),
+    };
 
     return Scaffold(
       backgroundColor: AppColors.kaoPage,
       body: SafeArea(
-        child: Column(children: [
-          const BrandStripe(),
-          Expanded(child: Center(child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 520),
-              child: Material(
-                color: AppColors.surface,
-                borderRadius: BorderRadius.circular(16),
-                elevation: 1,
-                shadowColor: const Color(0x14000000),
-                child: Padding(padding: const EdgeInsets.all(28), child: body),
+        child: Column(
+          children: [
+            const BrandStripe(),
+            Expanded(
+              child: Center(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 520),
+                    child: Material(
+                      color: AppColors.surface,
+                      borderRadius: BorderRadius.circular(16),
+                      elevation: 1,
+                      shadowColor: const Color(0x14000000),
+                      child: Padding(padding: const EdgeInsets.all(28), child: body),
+                    ),
+                  ),
+                ),
               ),
             ),
-          ))),
-        ]),
+          ],
+        ),
       ),
     );
   }

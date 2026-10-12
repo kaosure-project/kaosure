@@ -23,66 +23,47 @@ import '../features/kao_id/kyc/presentation/screens/kyc_page.dart';
 import '../features/kao_id/personal_info/presentation/pages/personal_info_page.dart';
 import '../features/kao_id/sso/presentation/pages/connected_apps_page.dart';
 import '../features/kao_id/sso/presentation/pages/oauth_consent_page.dart';
+import '../features/kao_id/sso/presentation/pages/sso_sign_out_page.dart';
 
 final class AppRouter {
   const AppRouter._();
 
   static const String initialRoute = '/';
 
-  static Route<dynamic> onGenerateRoute(
-    RouteSettings settings,
-  ) {
+  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/admin':
-        return MaterialPageRoute(settings: settings, builder: (_) => const AuthGuard(authenticatedChild: AdminHubPage()));
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AuthGuard(authenticatedChild: AdminHubPage()),
+        );
       // -----------------------------------------------------------------------
       // Entry Point
       // -----------------------------------------------------------------------
       case initialRoute:
       case KaoIdRoutes.kaoIdLanding:
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (_) => const LandingPage(),
-        );
+        return MaterialPageRoute(settings: settings, builder: (_) => const LandingPage());
 
       case '/login':
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (_) => const LoginPage(),
-        );
+        return MaterialPageRoute(settings: settings, builder: (_) => const LoginPage());
 
       case '/register':
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (_) => const RegisterPage(),
-        );
+        return MaterialPageRoute(settings: settings, builder: (_) => const RegisterPage());
 
       case '/verify-email':
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (_) => const VerifyEmailPage(),
-        );
+        return MaterialPageRoute(settings: settings, builder: (_) => const VerifyEmailPage());
 
       case '/forgot-password':
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (_) => const ForgotPasswordPage(),
-        );
+        return MaterialPageRoute(settings: settings, builder: (_) => const ForgotPasswordPage());
 
       case ResetPasswordPage.routeName:
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (_) => const ResetPasswordPage(),
-        );
+        return MaterialPageRoute(settings: settings, builder: (_) => const ResetPasswordPage());
 
       // -----------------------------------------------------------------------
       // Kao ID Bootstrap
       // -----------------------------------------------------------------------
       case '/bootstrap':
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (_) => const KaoIdBootstrapScreen(),
-        );
+        return MaterialPageRoute(settings: settings, builder: (_) => const KaoIdBootstrapScreen());
 
       // -----------------------------------------------------------------------
       // Kao ID Account
@@ -90,25 +71,19 @@ final class AppRouter {
       case KaoIdRoutes.profile:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const AuthGuard(
-            authenticatedChild: DashboardScreen(initialSection: 1),
-          ),
+          builder: (_) => const AuthGuard(authenticatedChild: DashboardScreen(initialSection: 1)),
         );
 
       case KaoIdRoutes.security:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const AuthGuard(
-            authenticatedChild: DashboardScreen(initialSection: 2),
-          ),
+          builder: (_) => const AuthGuard(authenticatedChild: DashboardScreen(initialSection: 2)),
         );
 
       case KaoIdRoutes.settings:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const AuthGuard(
-            authenticatedChild: DashboardScreen(initialSection: 3),
-          ),
+          builder: (_) => const AuthGuard(authenticatedChild: DashboardScreen(initialSection: 3)),
         );
 
       case KaoIdRoutes.personalInfo:
@@ -131,9 +106,7 @@ final class AppRouter {
       case '/complete-profile':
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const AuthGuard(
-            authenticatedChild: CompleteProfilePage(),
-          ),
+          builder: (_) => const AuthGuard(authenticatedChild: CompleteProfilePage()),
         );
 
       // -----------------------------------------------------------------------
@@ -142,9 +115,7 @@ final class AppRouter {
       case '/identity/verification':
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const AuthGuard(
-            authenticatedChild: KycPage(),
-          ),
+          builder: (_) => const AuthGuard(authenticatedChild: KycPage()),
         );
 
       // -----------------------------------------------------------------------
@@ -163,21 +134,29 @@ final class AppRouter {
         final authorizationId = settings.arguments is String
             ? settings.arguments as String
             : Uri.base.path == KaoIdRoutes.oauthConsent
-                ? Uri.base.queryParameters['authorization_id'] ?? ''
-                : '';
+            ? Uri.base.queryParameters['authorization_id'] ?? ''
+            : '';
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => AuthGuard(
-            authenticatedChild: OAuthConsentPage(authorizationId: authorizationId),
-          ),
+          builder: (_) => AuthGuard(authenticatedChild: OAuthConsentPage(authorizationId: authorizationId)),
+        );
+
+      // Signed out or not: the page only signs out when there is a session.
+      case KaoIdRoutes.logout:
+        final returnTo = settings.arguments is String
+            ? settings.arguments as String
+            : Uri.base.path == KaoIdRoutes.logout
+            ? Uri.base.queryParameters['return_to']
+            : null;
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => SsoSignOutPage(returnTo: returnTo),
         );
 
       case ChangePasswordPage.routeName:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const AuthGuard(
-            authenticatedChild: ChangePasswordPage(),
-          ),
+          builder: (_) => const AuthGuard(authenticatedChild: ChangePasswordPage()),
         );
 
       // -----------------------------------------------------------------------
@@ -192,26 +171,27 @@ final class AppRouter {
       case KaoIdRoutes.businessCompleted:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const AuthGuard(
-            authenticatedChild: BusinessRegistrationPage(),
-          ),
+          builder: (_) => const AuthGuard(authenticatedChild: BusinessRegistrationPage()),
         );
 
       // -----------------------------------------------------------------------
       // Kao ID Governance
       // -----------------------------------------------------------------------
       case '/admin/staff':
-        return MaterialPageRoute(settings: settings, builder: (_) => const AuthGuard(authenticatedChild: StaffPage()));
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AuthGuard(authenticatedChild: StaffPage()),
+        );
       case '/admin/members':
-        return MaterialPageRoute(settings: settings, builder: (_) => const AuthGuard(
-          authenticatedChild: MemberPage()));
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AuthGuard(authenticatedChild: MemberPage()),
+        );
 
       case '/governance':
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const AuthGuard(
-            authenticatedChild: StaffPage(),
-          ),
+          builder: (_) => const AuthGuard(authenticatedChild: StaffPage()),
         );
 
       // -----------------------------------------------------------------------
@@ -220,19 +200,14 @@ final class AppRouter {
       case '/dashboard':
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const AuthGuard(
-            authenticatedChild: DashboardScreen(),
-          ),
+          builder: (_) => const AuthGuard(authenticatedChild: DashboardScreen()),
         );
 
       // -----------------------------------------------------------------------
       // Unknown Route
       // -----------------------------------------------------------------------
       default:
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (_) => const LandingPage(),
-        );
+        return MaterialPageRoute(settings: settings, builder: (_) => const LandingPage());
     }
   }
 }

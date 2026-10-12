@@ -3616,6 +3616,157 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get contentsPresetHelp =>
       '标题是按钮名称，正文是随评价保存的句子（最多 300 个字符）。仅在选择\"好评\"时显示。';
+
+  @override
+  String get ssoChooseAccountTitle => '继续前往应用';
+
+  @override
+  String get ssoChooseAccountBody => '此应用请求你使用 Kao ID 登录。请选择要使用的账号。';
+
+  @override
+  String ssoContinueAs(String account) {
+    return '以 $account 继续';
+  }
+
+  @override
+  String get ssoUseAnotherAccount => '使用其他账号';
+
+  @override
+  String get ssoSigningOut => '正在退出登录…';
+
+  @override
+  String get orderIssuesTitle => '订单问题';
+
+  @override
+  String get orderIssuesHubHelp =>
+      '处理 Secondhand 买家发货后报告的问题：退款给买家、付款给卖家，或让订单继续';
+
+  @override
+  String get orderIssuesHelp =>
+      '报告未结期间，款项保留在托管中，订单不会自动确认收货。请先查看记录再做决定。每个决定都需要填写双方都能看到的备注。';
+
+  @override
+  String get orderIssuesFilterOpen => '待处理';
+
+  @override
+  String get orderIssuesFilterClosed => '已关闭';
+
+  @override
+  String get orderIssueKindNotArrived => '未收到商品';
+
+  @override
+  String get orderIssueKindNotAsDescribed => '商品损坏或与描述不符';
+
+  @override
+  String get orderIssueKindCancelRequest => '申请取消';
+
+  @override
+  String get orderIssueStatusOpen => '等待决定';
+
+  @override
+  String get orderIssueStatusWithdrawn => '买家已撤回';
+
+  @override
+  String get orderIssueStatusRefunded => '已退款给买家';
+
+  @override
+  String get orderIssueStatusReleased => '已付款给卖家';
+
+  @override
+  String get orderIssueStatusDismissed => '订单继续';
+
+  @override
+  String get orderIssueStatus => '状态';
+
+  @override
+  String get orderIssueReportedAt => '报告时间';
+
+  @override
+  String get orderIssueDetail => '买家描述';
+
+  @override
+  String get orderIssueResolvedBy => '处理人';
+
+  @override
+  String get orderIssueResolution => '决定备注';
+
+  @override
+  String get orderIssueProduct => '商品';
+
+  @override
+  String get orderIssueAmount => '金额';
+
+  @override
+  String get orderIssuePayment => '支付方式';
+
+  @override
+  String get orderIssuePaymentMock => '测试支付（非真实资金）';
+
+  @override
+  String get orderIssueEscrow => '托管';
+
+  @override
+  String get orderIssueShipping => '配送';
+
+  @override
+  String get orderIssueEscrowHolding => '保留中';
+
+  @override
+  String get orderIssueEscrowDisputed => '保留中（已报告问题）';
+
+  @override
+  String get orderIssueEscrowReleased => '已付给卖家';
+
+  @override
+  String get orderIssueEscrowRefunded => '已退给买家';
+
+  @override
+  String get orderIssueEvents => '订单记录';
+
+  @override
+  String get orderIssueHistory => '之前的报告';
+
+  @override
+  String get orderIssueDecide => '做出决定';
+
+  @override
+  String get orderIssueNote => '给买家和卖家的备注';
+
+  @override
+  String get orderIssueNoteHelp => '至少 3 个字符。双方都会在通知中看到。';
+
+  @override
+  String get orderIssueRefund => '退款给买家';
+
+  @override
+  String get orderIssueRelease => '付款给卖家';
+
+  @override
+  String get orderIssueDismiss => '让订单继续';
+
+  @override
+  String get orderIssueRefundConfirm => '取消订单并立即全额退款给买家。此操作无法撤销。';
+
+  @override
+  String get orderIssueReleaseConfirm => '完成订单并立即将款项（扣除手续费后）付给卖家。此操作无法撤销。';
+
+  @override
+  String get orderIssueDismissConfirm => '关闭报告且不转移资金。订单继续，买家获得新的确认收货期限。';
+
+  @override
+  String get orderIssueDone => '已保存决定并通知双方。';
+
+  @override
+  String get orderIssueClosedNote => '此报告已关闭。';
+
+  @override
+  String get orderIssueErrorOwn => '你不能处理自己的订单。';
+
+  @override
+  String get orderIssueErrorClosed => '此报告已关闭，或订单已不在配送中。';
+
+  @override
+  String get orderIssueErrorGone => '未找到此报告。';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -7230,4 +7381,155 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
   @override
   String get contentsPresetHelp =>
       '标题是按钮名称，正文是随评价保存的句子（最多 300 个字符）。仅在选择\"好评\"时显示。';
+
+  @override
+  String get ssoChooseAccountTitle => '继续前往应用';
+
+  @override
+  String get ssoChooseAccountBody => '此应用请求你使用 Kao ID 登录。请选择要使用的账号。';
+
+  @override
+  String ssoContinueAs(String account) {
+    return '以 $account 继续';
+  }
+
+  @override
+  String get ssoUseAnotherAccount => '使用其他账号';
+
+  @override
+  String get ssoSigningOut => '正在退出登录…';
+
+  @override
+  String get orderIssuesTitle => '订单问题';
+
+  @override
+  String get orderIssuesHubHelp =>
+      '处理 Secondhand 买家发货后报告的问题：退款给买家、付款给卖家，或让订单继续';
+
+  @override
+  String get orderIssuesHelp =>
+      '报告未结期间，款项保留在托管中，订单不会自动确认收货。请先查看记录再做决定。每个决定都需要填写双方都能看到的备注。';
+
+  @override
+  String get orderIssuesFilterOpen => '待处理';
+
+  @override
+  String get orderIssuesFilterClosed => '已关闭';
+
+  @override
+  String get orderIssueKindNotArrived => '未收到商品';
+
+  @override
+  String get orderIssueKindNotAsDescribed => '商品损坏或与描述不符';
+
+  @override
+  String get orderIssueKindCancelRequest => '申请取消';
+
+  @override
+  String get orderIssueStatusOpen => '等待决定';
+
+  @override
+  String get orderIssueStatusWithdrawn => '买家已撤回';
+
+  @override
+  String get orderIssueStatusRefunded => '已退款给买家';
+
+  @override
+  String get orderIssueStatusReleased => '已付款给卖家';
+
+  @override
+  String get orderIssueStatusDismissed => '订单继续';
+
+  @override
+  String get orderIssueStatus => '状态';
+
+  @override
+  String get orderIssueReportedAt => '报告时间';
+
+  @override
+  String get orderIssueDetail => '买家描述';
+
+  @override
+  String get orderIssueResolvedBy => '处理人';
+
+  @override
+  String get orderIssueResolution => '决定备注';
+
+  @override
+  String get orderIssueProduct => '商品';
+
+  @override
+  String get orderIssueAmount => '金额';
+
+  @override
+  String get orderIssuePayment => '支付方式';
+
+  @override
+  String get orderIssuePaymentMock => '测试支付（非真实资金）';
+
+  @override
+  String get orderIssueEscrow => '托管';
+
+  @override
+  String get orderIssueShipping => '配送';
+
+  @override
+  String get orderIssueEscrowHolding => '保留中';
+
+  @override
+  String get orderIssueEscrowDisputed => '保留中（已报告问题）';
+
+  @override
+  String get orderIssueEscrowReleased => '已付给卖家';
+
+  @override
+  String get orderIssueEscrowRefunded => '已退给买家';
+
+  @override
+  String get orderIssueEvents => '订单记录';
+
+  @override
+  String get orderIssueHistory => '之前的报告';
+
+  @override
+  String get orderIssueDecide => '做出决定';
+
+  @override
+  String get orderIssueNote => '给买家和卖家的备注';
+
+  @override
+  String get orderIssueNoteHelp => '至少 3 个字符。双方都会在通知中看到。';
+
+  @override
+  String get orderIssueRefund => '退款给买家';
+
+  @override
+  String get orderIssueRelease => '付款给卖家';
+
+  @override
+  String get orderIssueDismiss => '让订单继续';
+
+  @override
+  String get orderIssueRefundConfirm => '取消订单并立即全额退款给买家。此操作无法撤销。';
+
+  @override
+  String get orderIssueReleaseConfirm => '完成订单并立即将款项（扣除手续费后）付给卖家。此操作无法撤销。';
+
+  @override
+  String get orderIssueDismissConfirm => '关闭报告且不转移资金。订单继续，买家获得新的确认收货期限。';
+
+  @override
+  String get orderIssueDone => '已保存决定并通知双方。';
+
+  @override
+  String get orderIssueClosedNote => '此报告已关闭。';
+
+  @override
+  String get orderIssueErrorOwn => '你不能处理自己的订单。';
+
+  @override
+  String get orderIssueErrorClosed => '此报告已关闭，或订单已不在配送中。';
+
+  @override
+  String get orderIssueErrorGone => '未找到此报告。';
 }

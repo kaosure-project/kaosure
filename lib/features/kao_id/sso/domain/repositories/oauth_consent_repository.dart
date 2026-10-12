@@ -17,4 +17,8 @@ abstract interface class OAuthConsentRepository {
 
   /// Withdraws consent; the app's tokens for this member stop working.
   Future<void> revoke(String clientId);
+
+  /// Whether [target] is a page of an active registered app, so signing out
+  /// may send the member there. Works signed out too.
+  Future<bool> isAppPage(Uri target);
 }

@@ -10,20 +10,32 @@ import 'package:kaosure/features/kao_id/sso/domain/usecases/oauth_consent_use_ca
 
 import 'sso_fakes.dart';
 
-Matcher failsWith(SsoFailureCode code) =>
-    throwsA(isA<SsoFailure>().having((failure) => failure.code, 'code', code));
+Matcher failsWith(SsoFailureCode code) => throwsA(isA<SsoFailure>().having((failure) => failure.code, 'code', code));
 
 void main() {
-  AppClientDraft draft({String code = 'secondhand_web', String clientId = secondhandClientId,
-      String name = 'Kao Secondhand', List<String> rpcs = const ['get_my_seller_readiness'],
-      List<String> tables = const ['products']}) => AppClientDraft(
-        appCode: code, clientId: clientId, displayName: name, firstParty: true,
-        claims: const {SsoClaim.profile}, rpcs: rpcs, tables: tables);
+  AppClientDraft draft({
+    String code = 'secondhand_web',
+    String clientId = secondhandClientId,
+    String name = 'Kao Secondhand',
+    List<String> rpcs = const ['get_my_seller_readiness'],
+    List<String> tables = const ['products'],
+  }) => AppClientDraft(
+    appCode: code,
+    clientId: clientId,
+    displayName: name,
+    firstParty: true,
+    claims: const {SsoClaim.profile},
+    rpcs: rpcs,
+    tables: tables,
+  );
 
   group('AppClientDraft', () {
     test('accepts a well-formed app and normalizes its names', () {
-      final value = draft(code: ' Secondhand_Web ', clientId: secondhandClientId.toUpperCase(),
-          rpcs: const ['Create_Personal_Shop', 'create_personal_shop']);
+      final value = draft(
+        code: ' Secondhand_Web ',
+        clientId: secondhandClientId.toUpperCase(),
+        rpcs: const ['Create_Personal_Shop', 'create_personal_shop'],
+      );
       expect(value.isValid, isTrue);
       final normalized = value.normalized();
       expect(normalized.appCode, 'secondhand_web');
@@ -32,11 +44,16 @@ void main() {
     });
 
     test('qualifies names with a schema and keeps :write for tables only', () {
-      final value = draft(rpcs: const ['secondhand.open_shop'],
-          tables: const ['products', 'Public.Favorites:write', 'secondhand.member_profiles:write']);
+      final value = draft(
+        rpcs: const ['secondhand.open_shop'],
+        tables: const ['products', 'Public.Favorites:write', 'secondhand.member_profiles:write'],
+      );
       expect(value.isValid, isTrue);
-      expect(value.normalized().tables,
-          ['public.products', 'public.favorites:write', 'secondhand.member_profiles:write']);
+      expect(value.normalized().tables, [
+        'public.products',
+        'public.favorites:write',
+        'secondhand.member_profiles:write',
+      ]);
       expect(draft(rpcs: const ['create_personal_shop:write']).invalidFields, {AppClientField.rpcs});
       expect(draft(tables: const ['products:read']).invalidFields, {AppClientField.tables});
       for (final table in ['auth.users', 'storage.objects', 'kaoid_private.app_clients_r18']) {
@@ -52,19 +69,27 @@ void main() {
     });
 
     test('rejects Kao ID admin, KYC and security names in allow-lists', () {
-      for (final name in ['kyc_review_queue_r7c', 'admin_set_role', 'app_client_save_r18',
-          'security_events', 'mfa_reset']) {
+      for (final name in [
+        'kyc_review_queue_r7c',
+        'admin_set_role',
+        'app_client_save_r18',
+        'security_events',
+        'mfa_reset',
+      ]) {
         expect(draft(rpcs: [name]).invalidFields, {AppClientField.rpcs}, reason: name);
       }
-      for (final table in ['identity_documents', 'verification_requests', 'public.company_owners:write',
-          'secondhand.identity_documents']) {
+      for (final table in [
+        'identity_documents',
+        'verification_requests',
+        'public.company_owners:write',
+        'secondhand.identity_documents',
+      ]) {
         expect(draft(tables: [table]).invalidFields, {AppClientField.tables}, reason: table);
       }
     });
 
     test('parses names separated by commas, spaces and new lines', () {
-      expect(AppClientDraft.parseNames('products, shops\ncategories  products'),
-          ['products', 'shops', 'categories']);
+      expect(AppClientDraft.parseNames('products, shops\ncategories  products'), ['products', 'shops', 'categories']);
     });
 
     test('registry use case refuses invalid drafts before calling the server', () async {
@@ -101,10 +126,11 @@ void main() {
     });
 
     test('approval needs an active registered app', () async {
-      expect(() => useCases.approve(consentRequest(registered: false)),
-          failsWith(SsoFailureCode.appNotAllowed));
-      expect(() => useCases.approve(consentRequest(app: secondhandApp(active: false))),
-          failsWith(SsoFailureCode.appNotAllowed));
+      expect(() => useCases.approve(consentRequest(registered: false)), failsWith(SsoFailureCode.appNotAllowed));
+      expect(
+        () => useCases.approve(consentRequest(app: secondhandApp(active: false))),
+        failsWith(SsoFailureCode.appNotAllowed),
+      );
       final target = await useCases.approve(consentRequest());
       expect(target.queryParameters['code'], 'abc');
     });
@@ -115,20 +141,58 @@ void main() {
     });
 
     test('an earlier consent continues only to a safe address', () {
-      expect(useCases.continueApproved(ConsentAlreadyGiven(
-          redirectUrl: Uri.parse('https://secondhand.kaosure.com/cb?code=1'))).host,
-          'secondhand.kaosure.com');
-      expect(() => useCases.continueApproved(ConsentAlreadyGiven(
-          redirectUrl: Uri.parse('javascript:alert(1)'))), failsWith(SsoFailureCode.invalidRedirect));
+      expect(
+        useCases
+            .continueApproved(ConsentAlreadyGiven(redirectUrl: Uri.parse('https://secondhand.kaosure.com/cb?code=1')))
+            .host,
+        'secondhand.kaosure.com',
+      );
+      expect(
+        () => useCases.continueApproved(ConsentAlreadyGiven(redirectUrl: Uri.parse('javascript:alert(1)'))),
+        failsWith(SsoFailureCode.invalidRedirect),
+      );
+    });
+
+    test('another account returns the app state with account_selection_required instead of the code', () async {
+      final target = await useCases.switchAccount(
+        ConsentAlreadyGiven(redirectUrl: Uri.parse('https://secondhand.kaosure.com/cb?code=1&state=s1')),
+      );
+      expect(target, Uri.parse('https://secondhand.kaosure.com/cb?error=account_selection_required&state=s1'));
+      await expectLater(
+        useCases.switchAccount(ConsentAlreadyGiven(redirectUrl: Uri.parse('javascript:alert(1)'))),
+        failsWith(SsoFailureCode.invalidRedirect),
+      );
+    });
+
+    test('sign-out returns only to pages of registered apps', () async {
+      expect(await useCases.signOutReturn('http://localhost:5000/'), Uri.parse('http://localhost:5000/'));
+      repository.calls.clear();
+      for (final raw in [
+        null,
+        '',
+        'https://evil.test/',
+        'http://localhost:5000/?next=x',
+        'http://localhost:5000/#a',
+        'javascript:alert(1)',
+        'com.kaosure.app:/cb',
+        'http://user@localhost:5000/',
+      ]) {
+        expect(await useCases.signOutReturn(raw), isNull, reason: raw);
+      }
+      expect(repository.calls, ['isAppPage:https://evil.test/']);
     });
   });
 
   group('models', () {
     test('directory rows keep known claims only', () {
       final app = SsoAppModel.fromJson({
-        'app_code': 'secondhand_web', 'client_id': secondhandClientId.toUpperCase(),
-        'display_name': 'Kao Secondhand', 'status': 'active', 'first_party': true,
-        'claims': ['profile', 'business', 'unknown'], 'last_seen_at': '2026-10-12T09:00:00Z',
+        'app_code': 'secondhand_web',
+        'client_id': secondhandClientId.toUpperCase(),
+        'display_name': 'Kao Secondhand',
+        'status': 'active',
+        'first_party': true,
+        'claims': ['profile', 'business', 'unknown'],
+        'last_seen_at': '2026-10-12T09:00:00Z',
       });
       expect(app.clientId, secondhandClientId);
       expect(app.claims, {SsoClaim.profile, SsoClaim.business});
@@ -137,12 +201,17 @@ void main() {
 
     test('registry rows split comma separated redirect URIs', () {
       final client = AppClientModel.fromJson({
-        'app_code': 'secondhand_web', 'client_id': secondhandClientId,
-        'display_name': 'Kao Secondhand', 'status': 'suspended', 'first_party': false,
-        'claims': ['verification'], 'rpcs': ['public.create_personal_shop'],
+        'app_code': 'secondhand_web',
+        'client_id': secondhandClientId,
+        'display_name': 'Kao Secondhand',
+        'status': 'suspended',
+        'first_party': false,
+        'claims': ['verification'],
+        'rpcs': ['public.create_personal_shop'],
         'tables': ['public.products', 'public.favorites:write'],
         'redirect_uris': 'http://localhost:5000/auth/callback, https://secondhand.kaosure.com/cb',
-        'oauth_registered': true, 'members': 2,
+        'oauth_registered': true,
+        'members': 2,
       });
       expect(client.active, isFalse);
       expect(client.redirectUris, hasLength(2));

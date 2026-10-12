@@ -3912,4 +3912,161 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get contentsPresetHelp =>
       'Title is the chip label; the text is the sentence saved with the review (up to 300 characters). Presets are only offered with \"Good\".';
+
+  @override
+  String get ssoChooseAccountTitle => 'Continue to the app';
+
+  @override
+  String get ssoChooseAccountBody =>
+      'This app is asking you to sign in with Kao ID. Choose which account to use.';
+
+  @override
+  String ssoContinueAs(String account) {
+    return 'Continue as $account';
+  }
+
+  @override
+  String get ssoUseAnotherAccount => 'Use another account';
+
+  @override
+  String get ssoSigningOut => 'Signing out…';
+
+  @override
+  String get orderIssuesTitle => 'Order problems';
+
+  @override
+  String get orderIssuesHubHelp =>
+      'Decide on problems Secondhand buyers reported after shipping: refund the buyer, pay the seller, or let the order carry on';
+
+  @override
+  String get orderIssuesHelp =>
+      'While a report is open the money stays in escrow and the order is not received automatically. Check the history before deciding. Every decision needs a note both members see.';
+
+  @override
+  String get orderIssuesFilterOpen => 'Waiting';
+
+  @override
+  String get orderIssuesFilterClosed => 'Closed';
+
+  @override
+  String get orderIssueKindNotArrived => 'Item hasn\'t arrived';
+
+  @override
+  String get orderIssueKindNotAsDescribed => 'Damaged or not as described';
+
+  @override
+  String get orderIssueKindCancelRequest => 'Asked to cancel';
+
+  @override
+  String get orderIssueStatusOpen => 'Waiting for a decision';
+
+  @override
+  String get orderIssueStatusWithdrawn => 'Withdrawn by the buyer';
+
+  @override
+  String get orderIssueStatusRefunded => 'Buyer refunded';
+
+  @override
+  String get orderIssueStatusReleased => 'Seller paid';
+
+  @override
+  String get orderIssueStatusDismissed => 'Order carried on';
+
+  @override
+  String get orderIssueStatus => 'Status';
+
+  @override
+  String get orderIssueReportedAt => 'Reported';
+
+  @override
+  String get orderIssueDetail => 'What the buyer wrote';
+
+  @override
+  String get orderIssueResolvedBy => 'Closed by';
+
+  @override
+  String get orderIssueResolution => 'Decision note';
+
+  @override
+  String get orderIssueProduct => 'Item';
+
+  @override
+  String get orderIssueAmount => 'Amount';
+
+  @override
+  String get orderIssuePayment => 'Paid with';
+
+  @override
+  String get orderIssuePaymentMock => 'Test payment (no real money)';
+
+  @override
+  String get orderIssueEscrow => 'Escrow';
+
+  @override
+  String get orderIssueShipping => 'Shipping';
+
+  @override
+  String get orderIssueEscrowHolding => 'Held';
+
+  @override
+  String get orderIssueEscrowDisputed => 'Held (problem reported)';
+
+  @override
+  String get orderIssueEscrowReleased => 'Paid to the seller';
+
+  @override
+  String get orderIssueEscrowRefunded => 'Refunded to the buyer';
+
+  @override
+  String get orderIssueEvents => 'Order history';
+
+  @override
+  String get orderIssueHistory => 'Earlier reports';
+
+  @override
+  String get orderIssueDecide => 'Decide';
+
+  @override
+  String get orderIssueNote => 'Note to the buyer and seller';
+
+  @override
+  String get orderIssueNoteHelp =>
+      'At least 3 characters. Both members see it in their notification.';
+
+  @override
+  String get orderIssueRefund => 'Refund the buyer';
+
+  @override
+  String get orderIssueRelease => 'Pay the seller';
+
+  @override
+  String get orderIssueDismiss => 'Let the order carry on';
+
+  @override
+  String get orderIssueRefundConfirm =>
+      'Cancel the order and refund the buyer in full right away. This can\'t be undone.';
+
+  @override
+  String get orderIssueReleaseConfirm =>
+      'Complete the order and pay the seller (after the fee) right away. This can\'t be undone.';
+
+  @override
+  String get orderIssueDismissConfirm =>
+      'Close the report without moving money. The order carries on and the buyer gets a new window to confirm receipt.';
+
+  @override
+  String get orderIssueDone => 'Decision saved and both members told.';
+
+  @override
+  String get orderIssueClosedNote => 'This report is closed.';
+
+  @override
+  String get orderIssueErrorOwn => 'You can\'t decide on your own order.';
+
+  @override
+  String get orderIssueErrorClosed =>
+      'This report is already closed, or the order is no longer in transit.';
+
+  @override
+  String get orderIssueErrorGone => 'This report wasn\'t found.';
 }

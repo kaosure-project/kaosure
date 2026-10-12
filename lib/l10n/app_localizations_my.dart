@@ -3916,4 +3916,162 @@ class AppLocalizationsMy extends AppLocalizations {
   @override
   String get contentsPresetHelp =>
       'ခေါင်းစဉ်သည် ခလုတ်အမည်ဖြစ်ပြီး စာကိုယ်သည် သုံးသပ်ချက်နှင့်အတူ သိမ်းမည့် စာကြောင်းဖြစ်သည် (စာလုံး 300 အထိ)။ \"ကောင်း\" ရွေးမှသာ ပြပါမည်။';
+
+  @override
+  String get ssoChooseAccountTitle => 'အက်ပ်သို့ ဆက်သွားရန်';
+
+  @override
+  String get ssoChooseAccountBody =>
+      'ဤအက်ပ်က Kao ID ဖြင့် ဝင်ရောက်ရန် တောင်းဆိုနေသည်။ အသုံးပြုမည့် အကောင့်ကို ရွေးပါ။';
+
+  @override
+  String ssoContinueAs(String account) {
+    return '$account အဖြစ် ဆက်လုပ်ရန်';
+  }
+
+  @override
+  String get ssoUseAnotherAccount => 'အခြားအကောင့် သုံးရန်';
+
+  @override
+  String get ssoSigningOut => 'ထွက်နေသည်…';
+
+  @override
+  String get orderIssuesTitle => 'အော်ဒါပြဿနာများ';
+
+  @override
+  String get orderIssuesHubHelp =>
+      'Secondhand ဝယ်သူများ ပို့ပြီးနောက် တိုင်ကြားသော ပြဿနာများကို ဆုံးဖြတ်ပါ- ဝယ်သူထံ ငွေပြန်အမ်း၊ ရောင်းသူထံ ငွေပေး သို့မဟုတ် အော်ဒါဆက်လုပ်';
+
+  @override
+  String get orderIssuesHelp =>
+      'တိုင်ကြားချက် ဖွင့်ထားစဉ် ငွေကို Escrow တွင် ထိန်းထားပြီး အလိုအလျောက် လက်ခံခြင်း မဖြစ်ပါ။ မဆုံးဖြတ်မီ မှတ်တမ်းကို စစ်ဆေးပါ။ ဆုံးဖြတ်ချက်တိုင်းတွင် နှစ်ဖက်စလုံး မြင်ရမည့် မှတ်ချက် လိုအပ်သည်။';
+
+  @override
+  String get orderIssuesFilterOpen => 'စောင့်ဆိုင်းဆဲ';
+
+  @override
+  String get orderIssuesFilterClosed => 'ပိတ်ပြီး';
+
+  @override
+  String get orderIssueKindNotArrived => 'ပစ္စည်း မရောက်သေး';
+
+  @override
+  String get orderIssueKindNotAsDescribed => 'ပျက်စီး/ဖော်ပြချက်နှင့် မကိုက်ညီ';
+
+  @override
+  String get orderIssueKindCancelRequest => 'ပယ်ဖျက်ရန် တောင်းဆို';
+
+  @override
+  String get orderIssueStatusOpen => 'ဆုံးဖြတ်ချက် စောင့်ဆိုင်းဆဲ';
+
+  @override
+  String get orderIssueStatusWithdrawn => 'ဝယ်သူ ပြန်ရုပ်သိမ်း';
+
+  @override
+  String get orderIssueStatusRefunded => 'ဝယ်သူထံ ငွေပြန်အမ်းပြီး';
+
+  @override
+  String get orderIssueStatusReleased => 'ရောင်းသူထံ ငွေပေးပြီး';
+
+  @override
+  String get orderIssueStatusDismissed => 'အော်ဒါ ဆက်လုပ်';
+
+  @override
+  String get orderIssueStatus => 'အခြေအနေ';
+
+  @override
+  String get orderIssueReportedAt => 'တိုင်ကြားချိန်';
+
+  @override
+  String get orderIssueDetail => 'ဝယ်သူ ရေးသားချက်';
+
+  @override
+  String get orderIssueResolvedBy => 'ပိတ်သူ';
+
+  @override
+  String get orderIssueResolution => 'ဆုံးဖြတ်ချက် မှတ်ချက်';
+
+  @override
+  String get orderIssueProduct => 'ပစ္စည်း';
+
+  @override
+  String get orderIssueAmount => 'ပမာဏ';
+
+  @override
+  String get orderIssuePayment => 'ပေးချေမှု';
+
+  @override
+  String get orderIssuePaymentMock => 'စမ်းသပ်ပေးချေမှု (ငွေအစစ် မဟုတ်)';
+
+  @override
+  String get orderIssueEscrow => 'Escrow ထိန်းငွေ';
+
+  @override
+  String get orderIssueShipping => 'ပို့ဆောင်မှု';
+
+  @override
+  String get orderIssueEscrowHolding => 'ထိန်းထားဆဲ';
+
+  @override
+  String get orderIssueEscrowDisputed => 'ထိန်းထားဆဲ (တိုင်ကြားချက်ရှိ)';
+
+  @override
+  String get orderIssueEscrowReleased => 'ရောင်းသူထံ ပေးပြီး';
+
+  @override
+  String get orderIssueEscrowRefunded => 'ဝယ်သူထံ ပြန်အမ်းပြီး';
+
+  @override
+  String get orderIssueEvents => 'အော်ဒါ မှတ်တမ်း';
+
+  @override
+  String get orderIssueHistory => 'ယခင် တိုင်ကြားချက်များ';
+
+  @override
+  String get orderIssueDecide => 'ဆုံးဖြတ်ရန်';
+
+  @override
+  String get orderIssueNote => 'ဝယ်သူနှင့် ရောင်းသူထံ မှတ်ချက်';
+
+  @override
+  String get orderIssueNoteHelp =>
+      'အနည်းဆုံး စာလုံး 3 လုံး။ နှစ်ဖက်စလုံး အသိပေးချက်တွင် မြင်ရမည်။';
+
+  @override
+  String get orderIssueRefund => 'ဝယ်သူထံ ငွေပြန်အမ်း';
+
+  @override
+  String get orderIssueRelease => 'ရောင်းသူထံ ငွေပေး';
+
+  @override
+  String get orderIssueDismiss => 'အော်ဒါ ဆက်လုပ်ပါစေ';
+
+  @override
+  String get orderIssueRefundConfirm =>
+      'အော်ဒါကို ပယ်ဖျက်ပြီး ဝယ်သူထံ ငွေအပြည့် ချက်ချင်း ပြန်အမ်းမည်။ ပြန်ပြင်၍ မရပါ။';
+
+  @override
+  String get orderIssueReleaseConfirm =>
+      'အော်ဒါကို ပြီးဆုံးစေပြီး ကြေးနုတ်ပြီးနောက် ငွေကို ရောင်းသူထံ ချက်ချင်း ပေးမည်။ ပြန်ပြင်၍ မရပါ။';
+
+  @override
+  String get orderIssueDismissConfirm =>
+      'ငွေမရွှေ့ဘဲ တိုင်ကြားချက်ကို ပိတ်မည်။ အော်ဒါ ဆက်လုပ်ပြီး ဝယ်သူသည် လက်ခံကြောင်း အတည်ပြုရန် အချိန်အသစ် ရမည်။';
+
+  @override
+  String get orderIssueDone =>
+      'ဆုံးဖြတ်ချက်ကို သိမ်းပြီး နှစ်ဖက်စလုံးကို အသိပေးပြီးပါပြီ။';
+
+  @override
+  String get orderIssueClosedNote => 'ဤတိုင်ကြားချက် ပိတ်ပြီးပါပြီ။';
+
+  @override
+  String get orderIssueErrorOwn => 'သင့်ကိုယ်ပိုင် အော်ဒါကို ဆုံးဖြတ်၍ မရပါ။';
+
+  @override
+  String get orderIssueErrorClosed =>
+      'ဤတိုင်ကြားချက် ပိတ်ပြီးဖြစ်သည် သို့မဟုတ် အော်ဒါ ပို့ဆောင်ဆဲ မဟုတ်တော့ပါ။';
+
+  @override
+  String get orderIssueErrorGone => 'ဤတိုင်ကြားချက်ကို ရှာမတွေ့ပါ။';
 }

@@ -10,10 +10,24 @@ import 'package:kaosure/features/kao_id/sso/domain/failures/sso_failure.dart';
 import 'package:kaosure/features/kao_id/sso/presentation/pages/app_clients_page.dart';
 import 'package:kaosure/features/kao_id/sso/presentation/pages/connected_apps_page.dart';
 import 'package:kaosure/features/kao_id/sso/presentation/pages/oauth_consent_page.dart';
+import 'package:kaosure/features/kao_id/sso/presentation/pages/sso_sign_out_page.dart';
+import 'package:kaosure/app/routes/kao_id_routes.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 
 import '../../localization/auth_localization_r2_test.dart' show TestAuthNotifier;
 import 'sso_fakes.dart';
+
+class _SignOutAuthNotifier extends TestAuthNotifier {
+  _SignOutAuthNotifier(super.ref);
+
+  int signOuts = 0;
+
+  @override
+  Future<void> logout() async {
+    signOuts++;
+    state = const AsyncValue.data(null);
+  }
+}
 
 Future<void> frames(WidgetTester tester) async {
   for (var i = 0; i < 5; i++) {
@@ -25,6 +39,7 @@ void main() {
   late FakeOAuthConsentRepository consent;
   late FakeAppClientRegistryRepository registry;
   late List<Uri> redirects;
+  late _SignOutAuthNotifier auth;
 
   setUp(() {
     consent = FakeOAuthConsentRepository();
@@ -32,7 +47,9 @@ void main() {
     redirects = [];
   });
 
-  Future<AppLocalizations> pump(WidgetTester tester, Widget home, {
+  Future<AppLocalizations> pump(
+    WidgetTester tester,
+    Widget home, {
     String language = 'en',
     Size size = const Size(1024, 1400),
     bool settle = true,
@@ -40,23 +57,26 @@ void main() {
     tester.view.physicalSize = size;
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
-    await tester.pumpWidget(ProviderScope(
-      overrides: [
-        authProvider.overrideWith((ref) => TestAuthNotifier(ref)),
-        oauthConsentRepositoryProvider.overrideWithValue(consent),
-        appClientRegistryRepositoryProvider.overrideWithValue(registry),
-        ssoRedirectProvider.overrideWithValue((target) async {
-          redirects.add(target);
-          return true;
-        }),
-      ],
-      child: MaterialApp(
-        locale: Locale(language),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: home,
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          authProvider.overrideWith((ref) => auth = _SignOutAuthNotifier(ref)),
+          oauthConsentRepositoryProvider.overrideWithValue(consent),
+          appClientRegistryRepositoryProvider.overrideWithValue(registry),
+          ssoRedirectProvider.overrideWithValue((target) async {
+            redirects.add(target);
+            return true;
+          }),
+        ],
+        child: MaterialApp(
+          locale: Locale(language),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: home,
+          onGenerateRoute: (settings) => MaterialPageRoute(builder: (_) => Text('route:${settings.name}')),
+        ),
       ),
-    ));
+    );
     settle ? await tester.pumpAndSettle() : await frames(tester);
     return lookupAppLocalizations(Locale(language));
   }
@@ -69,8 +89,7 @@ void main() {
     settle ? await tester.pumpAndSettle() : await frames(tester);
   }
 
-  bool enabled(WidgetTester tester, Key key) =>
-      tester.widget<ButtonStyleButton>(find.byKey(key)).onPressed != null;
+  bool enabled(WidgetTester tester, Key key) => tester.widget<ButtonStyleButton>(find.byKey(key)).onPressed != null;
 
   const consentPage = OAuthConsentPage(authorizationId: 'auth_request_0001');
 
@@ -110,11 +129,41 @@ void main() {
       expect(enabled(tester, const Key('sso-consent-deny')), isTrue);
     });
 
-    testWidgets('an earlier consent continues straight to the app', (tester) async {
-      consent.request = ConsentAlreadyGiven(
-          redirectUrl: Uri.parse('http://localhost:5000/auth/callback?code=again'));
-      await pump(tester, consentPage, settle: false);
+    testWidgets('an earlier consent still asks which account to use', (tester) async {
+      consent.request = ConsentAlreadyGiven(redirectUrl: Uri.parse('http://localhost:5000/auth/callback?code=again'));
+      final l10n = await pump(tester, consentPage, language: 'th', size: const Size(360, 900));
+      expect(find.text(l10n.ssoContinueAs('example@example.com')), findsOneWidget);
+      expect(redirects, isEmpty);
+      expect(tester.takeException(), isNull);
+
+      await tap(tester, find.byKey(const Key('sso-continue-as')), settle: false);
       expect(redirects.single.queryParameters['code'], 'again');
+      expect(auth.signOuts, 0);
+    });
+
+    testWidgets('another account after an earlier consent signs out and asks the app to log in again', (tester) async {
+      consent.request = ConsentAlreadyGiven(
+        redirectUrl: Uri.parse('http://localhost:5000/auth/callback?code=again&state=s1'),
+      );
+      await pump(tester, consentPage);
+      await tap(tester, find.byKey(const Key('sso-use-another-account')), settle: false);
+      expect(auth.signOuts, 1);
+      expect(
+        redirects.single,
+        Uri.parse('http://localhost:5000/auth/callback?error=account_selection_required&state=s1'),
+      );
+      expect(consent.calls, isNot(contains(startsWith('deny:'))));
+    });
+
+    testWidgets('another account on a new request denies it before signing out', (tester) async {
+      await pump(tester, consentPage);
+      await tap(tester, find.byKey(const Key('sso-consent-switch-account')), settle: false);
+      expect(consent.calls.last, 'deny:auth_request_0001');
+      expect(auth.signOuts, 1);
+      expect(
+        redirects.single,
+        Uri.parse('http://localhost:5000/auth/callback?error=account_selection_required&state=xyz'),
+      );
     });
 
     testWidgets('expired requests explain how to start again', (tester) async {
@@ -131,13 +180,34 @@ void main() {
     });
   });
 
+  group('sign out from a sub-app', () {
+    testWidgets('ends the Kao ID session and returns to the registered app', (tester) async {
+      await pump(tester, const SsoSignOutPage(returnTo: 'http://localhost:5000/'), settle: false);
+      expect(auth.signOuts, 1);
+      expect(redirects.single, Uri.parse('http://localhost:5000/'));
+    });
+
+    testWidgets('an unknown return address lands on the Kao ID home page', (tester) async {
+      await pump(tester, const SsoSignOutPage(returnTo: 'https://evil.test/'));
+      expect(auth.signOuts, 1);
+      expect(redirects, isEmpty);
+      expect(find.text('route:${KaoIdRoutes.kaoIdLanding}'), findsOneWidget);
+    });
+  });
+
   group('connected apps', () {
     testWidgets('lists granted apps and disconnects after confirmation', (tester) async {
-      consent.apps = [ConnectedApp(clientId: secondhandClientId, name: 'secondhand-oauth',
-          scopes: const ['openid', 'email'], grantedAt: DateTime(2026, 10, 1),
-          clientUri: Uri.parse('https://secondhand.kaosure.test'), app: secondhandApp())];
-      final l10n = await pump(tester, const ConnectedAppsPage(), language: 'th',
-          size: const Size(360, 900));
+      consent.apps = [
+        ConnectedApp(
+          clientId: secondhandClientId,
+          name: 'secondhand-oauth',
+          scopes: const ['openid', 'email'],
+          grantedAt: DateTime(2026, 10, 1),
+          clientUri: Uri.parse('https://secondhand.kaosure.test'),
+          app: secondhandApp(),
+        ),
+      ];
+      final l10n = await pump(tester, const ConnectedAppsPage(), language: 'th', size: const Size(360, 900));
       expect(find.text('Kao Secondhand'), findsOneWidget);
       expect(find.text(l10n.ssoClaimBusiness), findsOneWidget);
       expect(tester.takeException(), isNull);
@@ -153,8 +223,7 @@ void main() {
   group('app registry', () {
     testWidgets('owner sees registered apps with their allow-lists', (tester) async {
       registry.clients = [appClient(registered: false)];
-      final l10n = await pump(tester, const AppClientsPage(), language: 'th',
-          size: const Size(400, 1400));
+      final l10n = await pump(tester, const AppClientsPage(), language: 'th', size: const Size(400, 1400));
       expect(find.text('Kao Secondhand'), findsOneWidget);
       expect(find.text('create_personal_shop'), findsOneWidget);
       expect(find.text(l10n.ssoAppOauthMissing), findsOneWidget);

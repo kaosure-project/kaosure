@@ -9,38 +9,38 @@ import 'package:kaosure/features/kao_id/sso/domain/repositories/oauth_consent_re
 const secondhandClientId = '6f1c2b8e-4d3a-4b7e-9c11-2a5d8e0f7b34';
 
 SsoApp secondhandApp({bool active = true, Set<SsoClaim>? claims}) => SsoApp(
-      appCode: 'secondhand_web',
-      clientId: secondhandClientId,
-      displayName: 'Kao Secondhand',
-      active: active,
-      firstParty: true,
-      claims: claims ?? {SsoClaim.profile, SsoClaim.verification, SsoClaim.business},
-      lastSeenAt: DateTime(2026, 10, 12, 9),
-    );
+  appCode: 'secondhand_web',
+  clientId: secondhandClientId,
+  displayName: 'Kao Secondhand',
+  active: active,
+  firstParty: true,
+  claims: claims ?? {SsoClaim.profile, SsoClaim.verification, SsoClaim.business},
+  lastSeenAt: DateTime(2026, 10, 12, 9),
+);
 
 ConsentRequest consentRequest({SsoApp? app, bool registered = true}) => ConsentRequest(
-      authorizationId: 'auth_request_0001',
-      clientId: secondhandClientId,
-      clientName: 'secondhand-oauth',
-      scopes: const ['openid', 'email', 'profile'],
-      redirectUri: Uri.parse('http://localhost:5000/auth/callback'),
-      clientUri: Uri.parse('https://secondhand.kaosure.test'),
-      app: registered ? app ?? secondhandApp() : null,
-    );
+  authorizationId: 'auth_request_0001',
+  clientId: secondhandClientId,
+  clientName: 'secondhand-oauth',
+  scopes: const ['openid', 'email', 'profile'],
+  redirectUri: Uri.parse('http://localhost:5000/auth/callback'),
+  clientUri: Uri.parse('https://secondhand.kaosure.test'),
+  app: registered ? app ?? secondhandApp() : null,
+);
 
 AppClient appClient({bool active = true, bool registered = true}) => AppClient(
-      appCode: 'secondhand_web',
-      clientId: secondhandClientId,
-      displayName: 'Kao Secondhand',
-      active: active,
-      firstParty: true,
-      claims: const {SsoClaim.profile, SsoClaim.verification},
-      rpcs: const ['get_my_seller_readiness', 'create_personal_shop'],
-      tables: const ['products', 'shops'],
-      oauthRegistered: registered,
-      redirectUris: const ['http://localhost:5000/auth/callback'],
-      members: 3,
-    );
+  appCode: 'secondhand_web',
+  clientId: secondhandClientId,
+  displayName: 'Kao Secondhand',
+  active: active,
+  firstParty: true,
+  claims: const {SsoClaim.profile, SsoClaim.verification},
+  rpcs: const ['get_my_seller_readiness', 'create_personal_shop'],
+  tables: const ['products', 'shops'],
+  oauthRegistered: registered,
+  redirectUris: const ['http://localhost:5000/auth/callback'],
+  members: 3,
+);
 
 final class FakeOAuthConsentRepository implements OAuthConsentRepository {
   AuthorizationRequest? request;
@@ -67,7 +67,7 @@ final class FakeOAuthConsentRepository implements OAuthConsentRepository {
   @override
   Future<Uri> deny(String authorizationId) async {
     calls.add('deny:$authorizationId');
-    return Uri.parse('http://localhost:5000/auth/callback?error=access_denied');
+    return Uri.parse('http://localhost:5000/auth/callback?error=access_denied&state=xyz');
   }
 
   @override
@@ -77,6 +77,15 @@ final class FakeOAuthConsentRepository implements OAuthConsentRepository {
   Future<void> revoke(String clientId) async {
     calls.add('revoke:$clientId');
     apps = apps.where((app) => app.clientId != clientId).toList();
+  }
+
+  /// Origins of active registered apps.
+  Set<String> appOrigins = {'http://localhost:5000'};
+
+  @override
+  Future<bool> isAppPage(Uri target) async {
+    calls.add('isAppPage:$target');
+    return appOrigins.contains(target.origin);
   }
 }
 
@@ -96,6 +105,5 @@ final class FakeAppClientRegistryRepository implements AppClientRegistryReposito
   Future<void> save(AppClientDraft draft) async => saved.add(draft);
 
   @override
-  Future<void> setActive(String appCode, {required bool active}) async =>
-      statusChanges.add('$appCode:$active');
+  Future<void> setActive(String appCode, {required bool active}) async => statusChanges.add('$appCode:$active');
 }

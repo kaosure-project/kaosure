@@ -3890,4 +3890,162 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get contentsPresetHelp =>
       'Tiêu đề là tên nút, nội dung là câu được lưu cùng đánh giá (tối đa 300 ký tự). Chỉ hiện khi chọn \"Tốt\".';
+
+  @override
+  String get ssoChooseAccountTitle => 'Tiếp tục đến ứng dụng';
+
+  @override
+  String get ssoChooseAccountBody =>
+      'Ứng dụng này yêu cầu bạn đăng nhập bằng Kao ID. Hãy chọn tài khoản muốn dùng.';
+
+  @override
+  String ssoContinueAs(String account) {
+    return 'Tiếp tục với tên $account';
+  }
+
+  @override
+  String get ssoUseAnotherAccount => 'Dùng tài khoản khác';
+
+  @override
+  String get ssoSigningOut => 'Đang đăng xuất…';
+
+  @override
+  String get orderIssuesTitle => 'Sự cố đơn hàng';
+
+  @override
+  String get orderIssuesHubHelp =>
+      'Quyết định các sự cố người mua Secondhand báo sau khi giao: hoàn tiền người mua, trả tiền người bán hoặc để đơn tiếp tục';
+
+  @override
+  String get orderIssuesHelp =>
+      'Khi báo cáo còn mở, tiền được giữ trong ký quỹ và đơn không tự động xác nhận nhận hàng. Hãy xem lịch sử trước khi quyết định. Mỗi quyết định cần một ghi chú mà cả hai bên đều thấy.';
+
+  @override
+  String get orderIssuesFilterOpen => 'Đang chờ';
+
+  @override
+  String get orderIssuesFilterClosed => 'Đã đóng';
+
+  @override
+  String get orderIssueKindNotArrived => 'Chưa nhận được hàng';
+
+  @override
+  String get orderIssueKindNotAsDescribed => 'Hư hỏng hoặc không đúng mô tả';
+
+  @override
+  String get orderIssueKindCancelRequest => 'Yêu cầu hủy';
+
+  @override
+  String get orderIssueStatusOpen => 'Chờ quyết định';
+
+  @override
+  String get orderIssueStatusWithdrawn => 'Người mua đã rút lại';
+
+  @override
+  String get orderIssueStatusRefunded => 'Đã hoàn tiền người mua';
+
+  @override
+  String get orderIssueStatusReleased => 'Đã trả tiền người bán';
+
+  @override
+  String get orderIssueStatusDismissed => 'Đơn tiếp tục';
+
+  @override
+  String get orderIssueStatus => 'Trạng thái';
+
+  @override
+  String get orderIssueReportedAt => 'Thời điểm báo';
+
+  @override
+  String get orderIssueDetail => 'Người mua mô tả';
+
+  @override
+  String get orderIssueResolvedBy => 'Người đóng';
+
+  @override
+  String get orderIssueResolution => 'Ghi chú quyết định';
+
+  @override
+  String get orderIssueProduct => 'Sản phẩm';
+
+  @override
+  String get orderIssueAmount => 'Số tiền';
+
+  @override
+  String get orderIssuePayment => 'Thanh toán bằng';
+
+  @override
+  String get orderIssuePaymentMock => 'Thanh toán thử (không phải tiền thật)';
+
+  @override
+  String get orderIssueEscrow => 'Ký quỹ';
+
+  @override
+  String get orderIssueShipping => 'Vận chuyển';
+
+  @override
+  String get orderIssueEscrowHolding => 'Đang giữ';
+
+  @override
+  String get orderIssueEscrowDisputed => 'Đang giữ (có báo sự cố)';
+
+  @override
+  String get orderIssueEscrowReleased => 'Đã trả người bán';
+
+  @override
+  String get orderIssueEscrowRefunded => 'Đã hoàn người mua';
+
+  @override
+  String get orderIssueEvents => 'Lịch sử đơn hàng';
+
+  @override
+  String get orderIssueHistory => 'Các báo cáo trước';
+
+  @override
+  String get orderIssueDecide => 'Quyết định';
+
+  @override
+  String get orderIssueNote => 'Ghi chú gửi người mua và người bán';
+
+  @override
+  String get orderIssueNoteHelp =>
+      'Ít nhất 3 ký tự. Cả hai bên sẽ thấy trong thông báo.';
+
+  @override
+  String get orderIssueRefund => 'Hoàn tiền người mua';
+
+  @override
+  String get orderIssueRelease => 'Trả tiền người bán';
+
+  @override
+  String get orderIssueDismiss => 'Để đơn tiếp tục';
+
+  @override
+  String get orderIssueRefundConfirm =>
+      'Hủy đơn và hoàn toàn bộ tiền cho người mua ngay. Không thể hoàn tác.';
+
+  @override
+  String get orderIssueReleaseConfirm =>
+      'Hoàn tất đơn và trả tiền (sau phí) cho người bán ngay. Không thể hoàn tác.';
+
+  @override
+  String get orderIssueDismissConfirm =>
+      'Đóng báo cáo mà không chuyển tiền. Đơn tiếp tục và người mua có thời hạn mới để xác nhận nhận hàng.';
+
+  @override
+  String get orderIssueDone => 'Đã lưu quyết định và thông báo cho cả hai bên.';
+
+  @override
+  String get orderIssueClosedNote => 'Báo cáo này đã đóng.';
+
+  @override
+  String get orderIssueErrorOwn =>
+      'Bạn không thể quyết định đơn hàng của chính mình.';
+
+  @override
+  String get orderIssueErrorClosed =>
+      'Báo cáo này đã đóng hoặc đơn hàng không còn đang giao.';
+
+  @override
+  String get orderIssueErrorGone => 'Không tìm thấy báo cáo này.';
 }

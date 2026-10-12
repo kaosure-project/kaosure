@@ -3828,4 +3828,161 @@ class AppLocalizationsLo extends AppLocalizations {
   @override
   String get contentsPresetHelp =>
       'ຫົວຂໍ້ຄືຊື່ປຸ່ມ, ເນື້ອຫາຄືປະໂຫຍກທີ່ບັນທຶກພ້ອມລີວິວ (ບໍ່ເກີນ 300 ຕົວອັກສອນ). ສະແດງສະເພາະເມື່ອເລືອກ \"ດີ\".';
+
+  @override
+  String get ssoChooseAccountTitle => 'ດຳເນີນການຕໍ່ໄປຫາແອັບ';
+
+  @override
+  String get ssoChooseAccountBody =>
+      'ແອັບນີ້ຂໍໃຫ້ທ່ານເຂົ້າສູ່ລະບົບດ້ວຍ Kao ID. ເລືອກບັນຊີທີ່ຕ້ອງການໃຊ້.';
+
+  @override
+  String ssoContinueAs(String account) {
+    return 'ດຳເນີນການຕໍ່ໃນນາມ $account';
+  }
+
+  @override
+  String get ssoUseAnotherAccount => 'ໃຊ້ບັນຊີອື່ນ';
+
+  @override
+  String get ssoSigningOut => 'ກຳລັງອອກຈາກລະບົບ…';
+
+  @override
+  String get orderIssuesTitle => 'ບັນຫາຄຳສັ່ງຊື້';
+
+  @override
+  String get orderIssuesHubHelp =>
+      'ຕັດສິນເລື່ອງທີ່ຜູ້ຊື້ Secondhand ແຈ້ງຫຼັງຈັດສົ່ງ: ຄືນເງິນຜູ້ຊື້, ປ່ອຍເງິນໃຫ້ຜູ້ຂາຍ ຫຼື ໃຫ້ຄຳສັ່ງຊື້ດຳເນີນຕໍ່';
+
+  @override
+  String get orderIssuesHelp =>
+      'ລະຫວ່າງທີ່ມີເລື່ອງເປີດຢູ່ ເງິນຈະຖືກພັກໄວ້ໃນ Escrow ແລະ ລະບົບຈະບໍ່ຢືນຢັນຮັບສິນຄ້າອັດຕະໂນມັດ ກວດປະຫວັດກ່ອນຕັດສິນ ທຸກການຕັດສິນຕ້ອງມີໝາຍເຫດທີ່ທັງສອງຝ່າຍເຫັນ';
+
+  @override
+  String get orderIssuesFilterOpen => 'ລໍຖ້າຕັດສິນ';
+
+  @override
+  String get orderIssuesFilterClosed => 'ປິດແລ້ວ';
+
+  @override
+  String get orderIssueKindNotArrived => 'ສິນຄ້າບໍ່ມາຮອດ';
+
+  @override
+  String get orderIssueKindNotAsDescribed => 'ສິນຄ້າເສຍຫາຍ/ບໍ່ຕົງຕາມລາຍລະອຽດ';
+
+  @override
+  String get orderIssueKindCancelRequest => 'ຂໍຍົກເລີກຄຳສັ່ງຊື້';
+
+  @override
+  String get orderIssueStatusOpen => 'ລໍຖ້າການຕັດສິນ';
+
+  @override
+  String get orderIssueStatusWithdrawn => 'ຜູ້ຊື້ຍົກເລີກການແຈ້ງ';
+
+  @override
+  String get orderIssueStatusRefunded => 'ຄືນເງິນຜູ້ຊື້ແລ້ວ';
+
+  @override
+  String get orderIssueStatusReleased => 'ປ່ອຍເງິນໃຫ້ຜູ້ຂາຍແລ້ວ';
+
+  @override
+  String get orderIssueStatusDismissed => 'ໃຫ້ຄຳສັ່ງຊື້ດຳເນີນຕໍ່';
+
+  @override
+  String get orderIssueStatus => 'ສະຖານະ';
+
+  @override
+  String get orderIssueReportedAt => 'ແຈ້ງເມື່ອ';
+
+  @override
+  String get orderIssueDetail => 'ລາຍລະອຽດຈາກຜູ້ຊື້';
+
+  @override
+  String get orderIssueResolvedBy => 'ປິດເລື່ອງໂດຍ';
+
+  @override
+  String get orderIssueResolution => 'ໝາຍເຫດການຕັດສິນ';
+
+  @override
+  String get orderIssueProduct => 'ສິນຄ້າ';
+
+  @override
+  String get orderIssueAmount => 'ຈຳນວນເງິນ';
+
+  @override
+  String get orderIssuePayment => 'ຊຳລະດ້ວຍ';
+
+  @override
+  String get orderIssuePaymentMock => 'ການຊຳລະທົດລອງ (ບໍ່ແມ່ນເງິນແທ້)';
+
+  @override
+  String get orderIssueEscrow => 'ເງິນພັກ (Escrow)';
+
+  @override
+  String get orderIssueShipping => 'ການຈັດສົ່ງ';
+
+  @override
+  String get orderIssueEscrowHolding => 'ພັກເງິນໄວ້';
+
+  @override
+  String get orderIssueEscrowDisputed => 'ພັກເງິນໄວ້ (ມີເລື່ອງແຈ້ງ)';
+
+  @override
+  String get orderIssueEscrowReleased => 'ໂອນໃຫ້ຜູ້ຂາຍແລ້ວ';
+
+  @override
+  String get orderIssueEscrowRefunded => 'ຄືນໃຫ້ຜູ້ຊື້ແລ້ວ';
+
+  @override
+  String get orderIssueEvents => 'ປະຫວັດຄຳສັ່ງຊື້';
+
+  @override
+  String get orderIssueHistory => 'ເລື່ອງທີ່ແຈ້ງກ່ອນໜ້າ';
+
+  @override
+  String get orderIssueDecide => 'ຕັດສິນ';
+
+  @override
+  String get orderIssueNote => 'ໝາຍເຫດເຖິງຜູ້ຊື້ ແລະ ຜູ້ຂາຍ';
+
+  @override
+  String get orderIssueNoteHelp =>
+      'ຢ່າງໜ້ອຍ 3 ຕົວອັກສອນ ທັງສອງຝ່າຍຈະເຫັນຂໍ້ຄວາມນີ້ໃນການແຈ້ງເຕືອນ';
+
+  @override
+  String get orderIssueRefund => 'ຄືນເງິນຜູ້ຊື້';
+
+  @override
+  String get orderIssueRelease => 'ປ່ອຍເງິນໃຫ້ຜູ້ຂາຍ';
+
+  @override
+  String get orderIssueDismiss => 'ໃຫ້ຄຳສັ່ງຊື້ດຳເນີນຕໍ່';
+
+  @override
+  String get orderIssueRefundConfirm =>
+      'ຍົກເລີກຄຳສັ່ງຊື້ ແລະ ຄືນເງິນເຕັມຈຳນວນໃຫ້ຜູ້ຊື້ທັນທີ ຍ້ອນກັບບໍ່ໄດ້';
+
+  @override
+  String get orderIssueReleaseConfirm =>
+      'ປິດຄຳສັ່ງຊື້ ແລະ ໂອນເງິນ (ຫຼັງຫັກຄ່າທຳນຽມ) ໃຫ້ຜູ້ຂາຍທັນທີ ຍ້ອນກັບບໍ່ໄດ້';
+
+  @override
+  String get orderIssueDismissConfirm =>
+      'ປິດເລື່ອງໂດຍບໍ່ຍ້າຍເງິນ ຄຳສັ່ງຊື້ດຳເນີນຕໍ່ ແລະ ຜູ້ຊື້ໄດ້ເວລາຢືນຢັນຮັບສິນຄ້າໃໝ່';
+
+  @override
+  String get orderIssueDone => 'ບັນທຶກການຕັດສິນ ແລະ ແຈ້ງທັງສອງຝ່າຍແລ້ວ';
+
+  @override
+  String get orderIssueClosedNote => 'ເລື່ອງນີ້ປິດແລ້ວ';
+
+  @override
+  String get orderIssueErrorOwn => 'ທ່ານຕັດສິນຄຳສັ່ງຊື້ຂອງຕົນເອງບໍ່ໄດ້';
+
+  @override
+  String get orderIssueErrorClosed =>
+      'ເລື່ອງນີ້ປິດໄປແລ້ວ ຫຼື ຄຳສັ່ງຊື້ບໍ່ໄດ້ຢູ່ລະຫວ່າງຈັດສົ່ງ';
+
+  @override
+  String get orderIssueErrorGone => 'ບໍ່ພົບເລື່ອງນີ້';
 }

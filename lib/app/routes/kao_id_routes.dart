@@ -33,6 +33,9 @@ final class KaoIdRoutes {
 
   /// Supabase Auth's OAuth server sends members here with `?authorization_id=`.
   static const String oauthConsent = '/oauth/consent';
+
+  /// Sub-apps end the Kao ID session here with `?return_to=` on sign-out.
+  static const String logout = '/logout';
   static const String connectedApps = '/security/apps';
 
   /// Routes behind the Kao ID header tabs, in tab order.

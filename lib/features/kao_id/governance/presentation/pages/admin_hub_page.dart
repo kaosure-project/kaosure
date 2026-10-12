@@ -24,6 +24,7 @@ import '../../domain/entities/staff_tools.dart';
 import '../widgets/admin/admin_scaffold.dart';
 import '../widgets/admin/admin_stat_card.dart';
 import '../widgets/admin/pending_badge.dart';
+import 'order_issues_page.dart';
 import 'owner_requests_page.dart';
 import 'review_moderation_page.dart';
 import 'system_contents_page.dart';
@@ -236,19 +237,29 @@ class _AdminHubPageState extends ConsumerState<AdminHubPage> with WidgetsBinding
     final marketplace = MenuPanel(
       title: l.adminGroupMarketplace,
       children: [
-        DashboardMenuTile(
-          icon: Icons.rate_review_outlined,
-          color: AppColors.kaoTeal,
-          tint: AppColors.kaoTealSoft,
-          title: l.moderationTitle,
-          subtitle: l.moderationHubHelp,
-          showDivider: false,
-          trailing: PendingTrailing(
-            count: AsyncData(PendingCount(tools.pendingReviewReports)),
-            color: AppColors.kaoTeal,
+        if (tools.orderIssues)
+          DashboardMenuTile(
+            icon: Icons.report_problem_outlined,
+            title: l.orderIssuesTitle,
+            subtitle: l.orderIssuesHubHelp,
+            showDivider: tools.reviews,
+            trailing: PendingTrailing(count: AsyncData(PendingCount(tools.openOrderIssues))),
+            onTap: () => _open(const OrderIssuesPage()),
           ),
-          onTap: () => _open(const ReviewModerationPage()),
-        ),
+        if (tools.reviews)
+          DashboardMenuTile(
+            icon: Icons.rate_review_outlined,
+            color: AppColors.kaoTeal,
+            tint: AppColors.kaoTealSoft,
+            title: l.moderationTitle,
+            subtitle: l.moderationHubHelp,
+            showDivider: false,
+            trailing: PendingTrailing(
+              count: AsyncData(PendingCount(tools.pendingReviewReports)),
+              color: AppColors.kaoTeal,
+            ),
+            onTap: () => _open(const ReviewModerationPage()),
+          ),
       ],
     );
 
@@ -280,7 +291,7 @@ class _AdminHubPageState extends ConsumerState<AdminHubPage> with WidgetsBinding
     final start = [if (canReview) reviews, if (canManage) people];
     final end = [
       if (tools.withdrawals || tools.contents) finance,
-      if (tools.reviews) marketplace,
+      if (tools.marketplace) marketplace,
       if (canManage) partners,
       security,
     ];

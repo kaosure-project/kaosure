@@ -11,8 +11,7 @@ final class OAuthConsentUseCases {
   static final RegExp _authorizationId = RegExp(r'^[A-Za-z0-9_-]{8,128}$');
   static final RegExp _nativeScheme = RegExp(r'^[a-z][a-z0-9+-]*(\.[a-z0-9+-]+)+$');
 
-  static bool isValidAuthorizationId(String? value) =>
-      value != null && _authorizationId.hasMatch(value);
+  static bool isValidAuthorizationId(String? value) => value != null && _authorizationId.hasMatch(value);
 
   /// Web apps over https (http only on loopback while developing), or a native
   /// app's reverse-domain scheme (RFC 8252).
@@ -41,10 +40,39 @@ final class OAuthConsentUseCases {
     return _safe(await _repository.approve(request.authorizationId));
   }
 
-  Future<Uri> deny(ConsentRequest request) async =>
-      _safe(await _repository.deny(request.authorizationId));
+  Future<Uri> deny(ConsentRequest request) async => _safe(await _repository.deny(request.authorizationId));
 
   Uri continueApproved(ConsentAlreadyGiven request) => _safe(request.redirectUrl);
+
+  /// "Use another account": the app gets `error=account_selection_required`
+  /// with its own `state` back, and starts a fresh login once Kao ID has
+  /// signed out. A pending request is denied so its code can never be issued.
+  Future<Uri> switchAccount(AuthorizationRequest request) async {
+    final reply = _safe(switch (request) {
+      ConsentRequest() => await _repository.deny(request.authorizationId),
+      ConsentAlreadyGiven(:final redirectUrl) => redirectUrl,
+    });
+    final state = reply.queryParameters['state'];
+    return reply.replace(queryParameters: {'error': 'account_selection_required', 'state': ?state}).removeFragment();
+  }
+
+  /// Where `/logout` may send the member afterwards: only an http(s) page of an
+  /// active registered app, without query or fragment. Null means Kao ID home.
+  Future<Uri?> signOutReturn(String? raw) async {
+    final target = Uri.tryParse(raw?.trim() ?? '');
+    if (target == null ||
+        !isSafeRedirect(target) ||
+        !const {'http', 'https'}.contains(target.scheme.toLowerCase()) ||
+        target.hasQuery ||
+        target.hasFragment) {
+      return null;
+    }
+    try {
+      return await _repository.isAppPage(target) ? target : null;
+    } on SsoFailure {
+      return null;
+    }
+  }
 
   Future<List<ConnectedApp>> connectedApps() => _repository.connectedApps();
 

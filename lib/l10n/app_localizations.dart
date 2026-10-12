@@ -7146,6 +7146,300 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Title is the chip label; the text is the sentence saved with the review (up to 300 characters). Presets are only offered with \"Good\".'**
   String get contentsPresetHelp;
+
+  /// No description provided for @ssoChooseAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to the app'**
+  String get ssoChooseAccountTitle;
+
+  /// No description provided for @ssoChooseAccountBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This app is asking you to sign in with Kao ID. Choose which account to use.'**
+  String get ssoChooseAccountBody;
+
+  /// No description provided for @ssoContinueAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue as {account}'**
+  String ssoContinueAs(String account);
+
+  /// No description provided for @ssoUseAnotherAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Use another account'**
+  String get ssoUseAnotherAccount;
+
+  /// No description provided for @ssoSigningOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Signing out…'**
+  String get ssoSigningOut;
+
+  /// No description provided for @orderIssuesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Order problems'**
+  String get orderIssuesTitle;
+
+  /// No description provided for @orderIssuesHubHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Decide on problems Secondhand buyers reported after shipping: refund the buyer, pay the seller, or let the order carry on'**
+  String get orderIssuesHubHelp;
+
+  /// No description provided for @orderIssuesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'While a report is open the money stays in escrow and the order is not received automatically. Check the history before deciding. Every decision needs a note both members see.'**
+  String get orderIssuesHelp;
+
+  /// No description provided for @orderIssuesFilterOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get orderIssuesFilterOpen;
+
+  /// No description provided for @orderIssuesFilterClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get orderIssuesFilterClosed;
+
+  /// No description provided for @orderIssueKindNotArrived.
+  ///
+  /// In en, this message translates to:
+  /// **'Item hasn\'t arrived'**
+  String get orderIssueKindNotArrived;
+
+  /// No description provided for @orderIssueKindNotAsDescribed.
+  ///
+  /// In en, this message translates to:
+  /// **'Damaged or not as described'**
+  String get orderIssueKindNotAsDescribed;
+
+  /// No description provided for @orderIssueKindCancelRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Asked to cancel'**
+  String get orderIssueKindCancelRequest;
+
+  /// No description provided for @orderIssueStatusOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a decision'**
+  String get orderIssueStatusOpen;
+
+  /// No description provided for @orderIssueStatusWithdrawn.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdrawn by the buyer'**
+  String get orderIssueStatusWithdrawn;
+
+  /// No description provided for @orderIssueStatusRefunded.
+  ///
+  /// In en, this message translates to:
+  /// **'Buyer refunded'**
+  String get orderIssueStatusRefunded;
+
+  /// No description provided for @orderIssueStatusReleased.
+  ///
+  /// In en, this message translates to:
+  /// **'Seller paid'**
+  String get orderIssueStatusReleased;
+
+  /// No description provided for @orderIssueStatusDismissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Order carried on'**
+  String get orderIssueStatusDismissed;
+
+  /// No description provided for @orderIssueStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get orderIssueStatus;
+
+  /// No description provided for @orderIssueReportedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported'**
+  String get orderIssueReportedAt;
+
+  /// No description provided for @orderIssueDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'What the buyer wrote'**
+  String get orderIssueDetail;
+
+  /// No description provided for @orderIssueResolvedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed by'**
+  String get orderIssueResolvedBy;
+
+  /// No description provided for @orderIssueResolution.
+  ///
+  /// In en, this message translates to:
+  /// **'Decision note'**
+  String get orderIssueResolution;
+
+  /// No description provided for @orderIssueProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get orderIssueProduct;
+
+  /// No description provided for @orderIssueAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get orderIssueAmount;
+
+  /// No description provided for @orderIssuePayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid with'**
+  String get orderIssuePayment;
+
+  /// No description provided for @orderIssuePaymentMock.
+  ///
+  /// In en, this message translates to:
+  /// **'Test payment (no real money)'**
+  String get orderIssuePaymentMock;
+
+  /// No description provided for @orderIssueEscrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Escrow'**
+  String get orderIssueEscrow;
+
+  /// No description provided for @orderIssueShipping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping'**
+  String get orderIssueShipping;
+
+  /// No description provided for @orderIssueEscrowHolding.
+  ///
+  /// In en, this message translates to:
+  /// **'Held'**
+  String get orderIssueEscrowHolding;
+
+  /// No description provided for @orderIssueEscrowDisputed.
+  ///
+  /// In en, this message translates to:
+  /// **'Held (problem reported)'**
+  String get orderIssueEscrowDisputed;
+
+  /// No description provided for @orderIssueEscrowReleased.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid to the seller'**
+  String get orderIssueEscrowReleased;
+
+  /// No description provided for @orderIssueEscrowRefunded.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded to the buyer'**
+  String get orderIssueEscrowRefunded;
+
+  /// No description provided for @orderIssueEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Order history'**
+  String get orderIssueEvents;
+
+  /// No description provided for @orderIssueHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier reports'**
+  String get orderIssueHistory;
+
+  /// No description provided for @orderIssueDecide.
+  ///
+  /// In en, this message translates to:
+  /// **'Decide'**
+  String get orderIssueDecide;
+
+  /// No description provided for @orderIssueNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note to the buyer and seller'**
+  String get orderIssueNote;
+
+  /// No description provided for @orderIssueNoteHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 3 characters. Both members see it in their notification.'**
+  String get orderIssueNoteHelp;
+
+  /// No description provided for @orderIssueRefund.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund the buyer'**
+  String get orderIssueRefund;
+
+  /// No description provided for @orderIssueRelease.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay the seller'**
+  String get orderIssueRelease;
+
+  /// No description provided for @orderIssueDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Let the order carry on'**
+  String get orderIssueDismiss;
+
+  /// No description provided for @orderIssueRefundConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the order and refund the buyer in full right away. This can\'t be undone.'**
+  String get orderIssueRefundConfirm;
+
+  /// No description provided for @orderIssueReleaseConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete the order and pay the seller (after the fee) right away. This can\'t be undone.'**
+  String get orderIssueReleaseConfirm;
+
+  /// No description provided for @orderIssueDismissConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Close the report without moving money. The order carries on and the buyer gets a new window to confirm receipt.'**
+  String get orderIssueDismissConfirm;
+
+  /// No description provided for @orderIssueDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Decision saved and both members told.'**
+  String get orderIssueDone;
+
+  /// No description provided for @orderIssueClosedNote.
+  ///
+  /// In en, this message translates to:
+  /// **'This report is closed.'**
+  String get orderIssueClosedNote;
+
+  /// No description provided for @orderIssueErrorOwn.
+  ///
+  /// In en, this message translates to:
+  /// **'You can\'t decide on your own order.'**
+  String get orderIssueErrorOwn;
+
+  /// No description provided for @orderIssueErrorClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'This report is already closed, or the order is no longer in transit.'**
+  String get orderIssueErrorClosed;
+
+  /// No description provided for @orderIssueErrorGone.
+  ///
+  /// In en, this message translates to:
+  /// **'This report wasn\'t found.'**
+  String get orderIssueErrorGone;
 }
 
 class _AppLocalizationsDelegate

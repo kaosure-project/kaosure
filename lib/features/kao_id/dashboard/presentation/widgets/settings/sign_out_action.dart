@@ -25,14 +25,8 @@ Future<bool> confirmSignOut(BuildContext context) async {
         title: Text(l10n.signOut),
         content: Text(l10n.signOutConfirmation),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(l10n.cancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: Text(l10n.signOut),
-          ),
+          TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l10n.cancel)),
+          FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(l10n.signOut)),
         ],
       );
     },
@@ -46,7 +40,15 @@ Future<void> signOutAndLeave(BuildContext context) async {
   // AuthGuard may remove the caller when logout completes. Keep the root
   // navigator and container so cleanup does not depend on a disposed WidgetRef.
   final navigator = Navigator.of(context, rootNavigator: true);
-  final container = ProviderScope.containerOf(context, listen: false);
+  await clearKaoIdSession(ProviderScope.containerOf(context, listen: false));
+  if (navigator.mounted) {
+    navigator.pushNamedAndRemoveUntil(KaoIdRoutes.kaoIdLanding, (_) => false);
+  }
+}
+
+/// Signs out of Kao ID on this browser and forgets every account's state.
+/// Throws when sign-out fails.
+Future<void> clearKaoIdSession(ProviderContainer container) async {
   await container.read(authProvider.notifier).logout();
   container.read(passwordRecoveryAuthorizedProvider.notifier).state = false;
   container.invalidate(profileControllerProvider);
@@ -60,7 +62,4 @@ Future<void> signOutAndLeave(BuildContext context) async {
   container.invalidate(governanceControllerProvider);
   container.invalidate(currentKaoIdIdentityProvider);
   container.invalidate(businessRegistrationControllerProvider);
-  if (navigator.mounted) {
-    navigator.pushNamedAndRemoveUntil(KaoIdRoutes.kaoIdLanding, (_) => false);
-  }
 }

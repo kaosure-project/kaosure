@@ -1,13 +1,18 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/providers/profile_controller_provider.dart';
+import '../../application/states/profile_state.dart';
 import '../widgets/kao_id_profile/card.dart';
 
 final class AccountPage extends ConsumerStatefulWidget {
   const AccountPage({
     super.key,
+    this.embedded = false,
   });
+
+  final bool embedded;
 
   @override
   ConsumerState<AccountPage> createState() =>
@@ -33,9 +38,11 @@ final class _AccountPageState
       profileControllerProvider,
     );
 
+    if (widget.embedded) return _buildBody(context, state);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('บัญชีของฉัน'),
+        title: Text(AppLocalizations.of(context).accountTitle),
       ),
       body: SafeArea(
         child: _buildBody(
@@ -48,7 +55,7 @@ final class _AccountPageState
 
   Widget _buildBody(
     BuildContext context,
-    dynamic state,
+    ProfileState state,
   ) {
     if (state.isLoading) {
       return const Center(
@@ -58,7 +65,7 @@ final class _AccountPageState
 
     if (state.errorMessage != null) {
       return _ErrorView(
-        message: state.errorMessage!,
+        message: AppLocalizations.of(context).profileLoadFailed,
         onRetry: () {
           ref
               .read(
@@ -90,174 +97,16 @@ final class _AccountPageState
           32,
         ),
         children: [
+          if (widget.embedded) ...[
+            Text(AppLocalizations.of(context).accountTitle,
+              style: Theme.of(context).textTheme.headlineSmall),
+            const SizedBox(height: 16),
+          ],
           KaoIdProfileCard(
             profile: state.profile!,
           ),
 
-          const SizedBox(height: 24),
-
-          const _SectionHeader(
-            title: 'บัญชีและความปลอดภัย',
-          ),
-
-          const SizedBox(height: 8),
-
-          _AccountMenuCard(
-            icon: Icons.verified_user_outlined,
-            title: 'การยืนยันตัวตน',
-            subtitle:
-                'ยืนยันตัวตนเพื่อเพิ่มความปลอดภัยให้บัญชี',
-            onTap: () {},
-          ),
-
-          _AccountMenuCard(
-            icon: Icons.account_balance_outlined,
-            title: 'บัญชีธนาคาร',
-            subtitle:
-                'จัดการบัญชีธนาคารสำหรับการรับเงิน',
-            onTap: () {},
-          ),
-
-          _AccountMenuCard(
-            icon: Icons.devices_outlined,
-            title: 'อุปกรณ์',
-            subtitle:
-                'ตรวจสอบและจัดการอุปกรณ์ที่เข้าสู่ระบบ',
-            onTap: () {},
-          ),
-
-          _AccountMenuCard(
-            icon: Icons.lock_outline,
-            title: 'เซสชันและการเข้าสู่ระบบ',
-            subtitle:
-                'ตรวจสอบกิจกรรมการเข้าสู่ระบบ',
-            onTap: () {},
-          ),
-
-          const SizedBox(height: 24),
-
-          const _SectionHeader(
-            title: 'บัญชีธุรกิจ',
-          ),
-
-          const SizedBox(height: 8),
-
-          _AccountMenuCard(
-            icon: Icons.business_outlined,
-            title: 'บริษัท / องค์กร',
-            subtitle:
-                'จัดการองค์กรและสิทธิ์การเข้าถึง',
-            onTap: () {},
-          ),
-
-          const SizedBox(height: 24),
-
-          const _SectionHeader(
-            title: 'การตั้งค่า',
-          ),
-
-          const SizedBox(height: 8),
-
-          _AccountMenuCard(
-            icon: Icons.language_outlined,
-            title: 'ภาษา',
-            subtitle:
-                'จัดการภาษาที่ใช้ใน Kao ID',
-            onTap: () {},
-          ),
-
-          _AccountMenuCard(
-            icon: Icons.notifications_none_outlined,
-            title: 'การแจ้งเตือน',
-            subtitle:
-                'จัดการการแจ้งเตือนของ Kao ID',
-            onTap: () {},
-          ),
         ],
-      ),
-    );
-  }
-}
-
-final class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({
-    required this.title,
-  });
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 4,
-      ),
-      child: Text(
-        title,
-        style: Theme.of(context)
-            .textTheme
-            .titleMedium
-            ?.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
-      ),
-    );
-  }
-}
-
-final class _AccountMenuCard extends StatelessWidget {
-  const _AccountMenuCard({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(
-        bottom: 8,
-      ),
-      elevation: 0,
-      clipBehavior: Clip.antiAlias,
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 6,
-        ),
-        leading: Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            color: Theme.of(context)
-                .colorScheme
-                .surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Icon(icon),
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        subtitle: Padding(
-          padding: const EdgeInsets.only(
-            top: 3,
-          ),
-          child: Text(subtitle),
-        ),
-        trailing: const Icon(
-          Icons.chevron_right,
-        ),
-        onTap: onTap,
       ),
     );
   }
@@ -292,7 +141,7 @@ final class _ErrorView extends StatelessWidget {
             const SizedBox(height: 16),
             FilledButton(
               onPressed: onRetry,
-              child: const Text('ลองอีกครั้ง'),
+              child: Text(AppLocalizations.of(context).retry),
             ),
           ],
         ),
@@ -306,11 +155,11 @@ final class _EmptyProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Padding(
-        padding: EdgeInsets.all(24),
+        padding: const EdgeInsets.all(24),
         child: Text(
-          'ไม่พบข้อมูลโปรไฟล์',
+          AppLocalizations.of(context).profileNotFound,
           textAlign: TextAlign.center,
         ),
       ),

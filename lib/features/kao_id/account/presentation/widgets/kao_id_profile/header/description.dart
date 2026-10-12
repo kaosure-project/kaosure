@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
 final class ProfileDescription extends StatelessWidget {
   const ProfileDescription({
@@ -8,8 +9,7 @@ final class ProfileDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      'คุณสามารถเปลี่ยนชื่อที่แสดงและรูปโปรไฟล์ของ Kao ID ได้ '
-      'ข้อมูลนี้จะแสดงใน Marketplace และบริการต่าง ๆ ของ Kao Ecosystem',
+      AppLocalizations.of(context).profileDescription,
       style: Theme.of(context).textTheme.bodyMedium,
     );
   }

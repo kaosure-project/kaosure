@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/providers/profile_controller_provider.dart';
@@ -72,12 +73,22 @@ final class _EditProfilePageState
       return;
     }
 
+    final updatedState = ref.read(profileControllerProvider);
+    if (updatedState.errorMessage != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).profileSaveFailed),
+        ),
+      );
+      return;
+    }
+
     _clearPreview();
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+      SnackBar(
         content: Text(
-          'บันทึกข้อมูลโปรไฟล์เรียบร้อยแล้ว',
+          AppLocalizations.of(context).profileSaved,
         ),
       ),
     );
@@ -102,8 +113,8 @@ final class _EditProfilePageState
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'แก้ไขโปรไฟล์',
+          title: Text(
+            AppLocalizations.of(context).editProfile,
           ),
         ),
         body: SafeArea(
@@ -134,8 +145,8 @@ final class _EditProfilePageState
 
                     const SizedBox(height: 8),
 
-                    const Text(
-                      'จะสามารถใช้งานได้หลังจากยืนยันตัวตน',
+                    Text(
+                      AppLocalizations.of(context).kaoIdAvailableAfterVerification,
                     ),
 
                     const SizedBox(height: 32),
@@ -145,14 +156,15 @@ final class _EditProfilePageState
                       textInputAction:
                           TextInputAction.done,
                       decoration:
-                          const InputDecoration(
-                        labelText: 'ชื่อ',
+                          InputDecoration(
+                        labelText: AppLocalizations.of(context).displayName,
                         hintText:
-                            'เช่น เก๋าชัวร์ Official',
+                            AppLocalizations.of(context).displayNameExample,
                         helperText:
-                            'ชื่อและรูปที่แสดงนี้จะใช้ในทุกบริการของ Kao ID และสามารถเปลี่ยนได้ภายหลัง',
+                            AppLocalizations.of(context).profileSharedDescription,
+                        helperMaxLines: 6,
                         border:
-                            OutlineInputBorder(),
+                            const OutlineInputBorder(),
                       ),
                       validator: (value) {
                         final displayName = value
@@ -164,40 +176,15 @@ final class _EditProfilePageState
                             '';
 
                         if (displayName.length < 3) {
-                          return 'ชื่อต้องมีอย่างน้อย 3 ตัวอักษร';
+                          return AppLocalizations.of(context).displayNameMinLength;
                         }
 
                         if (displayName.length > 30) {
-                          return 'ชื่อต้องไม่เกิน 30 ตัวอักษร';
+                          return AppLocalizations.of(context).displayNameMaxLength;
                         }
 
                         return null;
                       },
-                    ),
-
-                    const SizedBox(height: 16),
-
-                    const Row(
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.info_outline,
-                          size: 18,
-                          color: Colors.red,
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            'รูปโปรไฟล์และชื่อจะแสดงในบริการต่าง ๆ ของ Kao ID',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.black87,
-                              height: 1.5,
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
 
                     const SizedBox(height: 32),
@@ -217,8 +204,8 @@ final class _EditProfilePageState
                                   strokeWidth: 2,
                                 ),
                               )
-                            : const Text(
-                                'บันทึก',
+                            : Text(
+                                AppLocalizations.of(context).save,
                               ),
                       ),
                     ),

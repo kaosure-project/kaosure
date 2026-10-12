@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../../core/providers/core_providers.dart';
@@ -24,9 +24,9 @@ final class AvatarSection extends ConsumerWidget {
 
     return Center(
       child: SizedBox(
-        width: 120,
-        height: 180,
+        width: 160,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Stack(
               clipBehavior: Clip.none,
@@ -115,4 +115,3 @@ final class AvatarSection extends ConsumerWidget {
     );
   }
 }
-

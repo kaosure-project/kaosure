@@ -1,7 +1,10 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/providers/profile_controller_provider.dart';
+import '../../../auth/application/kao_id_sso_handoff.dart';
+import '../../../router/kao_id_routes.dart';
 
 final class CompleteProfilePage extends ConsumerStatefulWidget {
   const CompleteProfilePage({
@@ -38,6 +41,7 @@ final class _CompleteProfilePageState
   }
 
   Future<void> _loadProfile() async {
+    if (!mounted) return;
     await ref
         .read(profileControllerProvider.notifier)
         .loadCurrentProfile();
@@ -61,6 +65,7 @@ final class _CompleteProfilePageState
   }
 
   Future<void> _saveProfile() async {
+    if (ref.read(profileControllerProvider).isLoading) return;
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -69,7 +74,7 @@ final class _CompleteProfilePageState
     final profile = state.profile;
 
     if (profile == null) {
-      _showMessage('ไม่พบข้อมูล Profile');
+      _showMessage(AppLocalizations.of(context).profileNotFound);
       return;
     }
 
@@ -93,16 +98,24 @@ final class _CompleteProfilePageState
         ref.read(profileControllerProvider);
 
     if (updatedState.errorMessage != null) {
-      _showMessage(updatedState.errorMessage!);
+      _showMessage(AppLocalizations.of(context).profileSaveFailed);
       return;
     }
 
     _showMessage(
-      'บันทึกข้อมูล Profile สำเร็จ',
+      AppLocalizations.of(context).profileSaved,
     );
 
-    // ขั้นถัดไปเราจะเชื่อม Router ไป KYC
-    // ยังไม่ navigate ตอนนี้จนกว่า flow KYC จะถูกตรวจครบ
+    final returnedToService =
+        await KaoIdSsoHandoff.tryReturnToService();
+    if (!mounted || returnedToService) {
+      return;
+    }
+
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      KaoIdRoutes.dashboard,
+      (_) => false,
+    );
   }
 
   void _showMessage(String message) {
@@ -120,7 +133,7 @@ final class _CompleteProfilePageState
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Complete Profile'),
+        title: Text(AppLocalizations.of(context).completeProfile),
         automaticallyImplyLeading: false,
       ),
       body: SafeArea(
@@ -144,9 +157,9 @@ final class _CompleteProfilePageState
 
                     const SizedBox(height: 24),
 
-                    const Text(
-                      'Complete Your Profile',
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context).completeYourProfile,
+                      style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                       ),
@@ -155,8 +168,8 @@ final class _CompleteProfilePageState
 
                     const SizedBox(height: 12),
 
-                    const Text(
-                      'Set up your basic Kao ID profile.',
+                    Text(
+                      AppLocalizations.of(context).completeProfileDescription,
                       textAlign: TextAlign.center,
                     ),
 
@@ -167,22 +180,22 @@ final class _CompleteProfilePageState
                       textInputAction:
                           TextInputAction.next,
                       decoration:
-                          const InputDecoration(
-                        labelText: 'Display Name',
+                          InputDecoration(
+                        labelText: AppLocalizations.of(context).displayName,
                         hintText:
-                            'Name shown to other users',
-                        border: OutlineInputBorder(),
+                            AppLocalizations.of(context).displayNameHint,
+                        border: const OutlineInputBorder(),
                       ),
                       validator: (value) {
                         final text =
                             value?.trim() ?? '';
 
                         if (text.isEmpty) {
-                          return 'กรุณากรอก Display Name';
+                          return AppLocalizations.of(context).displayNameRequired;
                         }
 
                         if (text.length > 100) {
-                          return 'Display Name ยาวเกินไป';
+                          return AppLocalizations.of(context).displayNameTooLong;
                         }
 
                         return null;
@@ -197,19 +210,19 @@ final class _CompleteProfilePageState
                       textInputAction:
                           TextInputAction.done,
                       decoration:
-                          const InputDecoration(
+                          InputDecoration(
                         labelText:
-                            'Preferred Language',
+                            AppLocalizations.of(context).preferredLanguage,
                         hintText:
-                            'เช่น th หรือ en',
-                        border: OutlineInputBorder(),
+                            AppLocalizations.of(context).languageCodeHint,
+                        border: const OutlineInputBorder(),
                       ),
                       validator: (value) {
                         final text =
                             value?.trim() ?? '';
 
                         if (text.isEmpty) {
-                          return 'กรุณาระบุภาษา';
+                          return AppLocalizations.of(context).languageRequired;
                         }
 
                         return null;
@@ -219,7 +232,7 @@ final class _CompleteProfilePageState
                     if (state.errorMessage != null) ...[
                       const SizedBox(height: 16),
                       Text(
-                        state.errorMessage!,
+                        AppLocalizations.of(context).profileLoadFailed,
                         style: TextStyle(
                           color: Theme.of(context)
                               .colorScheme
@@ -244,8 +257,8 @@ final class _CompleteProfilePageState
                                 strokeWidth: 2,
                               ),
                             )
-                          : const Text(
-                              'Save Profile',
+                          : Text(
+                              AppLocalizations.of(context).saveProfile,
                             ),
                     ),
                   ],

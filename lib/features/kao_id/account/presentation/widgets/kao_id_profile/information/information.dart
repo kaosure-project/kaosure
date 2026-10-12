@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
 import '../../../../domain/entities/profile.dart';
 import 'profile_kao_id.dart';
@@ -8,22 +9,22 @@ final class ProfileInformation extends StatelessWidget {
 
   final Profile profile;
 
-  String get _accountLevel {
+  String _accountLevel(BuildContext context) {
     switch (profile.accountLevel) {
       case 'verified':
-        return 'ยืนยันตัวตนแล้ว';
+        return AppLocalizations.of(context).accountVerified;
 
       case 'business':
-        return 'บัญชีธุรกิจ';
+        return AppLocalizations.of(context).businessAccount;
 
       case 'organization':
-        return 'บัญชีองค์กร';
+        return AppLocalizations.of(context).organizationAccount;
 
       case 'registered':
-        return 'ลงทะเบียนแล้ว';
+        return AppLocalizations.of(context).accountRegistered;
 
       default:
-        return 'บัญชีมาตรฐาน';
+        return AppLocalizations.of(context).accountStandard;
     }
   }
 
@@ -54,7 +55,7 @@ final class ProfileInformation extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          profile.displayName ?? 'Display Name',
+          profile.displayName ?? AppLocalizations.of(context).displayName,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -64,7 +65,7 @@ final class ProfileInformation extends StatelessWidget {
 
         Chip(
           avatar: Icon(Icons.verified, color: _badgeColor, size: 18),
-          label: Text(_accountLevel),
+          label: Text(_accountLevel(context)),
         ),
 
         const ProfileKaoId(),

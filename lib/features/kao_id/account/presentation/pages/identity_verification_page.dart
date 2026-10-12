@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
 class IdentityVerificationScreen extends StatelessWidget {
   const IdentityVerificationScreen({super.key});
@@ -6,8 +7,8 @@ class IdentityVerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Identity Verification')),
-      body: const Center(child: Text('Identity Verification Screen')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).identityVerification)),
+      body: Center(child: Text(AppLocalizations.of(context).serviceUnavailable)),
     );
   }
 }

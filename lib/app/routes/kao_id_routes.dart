@@ -29,4 +29,10 @@ final class KaoIdRoutes {
   static const String changePassword = '/security/password';
 
   static const String settings = '/settings';
+
+  static const String businessRegistration = '/kao-id/business/register';
+  static const String businessInformation = '/kao-id/business/information';
+  static const String businessDocument = '/kao-id/business/document';
+  static const String businessReview = '/kao-id/business/review';
+  static const String businessCompleted = '/kao-id/business/completed';
 }

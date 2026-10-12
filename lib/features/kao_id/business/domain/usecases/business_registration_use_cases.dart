@@ -1,3 +1,4 @@
+import '../entities/business_document_file.dart';
 import '../entities/business_registration.dart';
 import '../repositories/business_registration_repository.dart';
 
@@ -7,6 +8,8 @@ final class BusinessRegistrationUseCases {
   );
 
   final BusinessRegistrationRepository _repository;
+
+  String? currentUserId() => _repository.currentUserId();
 
   Future<BusinessRegistration> createDraft(
     BusinessRegistration registration,
@@ -34,11 +37,11 @@ final class BusinessRegistrationUseCases {
 
   Future<BusinessRegistration> attachDocument({
     required String registrationId,
-    required String documentId,
+    required BusinessDocumentFile file,
   }) {
     return _repository.attachDocument(
       registrationId: registrationId,
-      documentId: documentId,
+      file: file,
     );
   }
 

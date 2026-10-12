@@ -64,6 +64,8 @@ class DashboardHomeContent extends StatelessWidget {
       l10n.securityHubDescription, KaoIdRoutes.security);
     final settingsCard = category(Icons.settings_outlined, l10n.settings,
       l10n.settingsHubDescription, KaoIdRoutes.settings);
+    final businessCard = category(Icons.storefront_outlined, l10n.businessRegTitle,
+      l10n.businessRegHubDescription, KaoIdRoutes.businessRegistration);
 
     return LayoutBuilder(builder: (context, constraints) {
       final wide = constraints.maxWidth >= 840 &&
@@ -83,6 +85,7 @@ class DashboardHomeContent extends StatelessWidget {
               Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Expanded(child: Column(children: [
                   profileCard, const SizedBox(height: 20), identityCard,
+                  const SizedBox(height: 20), businessCard,
                 ])),
                 const SizedBox(width: 20),
                 Expanded(child: Column(children: [
@@ -92,7 +95,8 @@ class DashboardHomeContent extends StatelessWidget {
             else ...[
               profileCard, const SizedBox(height: 16),
               securityCard, const SizedBox(height: 16),
-              identityCard, const SizedBox(height: 16), settingsCard,
+              identityCard, const SizedBox(height: 16),
+              businessCard, const SizedBox(height: 16), settingsCard,
             ],
             const SizedBox(height: 24),
             ListTile(leading: const Icon(Icons.account_balance_wallet_outlined),

@@ -8,10 +8,7 @@ import 'package:kaosure/features/kao_id/account/domain/repositories/profile_repo
 import 'package:kaosure/features/kao_id/auth/application/providers/auth_provider.dart';
 import 'package:kaosure/features/kao_id/auth/application/providers/password_recovery_provider.dart';
 import 'package:kaosure/features/kao_id/auth/presentation/guards/auth_guard.dart';
-import 'package:kaosure/features/kao_id/business/presentation/pages/business_completed_page.dart';
-import 'package:kaosure/features/kao_id/business/presentation/pages/business_document_page.dart';
 import 'package:kaosure/features/kao_id/business/presentation/pages/business_registration_page.dart';
-import 'package:kaosure/features/kao_id/business/presentation/pages/business_review_page.dart';
 import 'package:kaosure/features/kao_id/dashboard/presentation/widgets/settings/sign_out_tile.dart';
 import 'package:kaosure/features/kao_id/kyc/application/providers/kyc_provider.dart';
 import 'package:kaosure/features/kao_id/kyc/domain/entities/verification.dart';
@@ -140,10 +137,15 @@ void main() {
     });
   }
 
-  testWidgets('Business argument fallbacks retain the auth guard', (tester) async {
+  testWidgets('Every business route opens the guarded stepper', (tester) async {
     await tester.pumpWidget(app('en', Builder(builder: (context) {
-      for (final name in [BusinessDocumentPage.routeName,
-        BusinessReviewPage.routeName, BusinessCompletedPage.routeName]) {
+      for (final name in [
+        KaoIdRoutes.businessRegistration,
+        KaoIdRoutes.businessInformation,
+        KaoIdRoutes.businessDocument,
+        KaoIdRoutes.businessReview,
+        KaoIdRoutes.businessCompleted,
+      ]) {
         final route = AppRouter.onGenerateRoute(RouteSettings(name: name))
             as MaterialPageRoute<dynamic>;
         expect(route.settings.name, name);

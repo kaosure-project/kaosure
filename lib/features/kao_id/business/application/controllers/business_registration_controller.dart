@@ -1,239 +1,190 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/entities/business_document_file.dart';
 import '../../domain/entities/business_registration.dart';
+import '../../domain/entities/business_registration_step.dart';
+import '../../domain/entities/payout_bank_account.dart';
+import '../../domain/failures/business_registration_failure.dart';
+import '../../domain/usecases/business_registration_use_cases.dart';
+import '../services/payout_bank_reader.dart';
 import '../states/business_registration_state.dart';
 
-typedef LoadCurrentBusinessRegistration =
-    Future<BusinessRegistration?> Function(String userId);
-
-typedef SaveBusinessRegistration = Future<BusinessRegistration> Function(
-  BusinessRegistration registration,
-);
-
-typedef UpdateBusinessRegistration = Future<BusinessRegistration> Function(
-  BusinessRegistration registration,
-);
-
-typedef AttachBusinessDocument = Future<String?> Function(
-  String registrationId,
-);
-
-typedef SubmitBusinessRegistration = Future<BusinessRegistration> Function(
-  String registrationId,
-);
-
-typedef CancelBusinessRegistration = Future<void> Function(
-  String registrationId,
-);
+typedef _Flag = BusinessRegistrationState Function(BusinessRegistrationState state, bool on);
 
 final class BusinessRegistrationController
     extends StateNotifier<BusinessRegistrationState> {
   BusinessRegistrationController({
-    required this.loadCurrentRegistration,
-    required this.saveDraft,
-    required this._updateDraft,
-    required this.attachDocument,
-    required this.submitRegistration,
-    required this.cancelRegistration,
+    required this._useCases,
+    required this._readPayoutBank,
   }) : super(const BusinessRegistrationState());
 
-  final LoadCurrentBusinessRegistration loadCurrentRegistration;
-  final SaveBusinessRegistration saveDraft;
-  final UpdateBusinessRegistration _updateDraft;
-  final AttachBusinessDocument attachDocument;
-  final SubmitBusinessRegistration submitRegistration;
-  final CancelBusinessRegistration cancelRegistration;
+  final BusinessRegistrationUseCases _useCases;
+  final PayoutBankReader _readPayoutBank;
 
-  void setRegistration(
-    BusinessRegistration registration,
+  Future<void> load() async {
+    state = state.copyWith(isLoading: true, clearFailure: true);
+    try {
+      final current = _withoutWithdrawn(
+        await _useCases.getCurrent(_useCases.currentUserId() ?? ''),
+      );
+      final bank = await _bankOrNull();
+      if (!mounted) return;
+      state = BusinessRegistrationState(
+        registration: current,
+        bank: bank,
+        step: _resumeStep(current, bank),
+        isLoading: false,
+      );
+    } catch (error) {
+      if (mounted) state = state.copyWith(isLoading: false, failure: _code(error));
+    }
+  }
+
+  Future<bool> saveDetails({
+    required String businessType,
+    required String businessName,
+    required String registrationNumber,
+    required String businessCategory,
+    String? businessDescription,
+  }) async {
+    final userId = _useCases.currentUserId();
+    if (userId == null) {
+      state = state.copyWith(failure: BusinessRegistrationFailureCode.session);
+      return false;
+    }
+    final current = state.registration;
+    final description = businessDescription?.trim() ?? '';
+    final draft = BusinessRegistration(
+      id: current?.id,
+      organizationId: current?.organizationId,
+      userId: userId,
+      businessType: businessType,
+      businessName: businessName.trim(),
+      registrationNumber: registrationNumber.trim(),
+      businessCategory: businessCategory,
+      businessDescription: description.isEmpty ? null : description,
+      documentId: current?.documentId,
+      documentStatus: current?.documentStatus ?? BusinessDocumentStatus.pending,
+      createdAt: current?.createdAt,
+    );
+    return _run((s, on) => s.copyWith(isSaving: on), () async {
+      final saved = current?.id == null
+          ? await _useCases.createDraft(draft)
+          : await _useCases.updateDraft(draft);
+      state = state.copyWith(registration: saved, step: BusinessRegistrationStep.document);
+    });
+  }
+
+  Future<bool> uploadDocument(BusinessDocumentFile file) async {
+    final id = state.registration?.id;
+    if (id == null) return false;
+    return _run((s, on) => s.copyWith(isUploading: on), () async {
+      final updated = await _useCases.attachDocument(registrationId: id, file: file);
+      state = state.copyWith(registration: updated, documentName: file.name);
+    });
+  }
+
+  Future<void> refreshBank() async {
+    state = state.copyWith(isCheckingBank: true, clearFailure: true);
+    final bank = await _bankOrNull();
+    if (!mounted) return;
+    state = bank == null
+        ? state.copyWith(isCheckingBank: false, failure: BusinessRegistrationFailureCode.unknown)
+        : state.copyWith(isCheckingBank: false, bank: bank);
+  }
+
+  void goTo(BusinessRegistrationStep step) {
+    if (state.isBusy || !state.canOpen(step)) return;
+    state = state.copyWith(step: step, clearFailure: true);
+  }
+
+  void next() {
+    final steps = BusinessRegistrationStep.values;
+    if (state.step.index == steps.length - 1) return;
+    final target = steps[state.step.index + 1];
+    if (state.canOpen(target)) return goTo(target);
+    state = state.copyWith(failure: switch (state.step) {
+      BusinessRegistrationStep.document => BusinessRegistrationFailureCode.documentRequired,
+      BusinessRegistrationStep.bankAccount => BusinessRegistrationFailureCode.bankRequired,
+      _ => BusinessRegistrationFailureCode.unknown,
+    });
+  }
+
+  void back() {
+    final previous = state.step.previous;
+    if (previous != null) goTo(previous);
+  }
+
+  Future<bool> submit() async {
+    final id = state.registration?.id;
+    if (id == null || !state.canOpen(BusinessRegistrationStep.review)) return false;
+    return _run((s, on) => s.copyWith(isSubmitting: on), () async {
+      final submitted = await _useCases.submit(id);
+      state = state.copyWith(registration: submitted);
+    });
+  }
+
+  Future<bool> cancel() async {
+    final id = state.registration?.id;
+    if (id == null) return false;
+    return _run((s, on) => s.copyWith(isCancelling: on), () async {
+      await _useCases.cancelDraft(id);
+      state = BusinessRegistrationState(isLoading: false, bank: state.bank);
+    });
+  }
+
+  Future<bool> refreshStatus() async {
+    final id = state.registration?.id;
+    if (id == null) return false;
+    return _run((s, on) => s.copyWith(isLoading: on), () async {
+      final refreshed = await _useCases.refreshStatus(id);
+      state = state.copyWith(registration: refreshed);
+    });
+  }
+
+  void startNew() {
+    state = BusinessRegistrationState(isLoading: false, bank: state.bank);
+  }
+
+  void dismissFailure() => state = state.copyWith(clearFailure: true);
+
+  Future<bool> _run(_Flag flag, Future<void> Function() action) async {
+    if (state.isBusy) return false;
+    state = flag(state, true).copyWith(clearFailure: true);
+    try {
+      await action();
+      if (mounted) state = flag(state, false);
+      return true;
+    } catch (error) {
+      if (mounted) state = flag(state, false).copyWith(failure: _code(error));
+      return false;
+    }
+  }
+
+  Future<PayoutBankAccount?> _bankOrNull() async {
+    try {
+      return await _readPayoutBank();
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// A draft the owner cancelled is stored as rejected without ever being submitted.
+  static BusinessRegistration? _withoutWithdrawn(BusinessRegistration? registration) =>
+      registration != null && registration.isRejected && registration.submittedAt == null
+          ? null
+          : registration;
+
+  static BusinessRegistrationStep _resumeStep(
+    BusinessRegistration? registration,
+    PayoutBankAccount? bank,
   ) {
-    state = state.copyWith(
-      registration: registration,
-      clearError: true,
-    );
+    if (registration == null || !registration.isDraft) return BusinessRegistrationStep.details;
+    if (!registration.hasDocument) return BusinessRegistrationStep.document;
+    if (!(bank?.isApproved ?? false)) return BusinessRegistrationStep.bankAccount;
+    return BusinessRegistrationStep.review;
   }
 
-  void clearError() {
-    state = state.copyWith(
-      clearError: true,
-    );
-  }
-
-  Future<BusinessRegistration?> loadCurrent(
-    String userId,
-  ) async {
-    state = state.copyWith(
-      isLoading: true,
-      clearError: true,
-    );
-
-    try {
-      final result = await loadCurrentRegistration(userId);
-
-      state = state.copyWith(
-        registration: result,
-        isLoading: false,
-      );
-
-      return result;
-    } catch (error) {
-      state = state.copyWith(
-        isLoading: false,
-        error: error.toString(),
-      );
-
-      rethrow;
-    }
-  }
-
-  Future<BusinessRegistration> createDraft(
-    BusinessRegistration registration,
-  ) async {
-    state = state.copyWith(
-      isSaving: true,
-      clearError: true,
-    );
-
-    try {
-      final result = await saveDraft(registration);
-
-      state = state.copyWith(
-        registration: result,
-        isSaving: false,
-      );
-
-      return result;
-    } catch (error) {
-      state = state.copyWith(
-        isSaving: false,
-        error: error.toString(),
-      );
-
-      rethrow;
-    }
-  }
-
-  Future<BusinessRegistration> updateDraft(
-    BusinessRegistration registration,
-  ) async {
-    state = state.copyWith(
-      isSaving: true,
-      clearError: true,
-    );
-
-    try {
-      final result = await _updateDraft(registration);
-
-      state = state.copyWith(
-        registration: result,
-        isSaving: false,
-      );
-
-      return result;
-    } catch (error) {
-      state = state.copyWith(
-        isSaving: false,
-        error: error.toString(),
-      );
-
-      rethrow;
-    }
-  }
-
-  Future<String?> uploadDocument(
-    String registrationId,
-  ) async {
-    state = state.copyWith(
-      isUploading: true,
-      clearError: true,
-    );
-
-    try {
-      final documentId = await attachDocument(
-        registrationId,
-      );
-
-      if (documentId != null &&
-          documentId.trim().isNotEmpty) {
-        final current = state.registration;
-
-        if (current != null) {
-          state = state.copyWith(
-            registration: current.copyWith(
-              documentId: documentId,
-            ),
-          );
-        }
-      }
-
-      state = state.copyWith(
-        isUploading: false,
-      );
-
-      return documentId;
-    } catch (error) {
-      state = state.copyWith(
-        isUploading: false,
-        error: error.toString(),
-      );
-
-      rethrow;
-    }
-  }
-
-  Future<BusinessRegistration> submit(
-    String registrationId,
-  ) async {
-    state = state.copyWith(
-      isSubmitting: true,
-      clearError: true,
-    );
-
-    try {
-      final result = await submitRegistration(
-        registrationId,
-      );
-
-      state = state.copyWith(
-        registration: result,
-        isSubmitting: false,
-      );
-
-      return result;
-    } catch (error) {
-      state = state.copyWith(
-        isSubmitting: false,
-        error: error.toString(),
-      );
-
-      rethrow;
-    }
-  }
-
-  Future<void> cancel(
-    String registrationId,
-  ) async {
-    state = state.copyWith(
-      isCancelling: true,
-      clearError: true,
-    );
-
-    try {
-      await cancelRegistration(
-        registrationId,
-      );
-
-      state = state.copyWith(
-        clearRegistration: true,
-        isCancelling: false,
-      );
-    } catch (error) {
-      state = state.copyWith(
-        isCancelling: false,
-        error: error.toString(),
-      );
-
-      rethrow;
-    }
-  }
+  static BusinessRegistrationFailureCode _code(Object error) =>
+      error is BusinessRegistrationFailure ? error.code : BusinessRegistrationFailureCode.unknown;
 }

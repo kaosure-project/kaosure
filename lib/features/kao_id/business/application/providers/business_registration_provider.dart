@@ -1,9 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../core/services/document_picker_service.dart';
+import '../../../kyc/data/repositories/supabase_bank_repository.dart';
 import '../../data/providers/business_registration_repository_provider.dart';
+import '../../domain/entities/business_document_file.dart';
 import '../../domain/usecases/business_registration_use_cases.dart';
 import '../controllers/business_registration_controller.dart';
+import '../services/payout_bank_reader.dart';
 import '../states/business_registration_state.dart';
+
+typedef BusinessDocumentPicker = Future<BusinessDocumentFile?> Function();
 
 final businessRegistrationUseCasesProvider =
     Provider<BusinessRegistrationUseCases>((ref) {
@@ -12,62 +18,27 @@ final businessRegistrationUseCasesProvider =
   );
 });
 
-final businessRegistrationDependenciesProvider =
-    Provider<BusinessRegistrationDependencies>((ref) {
-  final useCases = ref.watch(
-    businessRegistrationUseCasesProvider,
-  );
-
-  return BusinessRegistrationDependencies(
-    loadCurrentRegistration: useCases.getCurrent,
-    saveDraft: useCases.createDraft,
-    updateDraft: useCases.updateDraft,
-    attachDocument: (registrationId) async {
-      // Document upload ยังต้องรับไฟล์จาก UI
-      // ก่อนจึงจะสามารถเรียก attachDocument(registrationId, documentId)
-      // ได้อย่างถูกต้อง
-      return null;
-    },
-    submitRegistration: useCases.submit,
-    cancelRegistration: useCases.cancelDraft,
-  );
+final payoutBankReaderProvider = Provider<PayoutBankReader>((ref) {
+  return kaoIdPayoutBankReader(ref.watch(bankRepositoryProvider));
 });
 
-final businessRegistrationControllerProvider =
-    StateNotifierProvider<
-        BusinessRegistrationController,
-        BusinessRegistrationState>(
-  (ref) {
-    final dependencies = ref.watch(
-      businessRegistrationDependenciesProvider,
+final businessDocumentPickerProvider = Provider<BusinessDocumentPicker>((ref) {
+  return () async {
+    final picked = await const DocumentPickerService()
+        .pickDocument(BusinessDocumentFile.allowedExtensions);
+    if (picked == null) return null;
+    return BusinessDocumentFile(
+      name: picked.name,
+      bytes: picked.bytes,
+      extension: picked.extension,
     );
+  };
+});
 
-    return BusinessRegistrationController(
-      loadCurrentRegistration:
-          dependencies.loadCurrentRegistration,
-      saveDraft: dependencies.saveDraft,
-      updateDraft: dependencies.updateDraft,
-      attachDocument: dependencies.attachDocument,
-      submitRegistration: dependencies.submitRegistration,
-      cancelRegistration: dependencies.cancelRegistration,
-    );
-  },
-);
-
-final class BusinessRegistrationDependencies {
-  const BusinessRegistrationDependencies({
-    required this.loadCurrentRegistration,
-    required this.saveDraft,
-    required this.updateDraft,
-    required this.attachDocument,
-    required this.submitRegistration,
-    required this.cancelRegistration,
-  });
-
-  final LoadCurrentBusinessRegistration loadCurrentRegistration;
-  final SaveBusinessRegistration saveDraft;
-  final UpdateBusinessRegistration updateDraft;
-  final AttachBusinessDocument attachDocument;
-  final SubmitBusinessRegistration submitRegistration;
-  final CancelBusinessRegistration cancelRegistration;
-}
+final businessRegistrationControllerProvider = StateNotifierProvider.autoDispose<
+    BusinessRegistrationController, BusinessRegistrationState>((ref) {
+  return BusinessRegistrationController(
+    useCases: ref.watch(businessRegistrationUseCasesProvider),
+    readPayoutBank: ref.watch(payoutBankReaderProvider),
+  )..load();
+});

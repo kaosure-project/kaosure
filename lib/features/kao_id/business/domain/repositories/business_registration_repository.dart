@@ -1,6 +1,9 @@
+import '../entities/business_document_file.dart';
 import '../entities/business_registration.dart';
 
 abstract interface class BusinessRegistrationRepository {
+  String? currentUserId();
+
   Future<BusinessRegistration> createDraft(
     BusinessRegistration registration,
   );
@@ -17,9 +20,10 @@ abstract interface class BusinessRegistrationRepository {
     BusinessRegistration registration,
   );
 
+  /// Uploads [file] privately and attaches it to the draft registration.
   Future<BusinessRegistration> attachDocument({
     required String registrationId,
-    required String documentId,
+    required BusinessDocumentFile file,
   });
 
   Future<BusinessRegistration> submit(

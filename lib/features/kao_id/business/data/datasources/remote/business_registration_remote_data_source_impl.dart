@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../models/business_registration_model.dart';
@@ -9,7 +11,12 @@ final class BusinessRegistrationRemoteDataSourceImpl
     required this._supabase,
   });
 
+  static const _documentBucket = 'identity-documents';
+
   final SupabaseClient _supabase;
+
+  @override
+  String? currentUserId() => _supabase.auth.currentUser?.id;
 
   @override
   Future<BusinessRegistrationModel> createDraft(
@@ -55,7 +62,8 @@ final class BusinessRegistrationRemoteDataSourceImpl
       'get_current_business_registration',
     );
 
-    if (response == null) {
+    // A composite-returning SQL function yields an all-null row when empty.
+    if (response == null || (response is Map && response['id'] == null)) {
       return null;
     }
 
@@ -91,15 +99,32 @@ final class BusinessRegistrationRemoteDataSourceImpl
   }
 
   @override
+  Future<void> uploadDocumentFile({
+    required String path,
+    required Uint8List bytes,
+    required String contentType,
+  }) async {
+    await _supabase.storage.from(_documentBucket).uploadBinary(
+          path,
+          bytes,
+          fileOptions: FileOptions(contentType: contentType, upsert: false),
+        );
+  }
+
+  @override
   Future<BusinessRegistrationModel> attachDocument({
     required String registrationId,
     required String documentId,
+    required String path,
+    required String fileName,
   }) async {
     final response = await _supabase.rpc(
-      'attach_business_registration_document',
+      'attach_business_document_r15a',
       params: {
         'p_registration_id': registrationId,
         'p_document_id': documentId,
+        'p_path': path,
+        'p_file_name': fileName,
       },
     );
 

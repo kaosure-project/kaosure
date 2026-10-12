@@ -19,6 +19,24 @@ final class PickedDocument {
 final class DocumentPickerService {
   const DocumentPickerService();
 
+  Future<PickedDocument?> pickDocument(List<String> allowedExtensions) async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: allowedExtensions,
+      withData: true,
+    );
+    final file = result?.files.first;
+    if (file == null || file.bytes == null) {
+      return null;
+    }
+    return PickedDocument(
+      name: file.name,
+      bytes: file.bytes!,
+      extension: file.extension ?? '',
+      mimeType: null,
+    );
+  }
+
   Future<PickedDocument?> pickImage() async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,

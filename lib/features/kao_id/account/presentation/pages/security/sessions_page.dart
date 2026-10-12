@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:kaosure/features/kao_id/account/data/repositories/supabase_sessions_repository.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../../../../governance/shared/admin_display.dart';
+import '../../../../governance/presentation/widgets/admin_display.dart';
 import '../../../data/repositories/supabase_account_access_repository.dart';
 
 class SessionsPage extends ConsumerStatefulWidget {

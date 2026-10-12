@@ -1,15 +1,15 @@
-import '../account/presentation/pages/security/security_operations_page.dart';
-import '../account/presentation/pages/security/mfa_page.dart';
-import 'shared/access_refresh.dart';
+import '../../../account/presentation/pages/security/security_operations_page.dart';
+import '../../../account/presentation/pages/security/mfa_page.dart';
+import '../../application/services/access_refresh.dart';
 import 'package:kaosure/features/wallet/partners/partner_page.dart';
-import 'lifecycle/owner_requests_page.dart';
+import 'owner_requests_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../auth/application/providers/auth_provider.dart';
-import '../kyc/review/kyc_review_page.dart';
-import '../kyc/review/kyc_review_repository.dart';
-import 'members/member_repository.dart';
+import '../../../auth/application/providers/auth_provider.dart';
+import '../../../kyc/review/kyc_review_page.dart';
+import '../../../kyc/review/kyc_review_repository.dart';
+import '../../application/providers/member_access_provider.dart';
 
 class AdminHubPage extends ConsumerStatefulWidget {
   const AdminHubPage({super.key});

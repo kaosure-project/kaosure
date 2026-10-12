@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import '../../../../auth/application/providers/auth_provider.dart';
-import '../../../../governance/members/member_repository.dart';
+import '../../../../governance/application/providers/member_access_provider.dart';
 import '../../../../kyc/review/kyc_review_repository.dart';
 import '../../../data/repositories/supabase_mfa_repository.dart';
 

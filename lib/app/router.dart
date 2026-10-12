@@ -1,6 +1,6 @@
-import '../features/kao_id/governance/admin_hub_page.dart';
-import '../features/kao_id/governance/staff/staff_page.dart';
-import '../features/kao_id/governance/members/member_page.dart';
+import '../features/kao_id/governance/presentation/pages/admin_hub_page.dart';
+import '../features/kao_id/governance/presentation/pages/staff_page.dart';
+import '../features/kao_id/governance/presentation/pages/member_page.dart';
 import 'package:flutter/material.dart';
 
 import '../features/kao_id/account/domain/entities/profile.dart';

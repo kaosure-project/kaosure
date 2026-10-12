@@ -1,14 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:kaosure/core/providers/supabase_provider.dart';
+import 'package:kaosure/features/kao_id/governance/domain/repositories/staff_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-abstract interface class StaffRepository {
-  Future<Map<String, dynamic>> load();
-  Future<void> assign(String target, String role);
-  Future<void> revoke(String id);
-}
 final staffRepositoryProvider = Provider<StaffRepository>((ref) =>
   SupabaseStaffRepository(ref.watch(supabaseClientProvider)));
+
 class SupabaseStaffRepository implements StaffRepository {
   SupabaseStaffRepository(this.client);
   final SupabaseClient client;

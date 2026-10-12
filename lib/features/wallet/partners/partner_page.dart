@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import '../../kao_id/account/data/repositories/supabase_account_access_repository.dart';
-import '../../kao_id/governance/shared/admin_display.dart';
+import '../../kao_id/governance/presentation/widgets/admin_display.dart';
 import 'partner_repository.dart';
 
 String partnerLabel(AppLocalizations l,String code) => switch(code) {

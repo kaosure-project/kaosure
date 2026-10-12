@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kaosure/features/kao_id/account/data/repositories/supabase_lifecycle_repository.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import '../../../../auth/application/providers/auth_provider.dart';
-import '../../../../governance/shared/admin_display.dart';
+import '../../../../governance/presentation/widgets/admin_display.dart';
 import 'recovery_evidence_page.dart';
 
 class LifecyclePage extends ConsumerStatefulWidget {

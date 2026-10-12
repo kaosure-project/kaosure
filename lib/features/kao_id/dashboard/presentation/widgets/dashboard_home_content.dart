@@ -1,6 +1,6 @@
 import 'package:kaosure/features/wallet/wallet_page.dart';
 import '../../../notifications/notification_center.dart';
-import '../../../governance/members/member_page.dart';
+import '../../../governance/domain/entities/member_admin_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import '../../../account/domain/entities/profile.dart';

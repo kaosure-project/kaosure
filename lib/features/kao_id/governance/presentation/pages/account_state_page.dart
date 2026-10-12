@@ -1,44 +1,18 @@
 import 'dart:convert';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/features/kao_id/governance/data/repositories/supabase_account_state_repository.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import 'package:kaosure/core/providers/supabase_provider.dart';
-import '../../auth/application/providers/auth_provider.dart';
-import 'member_repository.dart';
+import '../../../auth/application/providers/auth_provider.dart';
+import '../../application/providers/member_access_provider.dart';
 
-abstract interface class AccountStateRepository {
-  Future<List<Map<String, dynamic>>> history(String target);
-  Future<void> change(String target, String expected, String next, String reason);
-}
-final accountStateRepositoryProvider = Provider<AccountStateRepository>((ref) =>
-  _AccountStateRepository(ref.watch(supabaseClientProvider)));
-class _AccountStateRepository implements AccountStateRepository {
-  _AccountStateRepository(this.client);
-  final SupabaseClient client;
-  Future<dynamic> call(String name, Map<String, dynamic> params) async {
-    final id = client.auth.currentUser?.id;
-    if (id == null) { throw StateError('session'); }
-    final result = await client.rpc(name, params: params);
-    if (client.auth.currentUser?.id != id) { throw StateError('session'); }
-    return result;
-  }
-  @override
-  Future<List<Map<String, dynamic>>> history(String target) async =>
-    (await call('account_history_r9f', {'p_target': target}) as List)
-      .map((e) => Map<String, dynamic>.from(e as Map)).toList();
-  @override
-  Future<void> change(String target, String expected, String next, String reason) async {
-    await call('set_account_state_r9f', {'p_target': target, 'p_expected': expected,
-      'p_next': next, 'p_reason': reason});
-  }
-}
 class AccountStatePage extends ConsumerStatefulWidget {
   const AccountStatePage({super.key, required this.target, required this.initialStatus});
   final String target, initialStatus;
   @override
   ConsumerState<AccountStatePage> createState() => _AccountStatePageState();
 }
+
 class _AccountStatePageState extends ConsumerState<AccountStatePage> {
   final _reason = TextEditingController();
   late String _status;

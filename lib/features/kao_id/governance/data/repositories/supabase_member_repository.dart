@@ -1,19 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:kaosure/core/providers/supabase_provider.dart';
-import '../../auth/application/providers/auth_provider.dart';
+import 'package:kaosure/features/kao_id/governance/domain/repositories/member_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-abstract interface class MemberRepository {
-  Future<bool> canRead();
-  Future<Map<String, dynamic>?> find(String query);
-}
 final memberRepositoryProvider = Provider<MemberRepository>((ref) =>
   SupabaseMemberRepository(ref.watch(supabaseClientProvider)));
-final memberAccessProvider = FutureProvider.autoDispose<bool>((ref) {
-  final owner = ref.watch(authProvider.select((a) => a.asData?.value?.id));
-  if (owner == null) { return false; }
-  return ref.watch(memberRepositoryProvider).canRead();
-});
+
 class SupabaseMemberRepository implements MemberRepository {
   SupabaseMemberRepository(this.client);
   final SupabaseClient client;

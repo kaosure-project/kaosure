@@ -5,7 +5,7 @@ import 'package:kaosure/features/kao_id/account/data/repositories/supabase_accou
 import 'package:kaosure/l10n/app_localizations.dart';
 import '../../../auth/application/providers/auth_provider.dart';
 import '../../../auth/presentation/pages/reset_password_page.dart';
-import '../../../governance/members/member_repository.dart';
+import '../../../governance/application/providers/member_access_provider.dart';
 import '../../../kyc/review/kyc_review_repository.dart';
 import '../pages/lifecycle/lifecycle_page.dart';
 

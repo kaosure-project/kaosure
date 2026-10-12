@@ -1,5 +1,5 @@
 import '../../account/presentation/pages/security/mfa_page.dart';
-import '../../governance/shared/access_refresh.dart';
+import '../../governance/application/services/access_refresh.dart';
 import '../../account/application/providers/recovery_providers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

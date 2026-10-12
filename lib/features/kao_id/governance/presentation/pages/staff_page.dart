@@ -1,13 +1,13 @@
-import '../shared/access_refresh.dart';
-import '../shared/admin_display.dart';
+import '../../application/services/access_refresh.dart';
+import '../widgets/admin_display.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../../auth/application/providers/auth_provider.dart';
-import '../members/member_repository.dart';
-import 'staff_repository.dart';
+import '../../../auth/application/providers/auth_provider.dart';
+import '../../data/repositories/supabase_member_repository.dart';
+import '../../data/repositories/supabase_staff_repository.dart';
 
 String staffRoleLabel(AppLocalizations l, String code) => switch (code) {
   'admin' => l.staffAdmin, 'super_admin' => l.staffSuperAdmin,

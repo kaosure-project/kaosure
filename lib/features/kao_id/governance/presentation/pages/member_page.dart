@@ -1,33 +1,22 @@
-import '../shared/access_refresh.dart';
-import 'package:kaosure/features/wallet/linked_wallets_page.dart';
-import '../../kyc/maintenance/document_health_page.dart';
-import '../shared/admin_display.dart';
-import 'account_state_page.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/features/wallet/linked_wallets_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
-import '../../auth/application/providers/auth_provider.dart';
-import '../../kyc/presentation/widgets/kyc_status_label.dart';
-import 'member_repository.dart';
+import '../../../auth/application/providers/auth_provider.dart';
+import '../../../kyc/maintenance/document_health_page.dart';
+import '../../../kyc/presentation/widgets/kyc_status_label.dart';
+import '../../application/providers/member_access_provider.dart';
+import '../../application/services/access_refresh.dart';
+import '../../data/repositories/supabase_member_repository.dart';
+import '../widgets/admin_display.dart';
+import 'account_state_page.dart';
 
-class MemberAdminEntry extends ConsumerWidget {
-  const MemberAdminEntry({super.key});
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final allowed = ref.watch(memberAccessProvider).asData?.value == true;
-    if (!allowed) { return const SizedBox.shrink(); }
-    final l = AppLocalizations.of(context);
-    return Card(child: ListTile(leading: const Icon(Icons.admin_panel_settings_outlined),
-      title: Text(l.adminHubTitle), subtitle: Text(l.adminHubScope),
-      trailing: const Icon(Icons.chevron_right),
-      onTap: () => Navigator.of(context).pushNamed('/admin')));
-  }
-}
 class MemberPage extends ConsumerStatefulWidget {
   const MemberPage({super.key});
   @override
   ConsumerState<MemberPage> createState() => _MemberPageState();
 }
+
 class _MemberPageState extends ConsumerState<MemberPage> with WidgetsBindingObserver, AccessRefresh<MemberPage> {
   @override
   void refreshAccess() {

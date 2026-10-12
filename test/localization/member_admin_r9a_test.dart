@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kaosure/features/kao_id/auth/application/providers/auth_provider.dart';
-import 'package:kaosure/features/kao_id/governance/members/member_page.dart';
-import 'package:kaosure/features/kao_id/governance/members/member_repository.dart';
+import 'package:kaosure/features/kao_id/governance/presentation/pages/member_page.dart';
+import 'package:kaosure/features/kao_id/governance/domain/repositories/member_repository.dart';
+import 'package:kaosure/features/kao_id/governance/data/repositories/supabase_member_repository.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'auth_localization_r2_test.dart' show TestAuthNotifier;
 

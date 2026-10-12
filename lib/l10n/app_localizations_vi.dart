@@ -1633,6 +1633,38 @@ class AppLocalizationsVi extends AppLocalizations {
       'Kiểm tra thông tin tài khoản và đính kèm bằng chứng trước khi gửi.';
 
   @override
+  String get bankErrorSignIn =>
+      'Phiên đăng nhập đã hết hạn. Hãy đăng nhập lại rồi gửi.';
+
+  @override
+  String get bankErrorInactive =>
+      'Tài khoản Kao ID này đang bị tạm ngưng hoặc đã đóng nên không thể gửi tài khoản ngân hàng.';
+
+  @override
+  String get bankErrorInvalid =>
+      'Thông tin tài khoản bị từ chối: tên ngân hàng 2–100 ký tự, tên chủ tài khoản tối đa 200 ký tự, số tài khoản gồm 6–20 chữ số.';
+
+  @override
+  String get bankErrorEvidenceMissing =>
+      'Không tìm thấy bằng chứng đã tải lên hoặc tệp không phải ảnh hợp lệ. Hãy chọn lại ảnh rồi gửi.';
+
+  @override
+  String get bankErrorUploadDenied =>
+      'Tài khoản này hiện không được phép tải bằng chứng lên. Hãy đăng nhập lại hoặc liên hệ hỗ trợ.';
+
+  @override
+  String get bankErrorUploadNetwork =>
+      'Tải bằng chứng lên chưa hoàn tất. Kiểm tra kết nối Internet rồi gửi lại.';
+
+  @override
+  String get bankErrorConflict =>
+      'Lần gửi này xung đột với yêu cầu đã lưu. Nhấn Kiểm tra lại để xem danh sách mới nhất rồi gửi lại.';
+
+  @override
+  String get bankErrorUnavailable =>
+      'Kho lưu trữ tài liệu chưa sẵn sàng. Hãy liên hệ quản trị viên.';
+
+  @override
   String get bankEvidence => 'Bằng chứng tài khoản ngân hàng';
 
   @override

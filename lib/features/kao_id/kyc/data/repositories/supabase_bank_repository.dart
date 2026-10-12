@@ -36,10 +36,14 @@ class SupabaseBankRepository implements BankRepository {
     try {
       await client.storage.from(bucket).uploadBinary(path, draft.evidence.bytes,
         fileOptions: const FileOptions(contentType: 'image/jpeg', upsert: false));
-    } catch (_) {
+    } catch (uploadError) {
+      // A retry after a lost response finds its own earlier upload already in place.
       await _check(draft.owner);
-      final saved = await client.storage.from(bucket).download(path);
-      if (!listEquals(saved, draft.evidence.bytes)) { throw const NationalIdFailure('save'); }
+      Uint8List? saved;
+      try { saved = await client.storage.from(bucket).download(path); } catch (_) {}
+      if (saved == null || !listEquals(saved, draft.evidence.bytes)) {
+        throw NationalIdFailure(uploadFailureCode(uploadError));
+      }
     }
     await _check(draft.owner);
     try {
@@ -49,13 +53,42 @@ class SupabaseBankRepository implements BankRepository {
         'p_type': draft.type, 'p_evidence': path,
       });
     } on PostgrestException catch (e) {
-      if (e.message == 'bank_review_active') { throw const NationalIdFailure('pending'); }
-      if (e.message == 'bank_duplicate') { throw const NationalIdFailure('duplicate'); }
-      rethrow;
+      throw NationalIdFailure(submitFailureCode(e.message));
     }
     final rows = await list(draft.owner);
     return rows.firstWhere((row) => row.id == draft.id);
   }
+
+  /// Maps a failed evidence upload to the reason shown on the bank page.
+  static String uploadFailureCode(Object error) {
+    if (error is StorageException) {
+      final status = error.statusCode ?? '';
+      final message = error.message.toLowerCase();
+      if (status == '413' || status == '415' || message.contains('size') || message.contains('mime')) {
+        return 'file';
+      }
+      if (status == '401' || status == '403' || message.contains('row-level security') ||
+          message.contains('unauthorized') || message.contains('jwt')) {
+        return 'upload_denied';
+      }
+      if (status.startsWith('5')) { return 'upload_network'; }
+      return 'upload_denied';
+    }
+    return 'upload_network';
+  }
+
+  /// Maps `submit_bank_r8c` exceptions; anything unrecognised stays a retryable `save`.
+  static String submitFailureCode(String message) => switch (message) {
+    'bank_review_active' => 'pending',
+    'bank_duplicate' => 'duplicate',
+    'invalid_bank' => 'invalid',
+    'invalid_document_paths' || 'invalid_uploaded_file' => 'evidence_missing',
+    'authentication_required' => 'sign_in',
+    'inactive_account' => 'inactive',
+    'bank_conflict' => 'conflict',
+    'private_storage_required' => 'unavailable',
+    _ => 'save',
+  };
   @override
   Future<Uint8List> preview(String owner, String path) async {
     await _check(owner);

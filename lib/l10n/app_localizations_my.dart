@@ -1636,6 +1636,38 @@ class AppLocalizationsMy extends AppLocalizations {
       'မပို့မီ အကောင့်အချက်အလက်စစ်ပြီး အထောက်အထား ပူးတွဲပါ။';
 
   @override
+  String get bankErrorSignIn =>
+      'ဆက်ရှင် သက်တမ်းကုန်သွားပါပြီ။ ပြန်လည်ဝင်ရောက်ပြီးမှ ပို့ပါ။';
+
+  @override
+  String get bankErrorInactive =>
+      'ဤ Kao ID အကောင့်ကို ဆိုင်းငံ့ထား သို့မဟုတ် ပိတ်ထားသောကြောင့် ဘဏ်အကောင့် မပို့နိုင်ပါ။';
+
+  @override
+  String get bankErrorInvalid =>
+      'အကောင့်အချက်အလက်ကို လက်မခံပါ- ဘဏ်အမည် စာလုံး ၂–၁၀၀၊ ပိုင်ရှင်အမည် စာလုံး ၂၀၀ အထိ၊ အကောင့်နံပါတ် ဂဏန်း ၆–၂၀ လုံး ဖြစ်ရမည်။';
+
+  @override
+  String get bankErrorEvidenceMissing =>
+      'တင်ထားသော အထောက်အထားကို မတွေ့ပါ သို့မဟုတ် မှန်ကန်သောပုံ မဟုတ်ပါ။ ပုံကို ပြန်ရွေးပြီး ပို့ပါ။';
+
+  @override
+  String get bankErrorUploadDenied =>
+      'ဤအကောင့်သည် ယခု အထောက်အထား တင်ခွင့်မရှိပါ။ ပြန်လည်ဝင်ရောက်ပါ သို့မဟုတ် အကူအညီဌာနကို ဆက်သွယ်ပါ။';
+
+  @override
+  String get bankErrorUploadNetwork =>
+      'အထောက်အထား တင်ခြင်း မပြီးဆုံးပါ။ အင်တာနက်ချိတ်ဆက်မှုကို စစ်ပြီး ထပ်ပို့ပါ။';
+
+  @override
+  String get bankErrorConflict =>
+      'ဤတင်ပြမှုသည် သိမ်းထားပြီးသော တောင်းဆိုမှုနှင့် ကွဲလွဲနေသည်။ နောက်ဆုံးစာရင်းကြည့်ရန် ထပ်စစ်ရန်ကို နှိပ်ပြီး ပြန်ပို့ပါ။';
+
+  @override
+  String get bankErrorUnavailable =>
+      'စာရွက်စာတမ်း သိုလှောင်မှု မရရှိနိုင်ပါ။ စီမံခန့်ခွဲသူကို ဆက်သွယ်ပါ။';
+
+  @override
   String get bankEvidence => 'ဘဏ်အကောင့် အထောက်အထား';
 
   @override

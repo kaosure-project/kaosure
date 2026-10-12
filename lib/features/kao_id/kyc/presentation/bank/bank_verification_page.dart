@@ -73,8 +73,19 @@ final class _BankVerificationPageState extends ConsumerState<BankVerificationPag
     'pending' => l.bankPendingHelp,
     'duplicate' => l.bankDuplicate,
     'form' => l.bankCompleteForm,
+    'invalid' => l.bankErrorInvalid,
+    'evidence_missing' => l.bankErrorEvidenceMissing,
+    'upload_denied' => l.bankErrorUploadDenied,
+    'upload_network' => l.bankErrorUploadNetwork,
+    'sign_in' => l.bankErrorSignIn,
+    'inactive' => l.bankErrorInactive,
+    'conflict' => l.bankErrorConflict,
+    'unavailable' => l.bankErrorUnavailable,
     _ => l.idSaveFailed,
   };
+  /// Failures where resending the same draft cannot succeed, so the form is reopened.
+  static const _needsNewAttempt = {'file', 'invalid', 'evidence_missing', 'conflict', 'duplicate'};
+  static const _needsNewEvidence = {'file', 'evidence_missing'};
   Future<void> _pick() async {
     setState(() { _busy = true; _error = null; });
     try {
@@ -88,8 +99,9 @@ final class _BankVerificationPageState extends ConsumerState<BankVerificationPag
   Future<void> _save() async {
     if (_busy || !_known || _owner == null || _sessionChanged || _pending) { return; }
     if (_attempt == null) {
-      setState(() => _validate = true);
-      if (!_form.currentState!.validate() || _evidence == null) { _fail('form'); return; }
+      setState(() { _validate = true; _error = null; });
+      if (!_form.currentState!.validate()) { _fail('form'); return; }
+      if (_evidence == null) { return; }
       _attempt = BankDraft(id: const Uuid().v4(), owner: _owner!, bank: _bank.text.trim(),
         name: _name.text.trim(), number: _number.text.trim(), branch: _branch.text.trim(),
         type: _type, evidence: _evidence!);
@@ -101,7 +113,16 @@ final class _BankVerificationPageState extends ConsumerState<BankVerificationPag
       if (!mounted) { return; }
       if (!_sameUser(_owner!)) { _fail('session'); return; }
       setState(() { _records = [record, ..._records.where((r) => r.id != record.id)]; _clearForm(); });
-    } catch (e) { _fail(e is NationalIdFailure ? e.code : 'save'); }
+    } catch (e) {
+      final code = e is NationalIdFailure ? e.code : 'save';
+      if (mounted && _needsNewAttempt.contains(code)) {
+        setState(() {
+          _attempt = null;
+          if (_needsNewEvidence.contains(code)) { _evidence = null; }
+        });
+      }
+      _fail(code);
+    }
     finally { if (mounted) { setState(() => _busy = false); } }
   }
   Future<void> _preview(String path) async {

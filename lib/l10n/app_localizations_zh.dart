@@ -1515,6 +1515,31 @@ class AppLocalizationsZh extends AppLocalizations {
   String get bankCompleteForm => '提交前请检查账户信息并附上证明材料。';
 
   @override
+  String get bankErrorSignIn => '会话已过期。请重新登录后再提交。';
+
+  @override
+  String get bankErrorInactive => '此 Kao ID 账户已被暂停或关闭，无法提交银行账户。';
+
+  @override
+  String get bankErrorInvalid =>
+      '银行账户信息未被接受：银行名称 2–100 个字符，账户持有人姓名不超过 200 个字符，账号为 6–20 位数字。';
+
+  @override
+  String get bankErrorEvidenceMissing => '找不到已上传的证明材料，或文件不是有效图片。请重新选择图片后提交。';
+
+  @override
+  String get bankErrorUploadDenied => '此账户目前无权上传证明材料。请重新登录或联系客服。';
+
+  @override
+  String get bankErrorUploadNetwork => '证明材料上传未完成。请检查网络连接后重新提交。';
+
+  @override
+  String get bankErrorConflict => '此提交与已保存的申请冲突。请点击“再次检查”查看最新列表后重新提交。';
+
+  @override
+  String get bankErrorUnavailable => '文件存储暂不可用。请联系管理员。';
+
+  @override
   String get bankEvidence => '银行账户证明材料';
 
   @override
@@ -4716,6 +4741,31 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get bankCompleteForm => '提交前请检查账户信息并附上证明材料。';
+
+  @override
+  String get bankErrorSignIn => '会话已过期。请重新登录后再提交。';
+
+  @override
+  String get bankErrorInactive => '此 Kao ID 账户已被暂停或关闭，无法提交银行账户。';
+
+  @override
+  String get bankErrorInvalid =>
+      '银行账户信息未被接受：银行名称 2–100 个字符，账户持有人姓名不超过 200 个字符，账号为 6–20 位数字。';
+
+  @override
+  String get bankErrorEvidenceMissing => '找不到已上传的证明材料，或文件不是有效图片。请重新选择图片后提交。';
+
+  @override
+  String get bankErrorUploadDenied => '此账户目前无权上传证明材料。请重新登录或联系客服。';
+
+  @override
+  String get bankErrorUploadNetwork => '证明材料上传未完成。请检查网络连接后重新提交。';
+
+  @override
+  String get bankErrorConflict => '此提交与已保存的申请冲突。请点击“再次检查”查看最新列表后重新提交。';
+
+  @override
+  String get bankErrorUnavailable => '文件存储暂不可用。请联系管理员。';
 
   @override
   String get bankEvidence => '银行账户证明材料';

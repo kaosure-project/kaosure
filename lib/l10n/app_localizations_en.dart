@@ -1654,6 +1654,38 @@ class AppLocalizationsEn extends AppLocalizations {
       'Check the account details and attach evidence before submitting.';
 
   @override
+  String get bankErrorSignIn =>
+      'Your session has expired. Sign in again, then submit.';
+
+  @override
+  String get bankErrorInactive =>
+      'This Kao ID account is suspended or closed, so a bank account cannot be submitted.';
+
+  @override
+  String get bankErrorInvalid =>
+      'The bank details were rejected: bank name 2–100 characters, holder name up to 200 characters, account number 6–20 digits.';
+
+  @override
+  String get bankErrorEvidenceMissing =>
+      'The uploaded evidence could not be found or is not a valid image. Choose the picture again and submit.';
+
+  @override
+  String get bankErrorUploadDenied =>
+      'This account is not allowed to upload evidence right now. Sign in again or contact support.';
+
+  @override
+  String get bankErrorUploadNetwork =>
+      'The evidence upload did not finish. Check your internet connection and submit again.';
+
+  @override
+  String get bankErrorConflict =>
+      'This submission conflicts with one already saved. Tap Check again to see the latest list, then submit again.';
+
+  @override
+  String get bankErrorUnavailable =>
+      'Document storage is not available. Contact the administrator.';
+
+  @override
   String get bankEvidence => 'Bank account evidence';
 
   @override

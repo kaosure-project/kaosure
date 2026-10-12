@@ -1539,6 +1539,36 @@ class AppLocalizationsJa extends AppLocalizations {
   String get bankCompleteForm => '口座情報を確認し、証明資料を添付してから提出してください。';
 
   @override
+  String get bankErrorSignIn => 'セッションの有効期限が切れました。再度サインインしてから提出してください。';
+
+  @override
+  String get bankErrorInactive =>
+      'この Kao ID アカウントは停止または閉鎖されているため、銀行口座を提出できません。';
+
+  @override
+  String get bankErrorInvalid =>
+      '口座情報が受け付けられませんでした：銀行名は2〜100文字、口座名義は200文字以内、口座番号は6〜20桁の数字です。';
+
+  @override
+  String get bankErrorEvidenceMissing =>
+      'アップロードした証明資料が見つからないか、有効な画像ではありません。画像を選び直して提出してください。';
+
+  @override
+  String get bankErrorUploadDenied =>
+      'このアカウントは現在、証明資料をアップロードできません。再度サインインするか、サポートにお問い合わせください。';
+
+  @override
+  String get bankErrorUploadNetwork =>
+      '証明資料のアップロードが完了しませんでした。インターネット接続を確認して再度提出してください。';
+
+  @override
+  String get bankErrorConflict =>
+      'この提出内容は保存済みの申請と矛盾しています。「再確認」で最新の一覧を確認してから再提出してください。';
+
+  @override
+  String get bankErrorUnavailable => '書類の保存領域が利用できません。管理者にお問い合わせください。';
+
+  @override
   String get bankEvidence => '銀行口座の証明資料';
 
   @override

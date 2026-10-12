@@ -1635,6 +1635,38 @@ class AppLocalizationsTh extends AppLocalizations {
       'กรุณาตรวจข้อมูลบัญชีและแนบหลักฐานให้ครบก่อนส่ง';
 
   @override
+  String get bankErrorSignIn =>
+      'เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่แล้วส่งอีกครั้ง';
+
+  @override
+  String get bankErrorInactive =>
+      'บัญชี Kao ID นี้ถูกระงับหรือปิดอยู่ จึงส่งบัญชีธนาคารไม่ได้';
+
+  @override
+  String get bankErrorInvalid =>
+      'ระบบไม่รับข้อมูลบัญชี: ชื่อธนาคาร 2–100 ตัวอักษร ชื่อบัญชีไม่เกิน 200 ตัวอักษร และเลขบัญชีเป็นตัวเลข 6–20 หลัก';
+
+  @override
+  String get bankErrorEvidenceMissing =>
+      'ระบบไม่พบรูปหลักฐานที่อัปโหลด หรือไฟล์ไม่ใช่รูปที่ถูกต้อง กรุณาเลือกรูปใหม่แล้วส่งอีกครั้ง';
+
+  @override
+  String get bankErrorUploadDenied =>
+      'บัญชีนี้ยังไม่มีสิทธิ์อัปโหลดหลักฐานในตอนนี้ กรุณาเข้าสู่ระบบใหม่หรือติดต่อผู้ดูแล';
+
+  @override
+  String get bankErrorUploadNetwork =>
+      'อัปโหลดรูปหลักฐานไม่สำเร็จ ตรวจการเชื่อมต่ออินเทอร์เน็ตแล้วกดส่งอีกครั้ง';
+
+  @override
+  String get bankErrorConflict =>
+      'รายการนี้ขัดกับคำขอที่บันทึกไว้แล้ว กดตรวจสอบอีกครั้งเพื่อดูรายการล่าสุด แล้วส่งใหม่';
+
+  @override
+  String get bankErrorUnavailable =>
+      'ระบบจัดเก็บเอกสารยังไม่พร้อม กรุณาติดต่อผู้ดูแลระบบ';
+
+  @override
   String get bankEvidence => 'หลักฐานบัญชีธนาคาร';
 
   @override

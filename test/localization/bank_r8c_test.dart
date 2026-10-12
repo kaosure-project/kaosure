@@ -12,6 +12,7 @@ import 'package:kaosure/features/kao_id/kyc/domain/entities/id_image.dart';
 import 'package:kaosure/features/kao_id/kyc/application/providers/id_image_picker_provider.dart';
 import 'package:kaosure/features/kao_id/kyc/presentation/bank/bank_verification_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show StorageException;
 import 'auth_localization_r2_test.dart' show TestAuthNotifier;
 import 'national_id_r7a_test.dart' show imageBytes;
 import 'residence_r8b_test.dart' show tap, enter;
@@ -23,6 +24,7 @@ class BankAuthFixture extends TestAuthNotifier {
 class BankFixture implements BankRepository {
   List<BankRecord> records = [];
   bool failLoad = false, loseResponse = false;
+  String? failWith;
   int previews = 0;
   final submitted = <BankDraft>[];
   @override
@@ -35,6 +37,8 @@ class BankFixture implements BankRepository {
   @override
   Future<BankRecord> submit(BankDraft draft) async {
     submitted.add(draft);
+    final failure = failWith;
+    if (failure != null) { failWith = null; throw NationalIdFailure(failure); }
     final record = BankRecord({'id': draft.id, 'status': 'pending',
       'bank_name': draft.bank, 'account_name': draft.name,
       'account_number': '•••• ${draft.number.substring(draft.number.length - 4)}',
@@ -77,7 +81,8 @@ void main() {
       await tap(tester, 'bank-submit');
       expect(repo.submitted, isEmpty);
       final l = AppLocalizations.of(tester.element(find.byType(BankVerificationPage)));
-      expect(find.text(l.bankCompleteForm), findsOneWidget);
+      expect(find.text(l.bankEvidenceRequired), findsOneWidget);
+      expect(find.text(l.bankCompleteForm), findsNothing);
       await tap(tester, 'bank-pick', delta: -180);
       await tap(tester, 'bank-submit');
       expect(repo.submitted.length, 1);
@@ -120,6 +125,40 @@ void main() {
       expect(find.byType(Image), findsNothing);
       expect(find.text('•••• 5678'), findsNothing);
     });
+    testWidgets('Rejected evidence names the cause and reopens the form: $language', (tester) async {
+      final repo = BankFixture()..failWith = 'evidence_missing';
+      await tester.pumpWidget(bankApp(repo, language));
+      await tester.pumpAndSettle();
+      await fillBank(tester);
+      await tap(tester, 'bank-pick', delta: -180);
+      await tap(tester, 'bank-submit');
+      final l = AppLocalizations.of(tester.element(find.byType(BankVerificationPage)));
+      expect(find.text(l.bankErrorEvidenceMissing), findsOneWidget);
+      expect(find.text(l.idSaveFailed), findsNothing);
+      expect(find.text(l.bankEvidenceRequired, skipOffstage: false), findsOneWidget);
+
+      await tester.scrollUntilVisible(find.byKey(const ValueKey('bank-number')), -180,
+        scrollable: find.byType(Scrollable).first);
+      await enter(tester, 'bank-number', '0099887766');
+      await tap(tester, 'bank-pick', delta: -180);
+      await tap(tester, 'bank-submit');
+      expect(repo.submitted.length, 2);
+      expect(repo.submitted.last.id, isNot(repo.submitted.first.id));
+      expect(repo.submitted.last.number, '0099887766');
+    });
+    testWidgets('Interrupted upload names the cause and retries the same draft: $language', (tester) async {
+      final repo = BankFixture()..failWith = 'upload_network';
+      await tester.pumpWidget(bankApp(repo, language));
+      await tester.pumpAndSettle();
+      await fillBank(tester);
+      await tap(tester, 'bank-pick', delta: -180);
+      await tap(tester, 'bank-submit');
+      final l = AppLocalizations.of(tester.element(find.byType(BankVerificationPage)));
+      expect(find.text(l.bankErrorUploadNetwork), findsOneWidget);
+      await tap(tester, 'bank-submit');
+      expect(repo.submitted.length, 2);
+      expect(repo.submitted.last.id, repo.submitted.first.id);
+    });
     testWidgets('Invalid bank number cannot submit: $language', (tester) async {
       final repo = BankFixture();
       await tester.pumpWidget(bankApp(repo, language));
@@ -148,6 +187,23 @@ void main() {
       }
     });
   }
+  test('Bank submission failures map to a specific cause', () {
+    const codes = {
+      'bank_review_active': 'pending', 'bank_duplicate': 'duplicate', 'invalid_bank': 'invalid',
+      'invalid_document_paths': 'evidence_missing', 'invalid_uploaded_file': 'evidence_missing',
+      'authentication_required': 'sign_in', 'inactive_account': 'inactive', 'bank_conflict': 'conflict',
+      'private_storage_required': 'unavailable', 'something_else': 'save',
+    };
+    codes.forEach((message, code) => expect(SupabaseBankRepository.submitFailureCode(message), code, reason: message));
+
+    String upload(Object error) => SupabaseBankRepository.uploadFailureCode(error);
+    expect(upload(const StorageException('Payload too large', statusCode: '413')), 'file');
+    expect(upload(const StorageException('mime type image/gif is not supported', statusCode: '400')), 'file');
+    expect(upload(const StorageException('new row violates row-level security policy', statusCode: '403')),
+      'upload_denied');
+    expect(upload(const StorageException('Internal Server Error', statusCode: '500')), 'upload_network');
+    expect(upload(Exception('XMLHttpRequest error')), 'upload_network');
+  });
   test('Bank model preserves rejected, expired and unknown status', () {
     for (final status in ['rejected', 'expired', 'unknown', 'pending']) {
       final model = BankVerificationModel.fromJson({'id': 'id', 'profile_id': 'owner',

@@ -1591,6 +1591,38 @@ class AppLocalizationsLo extends AppLocalizations {
   String get bankCompleteForm => 'ກວດຂໍ້ມູນບັນຊີ ແລະ ແນບຫຼັກຖານກ່ອນສົ່ງ.';
 
   @override
+  String get bankErrorSignIn =>
+      'ເຊດຊັນໝົດອາຍຸ. ກະລຸນາເຂົ້າສູ່ລະບົບໃໝ່ແລ້ວສົ່ງອີກຄັ້ງ.';
+
+  @override
+  String get bankErrorInactive =>
+      'ບັນຊີ Kao ID ນີ້ຖືກລະງັບ ຫຼື ປິດຢູ່ ຈຶ່ງສົ່ງບັນຊີທະນາຄານບໍ່ໄດ້.';
+
+  @override
+  String get bankErrorInvalid =>
+      'ລະບົບບໍ່ຮັບຂໍ້ມູນບັນຊີ: ຊື່ທະນາຄານ 2–100 ຕົວອັກສອນ, ຊື່ເຈົ້າຂອງບັນຊີບໍ່ເກີນ 200 ຕົວອັກສອນ, ເລກບັນຊີເປັນຕົວເລກ 6–20 ຫຼັກ.';
+
+  @override
+  String get bankErrorEvidenceMissing =>
+      'ບໍ່ພົບຮູບຫຼັກຖານທີ່ອັບໂຫຼດ ຫຼື ໄຟລ໌ບໍ່ແມ່ນຮູບທີ່ຖືກຕ້ອງ. ກະລຸນາເລືອກຮູບໃໝ່ແລ້ວສົ່ງອີກຄັ້ງ.';
+
+  @override
+  String get bankErrorUploadDenied =>
+      'ບັນຊີນີ້ຍັງບໍ່ມີສິດອັບໂຫຼດຫຼັກຖານໃນຕອນນີ້. ກະລຸນາເຂົ້າສູ່ລະບົບໃໝ່ ຫຼື ຕິດຕໍ່ຝ່າຍຊ່ວຍເຫຼືອ.';
+
+  @override
+  String get bankErrorUploadNetwork =>
+      'ອັບໂຫຼດຮູບຫຼັກຖານບໍ່ສຳເລັດ. ກວດການເຊື່ອມຕໍ່ອິນເຕີເນັດແລ້ວສົ່ງອີກຄັ້ງ.';
+
+  @override
+  String get bankErrorConflict =>
+      'ລາຍການນີ້ຂັດກັບຄຳຂໍທີ່ບັນທຶກໄວ້ແລ້ວ. ກົດກວດສອບອີກຄັ້ງເພື່ອເບິ່ງລາຍການລ່າສຸດ ແລ້ວສົ່ງໃໝ່.';
+
+  @override
+  String get bankErrorUnavailable =>
+      'ລະບົບເກັບເອກະສານຍັງບໍ່ພ້ອມ. ກະລຸນາຕິດຕໍ່ຜູ້ດູແລລະບົບ.';
+
+  @override
   String get bankEvidence => 'ຫຼັກຖານບັນຊີທະນາຄານ';
 
   @override

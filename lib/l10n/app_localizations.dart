@@ -3097,6 +3097,54 @@ abstract class AppLocalizations {
   /// **'Check the account details and attach evidence before submitting.'**
   String get bankCompleteForm;
 
+  /// No description provided for @bankErrorSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Your session has expired. Sign in again, then submit.'**
+  String get bankErrorSignIn;
+
+  /// No description provided for @bankErrorInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'This Kao ID account is suspended or closed, so a bank account cannot be submitted.'**
+  String get bankErrorInactive;
+
+  /// No description provided for @bankErrorInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'The bank details were rejected: bank name 2–100 characters, holder name up to 200 characters, account number 6–20 digits.'**
+  String get bankErrorInvalid;
+
+  /// No description provided for @bankErrorEvidenceMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'The uploaded evidence could not be found or is not a valid image. Choose the picture again and submit.'**
+  String get bankErrorEvidenceMissing;
+
+  /// No description provided for @bankErrorUploadDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'This account is not allowed to upload evidence right now. Sign in again or contact support.'**
+  String get bankErrorUploadDenied;
+
+  /// No description provided for @bankErrorUploadNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'The evidence upload did not finish. Check your internet connection and submit again.'**
+  String get bankErrorUploadNetwork;
+
+  /// No description provided for @bankErrorConflict.
+  ///
+  /// In en, this message translates to:
+  /// **'This submission conflicts with one already saved. Tap Check again to see the latest list, then submit again.'**
+  String get bankErrorConflict;
+
+  /// No description provided for @bankErrorUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Document storage is not available. Contact the administrator.'**
+  String get bankErrorUnavailable;
+
   /// No description provided for @bankEvidence.
   ///
   /// In en, this message translates to:

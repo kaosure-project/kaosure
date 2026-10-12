@@ -291,7 +291,9 @@ final class AppRouter {
       case '/pudtan':
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const PudtanChatScreen(),
+          builder: (_) => const AuthGuard(
+            authenticatedChild: PudtanChatScreen(),
+          ),
         );
 
       // -----------------------------------------------------------------------

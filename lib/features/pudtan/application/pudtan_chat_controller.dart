@@ -52,8 +52,10 @@ final pudtanChatControllerProvider =
 
 class PudtanChatController
     extends Notifier<PudtanChatState> {
-  static const String projectId =
-      '3f2728d5-8d95-44a5-ae50-0b00cad439fa';
+  static const String projectId = String.fromEnvironment(
+    'PUDTAN_PROJECT_ID',
+    defaultValue: '3f2728d5-8d95-44a5-ae50-0b00cad439fa',
+  );
 
   @override
   PudtanChatState build() {

@@ -1,0 +1,15 @@
+{
+  "base": "R7C",
+  "flutter_tests_executed_here": false,
+  "files": {
+    "README_R7D.md": "8c602130c43df5274bb62c12f2fa8d84d4d62a1e17003b6ae3d9988318d61dba",
+    "lib/features/kao_id/kyc/presentation/screens/kyc_page.dart": "5f6674dc9a7346c638822d23ef4dd01956c29491ee40ada08ef048d536b67c64",
+    "lib/features/kao_id/kyc/review/kao_id_issuance_card.dart": "8f6346b08e1ced83eecd57b8c1927f6aef0db779044991daa4f547c7c460a9f5",
+    "lib/features/kao_id/kyc/review/kyc_review_page.dart": "604010b94b67c2193180a23e01baff41171b6d2fc7b4b1d72987a7cc68a48ceb",
+    "lib/features/kao_id/kyc/review/review_failure_message.dart": "0f8a02ec4cecbaaea18232207720c0f4c1da5f3bc5c2e3e0b799a9bcada64c1e",
+    "lib/l10n/app_en.arb": "ae4a2c36df2fc0390b905742a15ad240244d72b371a5a2b54a62f7dae28daa12",
+    "lib/l10n/app_th.arb": "1394f08c220604557f157bb1e8fb43aa6cb183c3a006af4bec96b52afacbb79a",
+    "test/localization/email_status_r7b_test.dart": "1c10fc10fafbf232d6e1c2c30c0ec87a97d3220fe05031b1397f2418848106f2",
+    "test/localization/kyc_review_r7d_test.dart": "362276d320c91d0c7f7f27235f4397d28667f8478962cc995802ad94135ebd59"
+  }
+}

@@ -1,0 +1,14 @@
+README_1E.md
+docs/kao_id_ui_localization_1e.md
+lib/features/kao_id/account/presentation/pages/account_page.dart
+lib/features/kao_id/account/presentation/pages/edit_profile_page.dart
+lib/features/kao_id/account/presentation/widgets/edit_profile/avatar_section.dart
+lib/features/kao_id/account/presentation/widgets/kao_id_profile/header/profile_action.dart
+lib/features/kao_id/dashboard/presentation/screens/dashboard_screen.dart
+lib/features/kao_id/dashboard/presentation/widgets/profile/profile_completion.dart
+lib/features/kao_id/dashboard/presentation/widgets/profile/profile_information.dart
+lib/features/kao_id/dashboard/presentation/widgets/profile/profile_status_chip.dart
+lib/l10n/app_en.arb
+lib/l10n/app_th.arb
+test/localization/dashboard_profile_localization_1e_test.dart
+manifest_1E.txt

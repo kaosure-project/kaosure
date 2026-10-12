@@ -1,0 +1,15 @@
+README_1D.md
+docs/kao_id_localization_inventory.md
+lib/features/kao_id/account/presentation/pages/account_page.dart
+lib/features/kao_id/account/presentation/pages/complete_profile_page.dart
+lib/features/kao_id/account/presentation/pages/edit_profile_page.dart
+lib/features/kao_id/account/presentation/pages/identity_verification_page.dart
+lib/features/kao_id/account/presentation/widgets/kao_id_profile/header/description.dart
+lib/features/kao_id/account/presentation/widgets/kao_id_profile/header/profile_action.dart
+lib/features/kao_id/account/presentation/widgets/kao_id_profile/header/title.dart
+lib/features/kao_id/account/presentation/widgets/kao_id_profile/information/information.dart
+lib/features/kao_id/account/presentation/widgets/kao_id_profile/information/profile_information.dart
+lib/l10n/app_en.arb
+lib/l10n/app_th.arb
+test/localization/profile_localization_1d_test.dart
+manifest_1D.txt

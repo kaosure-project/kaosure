@@ -1,0 +1,17 @@
+{
+  "base": "R8A + R8A fix",
+  "flutter_executed_here": false,
+  "sql_regression": "passed; rolled back",
+  "files": {
+    "README_R8B.md": "e915bc12dee6311f70e2018337d2596c1265d9a7d8245ebbdbfc40e620911614",
+    "docs/R8B_DATABASE_REGRESSION.sql": "009ef693cb1bb241d9507be9a254f7ffd5877c355525801cb808a62a859bb0b8",
+    "docs/R8B_backend.sql": "869524c8b57c9da06e3ebb48e782f5f2090a264f79b73102b5093ca43f932571",
+    "lib/features/kao_id/kyc/presentation/screens/kyc_page.dart": "49912eec41f6ca83f06903d173b84b208d0e4e8565e22b7b97522a36640a8634",
+    "lib/features/kao_id/kyc/presentation/screens/residence_permit_page.dart": "4dc25d3b9c74fa484e3fdda95a95119ae42a8bcc49c0b658b997c6d0d6512d8b",
+    "lib/features/kao_id/kyc/residence/residence_repository.dart": "ca0d4b53f8b9eae00f6681f8529be68e84b22b913396c60fd645b2d6b3874351",
+    "lib/l10n/app_en.arb": "71f35f3961a6ed3c6d78b612b752a8fd5aa4c2fa322a4f9fdaab89fcc9f6446a",
+    "lib/l10n/app_th.arb": "bf8f6059a38a8d626b565b202ba739c6714c4350b7dc18089e01fc3b137ace6a",
+    "test/localization/kyc_details_r6d_test.dart": "80bd941eb5bfd30812809eb8179a167039c8cf23386f7217d4aca4141cb79f32",
+    "test/localization/residence_r8b_test.dart": "10f09e5a1492e2ed6147ed2bda7cfd1ec362da03c03c9c4fc80fb5882a30364c"
+  }
+}

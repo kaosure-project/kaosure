@@ -1,0 +1,19 @@
+{
+  "base": "R7D; includes R7E form update",
+  "flutter_executed_here": false,
+  "database_regression": "passed; rolled back",
+  "files": {
+    "README_R8A.md": "88d72515ed9a1e70ff7ed4eb5b6a71cda44151d08cfbd652f773096746fd6f43",
+    "docs/KAOID_VERIFICATION_COMPLETION_PLAN.md": "22dd61a5e047cf0c1042b758893c72ffa25f20be156017ca31ebbf7a9bf2645a",
+    "docs/R8A_DATABASE_REGRESSION.sql": "ce8b57162221f8198cd7010b9f01351468eb4727aba3a9791ee11def693d310f",
+    "docs/R8A_backend.sql": "5d5361b35884974dec55e17ebf72963f7e6b591c7428d4f75d43d272bb1a258a",
+    "lib/features/kao_id/kyc/passport/passport_repository.dart": "b9a65f8c819c03e914fd9c707d2f36b7b58f37c488d4c52d40520b9e23d7b555",
+    "lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart": "acf515d5bb38154748a4f1d5bda19abe59763a949d820b52a4c18f68f720d37c",
+    "lib/features/kao_id/kyc/presentation/passport/passport_page.dart": "de309d2ae6441a5e3cc3d884421938be384930b59af60025bfb74172a5478984",
+    "lib/l10n/app_en.arb": "25e0876702f21cb9d55604ede9fd89bcfdc9b33d3b57e443d82002074a73e759",
+    "lib/l10n/app_th.arb": "57111e83a64094fc8ddf7779e7f86e87e024070f32d0aec8f2e2a91b872c562c",
+    "test/localization/kyc_details_r6d_test.dart": "4f540c734ff74694932fa9705165bf30e3cf72a7c006916e88b4af6ba53a0568",
+    "test/localization/national_id_r7a_test.dart": "5ae56c23723ecd5fd147d0b2d1b3c916f42fbe33f29c41c98f5ebf0ff05ec472",
+    "test/localization/passport_r8a_test.dart": "5e33bb30ebdcf9d064b1754e45143d2b5d30793074cc4e3635ca2594d3547b99"
+  }
+}

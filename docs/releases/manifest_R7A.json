@@ -1,0 +1,13 @@
+{
+  "README_R7A.md": "ed40983163995a664c4ef425b1a28bd204d9872d0a6c772e847d418c6b2cde8a",
+  "docs/R7A_DATABASE_REGRESSION.sql": "7fbc25008ce2379986b5618f0b60c4691ce9ebb33122411f52b341017dd1b1cd",
+  "docs/R7A_LOCALIZATION_AUDIT.txt": "23c4d43327811660d2974ff1913294aaabe03e12bd9034309e4787dfb7463df9",
+  "docs/R7A_backend.sql": "b5aa31917b6b3ad09c846da8887fe84e36279b1f82d98948e7057bd739b75b88",
+  "lib/features/kao_id/kyc/identity_card/national_id_repository.dart": "eeb511eb41ce891a4ceb7d8ae7f136778b238d799e1ec011881f2c7079a0cbba",
+  "lib/features/kao_id/kyc/presentation/identity_card/identity_card_page.dart": "339a05ae6bdf7f486c2e26df11ca0365ae507486bcde9446f2486d94d8c548de",
+  "lib/features/kao_id/kyc/presentation/widgets/kyc_status_label.dart": "34c1e682198528e8b4afd341e2d0520707537e9f482ce2a69a373123689cef99",
+  "lib/l10n/app_en.arb": "67abe70f6595a074a5062286fb399abe583773dfb9f35a44dd4ee946fca996c9",
+  "lib/l10n/app_th.arb": "67970f29c6da3200729eaf0d0dccf10fc78052d178bcb37fa88f83bddaa447f2",
+  "test/localization/kyc_details_r6d_test.dart": "225964c0f0ee26399a33c957e050a8328bea2a99922a9313960fbb60a53408e8",
+  "test/localization/national_id_r7a_test.dart": "94693d21f108b2176b68a2278f6da33849b7ebfc182866ef4a7e36bf52a62a45"
+}

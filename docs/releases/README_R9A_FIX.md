@@ -1,0 +1,1 @@
+R9A test fix: wrap home fixture in ProviderScope with member access false; assert SelectableText member values; scroll before accessing lazy content; hide test keyboard without await. No app/DB/permission changes. Flutter unavailable here; tests not run here. Run flutter analyze then flutter test test/localization. Based on supplied log: 194 passed, 10 failed.

@@ -1,0 +1,13 @@
+{
+  "README_R7C.md": "a007054dc4162c96d9a6b98b5915424dabf71d7314b189223c86a53e6fdd1083",
+  "docs/R7C_DATABASE_REGRESSION.sql": "cb5ca560875e9ee0ac9d66ddaa64a44c74f5e8138032c58f9076162328b35573",
+  "docs/R7C_backend.sql": "4b881946e88fa6422218ec37907a7e1296fad85fcf62689f2e542e7b6fcb1960",
+  "lib/features/kao_id/kyc/presentation/screens/kyc_page.dart": "41b74790c37915ca2f5dff1c5edf7a89beeb99acffb58552fa01f6bcc3dd5b2c",
+  "lib/features/kao_id/kyc/review/kao_id_issuance_card.dart": "943718a0e4154a61adc34c069ca3087557bf0d12133852673433194f1a6cacf8",
+  "lib/features/kao_id/kyc/review/kyc_review_page.dart": "5471c762e5c1db643cd9ddbcfcd969f9eb00a0ac5eae67abcb207a99bfbc35d8",
+  "lib/features/kao_id/kyc/review/kyc_review_repository.dart": "54306377048675551407cbe7642d81c607e6c5a43ed2f6b462ebe19ee011ecee",
+  "lib/l10n/app_en.arb": "742cfd325721c498f6e3a830f25f22a2e29a3f04fcff109ca6327aae6c49b653",
+  "lib/l10n/app_th.arb": "3531d4853ea9dddd926e579d0dffb67054e3fb1b6ad3c680ce72fc061bc1c161",
+  "test/localization/email_status_r7b_test.dart": "f0d535c3266756a6f512c0a373d09e7513008784a17b4b7ee2b507fca6ad01e0",
+  "test/localization/kyc_review_r7c_test.dart": "da0c604f76f71f7055d02f4fbcdd9fd134123f9442bca2c120abf3e0e45ea85d"
+}

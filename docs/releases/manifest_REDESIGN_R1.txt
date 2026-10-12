@@ -1,0 +1,13 @@
+README_REDESIGN_R1.md
+docs/kao_id_redesign_rollout.md
+lib/app/router.dart
+lib/features/kao_id/account/presentation/pages/account_page.dart
+lib/features/kao_id/account/presentation/widgets/kao_id_profile/header/profile_action.dart
+lib/features/kao_id/dashboard/presentation/screens/dashboard_screen.dart
+lib/features/kao_id/dashboard/presentation/widgets/dashboard_home_content.dart
+lib/features/kao_id/dashboard/presentation/widgets/kao_id_scaffold.dart
+lib/features/kao_id/governance/presentation/widgets/governance_dashboard_tile.dart
+lib/l10n/app_en.arb
+lib/l10n/app_th.arb
+test/localization/kao_id_redesign_r1_test.dart
+manifest_REDESIGN_R1.txt

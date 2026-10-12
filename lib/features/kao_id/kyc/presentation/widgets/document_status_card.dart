@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 final class DocumentStatusCard extends StatelessWidget {
@@ -46,7 +47,7 @@ final class DocumentStatusCard extends StatelessWidget {
                     CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'สถานะ',
+                    AppLocalizations.of(context).kycStatus,
                     style: theme.textTheme.labelMedium,
                   ),
                   const SizedBox(height: 4),

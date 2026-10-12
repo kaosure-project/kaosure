@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 final class KycStatusCard extends StatelessWidget {
@@ -48,19 +49,19 @@ final class KycStatusCard extends StatelessWidget {
     }
   }
 
-  String get _statusText {
+  String _statusText(BuildContext context) {
     switch (status) {
       case 'verified':
-        return 'ยืนยันตัวตนแล้ว';
+        return AppLocalizations.of(context).kycIdentityVerified;
 
       case 'pending':
-        return 'กำลังตรวจสอบ';
+        return AppLocalizations.of(context).kycUnderReview;
 
       case 'rejected':
-        return 'ไม่ผ่านการตรวจสอบ';
+        return AppLocalizations.of(context).kycRejected;
 
       default:
-        return 'ยังไม่ได้ยืนยันตัวตน';
+        return AppLocalizations.of(context).kycIdentityNotVerified;
     }
   }
 
@@ -114,7 +115,7 @@ final class KycStatusCard extends StatelessWidget {
                 size: 18,
               ),
               label: Text(
-                _statusText,
+                _statusText(context),
               ),
             ),
 

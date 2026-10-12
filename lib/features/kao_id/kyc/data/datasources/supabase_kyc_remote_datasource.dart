@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/bank_verification_model.dart';
+import '../models/verification_timeline.dart';
 import '../models/kyc_identity_document_model.dart';
 import '../models/verification_history_model.dart';
 import '../models/verification_model.dart';
@@ -135,10 +136,15 @@ final class SupabaseKycRemoteDataSource
           'created_at, updated_at',
         )
         .eq('owner_id', user.id)
+        .isFilter('deleted_at', null)
         .order(
           'created_at',
           ascending: false,
         );
+
+    if (_client.auth.currentUser?.id != user.id) {
+      throw const AuthException('Session changed.');
+    }
 
     return response
         .map(
@@ -159,18 +165,13 @@ final class SupabaseKycRemoteDataSource
       getBankVerification() async {
     final user = _requireUser();
 
-    final response = await _client
-        .from('bank_accounts')
-        .select()
-        .eq('profile_id', user.id)
-        .maybeSingle();
-
-    if (response == null) {
-      return null;
+    final rows = await _client.rpc('list_banks_r8c') as List;
+    if (_client.auth.currentUser?.id != user.id) {
+      throw const AuthException('Session changed.');
     }
-
+    if (rows.isEmpty) { return null; }
     return BankVerificationModel.fromJson(
-      response,
+      Map<String, dynamic>.from(rows.first as Map),
     );
   }
 
@@ -200,14 +201,23 @@ final class SupabaseKycRemoteDataSource
           ascending: false,
         );
 
-    return response
-        .map(
-          (row) =>
-              VerificationHistoryModel.fromJson(
-            Map<String, dynamic>.from(row),
-          ),
-        )
-        .toList();
+    final requests = await _client.from('verification_requests')
+        .select('id, created_at, identity_documents(document_type)')
+        .eq('requested_by', user.id);
+    final banks = await _client.rpc('list_banks_r8c') as List;
+    final current = (await _client.auth.getUser()).user;
+    if (current == null || current.id != user.id ||
+        _client.auth.currentUser?.id != user.id) {
+      throw const AuthException('Session changed.');
+    }
+    return verificationTimeline(
+      logs: response.map((row) => Map<String, dynamic>.from(row)).toList(),
+      requests: requests.map((row) => Map<String, dynamic>.from(row)).toList(),
+      banks: banks.map((row) => Map<String, dynamic>.from(row as Map)).toList(),
+      emailConfirmedAt: (current.email?.isNotEmpty ?? false)
+          ? current.emailConfirmedAt : null,
+      phoneConfirmedAt: (current.phone?.isNotEmpty ?? false)
+          ? current.phoneConfirmedAt : null,
+    );
   }
-
 }

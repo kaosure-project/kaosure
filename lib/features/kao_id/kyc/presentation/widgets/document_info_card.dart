@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import 'info_tile.dart';
@@ -31,7 +32,7 @@ final class DocumentInfoCard extends StatelessWidget {
         children: [
           InfoTile(
             icon: Icons.description_outlined,
-            title: 'ชื่อไฟล์',
+            title: AppLocalizations.of(context).kycFileName,
             value: fileName,
           ),
 
@@ -42,7 +43,7 @@ final class DocumentInfoCard extends StatelessWidget {
 
           InfoTile(
             icon: Icons.storage_outlined,
-            title: 'ขนาดไฟล์',
+            title: AppLocalizations.of(context).kycFileSize,
             value: fileSize,
           ),
 
@@ -53,7 +54,7 @@ final class DocumentInfoCard extends StatelessWidget {
 
           InfoTile(
             icon: Icons.schedule_outlined,
-            title: 'อัปโหลดเมื่อ',
+            title: AppLocalizations.of(context).kycUploadedOn,
             value: uploadDate,
           ),
 
@@ -72,8 +73,8 @@ final class DocumentInfoCard extends StatelessWidget {
                   icon: const Icon(
                     Icons.refresh,
                   ),
-                  label: const Text(
-                    'เปลี่ยนไฟล์',
+                  label:  Text(
+                    AppLocalizations.of(context).kycChangeFile,
                   ),
                 ),
               ),

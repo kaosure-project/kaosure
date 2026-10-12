@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 final class PassportExpiry {
@@ -40,9 +41,9 @@ final class PassportExpiry {
         12,
         31,
       ),
-      helpText: 'เลือกวันหมดอายุหนังสือเดินทาง',
-      cancelText: 'ยกเลิก',
-      confirmText: 'เลือก',
+      helpText: AppLocalizations.of(context).kycSelectPassportExpiryDate,
+      cancelText: AppLocalizations.of(context).kycCancel,
+      confirmText: AppLocalizations.of(context).kycSelect,
     );
 
     if (selected == null) {

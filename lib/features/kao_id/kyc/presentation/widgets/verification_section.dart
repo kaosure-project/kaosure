@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -55,11 +56,11 @@ final class VerificationSection
           icon: Icons.mail_outline,
           iconColor:
               const Color(0xFF22A447),
-          title: 'อีเมล',
+          title: AppLocalizations.of(context).kycEmail,
           subtitle: email,
           status: emailVerified
-              ? 'ยืนยันแล้ว'
-              : 'ยังไม่ยืนยัน',
+              ? AppLocalizations.of(context).kycVerified
+              : AppLocalizations.of(context).kycNotVerifiedLabelText,
           statusType: emailVerified
               ? _StatusType.success
               : _StatusType.warning,
@@ -84,13 +85,13 @@ final class VerificationSection
           icon: Icons.phone_outlined,
           iconColor:
               const Color(0xFFFF9800),
-          title: 'เบอร์โทรศัพท์',
+          title: AppLocalizations.of(context).kycPhoneNumber,
           subtitle: '-',
           status:
               verification?.phoneVerified ==
                       true
-                  ? 'ยืนยันแล้ว'
-                  : 'ยังไม่ยืนยัน',
+                  ? AppLocalizations.of(context).kycVerified
+                  : AppLocalizations.of(context).kycNotVerifiedLabelText,
           statusType:
               verification?.phoneVerified ==
                       true
@@ -117,10 +118,10 @@ final class VerificationSection
           icon: Icons.badge_outlined,
           iconColor:
               const Color(0xFF7C4DFF),
-          title: 'บัตรประชาชน',
+          title: AppLocalizations.of(context).kycNationalIdCard,
           subtitle:
-              _identitySubtitle,
-          status: _statusText(
+              _identitySubtitle(context),
+          status: _statusText(context, 
             verification
                 ?.identityCardStatus,
           ),
@@ -150,10 +151,10 @@ final class VerificationSection
               Icons.menu_book_outlined,
           iconColor:
               const Color(0xFF2583E8),
-          title: 'หนังสือเดินทาง',
+          title: AppLocalizations.of(context).kycPassport,
           subtitle:
-              _passportSubtitle,
-          status: _statusText(
+              _passportSubtitle(context),
+          status: _statusText(context, 
             verification
                 ?.passportStatus,
           ),
@@ -182,10 +183,10 @@ final class VerificationSection
           icon: Icons.work_outline,
           iconColor:
               const Color(0xFF00AFA3),
-          title: 'ใบพำนัก',
+          title: AppLocalizations.of(context).kycResidencePermit,
           subtitle:
-              _residenceSubtitle,
-          status: _statusText(
+              _residenceSubtitle(context),
+          status: _statusText(context, 
             verification
                 ?.residencePermitStatus,
           ),
@@ -235,9 +236,9 @@ final class VerificationSection
           iconColor:
               const Color(0xFF4F72D8),
           title:
-              'ประวัติการยืนยันตัวตน',
+              AppLocalizations.of(context).kycVerificationHistory,
           subtitle:
-              'ดูประวัติการตรวจสอบและการเปลี่ยนแปลง',
+              AppLocalizations.of(context).kycReviewVerificationResultsAndChanges,
           showStatus: false,
           onTap: () {
             Navigator.push(
@@ -257,58 +258,58 @@ final class VerificationSection
   // SUBTITLE
   // =========================================================================
 
-  String get _identitySubtitle {
+  String _identitySubtitle(BuildContext context) {
     final status =
         verification?.identityCardStatus;
 
     if (!_hasDocumentStatus(status)) {
-      return 'ยังไม่ได้เพิ่ม';
+      return AppLocalizations.of(context).kycNotAdded;
     }
 
     final expiry =
         identityCard?.expiryDate;
 
     if (expiry == null) {
-      return 'ยืนยันข้อมูลแล้ว';
+      return AppLocalizations.of(context).kycInformationRecorded;
     }
 
-    return 'หมดอายุ ${_formatDate(expiry)}';
+    return AppLocalizations.of(context).kycExpiresOnDate(MaterialLocalizations.of(context).formatMediumDate(expiry));
   }
 
-  String get _passportSubtitle {
+  String _passportSubtitle(BuildContext context) {
     final status =
         verification?.passportStatus;
 
     if (!_hasDocumentStatus(status)) {
-      return 'ยังไม่ได้ระบุวันหมดอายุ';
+      return AppLocalizations.of(context).kycExpiryDateNotProvided;
     }
 
     final expiry =
         passport?.expiryDate;
 
     if (expiry == null) {
-      return 'ยังไม่ได้ระบุวันหมดอายุ';
+      return AppLocalizations.of(context).kycExpiryDateNotProvided;
     }
 
-    return 'หมดอายุ ${_formatDate(expiry)}';
+    return AppLocalizations.of(context).kycExpiresOnDate(MaterialLocalizations.of(context).formatMediumDate(expiry));
   }
 
-  String get _residenceSubtitle {
+  String _residenceSubtitle(BuildContext context) {
     final status =
         verification?.residencePermitStatus;
 
     if (!_hasDocumentStatus(status)) {
-      return 'ยังไม่ได้เพิ่ม';
+      return AppLocalizations.of(context).kycNotAdded;
     }
 
     final expiry =
         residencePermit?.expiryDate;
 
     if (expiry == null) {
-      return 'ยืนยันข้อมูลแล้ว';
+      return AppLocalizations.of(context).kycInformationRecorded;
     }
 
-    return 'หมดอายุ ${_formatDate(expiry)}';
+    return AppLocalizations.of(context).kycExpiresOnDate(MaterialLocalizations.of(context).formatMediumDate(expiry));
   }
 
   // =========================================================================
@@ -339,7 +340,7 @@ final class VerificationSection
     }
   }
 
-  String _statusText(
+  String _statusText(BuildContext context, 
     String? status,
   ) {
     switch (status) {
@@ -347,22 +348,22 @@ final class VerificationSection
       case 'approved':
       case 'completed':
       case 'complete':
-        return 'ยืนยันแล้ว';
+        return AppLocalizations.of(context).kycVerified;
 
       case 'pending':
       case 'submitted':
       case 'reviewing':
-        return 'กำลังตรวจสอบ';
+        return AppLocalizations.of(context).kycUnderReview;
 
       case 'rejected':
-        return 'ไม่ผ่าน';
+        return AppLocalizations.of(context).kycRejectedLabel;
 
       case 'expired':
-        return 'หมดอายุ';
+        return AppLocalizations.of(context).kycExpired;
 
       case 'not_started':
       default:
-        return 'ยังไม่ได้เพิ่ม';
+        return AppLocalizations.of(context).kycNotAdded;
     }
   }
 
@@ -389,13 +390,6 @@ final class VerificationSection
     }
   }
 
-  String _formatDate(
-    DateTime date,
-  ) {
-    return '${date.day.toString().padLeft(2, '0')}/'
-        '${date.month.toString().padLeft(2, '0')}/'
-        '${date.year}';
-  }
 }
 
 // =============================================================================

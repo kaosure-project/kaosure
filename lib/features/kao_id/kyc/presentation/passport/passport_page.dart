@@ -1,1132 +1,223 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
-
-import '../../../identity/application/providers/identity_providers.dart';
-import '../../../identity/domain/entities/document_file.dart';
-import '../../../identity/domain/entities/identity_document.dart';
-import '../../../identity/domain/enums/document_status.dart';
-import '../../../identity/domain/enums/document_type_enum.dart';
-import '../../../identity/domain/value_objects/document_number.dart';
-import '../../../identity/domain/value_objects/expiry_date.dart';
-import '../../../identity/domain/value_objects/issued_date.dart';
-
-import '../../../../../core/services/document_picker_service.dart';
-import '../../../../../core/services/document_upload_service.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
+import '../../../auth/application/providers/auth_provider.dart';
+import '../../identity_card/national_id_repository.dart';
+import '../../passport/passport_repository.dart';
+import '../widgets/kyc_status_label.dart';
 
 final class PassportPage extends ConsumerStatefulWidget {
-  const PassportPage({
-    super.key,
-  });
+  const PassportPage({super.key});
+  @override
+  ConsumerState<PassportPage> createState() => _PassportPageState();
+}
+final class _PassportPageState extends ConsumerState<PassportPage> {
+  final _form = GlobalKey<FormState>();
+  final _given = TextEditingController(), _family = TextEditingController();
+  final _number = TextEditingController(), _country = TextEditingController();
+  DateTime? _birth, _issued, _expiry;
+  IdImage? _image;
+  PassportRecord? _record;
+  PassportDraft? _attempt;
+  String? _owner, _error;
+  bool _busy = false, _known = false, _pending = false;
+  bool _single = false, _familyFirst = false, _validate = false;
+  bool _sessionChanged = false;
 
   @override
-  ConsumerState<PassportPage> createState() =>
-      _PassportPageState();
-}
-
-final class _PassportPageState
-    extends ConsumerState<PassportPage> {
-  final _formKey = GlobalKey<FormState>();
-
-  final _passportController =
-      TextEditingController();
-
-  DateTime? _issuedDate;
-  DateTime? _expiryDate;
-
-  String? _fileName;
-  Uint8List? _fileBytes;
-
-  bool _isLoading = false;
-
+  void initState() { super.initState(); Future.microtask(_load); }
   @override
   void dispose() {
-    _passportController.dispose();
+    _given.dispose(); _family.dispose(); _number.dispose(); _country.dispose();
     super.dispose();
   }
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
-
-    return Scaffold(
-      backgroundColor: colors.surface,
-
-      appBar: AppBar(
-        title: const Text(
-          'หนังสือเดินทาง',
-        ),
-        centerTitle: false,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-      ),
-
-      body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(
-                maxWidth: 760,
-              ),
-              child: ListView(
-                padding: const EdgeInsets.fromLTRB(
-                  20,
-                  20,
-                  20,
-                  40,
-                ),
-                children: [
-                  _buildHeader(
-                    theme,
-                    colors,
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  _buildPassportNumberField(
-                    theme,
-                    colors,
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  _buildDateSection(
-                    theme,
-                    colors,
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  _buildFileSection(
-                    theme,
-                    colors,
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  _buildSecurityCard(
-                    theme,
-                    colors,
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  _buildSaveButton(
-                    theme,
-                    colors,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ===========================================================================
-  // HEADER
-  // ===========================================================================
-
-  Widget _buildHeader(
-    ThemeData theme,
-    ColorScheme colors,
-  ) {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: colors.primaryContainer.withValues(
-          alpha: 0.30,
-        ),
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(
-          color: colors.primary.withValues(
-            alpha: 0.12,
-          ),
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 64,
-            height: 64,
-            decoration: BoxDecoration(
-              color: colors.primary,
-              borderRadius:
-                  BorderRadius.circular(18),
-            ),
-            child: Icon(
-              Icons.menu_book_rounded,
-              color: colors.onPrimary,
-              size: 32,
-            ),
-          ),
-
-          const SizedBox(width: 18),
-
-          Expanded(
-            child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'หนังสือเดินทาง',
-                  style: theme
-                      .textTheme
-                      .headlineSmall
-                      ?.copyWith(
-                    fontWeight:
-                        FontWeight.w800,
-                  ),
-                ),
-
-                const SizedBox(height: 5),
-
-                Text(
-                  'เพิ่มข้อมูลหนังสือเดินทางเพื่อใช้ยืนยันตัวตนของคุณ',
-                  style: theme
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(
-                    color:
-                        colors.onSurfaceVariant,
-                    height: 1.4,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ===========================================================================
-  // PASSPORT NUMBER
-  // ===========================================================================
-
-  Widget _buildPassportNumberField(
-    ThemeData theme,
-    ColorScheme colors,
-  ) {
-    return _SectionCard(
-      child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-        children: [
-          _SectionTitle(
-            icon: Icons.badge_outlined,
-            title: 'เลขหนังสือเดินทาง',
-            subtitle:
-                'กรอกหมายเลขตามหนังสือเดินทางของคุณ',
-          ),
-
-          const SizedBox(height: 18),
-
-          TextFormField(
-            controller: _passportController,
-            enabled: !_isLoading,
-            textCapitalization:
-                TextCapitalization.characters,
-            decoration: InputDecoration(
-              hintText: 'เช่น AA1234567',
-              prefixIcon: const Icon(
-                Icons.badge_outlined,
-              ),
-              filled: true,
-              fillColor:
-                  colors.surfaceContainerLowest,
-              border: OutlineInputBorder(
-                borderRadius:
-                    BorderRadius.circular(14),
-              ),
-              enabledBorder:
-                  OutlineInputBorder(
-                borderRadius:
-                    BorderRadius.circular(14),
-                borderSide: BorderSide(
-                  color:
-                      colors.outlineVariant,
-                ),
-              ),
-              focusedBorder:
-                  OutlineInputBorder(
-                borderRadius:
-                    BorderRadius.circular(14),
-                borderSide: BorderSide(
-                  color: colors.primary,
-                  width: 1.5,
-                ),
-              ),
-            ),
-            validator: (value) {
-              final number =
-                  value?.trim() ?? '';
-
-              if (number.isEmpty) {
-                return 'กรุณากรอกเลขหนังสือเดินทาง';
-              }
-
-              if (number.length < 6) {
-                return 'เลขหนังสือเดินทางไม่ถูกต้อง';
-              }
-
-              return null;
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ===========================================================================
-  // DATES
-  // ===========================================================================
-
-  Widget _buildDateSection(
-    ThemeData theme,
-    ColorScheme colors,
-  ) {
-    return _SectionCard(
-      child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-        children: [
-          _SectionTitle(
-            icon: Icons.calendar_month_outlined,
-            title: 'ข้อมูลวันที่',
-            subtitle:
-                'วันที่ออกและวันหมดอายุของหนังสือเดินทาง',
-          ),
-
-          const SizedBox(height: 18),
-
-          LayoutBuilder(
-            builder: (
-              context,
-              constraints,
-            ) {
-              if (constraints.maxWidth < 520) {
-                return Column(
-                  children: [
-                    _DateButton(
-                      label: 'วันที่ออก',
-                      value: _issuedDate,
-                      icon:
-                          Icons.event_available_outlined,
-                      onTap:
-                          _pickIssuedDate,
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    _DateButton(
-                      label: 'วันหมดอายุ',
-                      value: _expiryDate,
-                      icon:
-                          Icons.event_busy_outlined,
-                      onTap:
-                          _pickExpiryDate,
-                    ),
-                  ],
-                );
-              }
-
-              return Row(
-                children: [
-                  Expanded(
-                    child: _DateButton(
-                      label: 'วันที่ออก',
-                      value: _issuedDate,
-                      icon:
-                          Icons.event_available_outlined,
-                      onTap:
-                          _pickIssuedDate,
-                    ),
-                  ),
-
-                  const SizedBox(width: 12),
-
-                  Expanded(
-                    child: _DateButton(
-                      label: 'วันหมดอายุ',
-                      value: _expiryDate,
-                      icon:
-                          Icons.event_busy_outlined,
-                      onTap:
-                          _pickExpiryDate,
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ===========================================================================
-  // FILE
-  // ===========================================================================
-
-  Widget _buildFileSection(
-    ThemeData theme,
-    ColorScheme colors,
-  ) {
-    return _SectionCard(
-      child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-        children: [
-          _SectionTitle(
-            icon: Icons.upload_file_outlined,
-            title: 'เอกสารหนังสือเดินทาง',
-            subtitle:
-                'อัปโหลดภาพหน้าหนังสือเดินทางที่เห็นข้อมูลชัดเจน',
-          ),
-
-          const SizedBox(height: 18),
-
-          if (_fileName == null)
-            InkWell(
-              onTap: _isLoading
-                  ? null
-                  : _pickPassport,
-              borderRadius:
-                  BorderRadius.circular(16),
-              child: Container(
-                width: double.infinity,
-                padding:
-                    const EdgeInsets.symmetric(
-                  vertical: 28,
-                  horizontal: 20,
-                ),
-                decoration: BoxDecoration(
-                  color: colors
-                      .primaryContainer
-                      .withValues(alpha: 0.20),
-                  borderRadius:
-                      BorderRadius.circular(16),
-                  border: Border.all(
-                    color: colors.primary
-                        .withValues(alpha: 0.25),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      width: 54,
-                      height: 54,
-                      decoration:
-                          BoxDecoration(
-                        color: colors.primary
-                            .withValues(
-                          alpha: 0.10,
-                        ),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.cloud_upload_outlined,
-                        color: colors.primary,
-                        size: 28,
-                      ),
-                    ),
-
-                    const SizedBox(height: 12),
-
-                    Text(
-                      'เพิ่มรูปหนังสือเดินทาง',
-                      style: theme
-                          .textTheme
-                          .titleSmall
-                          ?.copyWith(
-                        fontWeight:
-                            FontWeight.w700,
-                      ),
-                    ),
-
-                    const SizedBox(height: 4),
-
-                    Text(
-                      'แตะเพื่อเลือกไฟล์จากอุปกรณ์',
-                      style: theme
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(
-                        color: colors
-                            .onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          else
-            Container(
-              padding:
-                  const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: colors
-                    .surfaceContainerLow,
-                borderRadius:
-                    BorderRadius.circular(16),
-                border: Border.all(
-                  color:
-                      colors.outlineVariant,
-                ),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 48,
-                    height: 48,
-                    decoration:
-                        BoxDecoration(
-                      color: colors
-                          .primaryContainer,
-                      borderRadius:
-                          BorderRadius.circular(
-                        12,
-                      ),
-                    ),
-                    child: Icon(
-                      Icons.description_outlined,
-                      color:
-                          colors.primary,
-                    ),
-                  ),
-
-                  const SizedBox(width: 12),
-
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment:
-                          CrossAxisAlignment
-                              .start,
-                      children: [
-                        Text(
-                          _fileName!,
-                          maxLines: 1,
-                          overflow:
-                              TextOverflow.ellipsis,
-                          style: theme
-                              .textTheme
-                              .titleSmall
-                              ?.copyWith(
-                            fontWeight:
-                                FontWeight.w700,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 3,
-                        ),
-                        Text(
-                          'พร้อมสำหรับการส่งตรวจสอบ',
-                          style: theme
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                            color: colors
-                                .onSurfaceVariant,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  IconButton(
-                    onPressed: _isLoading
-                        ? null
-                        : _pickPassport,
-                    tooltip: 'เปลี่ยนไฟล์',
-                    icon: const Icon(
-                      Icons.refresh_rounded,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
-  // ===========================================================================
-  // SECURITY
-  // ===========================================================================
-
-  Widget _buildSecurityCard(
-    ThemeData theme,
-    ColorScheme colors,
-  ) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: colors.surfaceContainerLow,
-        borderRadius:
-            BorderRadius.circular(16),
-        border: Border.all(
-          color: colors.outlineVariant,
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 42,
-            height: 42,
-            decoration: BoxDecoration(
-              color: colors.primary
-                  .withValues(alpha: 0.10),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.security_outlined,
-              color: colors.primary,
-            ),
-          ),
-
-          const SizedBox(width: 12),
-
-          Expanded(
-            child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'ข้อมูลของคุณได้รับการปกป้อง',
-                  style: theme
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(
-                    fontWeight:
-                        FontWeight.w700,
-                  ),
-                ),
-
-                const SizedBox(height: 4),
-
-                Text(
-                  'เอกสารจะถูกจัดเก็บในพื้นที่ KYC แบบ Private และใช้สำหรับกระบวนการยืนยันตัวตนเท่านั้น',
-                  style: theme
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(
-                    color:
-                        colors.onSurfaceVariant,
-                    height: 1.45,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ===========================================================================
-  // SAVE BUTTON
-  // ===========================================================================
-
-  Widget _buildSaveButton(
-    ThemeData theme,
-    ColorScheme colors,
-  ) {
-    return SizedBox(
-      height: 54,
-      child: FilledButton.icon(
-        onPressed:
-            _isLoading ? null : _savePassport,
-        icon: _isLoading
-            ? const SizedBox(
-                width: 20,
-                height: 20,
-                child:
-                    CircularProgressIndicator(
-                  strokeWidth: 2,
-                ),
-              )
-            : const Icon(
-                Icons.check_circle_outline,
-              ),
-        label: Text(
-          _isLoading
-              ? 'กำลังบันทึก...'
-              : 'บันทึกหนังสือเดินทาง',
-        ),
-        style: FilledButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(14),
-          ),
-          textStyle: const TextStyle(
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ===========================================================================
-  // PICK FILE
-  // ===========================================================================
-
-  Future<void> _pickPassport() async {
-    const picker =
-        DocumentPickerService();
-
-    final document =
-        await picker.pickImage();
-
-    if (document == null || !mounted) {
-      return;
-    }
-
-    setState(() {
-      _fileName = document.name;
-      _fileBytes = document.bytes;
-    });
-  }
-
-  // ===========================================================================
-  // PICK ISSUED DATE
-  // ===========================================================================
-
-  Future<void> _pickIssuedDate() async {
-    final date =
-        await showDatePicker(
-      context: context,
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-      initialDate:
-          _issuedDate ?? DateTime.now(),
-    );
-
-    if (date == null || !mounted) {
-      return;
-    }
-
-    setState(() {
-      _issuedDate = date;
-    });
-  }
-
-  // ===========================================================================
-  // PICK EXPIRY DATE
-  // ===========================================================================
-
-  Future<void> _pickExpiryDate() async {
-    final today = DateTime.now();
-
-    final date =
-        await showDatePicker(
-      context: context,
-      firstDate: today,
-      lastDate: DateTime(
-        today.year + 30,
-        today.month,
-        today.day,
-      ),
-      initialDate:
-          _expiryDate ??
-              DateTime(
-                today.year + 5,
-                today.month,
-                today.day,
-              ),
-    );
-
-    if (date == null || !mounted) {
-      return;
-    }
-
-    setState(() {
-      _expiryDate = date;
-    });
-  }
-
-  // ===========================================================================
-  // SAVE
-  // ===========================================================================
-
-  Future<void> _savePassport() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    if (_issuedDate == null || _expiryDate == null) {
-      _showError('กรุณาระบุวันที่ออกและวันหมดอายุ');
-      return;
-    }
-
-    if (!_expiryDate!.isAfter(_issuedDate!)) {
-      _showError('วันหมดอายุต้องอยู่หลังวันที่ออก');
-      return;
-    }
-
-    final bytes = _fileBytes;
-    if (bytes == null || bytes.isEmpty || _fileName == null) {
-      _showError('กรุณาเลือกรูปหนังสือเดินทาง');
-      return;
-    }
-
-    final client = Supabase.instance.client;
-    final user = client.auth.currentUser;
-    if (user == null) {
-      _showError('ไม่พบผู้ใช้ที่เข้าสู่ระบบ');
-      return;
-    }
-
-    setState(() => _isLoading = true);
-    String? storagePath;
-
+  Future<void> _load() async {
+    if (!mounted || _busy || _sessionChanged) { return; }
+    setState(() { _busy = true; _error = null; _known = false; });
     try {
-      final uploadService = DocumentUploadService(client);
-      storagePath = await uploadService.uploadBytes(
-        bytes: bytes,
-        fileName: _fileName!,
-        folder: 'passport',
-        mimeType: _detectMimeType(_fileName!),
-      );
-
-      final now = DateTime.now();
-      final document = IdentityDocument(
-        id: const Uuid().v4(),
-        ownerId: user.id,
-        documentType: DocumentTypeEnum.passport,
-        documentNumber: DocumentNumber(
-          _passportController.text.trim().toUpperCase(),
-        ),
-        issuedDate: IssuedDate(_issuedDate!),
-        expiryDate: ExpiryDate(_expiryDate!),
-        status: DocumentStatus.uploaded,
-        files: [
-          DocumentFile(
-            id: const Uuid().v4(),
-            fileName: _fileName!,
-            filePath: storagePath,
-            mimeType: _detectMimeType(_fileName!),
-            fileSize: bytes.length,
-            uploadedAt: now,
-          ),
-        ],
-        createdAt: now,
-        updatedAt: now,
-      );
-
-      await ref.read(uploadDocumentProvider)(
-        document: document,
-      );
-
-      if (!mounted) return;
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          behavior: SnackBarBehavior.floating,
-          content: Text('บันทึกหนังสือเดินทางเรียบร้อยแล้ว'),
-        ),
-      );
-      Navigator.of(context).pop(true);
-    } catch (error) {
-      if (storagePath != null) {
-        try {
-          await DocumentUploadService(client).delete(
-            storagePath: storagePath,
-          );
-        } catch (_) {}
+      final repo = ref.read(passportRepositoryProvider);
+      final owner = await repo.owner();
+      if (_owner != null && _owner != owner) { throw const NationalIdFailure('session'); }
+      final record = await repo.latest(owner);
+      final pending = await repo.hasPendingRequest(owner);
+      if (!mounted || _sessionChanged) { return; }
+      setState(() {
+        _owner = owner; _record = record; _pending = pending; _known = true;
+        if (record?.id == _attempt?.id && record != null) {
+          _attempt = null; _image = null;
+        }
+      });
+    } catch (e) {
+      if (mounted) { setState(() { _error = e is NationalIdFailure ? e.code : 'load'; _record = null; }); }
+    } finally { if (mounted) { setState(() => _busy = false); } }
+  }
+  String _message(AppLocalizations l, String code) => switch (code) {
+    'session' => l.contactSessionChanged,
+    'load' => l.contactLoadFailed,
+    'file' => l.idFileInvalid,
+    'preview' => l.idPreviewFailed,
+    'pending' => l.passportOtherPending,
+    'form' => l.passportCompleteForm,
+    _ => l.idSaveFailed,
+  };
+  void _fail(String code) {
+    if (!mounted || _sessionChanged) { return; }
+    setState(() => _error = code);
+  }
+  Future<void> _pick() async {
+    setState(() { _busy = true; _error = null; });
+    try {
+      final selected = await ref.read(nationalIdImagePickerProvider)();
+      if (mounted && !_sessionChanged && selected != null) { setState(() => _image = selected); }
+    } catch (_) { _fail('file'); }
+    finally { if (mounted) { setState(() => _busy = false); } }
+  }
+  Future<void> _date(String field) async {
+    final now = DateTime.now(), l = AppLocalizations.of(context);
+    final today = DateTime(now.year, now.month, now.day);
+    final current = switch(field) { 'birth' => _birth, 'issued' => _issued, _ => _expiry };
+    final date = await showDatePicker(context: context,
+      helpText: field == 'birth' ? l.passportBirth : field == 'issued' ? l.kycIssueDate : l.kycExpiryDate,
+      initialDate: current ?? today, firstDate: field == 'expiry' ? today : DateTime(1900),
+      lastDate: field == 'expiry' ? DateTime(today.year + 30) : today);
+    if (!mounted || _sessionChanged || date == null) { return; }
+    setState(() {
+      if (field == 'birth') { _birth = date; }
+      else if (field == 'issued') { _issued = date; } else { _expiry = date; }
+    });
+  }
+  Future<void> _save() async {
+    if (_busy || !_known || _owner == null || _sessionChanged) { return; }
+    if (_attempt == null) {
+      setState(() => _validate = true);
+      final fieldsValid = _form.currentState!.validate();
+      if (!fieldsValid || _birth == null || _issued == null || _expiry == null ||
+          _issued!.isBefore(_birth!) || !_expiry!.isAfter(_issued!) || _image == null) {
+        _fail('form'); return;
       }
-
-      if (!mounted) return;
-      _showError(error.toString());
-    } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
+      _attempt = PassportDraft(id: const Uuid().v4(), owner: _owner!,
+        number: _number.text.trim(), given: _given.text.trim(),
+        family: _single ? '' : _family.text.trim(), singleName: _single,
+        familyFirst: _single ? false : _familyFirst, country: _country.text.trim(),
+        birth: _birth!, issued: _issued!, expiry: _expiry!, image: _image!);
+    }
+    FocusScope.of(context).unfocus();
+    setState(() { _busy = true; _error = null; });
+    try {
+      final result = await ref.read(passportRepositoryProvider).submit(_attempt!);
+      if (mounted && !_sessionChanged) {
+        setState(() { _record = result; _pending = true; _attempt = null; _image = null; });
+        _given.clear(); _family.clear(); _number.clear(); _country.clear();
       }
-    }
+    } catch (e) { _fail(e is NationalIdFailure ? e.code : 'save'); }
+    finally { if (mounted) { setState(() => _busy = false); } }
   }
-
-  String _detectMimeType(
-    String fileName,
-  ) {
-    final extension =
-        fileName
-            .split('.')
-            .last
-            .toLowerCase();
-
-    switch (extension) {
-      case 'jpg':
-      case 'jpeg':
-        return 'image/jpeg';
-
-      case 'png':
-        return 'image/png';
-
-      case 'webp':
-        return 'image/webp';
-
-      default:
-        return 'application/octet-stream';
-    }
+  Future<void> _preview(String path) async {
+    setState(() => _busy = true);
+    try {
+      final bytes = await ref.read(passportRepositoryProvider).preview(_owner!, path);
+      if (!mounted || _sessionChanged) { return; }
+      final l = AppLocalizations.of(context);
+      await showDialog<void>(context: context, builder: (c) => AlertDialog(
+        title: Text(l.kycPassportDocument),
+        content: SizedBox(width: 600, height: 400, child: Consumer(builder: (context, ref, child) {
+          final current = ref.watch(authProvider).asData?.value?.id;
+          if (_sessionChanged || current != _owner) { return Text(l.contactSessionChanged); }
+          return InteractiveViewer(child: Image.memory(bytes, fit: BoxFit.contain,
+            errorBuilder: (_, error, stack) => Text(l.idPreviewFailed)));
+        })),
+        actions: [TextButton(onPressed: () => Navigator.of(c).pop(), child: Text(l.back))],
+      ));
+    } catch (_) { _fail('preview'); }
+    finally { if (mounted) { setState(() => _busy = false); } }
   }
-
-  void _showError(
-    String message,
-  ) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(
-      SnackBar(
-        behavior:
-            SnackBarBehavior.floating,
-        backgroundColor:
-            Theme.of(context)
-                .colorScheme
-                .error,
-        content: Text(message),
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// SECTION CARD
-// =============================================================================
-
-final class _SectionCard
-    extends StatelessWidget {
-  const _SectionCard({
-    required this.child,
-  });
-
-  final Widget child;
-
   @override
   Widget build(BuildContext context) {
-    final colors =
-        Theme.of(context).colorScheme;
-
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: colors.surface,
-        borderRadius:
-            BorderRadius.circular(20),
-        border: Border.all(
-          color: colors.outlineVariant,
-        ),
-      ),
-      child: child,
-    );
-  }
-}
-
-// =============================================================================
-// SECTION TITLE
-// =============================================================================
-
-final class _SectionTitle
-    extends StatelessWidget {
-  const _SectionTitle({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-  });
-
-  final IconData icon;
-  final String title;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme =
-        Theme.of(context);
-    final colors =
-        theme.colorScheme;
-
-    return Row(
-      crossAxisAlignment:
-          CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            color: colors.primary
-                .withValues(alpha: 0.10),
-            borderRadius:
-                BorderRadius.circular(13),
-          ),
-          child: Icon(
-            icon,
-            color: colors.primary,
-            size: 22,
-          ),
-        ),
-
-        const SizedBox(width: 12),
-
-        Expanded(
-          child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: theme
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(
-                  fontWeight:
-                      FontWeight.w800,
-                ),
-              ),
-
-              const SizedBox(height: 3),
-
-              Text(
-                subtitle,
-                style: theme
-                    .textTheme
-                    .bodySmall
-                    ?.copyWith(
-                  color: colors
-                      .onSurfaceVariant,
-                  height: 1.4,
-                ),
-              ),
+    ref.listen(authProvider, (previous, next) {
+      final previousId = previous?.asData?.value?.id;
+      final nextId = next.asData?.value?.id;
+      if (_owner != null && (previousId == _owner || nextId != null) && nextId != _owner) {
+        setState(() {
+          _sessionChanged = true; _record = null; _attempt = null; _image = null;
+          _given.clear(); _family.clear(); _number.clear(); _country.clear();
+        });
+      }
+    });
+    final l = AppLocalizations.of(context);
+    if (_sessionChanged) { return Scaffold(appBar: AppBar(title: Text(l.kycPassport)), body: Center(child: Text(l.contactSessionChanged))); }
+    final editable = !_busy && _attempt == null;
+    final showForm = _known && !_pending && (_record == null || _record!.canResubmit);
+    String date(DateTime? d) => d == null ? l.kycSelectDate : MaterialLocalizations.of(context).formatMediumDate(d);
+    Widget field(String key, TextEditingController controller, String label, int max) => Padding(
+      padding: const EdgeInsets.only(bottom: 16), child: TextFormField(
+        key: ValueKey(key), controller: controller, enabled: editable, maxLength: max,
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(labelText: label, border: const OutlineInputBorder()),
+        validator: (value) {
+          if (value == null || value.trim().isEmpty) { return l.passportRequired; }
+          if (key == 'passport-country' && value.trim().length < 2) { return l.passportCountryInvalid; }
+          return null;
+        },
+      ));
+    Widget dateButton(String key, String label, DateTime? value) => OutlinedButton(
+      key: ValueKey('passport-$key'), onPressed: editable ? () => _date(key) : null,
+      child: Text('$label: ${date(value)}'));
+    return PopScope(canPop: !_busy, child: Scaffold(appBar: AppBar(title: Text(l.kycPassport)),
+      body: SafeArea(child: Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 760),
+        child: Form(key: _form, autovalidateMode: _validate ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
+          child: ListView(padding: const EdgeInsets.all(20), children: [
+            Text(l.passportIntro), const SizedBox(height: 16),
+            if (_busy) const LinearProgressIndicator(),
+            if (_error != null && !showForm) Semantics(liveRegion: true, child: Text(_message(l, _error!))),
+            OutlinedButton(onPressed: _busy ? null : _load, child: Text(l.authCheckAgain)),
+            if (_known && _record == null) Text(l.kycNoDocumentSubmitted),
+            if (_record != null) Card(child: Padding(padding: const EdgeInsets.all(16), child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                Text(kycStatusLabel(l, _record!.status)),
+                if (_record!.data['full_name'] != null) Text(_record!.data['full_name'] as String),
+                Text('${l.kycExpiryDate}: ${date(_record!.expiry)}'),
+                if (_record!.rejection?.isNotEmpty == true) Text(_record!.rejection!),
+                for (final path in _record!.paths) TextButton(onPressed: _busy ? null : () => _preview(path), child: Text(l.idViewDocument)),
+                if (const {'pending', 'pending_review', 'under_review', 'submitted'}.contains(_record!.status))
+                  Text(l.passportPendingHelp),
+              ]))),
+            if (_known && _pending && (_record == null || _record!.canResubmit)) Text(l.passportOtherPending),
+            if (showForm) ...[
+              const SizedBox(height: 16),
+              CheckboxListTile(key: const ValueKey('passport-single'), value: _single,
+                onChanged: editable ? (v) => setState(() => _single = v ?? false) : null,
+                title: Text(l.passportSingleName)),
+              field('passport-given', _given, _single ? l.passportOnlyName : l.passportGiven, 100),
+              if (!_single) field('passport-family', _family, l.passportFamily, 100),
+              if (!_single) CheckboxListTile(value: _familyFirst,
+                onChanged: editable ? (v) => setState(() => _familyFirst = v ?? false) : null,
+                title: Text(l.passportFamilyFirst)),
+              field('passport-number', _number, l.kycPassportNumber, 30),
+              field('passport-country', _country, l.passportIssuingCountry, 100),
+              dateButton('birth', l.passportBirth, _birth),
+              dateButton('issued', l.kycIssueDate, _issued),
+              dateButton('expiry', l.kycExpiryDate, _expiry),
+              if (_validate && (_birth == null || _issued == null || _expiry == null ||
+                (_issued != null && _birth != null && _issued!.isBefore(_birth!)) ||
+                (_expiry != null && _issued != null && !_expiry!.isAfter(_issued!)))) Text(l.passportDatesInvalid),
+              const SizedBox(height: 16),
+              Text(l.kycPassportDocument), Text(l.idFileHelp),
+              if (_image != null) ...[Image.memory(_image!.bytes, height: 180), Text(_image!.name)],
+              OutlinedButton(key: const ValueKey('passport-image'), onPressed: editable ? _pick : null, child: Text(l.kycChooseFile)),
+              if (_validate && _image == null) Text(l.kycSelectAPassportImage),
+              const SizedBox(height: 16),
+              if (_error != null) Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Semantics(liveRegion: true, child: Text(_message(l, _error!),
+                  style: TextStyle(color: Theme.of(context).colorScheme.error)))),
+              if (_busy) Text(l.idSubmitting),
+              FilledButton(key: const ValueKey('passport-submit'), onPressed: _busy ? null : _save,
+                child: Text(_attempt == null ? l.passportSubmit : l.idRetrySubmission)),
             ],
-          ),
+          ]),
         ),
-      ],
-    );
-  }
-}
-
-// =============================================================================
-// DATE BUTTON
-// =============================================================================
-
-final class _DateButton
-    extends StatelessWidget {
-  const _DateButton({
-    required this.label,
-    required this.value,
-    required this.icon,
-    required this.onTap,
-  });
-
-  final String label;
-  final DateTime? value;
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme =
-        Theme.of(context);
-    final colors =
-        theme.colorScheme;
-
-    return InkWell(
-      onTap: onTap,
-      borderRadius:
-          BorderRadius.circular(16),
-      child: Container(
-        width: double.infinity,
-        padding:
-            const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          color: colors
-              .surfaceContainerLowest,
-          borderRadius:
-              BorderRadius.circular(16),
-          border: Border.all(
-            color:
-                colors.outlineVariant,
-          ),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 42,
-              height: 42,
-              decoration:
-                  BoxDecoration(
-                color: colors.primary
-                    .withValues(
-                  alpha: 0.10,
-                ),
-                borderRadius:
-                    BorderRadius.circular(
-                  12,
-                ),
-              ),
-              child: Icon(
-                icon,
-                color: colors.primary,
-                size: 21,
-              ),
-            ),
-
-            const SizedBox(width: 12),
-
-            Expanded(
-              child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: theme
-                        .textTheme
-                        .labelMedium
-                        ?.copyWith(
-                      color: colors
-                          .onSurfaceVariant,
-                    ),
-                  ),
-
-                  const SizedBox(height: 4),
-
-                  Text(
-                    value == null
-                        ? 'เลือกวันที่'
-                        : _formatDate(value!),
-                    style: theme
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(
-                      fontWeight:
-                          FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            Icon(
-              Icons
-                  .keyboard_arrow_down_rounded,
-              color:
-                  colors.onSurfaceVariant,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  String _formatDate(
-    DateTime date,
-  ) {
-    return '${date.day.toString().padLeft(2, '0')}/'
-        '${date.month.toString().padLeft(2, '0')}/'
-        '${date.year}';
+      ))),
+    ));
   }
 }

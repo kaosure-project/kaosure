@@ -1,1604 +1,219 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
+import '../../../auth/application/providers/auth_provider.dart';
+import '../../bank/bank_repository.dart';
+import '../../identity_card/national_id_repository.dart';
+import '../widgets/kyc_status_label.dart';
 
-import '../../application/providers/kyc_provider.dart';
-import '../../domain/entities/bank_verification.dart';
-
-final class BankVerificationPage
-    extends ConsumerStatefulWidget {
-  const BankVerificationPage({
-    super.key,
-  });
-
+final class BankVerificationPage extends ConsumerStatefulWidget {
+  const BankVerificationPage({super.key});
   @override
-  ConsumerState<BankVerificationPage>
-      createState() =>
-          _BankVerificationPageState();
+  ConsumerState<BankVerificationPage> createState() => _BankVerificationPageState();
 }
-
-final class _BankVerificationPageState
-    extends ConsumerState<BankVerificationPage> {
+final class _BankVerificationPageState extends ConsumerState<BankVerificationPage> {
+  final _form = GlobalKey<FormState>();
+  final _bank = TextEditingController(), _name = TextEditingController();
+  final _number = TextEditingController(), _branch = TextEditingController();
+  List<BankRecord> _records = [];
+  BankDraft? _attempt;
+  IdImage? _evidence;
+  String? _owner, _error;
+  String _type = 'savings';
+  bool _busy = false, _known = false, _adding = false, _validate = false;
+  bool _sessionChanged = false;
+  bool get _pending => _records.any((r) => r.pending);
   @override
-  void initState() {
-    super.initState();
-
-    Future.microtask(_load);
+  void initState() { super.initState(); Future.microtask(_load); }
+  @override
+  void dispose() {
+    _bank.dispose(); _name.dispose(); _number.dispose(); _branch.dispose();
+    super.dispose();
   }
-
+  void _clearForm() {
+    _attempt = null; _evidence = null; _validate = false; _adding = false;
+    _bank.clear(); _name.clear(); _number.clear(); _branch.clear();
+  }
+  bool _sameUser(String owner) => !_sessionChanged &&
+      ref.read(authProvider).asData?.value?.id == owner;
   Future<void> _load() async {
-    await ref
-        .read(kycControllerProvider.notifier)
-        .load();
+    if (!mounted || _busy || _sessionChanged) { return; }
+    setState(() { _busy = true; _known = false; _records = []; _error = null; });
+    try {
+      final repo = ref.read(bankRepositoryProvider);
+      final owner = await repo.owner();
+      if (_owner != null && _owner != owner) { throw const NationalIdFailure('session'); }
+      final records = await repo.list(owner);
+      if (!mounted) { return; }
+      if (!_sameUser(owner)) { throw const NationalIdFailure('session'); }
+      setState(() {
+        _owner = owner; _records = records; _known = true;
+        if (_pending || records.any((r) => r.id == _attempt?.id)) { _clearForm(); }
+      });
+    } catch (e) { _fail(e is NationalIdFailure ? e.code : 'load'); }
+    finally { if (mounted) { setState(() => _busy = false); } }
   }
-
+  void _fail(String code) {
+    if (!mounted || _sessionChanged) { return; }
+    setState(() {
+      _error = code;
+      if (code == 'session') { _sessionChanged = true; _records = []; _clearForm(); }
+    });
+  }
+  String _message(AppLocalizations l, String code) => switch (code) {
+    'session' => l.contactSessionChanged,
+    'load' => l.contactLoadFailed,
+    'file' => l.idFileInvalid,
+    'preview' => l.idPreviewFailed,
+    'pending' => l.bankPendingHelp,
+    'duplicate' => l.bankDuplicate,
+    'form' => l.bankCompleteForm,
+    _ => l.idSaveFailed,
+  };
+  Future<void> _pick() async {
+    setState(() { _busy = true; _error = null; });
+    try {
+      final image = await ref.read(nationalIdImagePickerProvider)();
+      if (!mounted || _sessionChanged) { return; }
+      if (!_sameUser(_owner!)) { _fail('session'); return; }
+      if (image != null) { setState(() => _evidence = image); }
+    } catch (_) { _fail('file'); }
+    finally { if (mounted) { setState(() => _busy = false); } }
+  }
+  Future<void> _save() async {
+    if (_busy || !_known || _owner == null || _sessionChanged || _pending) { return; }
+    if (_attempt == null) {
+      setState(() => _validate = true);
+      if (!_form.currentState!.validate() || _evidence == null) { _fail('form'); return; }
+      _attempt = BankDraft(id: const Uuid().v4(), owner: _owner!, bank: _bank.text.trim(),
+        name: _name.text.trim(), number: _number.text.trim(), branch: _branch.text.trim(),
+        type: _type, evidence: _evidence!);
+    }
+    FocusScope.of(context).unfocus();
+    setState(() { _busy = true; _error = null; });
+    try {
+      final record = await ref.read(bankRepositoryProvider).submit(_attempt!);
+      if (!mounted) { return; }
+      if (!_sameUser(_owner!)) { _fail('session'); return; }
+      setState(() { _records = [record, ..._records.where((r) => r.id != record.id)]; _clearForm(); });
+    } catch (e) { _fail(e is NationalIdFailure ? e.code : 'save'); }
+    finally { if (mounted) { setState(() => _busy = false); } }
+  }
+  Future<void> _preview(String path) async {
+    setState(() { _busy = true; _error = null; });
+    try {
+      final bytes = await ref.read(bankRepositoryProvider).preview(_owner!, path);
+      if (!mounted || _sessionChanged) { return; }
+      if (!_sameUser(_owner!)) { _fail('session'); return; }
+      // Loading ends when the download completes, not when the viewer closes.
+      setState(() => _busy = false);
+      final l = AppLocalizations.of(context);
+      await showDialog<void>(context: context, builder: (c) => AlertDialog(
+        title: Text(l.bankEvidence),
+        content: SizedBox(width: 600, height: 400, child: Consumer(builder: (context, ref, child) {
+          if (_sessionChanged || ref.watch(authProvider).asData?.value?.id != _owner) {
+            return Text(l.contactSessionChanged);
+          }
+          return InteractiveViewer(child: Image.memory(bytes, fit: BoxFit.contain,
+            errorBuilder: (_, error, stack) => Text(l.idPreviewFailed)));
+        })),
+        actions: [TextButton(onPressed: () => Navigator.of(c).pop(), child: Text(l.back))],
+      ));
+    } catch (_) { _fail('preview'); }
+    finally { if (mounted) { setState(() => _busy = false); } }
+  }
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
-    final state =
-        ref.watch(kycControllerProvider);
-
-    final bank =
-        state.bankVerification;
-
-    return Scaffold(
-      backgroundColor: colors.surface,
-      appBar: AppBar(
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        backgroundColor: colors.surface,
-        title: const Text(
-          'บัญชีธนาคาร',
-        ),
-      ),
-      body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: _load,
-          child: ListView(
-            physics:
-                const AlwaysScrollableScrollPhysics(),
-            padding:
-                const EdgeInsets.fromLTRB(
-              20,
-              12,
-              20,
-              40,
-            ),
-            children: [
-              _PageHeader(
-                bank: bank,
-              ),
-
-              const SizedBox(height: 24),
-
-              if (state.isLoading)
-                const _LoadingCard(),
-
-              if (!state.isLoading &&
-                  state.hasError)
-                _ErrorCard(
-                  message:
-                      state.errorMessage!,
-                  onRetry: _load,
-                ),
-
-              if (!state.isLoading &&
-                  !state.hasError &&
-                  bank == null)
-                _EmptyBankCard(
-                  onAdd: _onAddBank,
-                ),
-
-              if (!state.isLoading &&
-                  !state.hasError &&
-                  bank != null) ...[
-                _BankAccountCard(
-                  bank: bank,
-                ),
-
-                const SizedBox(height: 16),
-
-                _VerificationStatusCard(
-                  bank: bank,
-                ),
-
-                const SizedBox(height: 16),
-
-                _KycNameMatchCard(
-                  bank: bank,
-                ),
-
-                if (bank.rejectedReason != null &&
-                    bank.rejectedReason!
-                        .trim()
-                        .isNotEmpty) ...[
-                  const SizedBox(height: 16),
-                  _RejectedReasonCard(
-                    reason:
-                        bank.rejectedReason!,
-                  ),
-                ],
-
-                const SizedBox(height: 16),
-
-                _SecurityCard(
-                  bank: bank,
-                ),
-
-                if (!bank.isTrusted) ...[
-                  const SizedBox(height: 20),
-                  _ActionButton(
-                    bank: bank,
-                    onPressed: _onManageBank,
-                  ),
-                ],
-              ],
+    ref.listen(authProvider, (previous, next) {
+      if (_owner != null && next.asData?.value?.id != _owner) {
+        setState(() { _sessionChanged = true; _records = []; _clearForm(); });
+      }
+    });
+    final l = AppLocalizations.of(context);
+    if (_sessionChanged) {
+      return Scaffold(appBar: AppBar(title: Text(l.kycBankAccount)),
+        body: Center(child: Text(l.contactSessionChanged)));
+    }
+    final editable = !_busy && _attempt == null;
+    Widget field(String key, TextEditingController controller, String label, int max,
+        {bool optional = false, bool number = false}) => Padding(
+      padding: const EdgeInsets.only(bottom: 16), child: TextFormField(
+        key: ValueKey(key), controller: controller, enabled: editable, maxLength: max,
+        keyboardType: number ? TextInputType.number : TextInputType.text,
+        inputFormatters: number ? [FilteringTextInputFormatter.digitsOnly] : null,
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(labelText: label, border: const OutlineInputBorder()),
+        validator: (value) {
+          final text = value?.trim() ?? '';
+          if (!optional && text.isEmpty) { return l.passportRequired; }
+          if (number && !RegExp(r'^[0-9]{6,20}$').hasMatch(text)) { return l.bankNumberInvalid; }
+          if ((key == 'bank-name' && text.length < 2) || RegExp(r'[\x00-\x1F\x7F]').hasMatch(text)) {
+            return l.bankCompleteForm;
+          }
+          return null;
+        },
+      ));
+    Widget error() => Semantics(liveRegion: true, child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12), child: Text(_message(l, _error!),
+        style: TextStyle(color: Theme.of(context).colorScheme.error))));
+    return PopScope(canPop: !_busy, child: Scaffold(appBar: AppBar(title: Text(l.kycBankAccount)),
+      body: SafeArea(child: Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 760),
+        child: Form(key: _form, autovalidateMode: _validate ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
+          child: ListView(padding: const EdgeInsets.all(20), children: [
+            Text(l.bankSubmissionIntro), const SizedBox(height: 16),
+            if (_busy) const LinearProgressIndicator(),
+            OutlinedButton(key: const ValueKey('bank-refresh'), onPressed: _busy ? null : _load,
+              child: Text(l.authCheckAgain)),
+            if (_error != null && (!_known || !_adding || _pending)) error(),
+            if (_known && _records.isEmpty && !_adding) Text(l.bankNoAccounts),
+            for (final record in _records) Card(child: Padding(padding: const EdgeInsets.all(16),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                Text(record.data['bank_name'] as String? ?? '', style: Theme.of(context).textTheme.titleMedium),
+                Text(record.maskedNumber),
+                Text(record.data['account_name'] as String? ?? ''),
+                if (record.data['account_type'] == 'savings' || record.data['account_type'] == 'current')
+                  Text(record.data['account_type'] == 'savings' ? l.bankSavings : l.bankCurrent),
+                if ((record.data['branch_name'] as String? ?? '').isNotEmpty)
+                  Text(record.data['branch_name'] as String),
+                Text(kycStatusLabel(l, record.status)),
+                if (record.pending) Text(l.bankPendingHelp),
+                if (record.status == 'rejected' || record.status == 'expired') Text(l.bankResubmitHelp),
+                if (record.evidence != null) TextButton(key: ValueKey('bank-view-${record.id}'),
+                  onPressed: _busy ? null : () => _preview(record.evidence!), child: Text(l.bankViewEvidence)),
+              ]))),
+            if (_known && !_pending && !_adding) FilledButton(key: const ValueKey('bank-add'),
+              onPressed: _busy ? null : () => setState(() { _adding = true; _error = null; }),
+              child: Text(l.bankAddAccount)),
+            if (_known && !_pending && _adding) ...[
+              const SizedBox(height: 20),
+              field('bank-name', _bank, l.bankInstitutionName, 100),
+              field('bank-holder', _name, l.bankHolderName, 200),
+              field('bank-number', _number, l.bankAccountNumber, 20, number: true),
+              field('bank-branch', _branch, l.bankBranchOptional, 100, optional: true),
+              Text(l.bankAccountType),
+              Wrap(spacing: 12, children: [
+                ChoiceChip(label: Text(l.bankSavings), selected: _type == 'savings',
+                  onSelected: editable ? (_) => setState(() => _type = 'savings') : null),
+                ChoiceChip(label: Text(l.bankCurrent), selected: _type == 'current',
+                  onSelected: editable ? (_) => setState(() => _type = 'current') : null),
+              ]),
+              const SizedBox(height: 16), Text(l.bankEvidenceHelp), Text(l.idFileHelp),
+              if (_evidence != null) ...[Image.memory(_evidence!.bytes, height: 160), Text(_evidence!.name)],
+              OutlinedButton(key: const ValueKey('bank-pick'), onPressed: editable ? _pick : null,
+                child: Text(l.kycChooseFile)),
+              if (_validate && _evidence == null) Text(l.bankEvidenceRequired),
+              if (_error != null) error(),
+              if (_attempt != null) Text(l.bankRetryHelp),
+              FilledButton(key: const ValueKey('bank-submit'), onPressed: _busy ? null : _save,
+                child: Text(_attempt == null ? l.bankSubmitReview : l.idRetrySubmission)),
+              if (_attempt == null) TextButton(onPressed: _busy ? null : () => setState(_clearForm),
+                child: Text(l.back)),
             ],
-          ),
+          ]),
         ),
-      ),
-    );
+      ))),
+    ));
   }
-
-  void _onAddBank() {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        const SnackBar(
-          content: Text(
-            'ขั้นตอนเพิ่มบัญชีธนาคารจะเปิดในขั้นตอนถัดไป',
-          ),
-        ),
-      );
-  }
-
-  void _onManageBank() {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        const SnackBar(
-          content: Text(
-            'การจัดการบัญชีธนาคารจะเปิดในขั้นตอนถัดไป',
-          ),
-        ),
-      );
-  }
-}
-
-// =============================================================================
-// PAGE HEADER
-// =============================================================================
-
-final class _PageHeader
-    extends StatelessWidget {
-  const _PageHeader({
-    required this.bank,
-  });
-
-  final BankVerification? bank;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
-
-    return Container(
-      padding: const EdgeInsets.all(22),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            colors.primaryContainer,
-            colors.surfaceContainerHighest,
-          ],
-        ),
-        borderRadius:
-            BorderRadius.circular(24),
-        border: Border.all(
-          color:
-              colors.outlineVariant
-                  .withValues(alpha: 0.5),
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 58,
-            height: 58,
-            decoration: BoxDecoration(
-              color: colors.surface
-                  .withValues(alpha: 0.75),
-              borderRadius:
-                  BorderRadius.circular(18),
-            ),
-            child: Icon(
-              Icons.account_balance_rounded,
-              size: 30,
-              color: colors.primary,
-            ),
-          ),
-
-          const SizedBox(width: 16),
-
-          Expanded(
-            child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'ยืนยันบัญชีธนาคาร',
-                  style: theme
-                      .textTheme
-                      .titleLarge
-                      ?.copyWith(
-                        fontWeight:
-                            FontWeight.w800,
-                      ),
-                ),
-
-                const SizedBox(height: 6),
-
-                Text(
-                  bank == null
-                      ? 'เพิ่มบัญชีธนาคารเพื่อใช้ในการรับเงินและบริการทางการเงินของ Kao Ecosystem'
-                      : 'ตรวจสอบสถานะบัญชีและความสอดคล้องกับข้อมูล KYC',
-                  style: theme
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(
-                        color: colors
-                            .onSurfaceVariant,
-                        height: 1.45,
-                      ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// LOADING
-// =============================================================================
-
-final class _LoadingCard
-    extends StatelessWidget {
-  const _LoadingCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final colors =
-        Theme.of(context).colorScheme;
-
-    return Container(
-      padding:
-          const EdgeInsets.symmetric(
-        vertical: 42,
-        horizontal: 24,
-      ),
-      decoration: BoxDecoration(
-        color: colors.surface,
-        borderRadius:
-            BorderRadius.circular(22),
-        border: Border.all(
-          color:
-              colors.outlineVariant,
-        ),
-      ),
-      child: const Column(
-        children: [
-          CircularProgressIndicator(),
-          SizedBox(height: 18),
-          Text(
-            'กำลังตรวจสอบข้อมูลบัญชีธนาคาร...',
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// ERROR
-// =============================================================================
-
-final class _ErrorCard
-    extends StatelessWidget {
-  const _ErrorCard({
-    required this.message,
-    required this.onRetry,
-  });
-
-  final String message;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
-
-    return Container(
-      padding:
-          const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: colors.errorContainer,
-        borderRadius:
-            BorderRadius.circular(20),
-        border: Border.all(
-          color: colors.error
-              .withValues(alpha: 0.2),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.error_outline_rounded,
-                color: colors.error,
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  'ไม่สามารถโหลดข้อมูลได้',
-                  style: theme
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(
-                        fontWeight:
-                            FontWeight.w800,
-                        color:
-                            colors.onErrorContainer,
-                      ),
-                ),
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 10),
-
-          Text(
-            message,
-            style: theme
-                .textTheme
-                .bodySmall
-                ?.copyWith(
-                  color:
-                      colors.onErrorContainer,
-                  height: 1.4,
-                ),
-          ),
-
-          const SizedBox(height: 16),
-
-          OutlinedButton.icon(
-            onPressed: onRetry,
-            icon: const Icon(
-              Icons.refresh_rounded,
-            ),
-            label:
-                const Text('ลองอีกครั้ง'),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// EMPTY
-// =============================================================================
-
-final class _EmptyBankCard
-    extends StatelessWidget {
-  const _EmptyBankCard({
-    required this.onAdd,
-  });
-
-  final VoidCallback onAdd;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
-
-    return Container(
-      padding:
-          const EdgeInsets.all(28),
-      decoration: BoxDecoration(
-        color: colors.surface,
-        borderRadius:
-            BorderRadius.circular(24),
-        border: Border.all(
-          color:
-              colors.outlineVariant,
-        ),
-      ),
-      child: Column(
-        children: [
-          Container(
-            width: 76,
-            height: 76,
-            decoration: BoxDecoration(
-              color: colors.primary
-                  .withValues(alpha: 0.08),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.account_balance_outlined,
-              size: 38,
-              color: colors.primary,
-            ),
-          ),
-
-          const SizedBox(height: 20),
-
-          Text(
-            'ยังไม่มีบัญชีธนาคาร',
-            style: theme
-                .textTheme
-                .titleLarge
-                ?.copyWith(
-                  fontWeight:
-                      FontWeight.w800,
-                ),
-          ),
-
-          const SizedBox(height: 8),
-
-          Text(
-            'เพิ่มบัญชีธนาคารเพื่อเข้าสู่กระบวนการตรวจสอบและยืนยันตัวตนทางการเงิน',
-            textAlign:
-                TextAlign.center,
-            style: theme
-                .textTheme
-                .bodyMedium
-                ?.copyWith(
-                  color: colors
-                      .onSurfaceVariant,
-                  height: 1.5,
-                ),
-          ),
-
-          const SizedBox(height: 22),
-
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton.icon(
-              onPressed: onAdd,
-              icon: const Icon(
-                Icons.add_card_rounded,
-              ),
-              label: const Text(
-                'เพิ่มบัญชีธนาคาร',
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// BANK ACCOUNT
-// =============================================================================
-
-final class _BankAccountCard
-    extends StatelessWidget {
-  const _BankAccountCard({
-    required this.bank,
-  });
-
-  final BankVerification bank;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
-
-    return Container(
-      padding:
-          const EdgeInsets.all(22),
-      decoration: BoxDecoration(
-        color: colors.surface,
-        borderRadius:
-            BorderRadius.circular(24),
-        border: Border.all(
-          color:
-              colors.outlineVariant,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black
-                .withValues(alpha: 0.025),
-            blurRadius: 18,
-            offset:
-                const Offset(0, 7),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              _BankIcon(
-                bankName:
-                    bank.bankName,
-              ),
-
-              const SizedBox(width: 14),
-
-              Expanded(
-                child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      bank.bankName,
-                      style: theme
-                          .textTheme
-                          .titleMedium
-                          ?.copyWith(
-                            fontWeight:
-                                FontWeight.w800,
-                          ),
-                    ),
-                    const SizedBox(height: 3),
-                    Text(
-                      'บัญชีธนาคาร',
-                      style: theme
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(
-                            color: colors
-                                .onSurfaceVariant,
-                          ),
-                    ),
-                  ],
-                ),
-              ),
-
-              if (bank.isPrimary == true)
-                _PrimaryBadge(),
-            ],
-          ),
-
-          const SizedBox(height: 24),
-
-          _AccountNumberDisplay(
-            accountNumber:
-                bank.accountNumber,
-          ),
-
-          const SizedBox(height: 22),
-
-          const Divider(),
-
-          const SizedBox(height: 18),
-
-          _InfoItem(
-            icon:
-                Icons.person_outline_rounded,
-            label: 'ชื่อเจ้าของบัญชี',
-            value:
-                bank.accountName,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// BANK ICON
-// =============================================================================
-
-final class _BankIcon
-    extends StatelessWidget {
-  const _BankIcon({
-    required this.bankName,
-  });
-
-  final String bankName;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors =
-        Theme.of(context).colorScheme;
-
-    return Container(
-      width: 54,
-      height: 54,
-      decoration: BoxDecoration(
-        color: colors.primaryContainer,
-        borderRadius:
-            BorderRadius.circular(16),
-      ),
-      child: Icon(
-        Icons.account_balance_rounded,
-        color:
-            colors.onPrimaryContainer,
-        size: 28,
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// PRIMARY BADGE
-// =============================================================================
-
-final class _PrimaryBadge
-    extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final colors =
-        Theme.of(context).colorScheme;
-
-    return Container(
-      padding:
-          const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 6,
-      ),
-      decoration: BoxDecoration(
-        color: colors.primary
-            .withValues(alpha: 0.08),
-        borderRadius:
-            BorderRadius.circular(999),
-      ),
-      child: Row(
-        mainAxisSize:
-            MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.star_rounded,
-            size: 15,
-            color: colors.primary,
-          ),
-          const SizedBox(width: 4),
-          Text(
-            'บัญชีหลัก',
-            style: TextStyle(
-              color: colors.primary,
-              fontSize: 12,
-              fontWeight:
-                  FontWeight.w700,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// ACCOUNT NUMBER
-// =============================================================================
-
-final class _AccountNumberDisplay
-    extends StatelessWidget {
-  const _AccountNumberDisplay({
-    required this.accountNumber,
-  });
-
-  final String accountNumber;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
-
-    return Container(
-      width: double.infinity,
-      padding:
-          const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: colors.surfaceContainerHighest
-            .withValues(alpha: 0.55),
-        borderRadius:
-            BorderRadius.circular(16),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            Icons.credit_card_outlined,
-            color:
-                colors.onSurfaceVariant,
-          ),
-
-          const SizedBox(width: 12),
-
-          Expanded(
-            child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'เลขบัญชี',
-                  style: theme
-                      .textTheme
-                      .labelMedium
-                      ?.copyWith(
-                        color: colors
-                            .onSurfaceVariant,
-                      ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  _maskAccountNumber(
-                    accountNumber,
-                  ),
-                  style: theme
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(
-                        fontWeight:
-                            FontWeight.w800,
-                        letterSpacing:
-                            1.2,
-                      ),
-                ),
-              ],
-            ),
-          ),
-
-          Icon(
-            Icons.lock_outline_rounded,
-            size: 19,
-            color:
-                colors.onSurfaceVariant,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// VERIFICATION STATUS
-// =============================================================================
-
-final class _VerificationStatusCard
-    extends StatelessWidget {
-  const _VerificationStatusCard({
-    required this.bank,
-  });
-
-  final BankVerification bank;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    final config =
-        _statusConfig(
-      theme,
-      bank.status,
-    );
-
-    return _SectionCard(
-      title: 'สถานะการยืนยัน',
-      icon:
-          Icons.verified_outlined,
-      child: Container(
-        padding:
-            const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: config.background,
-          borderRadius:
-              BorderRadius.circular(16),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 46,
-              height: 46,
-              decoration: BoxDecoration(
-                color: config.foreground
-                    .withValues(
-                  alpha: 0.10,
-                ),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                config.icon,
-                color:
-                    config.foreground,
-              ),
-            ),
-
-            const SizedBox(width: 14),
-
-            Expanded(
-              child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    config.title,
-                    style: theme
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(
-                          color:
-                              config.foreground,
-                          fontWeight:
-                              FontWeight.w800,
-                        ),
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    config.description,
-                    style: theme
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(
-                          color:
-                              config.foreground,
-                          height: 1.4,
-                        ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// KYC NAME MATCH
-// =============================================================================
-
-final class _KycNameMatchCard
-    extends StatelessWidget {
-  const _KycNameMatchCard({
-    required this.bank,
-  });
-
-  final BankVerification bank;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    final config =
-        _nameMatchConfig(
-      theme,
-      bank.nameMatchStatus,
-    );
-
-    return _SectionCard(
-      title:
-          'ตรวจสอบชื่อกับ KYC',
-      icon:
-          Icons.person_search_outlined,
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            padding:
-                const EdgeInsets.all(18),
-            decoration: BoxDecoration(
-              color: config.background,
-              borderRadius:
-                  BorderRadius.circular(16),
-              border: Border.all(
-                color: config.foreground
-                    .withValues(
-                  alpha: 0.12,
-                ),
-              ),
-            ),
-            child: Row(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  config.icon,
-                  color:
-                      config.foreground,
-                  size: 24,
-                ),
-
-                const SizedBox(width: 12),
-
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        config.title,
-                        style: theme
-                            .textTheme
-                            .titleSmall
-                            ?.copyWith(
-                              color:
-                                  config.foreground,
-                              fontWeight:
-                                  FontWeight.w800,
-                            ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        config.description,
-                        style: theme
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(
-                              color:
-                                  config.foreground,
-                              height: 1.45,
-                            ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          if (bank.nameMatchReason != null &&
-              bank.nameMatchReason!
-                  .trim()
-                  .isNotEmpty) ...[
-            const SizedBox(height: 14),
-            _ReasonRow(
-              reason:
-                  bank.nameMatchReason!,
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// REJECTED REASON
-// =============================================================================
-
-final class _RejectedReasonCard
-    extends StatelessWidget {
-  const _RejectedReasonCard({
-    required this.reason,
-  });
-
-  final String reason;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors =
-        Theme.of(context).colorScheme;
-
-    return Container(
-      padding:
-          const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: colors.errorContainer
-            .withValues(alpha: 0.65),
-        borderRadius:
-            BorderRadius.circular(18),
-        border: Border.all(
-          color: colors.error
-              .withValues(alpha: 0.15),
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-        children: [
-          Icon(
-            Icons.info_outline_rounded,
-            color: colors.error,
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'เหตุผลที่ไม่ผ่าน',
-                  style: TextStyle(
-                    color: colors.error,
-                    fontWeight:
-                        FontWeight.w800,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  reason,
-                  style: TextStyle(
-                    color:
-                        colors.onErrorContainer,
-                    height: 1.45,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// SECURITY
-// =============================================================================
-
-final class _SecurityCard
-    extends StatelessWidget {
-  const _SecurityCard({
-    required this.bank,
-  });
-
-  final BankVerification bank;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
-
-    final trusted =
-        bank.isTrusted;
-
-    return Container(
-      padding:
-          const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: trusted
-            ? colors.primaryContainer
-                .withValues(alpha: 0.55)
-            : colors.surfaceContainerHighest
-                .withValues(alpha: 0.65),
-        borderRadius:
-            BorderRadius.circular(20),
-        border: Border.all(
-          color: trusted
-              ? colors.primary.withValues(
-                  alpha: 0.16,
-                )
-              : colors.outlineVariant,
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: trusted
-                  ? colors.primary
-                      .withValues(
-                      alpha: 0.10,
-                    )
-                  : colors.surface,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              trusted
-                  ? Icons.shield_rounded
-                  : Icons.security_outlined,
-              color: trusted
-                  ? colors.primary
-                  : colors.onSurfaceVariant,
-            ),
-          ),
-
-          const SizedBox(width: 13),
-
-          Expanded(
-            child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
-              children: [
-                Text(
-                  trusted
-                      ? 'บัญชีธนาคารที่เชื่อถือได้'
-                      : 'การรักษาความปลอดภัย',
-                  style: theme
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(
-                        fontWeight:
-                            FontWeight.w800,
-                      ),
-                ),
-
-                const SizedBox(height: 5),
-
-                Text(
-                  trusted
-                      ? 'บัญชีผ่านการยืนยันและชื่อบัญชีตรงกับข้อมูลที่ผ่าน KYC แล้ว'
-                      : 'ชื่อบัญชีธนาคารต้องตรงกับข้อมูลที่ผ่าน KYC ก่อนจึงจะถือว่าเป็นบัญชีที่เชื่อถือได้',
-                  style: theme
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(
-                        color: colors
-                            .onSurfaceVariant,
-                        height: 1.45,
-                      ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// ACTION
-// =============================================================================
-
-final class _ActionButton
-    extends StatelessWidget {
-  const _ActionButton({
-    required this.bank,
-    required this.onPressed,
-  });
-
-  final BankVerification bank;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-  
-
-    final label =
-        bank.isRejected
-            ? 'ตรวจสอบข้อมูลอีกครั้ง'
-            : 'จัดการบัญชีธนาคาร';
-
-    return SizedBox(
-      width: double.infinity,
-      child: FilledButton.icon(
-        onPressed: onPressed,
-        icon: Icon(
-          bank.isRejected
-              ? Icons.refresh_rounded
-              : Icons.account_balance_outlined,
-        ),
-        label: Text(label),
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// SECTION CARD
-// =============================================================================
-
-final class _SectionCard
-    extends StatelessWidget {
-  const _SectionCard({
-    required this.title,
-    required this.icon,
-    required this.child,
-  });
-
-  final String title;
-  final IconData icon;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
-
-    return Container(
-      padding:
-          const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: colors.surface,
-        borderRadius:
-            BorderRadius.circular(22),
-        border: Border.all(
-          color:
-              colors.outlineVariant,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                icon,
-                size: 21,
-                color: colors.primary,
-              ),
-              const SizedBox(width: 9),
-              Text(
-                title,
-                style: theme
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(
-                      fontWeight:
-                          FontWeight.w800,
-                    ),
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 16),
-
-          child,
-        ],
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// INFO ITEM
-// =============================================================================
-
-final class _InfoItem
-    extends StatelessWidget {
-  const _InfoItem({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
-  final IconData icon;
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
-
-    return Row(
-      crossAxisAlignment:
-          CrossAxisAlignment.start,
-      children: [
-        Icon(
-          icon,
-          size: 21,
-          color:
-              colors.onSurfaceVariant,
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: theme
-                    .textTheme
-                    .labelMedium
-                    ?.copyWith(
-                      color: colors
-                          .onSurfaceVariant,
-                    ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                value,
-                style: theme
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(
-                      fontWeight:
-                          FontWeight.w700,
-                    ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-// =============================================================================
-// REASON
-// =============================================================================
-
-final class _ReasonRow
-    extends StatelessWidget {
-  const _ReasonRow({
-    required this.reason,
-  });
-
-  final String reason;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
-
-    return Row(
-      crossAxisAlignment:
-          CrossAxisAlignment.start,
-      children: [
-        Icon(
-          Icons.notes_rounded,
-          size: 19,
-          color:
-              colors.onSurfaceVariant,
-        ),
-        const SizedBox(width: 9),
-        Expanded(
-          child: Text(
-            reason,
-            style: theme
-                .textTheme
-                .bodySmall
-                ?.copyWith(
-                  color: colors
-                      .onSurfaceVariant,
-                  height: 1.45,
-                ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-// =============================================================================
-// STATUS CONFIGURATION
-// =============================================================================
-
-_StatusConfig _statusConfig(
-  ThemeData theme,
-  String status,
-) {
-  final colors = theme.colorScheme;
-
-  switch (status) {
-    case 'approved':
-      return _StatusConfig(
-        title: 'ยืนยันแล้ว',
-        description:
-            'บัญชีธนาคารผ่านการตรวจสอบแล้ว',
-        icon:
-            Icons.check_circle_rounded,
-        foreground:
-            Colors.green.shade700,
-        background:
-            Colors.green.withValues(
-          alpha: 0.08,
-        ),
-      );
-
-    case 'pending':
-      return _StatusConfig(
-        title: 'กำลังตรวจสอบ',
-        description:
-            'ระบบกำลังตรวจสอบข้อมูลบัญชีธนาคาร',
-        icon:
-            Icons.hourglass_top_rounded,
-        foreground:
-            colors.tertiary,
-        background:
-            colors.tertiary.withValues(
-          alpha: 0.08,
-        ),
-      );
-
-    case 'manual_review':
-      return _StatusConfig(
-        title:
-            'อยู่ระหว่างการตรวจสอบเพิ่มเติม',
-        description:
-            'ข้อมูลต้องได้รับการตรวจสอบเพิ่มเติม',
-        icon:
-            Icons.manage_search_rounded,
-        foreground:
-            colors.tertiary,
-        background:
-            colors.tertiary.withValues(
-          alpha: 0.08,
-        ),
-      );
-
-    case 'rejected':
-      return _StatusConfig(
-        title: 'ไม่ผ่านการยืนยัน',
-        description:
-            'บัญชีธนาคารไม่ผ่านกระบวนการตรวจสอบ',
-        icon:
-            Icons.cancel_rounded,
-        foreground:
-            colors.error,
-        background:
-            colors.error.withValues(
-          alpha: 0.08,
-        ),
-      );
-
-    case 'expired':
-      return _StatusConfig(
-        title: 'หมดอายุ',
-        description:
-            'ข้อมูลการยืนยันบัญชีหมดอายุ',
-        icon:
-            Icons.event_busy_rounded,
-        foreground:
-            colors.error,
-        background:
-            colors.error.withValues(
-          alpha: 0.08,
-        ),
-      );
-
-    case 'not_started':
-    default:
-      return _StatusConfig(
-        title:
-            'ยังไม่ได้เริ่มการยืนยัน',
-        description:
-            'บัญชีธนาคารยังไม่ได้เข้าสู่กระบวนการตรวจสอบ',
-        icon:
-            Icons.info_outline_rounded,
-        foreground:
-            colors.onSurfaceVariant,
-        background:
-            colors.surfaceContainerHighest,
-      );
-  }
-}
-
-// =============================================================================
-// NAME MATCH CONFIGURATION
-// =============================================================================
-
-_NameMatchConfig _nameMatchConfig(
-  ThemeData theme,
-  String? status,
-) {
-  final colors = theme.colorScheme;
-
-  switch (status) {
-    case 'matched':
-      return _NameMatchConfig(
-        title:
-            'ชื่อบัญชีตรงกับข้อมูล KYC',
-        description:
-            'ชื่อเจ้าของบัญชีผ่านการตรวจสอบและตรงกับข้อมูลที่ยืนยันตัวตนไว้',
-        icon:
-            Icons.verified_rounded,
-        foreground:
-            Colors.green.shade700,
-        background:
-            Colors.green.withValues(
-          alpha: 0.08,
-        ),
-      );
-
-    case 'mismatched':
-      return _NameMatchConfig(
-        title:
-            'ชื่อบัญชีไม่ตรงกับข้อมูล KYC',
-        description:
-            'ระบบพบความแตกต่างระหว่างชื่อบัญชีธนาคารกับข้อมูล KYC',
-        icon:
-            Icons.warning_amber_rounded,
-        foreground:
-            colors.error,
-        background:
-            colors.error.withValues(
-          alpha: 0.08,
-        ),
-      );
-
-    case 'manual_review':
-      return _NameMatchConfig(
-        title:
-            'กำลังตรวจสอบชื่อบัญชี',
-        description:
-            'ระบบต้องตรวจสอบข้อมูลเพิ่มเติมก่อนสรุปผล',
-        icon:
-            Icons.manage_search_rounded,
-        foreground:
-            colors.tertiary,
-        background:
-            colors.tertiary.withValues(
-          alpha: 0.08,
-        ),
-      );
-
-    case 'pending':
-    default:
-      return _NameMatchConfig(
-        title:
-            'รอการตรวจสอบชื่อบัญชี',
-        description:
-            'ชื่อบัญชีจะถูกตรวจสอบกับข้อมูล KYC',
-        icon:
-            Icons.hourglass_empty_rounded,
-        foreground:
-            colors.onSurfaceVariant,
-        background:
-            colors.surfaceContainerHighest,
-      );
-  }
-}
-
-// =============================================================================
-// MASK ACCOUNT NUMBER
-// =============================================================================
-
-String _maskAccountNumber(
-  String accountNumber,
-) {
-  final value =
-      accountNumber.trim();
-
-  if (value.length <= 4) {
-    return value;
-  }
-
-  final visible =
-      value.substring(
-    value.length - 4,
-  );
-
-  return '•••• •••• $visible';
-}
-
-// =============================================================================
-// CONFIGURATION MODELS
-// =============================================================================
-
-final class _StatusConfig {
-  const _StatusConfig({
-    required this.title,
-    required this.description,
-    required this.icon,
-    required this.foreground,
-    required this.background,
-  });
-
-  final String title;
-  final String description;
-  final IconData icon;
-  final Color foreground;
-  final Color background;
-}
-
-final class _NameMatchConfig {
-  const _NameMatchConfig({
-    required this.title,
-    required this.description,
-    required this.icon,
-    required this.foreground,
-    required this.background,
-  });
-
-  final String title;
-  final String description;
-  final IconData icon;
-  final Color foreground;
-  final Color background;
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
@@ -44,47 +45,51 @@ final class KycController
   // LOAD
   // ===========================================================================
 
+  int _generation = 0;
+
   Future<void> load() async {
+    if (!mounted) return;
+    final generation = ++_generation;
     state = state.copyWith(
-      isLoading: true,
-      clearError: true,
+      isLoading: true, clearError: true,
+      loadedResources: const {}, failedResources: const {},
     );
+    bool current() => mounted && generation == _generation;
 
-    try {
-      final verification =
-          await _getVerificationUseCase();
-
-      final verificationRequest =
-          await _getVerificationRequestUseCase();
-
-      final identityDocuments =
-          await _getIdentityDocumentsUseCase();
-
-      final bankVerification =
-          await _getBankVerificationUseCase();
-
-      final verificationHistory =
-          await _getVerificationHistoryUseCase();
-
-      state = state.copyWith(
-        isLoading: false,
-        verification: verification,
-        verificationRequest:
-            verificationRequest,
-        identityDocuments:
-            identityDocuments,
-        bankVerification:
-            bankVerification,
-        verificationHistory:
-            verificationHistory,
-        clearError: true,
-      );
-    } catch (error) {
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: error.toString(),
-      );
+    Future<void> fetch<T>(KycResource resource, Future<T> Function() read,
+        KycState Function(KycState, T) apply) async {
+      try {
+        final value = await read();
+        if (!current()) return;
+        state = apply(state, value).copyWith(
+          loadedResources: Set.unmodifiable({...state.loadedResources, resource}),
+        );
+      } catch (error) {
+        if (!current()) return;
+        // Never log document numbers, bank data, tokens or raw server messages.
+        debugPrint('KYC load failed: ${resource.name} (${error.runtimeType})');
+        state = state.copyWith(
+          failedResources: Set.unmodifiable({...state.failedResources, resource}),
+          errorMessage: 'KYC data unavailable',
+        );
+      }
     }
+
+    await Future.wait([
+      fetch(KycResource.verification, () => _getVerificationUseCase(),
+          (s, value) => s.copyWith(verification: value)),
+      fetch(KycResource.request, () => _getVerificationRequestUseCase(),
+          (s, value) => s.copyWith(verificationRequest: value,
+              clearVerificationRequest: value == null)),
+      fetch(KycResource.documents, () => _getIdentityDocumentsUseCase(),
+          (s, value) => s.copyWith(identityDocuments: value)),
+      fetch(KycResource.bank, () => _getBankVerificationUseCase(),
+          (s, value) => s.copyWith(bankVerification: value,
+              clearBankVerification: value == null)),
+      fetch(KycResource.history, () => _getVerificationHistoryUseCase(),
+          (s, value) => s.copyWith(verificationHistory: value)),
+    ]);
+    if (current()) state = state.copyWith(isLoading: false);
   }
 
   // ===========================================================================
@@ -94,7 +99,7 @@ final class KycController
   Future<void> submitVerificationRequest({
     required String documentId,
   }) async {
-    if (!state.canSubmitVerificationRequest) {
+    if (!mounted || !state.canSubmitVerificationRequest) {
       return;
     }
 
@@ -103,16 +108,19 @@ final class KycController
       clearError: true,
     );
 
+    final generation = ++_generation;
     try {
       await _submitVerificationRequestUseCase(
         documentId: documentId,
       );
 
+      if (!mounted || generation != _generation) return;
       await load();
     } catch (error) {
+      if (!mounted || generation != _generation) return;
       state = state.copyWith(
         isLoading: false,
-        errorMessage: error.toString(),
+        errorMessage: 'KYC request failed',
       );
     }
   }
@@ -122,6 +130,8 @@ final class KycController
   // ===========================================================================
 
   void clear() {
+    _generation++;
+    if (!mounted) return;
     state = KycState.initial();
   }
 }

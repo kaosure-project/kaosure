@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../../../account/domain/entities/profile.dart';
@@ -148,14 +149,14 @@ final class _CompletionSection
           children: [
             Expanded(
               child: Text(
-                'ความสมบูรณ์ของบัญชี',
+                AppLocalizations.of(context).kycAccountCompleteness,
                 style: theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
               ),
             ),
             Text(
-              'บัญชีของคุณ',
+              AppLocalizations.of(context).kycYourAccount,
               style: theme.textTheme.labelMedium?.copyWith(
                 color: colorScheme.primary,
                 fontWeight: FontWeight.w600,

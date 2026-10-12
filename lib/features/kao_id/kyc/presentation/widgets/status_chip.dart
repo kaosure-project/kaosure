@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 final class StatusChip extends StatelessWidget {
@@ -20,28 +21,35 @@ final class StatusChip extends StatelessWidget {
         backgroundColor = const Color(0xFFE8F5E9);
         foregroundColor = const Color(0xFF2E7D32);
         icon = Icons.check_circle;
-        text = 'อนุมัติแล้ว';
+        text = AppLocalizations.of(context).kycApproved;
         break;
 
       case 'pending':
         backgroundColor = const Color(0xFFFFF3E0);
         foregroundColor = const Color(0xFFEF6C00);
         icon = Icons.schedule;
-        text = 'รอตรวจสอบ';
+        text = AppLocalizations.of(context).kycAwaitingReview;
         break;
 
       case 'rejected':
         backgroundColor = const Color(0xFFFFEBEE);
         foregroundColor = const Color(0xFFC62828);
         icon = Icons.cancel;
-        text = 'ไม่ผ่านการตรวจสอบ';
+        text = AppLocalizations.of(context).kycRejected;
         break;
 
-      default:
+      case 'not_started':
+      case 'draft':
         backgroundColor = const Color(0xFFF5F5F5);
         foregroundColor = const Color(0xFF616161);
         icon = Icons.radio_button_unchecked;
-        text = 'ยังไม่ได้ส่งเอกสาร';
+        text = AppLocalizations.of(context).kycNoDocumentSubmitted;
+        break;
+      default:
+        backgroundColor = const Color(0xFFF5F5F5);
+        foregroundColor = const Color(0xFF616161);
+        icon = Icons.help_outline;
+        text = AppLocalizations.of(context).kycUnknownStatus;
     }
 
     return Container(
@@ -62,14 +70,14 @@ final class StatusChip extends StatelessWidget {
             color: foregroundColor,
           ),
           const SizedBox(width: 8),
-          Text(
+          Flexible(child: Text(
             text,
             style: TextStyle(
               color: foregroundColor,
               fontWeight: FontWeight.w600,
               fontSize: 14,
             ),
-          ),
+          )),
         ],
       ),
     );

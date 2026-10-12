@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/verification.dart';
@@ -28,32 +29,32 @@ final class PermissionSection extends StatelessWidget {
 
     return PermissionCard(
       permissions: [
-        const PermissionItem(
-          title: 'เข้าสู่ระบบ',
+         PermissionItem(
+          title: AppLocalizations.of(context).kycSignIn,
           enabled: true,
         ),
-        const PermissionItem(
-          title: 'แก้ไขโปรไฟล์',
+         PermissionItem(
+          title: AppLocalizations.of(context).kycEditProfile,
           enabled: true,
         ),
         PermissionItem(
-          title: 'ยืนยันอีเมล',
+          title: AppLocalizations.of(context).kycVerifyEmail,
           enabled: emailVerified,
         ),
         PermissionItem(
-          title: 'ยืนยันเบอร์โทรศัพท์',
+          title: AppLocalizations.of(context).kycVerifyPhoneNumber,
           enabled: phoneVerified,
         ),
-        const PermissionItem(
-          title: 'ซื้อสินค้า',
+         PermissionItem(
+          title: AppLocalizations.of(context).kycBuyItems,
           enabled: true,
         ),
         PermissionItem(
-          title: 'ขายสินค้า',
+          title: AppLocalizations.of(context).kycSellItems,
           enabled: identityVerified,
         ),
         PermissionItem(
-          title: 'ถอนเงิน',
+          title: AppLocalizations.of(context).kycWithdrawFunds,
           enabled: bankVerified,
         ),
         PermissionItem(

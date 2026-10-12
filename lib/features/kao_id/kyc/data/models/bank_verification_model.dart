@@ -9,6 +9,7 @@ final class BankVerificationModel {
     required this.accountName,
     required this.accountNumber,
     required this.status,
+    this.nameMatchStatus,
     this.verifiedAt,
     this.verifiedBy,
     required this.isPrimary,
@@ -23,6 +24,7 @@ final class BankVerificationModel {
   final String accountName;
   final String accountNumber;
   final String status;
+  final String? nameMatchStatus;
   final DateTime? verifiedAt;
   final String? verifiedBy;
   final bool isPrimary;
@@ -30,7 +32,10 @@ final class BankVerificationModel {
   final DateTime updatedAt;
 
   factory BankVerificationModel.fromJson(Map<String, dynamic> json) {
-    final isVerified = json['is_verified'] as bool? ?? false;
+    final rawStatus = json['status'] as String? ?? 'unknown';
+    final status = rawStatus == 'verified'
+        ? (json['is_verified'] == true ? 'approved' : 'unknown')
+        : rawStatus;
 
     return BankVerificationModel(
       id: json['id'] as String,
@@ -39,7 +44,8 @@ final class BankVerificationModel {
       bankName: json['bank_name'] as String,
       accountName: json['account_name'] as String,
       accountNumber: json['account_number'] as String,
-      status: isVerified ? 'approved' : 'pending',
+      status: status,
+      nameMatchStatus: json['name_match_status'] as String?,
       verifiedAt: _parseDate(json['verified_at']),
       verifiedBy: json['verified_by'] as String?,
       isPrimary: json['is_default'] as bool? ?? false,
@@ -57,7 +63,7 @@ final class BankVerificationModel {
       accountName: accountName,
       accountNumber: accountNumber,
       status: status,
-      nameMatchStatus: null,
+      nameMatchStatus: nameMatchStatus,
       nameMatchReason: null,
       verificationMethod: null,
       verifiedAt: verifiedAt,
@@ -70,8 +76,8 @@ final class BankVerificationModel {
   }
 
   static DateTime? _parseDate(dynamic value) {
-    if (value == null) return null;
-    if (value is DateTime) return value;
+    if (value == null) { return null; }
+    if (value is DateTime) { return value; }
     return DateTime.parse(value.toString());
   }
 }

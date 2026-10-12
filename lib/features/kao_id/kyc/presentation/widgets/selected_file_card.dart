@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 final class SelectedFileCard extends StatelessWidget {
@@ -71,8 +72,8 @@ final class SelectedFileCard extends StatelessWidget {
                     icon: const Icon(
                       Icons.refresh,
                     ),
-                    label: const Text(
-                      'เลือกไฟล์ใหม่',
+                    label:  Text(
+                      AppLocalizations.of(context).kycChooseAnotherFile,
                     ),
                   ),
                 ],

@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/bank_verification.dart';
@@ -206,7 +207,7 @@ final class _EmptyTile
                       CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'บัญชีธนาคาร',
+                      AppLocalizations.of(context).kycBankAccount,
                       style: theme
                           .textTheme
                           .titleSmall
@@ -217,7 +218,7 @@ final class _EmptyTile
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'ยังไม่ได้เพิ่มบัญชีธนาคาร',
+                      AppLocalizations.of(context).kycNoBankAccountAddedLabel,
                       style: theme
                           .textTheme
                           .bodySmall
@@ -342,38 +343,38 @@ _StatusConfig _statusConfig(
   switch (status) {
     case 'approved':
       return _StatusConfig(
-        label: 'ยืนยันแล้ว',
+        label: AppLocalizations.of(context).kycVerified,
         color: Colors.green.shade700,
       );
 
     case 'pending':
       return _StatusConfig(
-        label: 'กำลังตรวจสอบ',
+        label: AppLocalizations.of(context).kycUnderReview,
         color: colors.tertiary,
       );
 
     case 'rejected':
       return _StatusConfig(
-        label: 'ไม่ผ่าน',
+        label: AppLocalizations.of(context).kycRejectedLabel,
         color: colors.error,
       );
 
     case 'manual_review':
       return _StatusConfig(
-        label: 'ตรวจสอบเพิ่มเติม',
+        label: AppLocalizations.of(context).kycAdditionalReviewLabel,
         color: colors.tertiary,
       );
 
     case 'expired':
       return _StatusConfig(
-        label: 'หมดอายุ',
+        label: AppLocalizations.of(context).kycExpired,
         color: colors.error,
       );
 
     case 'not_started':
     default:
       return _StatusConfig(
-        label: 'ยังไม่ได้ยืนยัน',
+        label: AppLocalizations.of(context).kycNotVerifiedLabel,
         color: colors.onSurfaceVariant,
       );
   }
@@ -393,26 +394,26 @@ _StatusConfig _nameMatchConfig(
   switch (status) {
     case 'matched':
       return _StatusConfig(
-        label: 'ชื่อ KYC ตรงกัน',
+        label: AppLocalizations.of(context).kycNameMatchesKyc,
         color: Colors.green.shade700,
       );
 
     case 'mismatched':
       return _StatusConfig(
-        label: 'ชื่อไม่ตรง',
+        label: AppLocalizations.of(context).kycNameDoesNotMatch,
         color: colors.error,
       );
 
     case 'manual_review':
       return _StatusConfig(
-        label: 'ตรวจชื่อเพิ่มเติม',
+        label: AppLocalizations.of(context).kycAdditionalNameReview,
         color: colors.tertiary,
       );
 
     case 'pending':
     default:
       return _StatusConfig(
-        label: 'รอตรวจชื่อ KYC',
+        label: AppLocalizations.of(context).kycAwaitingKycNameCheck,
         color: colors.onSurfaceVariant,
       );
   }

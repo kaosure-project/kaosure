@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 final class IdentityCardTile extends StatelessWidget {
@@ -28,19 +29,19 @@ final class IdentityCardTile extends StatelessWidget {
     }
   }
 
-  String get _statusText {
+  String _statusText(BuildContext context) {
     switch (status) {
       case 'verified':
-        return 'ผ่านการยืนยัน';
+        return AppLocalizations.of(context).kycVerifiedLabel;
 
       case 'pending':
-        return 'กำลังตรวจสอบ';
+        return AppLocalizations.of(context).kycUnderReview;
 
       case 'rejected':
-        return 'ไม่ผ่าน';
+        return AppLocalizations.of(context).kycRejectedLabel;
 
       default:
-        return 'ยังไม่ได้เพิ่ม';
+        return AppLocalizations.of(context).kycNotAdded;
     }
   }
 
@@ -59,19 +60,19 @@ final class IdentityCardTile extends StatelessWidget {
         Icons.badge_outlined,
         color: _statusColor,
       ),
-      title: const Text(
-        'บัตรประชาชน',
+      title:  Text(
+        AppLocalizations.of(context).kycNationalIdCard,
       ),
       subtitle: expiryDate == null
-          ? Text(_statusText)
+          ? Text(_statusText(context))
           : Text(
-              'หมดอายุ $_expiryText',
+              AppLocalizations.of(context).kycExpiresOnDate(_expiryText),
             ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            _statusText,
+            _statusText(context),
             style: TextStyle(
               color: _statusColor,
               fontWeight: FontWeight.w600,

@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 final class PermissionCard extends StatelessWidget {
@@ -21,7 +22,7 @@ final class PermissionCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'สิทธิ์การใช้งาน',
+              AppLocalizations.of(context).kycAccessPermissions,
               style: Theme.of(context).textTheme.titleLarge,
             ),
 

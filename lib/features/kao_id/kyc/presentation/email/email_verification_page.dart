@@ -1,572 +1,110 @@
+import '../../../auth/application/providers/email_verification_status_provider.dart';
+import 'package:kaosure/features/kao_id/contact_change/contact_change_page.dart';
+import 'package:kaosure/features/kao_id/contact_change/contact_change_repository.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
+import '../../../auth/application/providers/auth_provider.dart';
 
-import '../../../../../shared/design_system/responsive/app_layout.dart';
-import '../../../../../shared/design_system/responsive/app_page_layout.dart';
-import '../../../../../shared/widgets/buttons/primary_button.dart';
-import '../../../../../shared/widgets/cards/app_card.dart';
-
-import '../widgets/info_tile.dart';
-import '../widgets/status_chip.dart';
-
-final class EmailVerificationPage extends StatefulWidget {
-  const EmailVerificationPage({
-    super.key,
-  });
-
+final class EmailVerificationPage extends ConsumerStatefulWidget {
+  const EmailVerificationPage({super.key});
   @override
-  State<EmailVerificationPage> createState() =>
-      _EmailVerificationPageState();
+  ConsumerState<EmailVerificationPage> createState() => _EmailVerificationPageState();
 }
-
-final class _EmailVerificationPageState
-    extends State<EmailVerificationPage> {
-  static const _title = 'ยืนยันอีเมล';
-
-  static const _description =
-      'ใช้อีเมลเพื่อเข้าสู่ระบบ รับการแจ้งเตือน '
-      'และเพิ่มความปลอดภัยของบัญชี Kao ID';
-
-  final _supabase = Supabase.instance.client;
-
-  bool _sending = false;
-
-  User? get _user => _supabase.auth.currentUser;
-
-  Future<void> _sendVerification() async {
-    final user = _user;
-
-    if (user == null || user.email == null) {
-      if (!mounted) {
-        return;
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('ไม่พบข้อมูลผู้ใช้งาน'),
-        ),
-      );
-
-      return;
-    }
-
-    setState(() {
-      _sending = true;
+class _EmailVerificationPageState extends ConsumerState<EmailVerificationPage> {
+  bool _busy = false;
+  bool _known = false;
+  String? _message;
+  DateTime? _retryAt;
+  Timer? _timer;
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(_refresh);
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (mounted) { setState(() {}); }
     });
+  }
+  @override
+  void dispose() { _timer?.cancel(); super.dispose(); }
 
+  Future<void> _refresh() async {
+    if (!mounted || _busy) { return; }
+    setState(() { _busy = true; _message = null; });
     try {
-      await _supabase.auth.resend(
-        type: OtpType.signup,
-        email: user.email!,
-      );
-
-      if (!mounted) {
-        return;
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'ส่งอีเมลยืนยันเรียบร้อยแล้ว',
-          ),
-        ),
-      );
-    } on AuthException catch (e) {
-      if (!mounted) {
-        return;
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.message),
-        ),
-      );
+      final user = await ref.read(authProvider.notifier).refreshCurrentUser();
+      if (!mounted) { return; }
+      setState(() { _known = user != null; _message = user == null ? 'error' : null; });
+    } catch (_) {
+      if (mounted) { setState(() { _known = false; _message = 'error'; }); }
     } finally {
-      if (mounted) {
-        setState(() {
-          _sending = false;
-        });
-      }
+      if (mounted) { setState(() => _busy = false); }
     }
   }
 
+  Future<void> _send() async {
+    if (_busy || (_retryAt != null && DateTime.now().isBefore(_retryAt!))) { return; }
+    setState(() {
+      _busy = true; _message = null;
+      _retryAt = DateTime.now().add(const Duration(seconds: 60));
+    });
+    try {
+      await ref.read(authProvider.notifier).resendEmailVerification();
+      if (mounted) { setState(() => _message = 'sent'); }
+    } catch (_) {
+      if (mounted) { setState(() => _message = 'error'); }
+    } finally {
+      if (mounted) { setState(() => _busy = false); }
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    final email = _user?.email ?? 'ไม่พบอีเมล';
-
-    final verified =
-        _user?.emailConfirmedAt != null;
-
+    final l = AppLocalizations.of(context);
+    final user = ref.watch(authProvider).asData?.value;
+    final emailStatus = ref.watch(emailVerificationStatusProvider);
+    final verified = _known && emailStatus == true;
+    final remaining = _retryAt?.difference(DateTime.now()).inSeconds ?? 0;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(_title),
-      ),
-      body: AppPageLayout(
-        maxWidth: AppLayout.formMaxWidth,
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 760,
-            ),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(
-                20,
-                28,
-                20,
-                40,
-              ),
-              child: AppCard(
-                padding: EdgeInsets.zero,
-                child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.stretch,
-                  children: [
-                    _VerificationHeader(
-                      title: _title,
-                      description: _description,
-                      verified: verified,
-                    ),
-
-                    const Divider(height: 1),
-
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        28,
-                        28,
-                        28,
-                        32,
-                      ),
-                      child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.stretch,
-                        children: [
-                          _SectionTitle(
-                            title: 'ข้อมูลอีเมล',
-                            subtitle:
-                                'ข้อมูลอีเมลที่ผูกกับบัญชี Kao ID',
-                          ),
-
-                          const SizedBox(height: 16),
-
-                          InfoTile(
-                            icon: Icons.email_outlined,
-                            title: 'อีเมล',
-                            value: email,
-                          ),
-
-                          const SizedBox(height: 12),
-
-                          InfoTile(
-                            icon:
-                                Icons.verified_user_outlined,
-                            title: 'สถานะ',
-                            value: verified
-                                ? 'ยืนยันแล้ว'
-                                : 'ยังไม่ได้ยืนยัน',
-                          ),
-
-                          const SizedBox(height: 28),
-
-                          if (!verified) ...[
-                            PrimaryButton(
-                              text: 'ส่งอีเมลยืนยัน',
-                              icon: Icons.send_outlined,
-                              isLoading: _sending,
-                              onPressed:
-                                  _sendVerification,
-                            ),
-                          ] else ...[
-                            _VerifiedMessage(
-                              colorScheme:
-                                  colorScheme,
-                            ),
-                          ],
-
-                          const SizedBox(height: 28),
-
-                          _InformationCard(
-                            colorScheme: colorScheme,
-                            theme: theme,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-final class _VerificationHeader
-    extends StatelessWidget {
-  const _VerificationHeader({
-    required this.title,
-    required this.description,
-    required this.verified,
-  });
-
-  final String title;
-  final String description;
-  final bool verified;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    final accentColor = verified
-        ? colorScheme.primary
-        : colorScheme.secondary;
-
-    return Container(
-      padding: const EdgeInsets.fromLTRB(
-        28,
-        32,
-        28,
-        28,
-      ),
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest
-            .withValues(alpha: 0.28),
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
-      ),
-      child: Column(
-        children: [
-          Container(
-            width: 76,
-            height: 76,
-            decoration: BoxDecoration(
-              color: accentColor.withValues(
-                alpha: 0.10,
-              ),
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: accentColor.withValues(
-                  alpha: 0.18,
-                ),
-              ),
-            ),
-            child: Icon(
-              verified
-                  ? Icons.mark_email_read_outlined
-                  : Icons.email_outlined,
-              size: 38,
-              color: accentColor,
-            ),
-          ),
-
-          const SizedBox(height: 20),
-
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: theme.textTheme.headlineSmall
-                ?.copyWith(
-              fontWeight: FontWeight.w700,
-              letterSpacing: -0.3,
-            ),
-          ),
-
-          const SizedBox(height: 10),
-
-          ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 600,
-            ),
-            child: Text(
-              description,
-              textAlign: TextAlign.center,
-              style: theme.textTheme.bodyMedium
-                  ?.copyWith(
-                color:
-                    colorScheme.onSurfaceVariant,
-                height: 1.6,
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 18),
-
-          StatusChip(
-            status:
-                verified ? 'approved' : 'not_started',
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-final class _SectionTitle
-    extends StatelessWidget {
-  const _SectionTitle({
-    required this.title,
-    required this.subtitle,
-  });
-
-  final String title;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return Column(
-      crossAxisAlignment:
-          CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: theme.textTheme.titleMedium
-              ?.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          subtitle,
-          style: theme.textTheme.bodySmall
-              ?.copyWith(
-            color:
-                colorScheme.onSurfaceVariant,
-            height: 1.45,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-final class _VerifiedMessage
-    extends StatelessWidget {
-  const _VerifiedMessage({
-    required this.colorScheme,
-  });
-
-  final ColorScheme colorScheme;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: colorScheme.primaryContainer
-            .withValues(alpha: 0.45),
-        borderRadius:
-            BorderRadius.circular(16),
-        border: Border.all(
-          color: colorScheme.primary
-              .withValues(alpha: 0.18),
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: colorScheme.primary,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.check,
-              size: 20,
-              color: colorScheme.onPrimary,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'ยืนยันอีเมลแล้ว',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(
-                        fontWeight:
-                            FontWeight.w700,
-                      ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'อีเมลของคุณได้รับการยืนยันเรียบร้อยแล้ว',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(
-                        color: colorScheme
-                            .onSurfaceVariant,
-                        height: 1.45,
-                      ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-final class _InformationCard
-    extends StatelessWidget {
-  const _InformationCard({
-    required this.colorScheme,
-    required this.theme,
-  });
-
-  final ColorScheme colorScheme;
-  final ThemeData theme;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerLow,
-        borderRadius:
-            BorderRadius.circular(18),
-        border: Border.all(
-          color: colorScheme.outlineVariant,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 38,
-                height: 38,
-                decoration: BoxDecoration(
-                  color:
-                      colorScheme.secondaryContainer,
-                  borderRadius:
-                      BorderRadius.circular(11),
-                ),
-                child: Icon(
-                  Icons.info_outline,
-                  size: 20,
-                  color: colorScheme
-                      .onSecondaryContainer,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'ข้อมูลเพิ่มเติม',
-                      style: theme
-                          .textTheme
-                          .titleSmall
-                          ?.copyWith(
-                        fontWeight:
-                            FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    Text(
-                      'สิ่งที่ควรรู้เกี่ยวกับการยืนยันอีเมล',
-                      style: theme
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(
-                        color: colorScheme
-                            .onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+      appBar: AppBar(title: Text(l.authVerifyEmail)),
+      body: SafeArea(child: Center(child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 640),
+        child: ListView(padding: const EdgeInsets.all(20), children: [
+          Text(verified ? l.authEmailVerified : l.authVerifyEmailInstructions), const SizedBox(height: 20),
+          Card(child: Padding(padding: const EdgeInsets.all(20), child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(user?.email ?? '—'), const SizedBox(height: 12),
+              Text(!_known || emailStatus == null ? l.kycUnknownStatus
+                : verified ? l.kycVerifiedStatus : l.kycUnverifiedStatus),
             ],
-          ),
-
-          const SizedBox(height: 18),
-
-          const _InformationItem(
-            icon: Icons.mark_email_read_outlined,
-            text:
-                'ลิงก์ยืนยันจะถูกส่งไปยังอีเมลของคุณ',
-          ),
-
+          ))),
+          const SizedBox(height: 20),
+          if (!verified) FilledButton(
+            onPressed: _busy || !_known || user == null || remaining > 0 ? null : _send,
+            child: Text(remaining > 0 ? '${l.contactWait} ($remaining)'
+              : l.authResendVerificationEmail)),
           const SizedBox(height: 12),
-
-          const _InformationItem(
-            icon: Icons.schedule_outlined,
-            text:
-                'ลิงก์มีอายุ 30 นาที',
-          ),
-
-          const SizedBox(height: 12),
-
-          const _InformationItem(
-            icon: Icons.sync_outlined,
-            text:
-                'หลังยืนยันแล้วสถานะจะเปลี่ยนอัตโนมัติ',
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-final class _InformationItem
-    extends StatelessWidget {
-  const _InformationItem({
-    required this.icon,
-    required this.text,
-  });
-
-  final IconData icon;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return Row(
-      crossAxisAlignment:
-          CrossAxisAlignment.start,
-      children: [
-        Icon(
-          icon,
-          size: 19,
-          color: colorScheme.primary,
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: Text(
-            text,
-            style: theme.textTheme.bodySmall
-                ?.copyWith(
-              height: 1.45,
-            ),
-          ),
-        ),
-      ],
+          OutlinedButton.icon(onPressed: _busy ? null : _refresh,
+            icon: const Icon(Icons.refresh), label: Text(l.authCheckAgain)),
+          if (_busy) ...[const SizedBox(height: 16), const LinearProgressIndicator()],
+          if (_message != null) ...[
+            const SizedBox(height: 16),
+            Semantics(liveRegion: true, child: Text(_message == 'sent'
+              ? l.authVerificationEmailSent : l.authVerificationFailed)),
+          ],
+          const SizedBox(height: 20),
+          OutlinedButton.icon(
+            onPressed: _busy || !_known || user == null ? null : () async {
+              await Navigator.of(context).push<void>(MaterialPageRoute(
+                builder: (_) => const ContactChangePage(kind: ContactKind.email)));
+              if (mounted) { await _refresh(); }
+            },
+            icon: const Icon(Icons.edit_outlined), label: Text(l.changeEmailTitle)),
+          if (!verified) ...[
+            const SizedBox(height: 20), Text(l.contactEmailRefreshHelp),
+          ],
+        ]),
+      ))),
     );
   }
 }

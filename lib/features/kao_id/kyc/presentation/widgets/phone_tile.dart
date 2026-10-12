@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 final class PhoneTile extends StatelessWidget {
@@ -21,8 +22,8 @@ final class PhoneTile extends StatelessWidget {
             ? Colors.green
             : Colors.orange,
       ),
-      title: const Text(
-        'เบอร์โทรศัพท์',
+      title:  Text(
+        AppLocalizations.of(context).kycPhoneNumber,
       ),
       subtitle: Text(
         phoneNumber,
@@ -32,8 +33,8 @@ final class PhoneTile extends StatelessWidget {
         children: [
           Text(
             isVerified
-                ? 'ยืนยันแล้ว'
-                : 'ยังไม่ยืนยัน',
+                ? AppLocalizations.of(context).kycVerified
+                : AppLocalizations.of(context).kycNotVerifiedLabelText,
             style: TextStyle(
               color: isVerified
                   ? Colors.green

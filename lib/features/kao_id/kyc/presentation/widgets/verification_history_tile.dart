@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 final class VerificationHistoryTile extends StatelessWidget {
@@ -14,11 +15,11 @@ final class VerificationHistoryTile extends StatelessWidget {
       leading: const Icon(
         Icons.history,
       ),
-      title: const Text(
-        'ประวัติการยืนยันตัวตน',
+      title:  Text(
+        AppLocalizations.of(context).kycVerificationHistory,
       ),
-      subtitle: const Text(
-        'ดูประวัติการตรวจสอบและการเปลี่ยนแปลง',
+      subtitle:  Text(
+        AppLocalizations.of(context).kycReviewVerificationResultsAndChanges,
       ),
       trailing: const Icon(
         Icons.chevron_right,

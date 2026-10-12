@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/verification.dart';
@@ -131,7 +132,7 @@ final class VerificationProgressCard extends StatelessWidget {
                       CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'ความคืบหน้าการยืนยันตัวตน',
+                      AppLocalizations.of(context).kycIdentityVerificationProgress,
                       style: theme.textTheme.titleSmall
                           ?.copyWith(
                         fontWeight: FontWeight.w800,
@@ -140,8 +141,8 @@ final class VerificationProgressCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       kycProgress >= 100
-                          ? 'การยืนยันตัวตนของคุณครบถ้วนแล้ว'
-                          : 'ยืนยันข้อมูลเพิ่มเติมเพื่อยืนยันตัวตนของคุณ',
+                          ? AppLocalizations.of(context).kycYourIdentityVerificationIsComplete
+                          : AppLocalizations.of(context).kycVerifyAdditionalInformationToCompleteYourIdentity,
                       maxLines: 2,
                       overflow:
                           TextOverflow.ellipsis,
@@ -195,8 +196,8 @@ final class VerificationProgressCard extends StatelessWidget {
             icon: Icons.badge_outlined,
             title: 'Identity / KYC',
             status: kycProgress >= 100
-                ? 'ยืนยันครบแล้ว'
-                : 'กำลังดำเนินการ',
+                ? AppLocalizations.of(context).kycVerificationComplete
+                : AppLocalizations.of(context).kycInProgress,
             isVerified: kycProgress >= 100,
           ),
 
@@ -204,10 +205,10 @@ final class VerificationProgressCard extends StatelessWidget {
 
           _VerificationStatusRow(
             icon: Icons.account_balance_outlined,
-            title: 'บัญชีธนาคาร',
+            title: AppLocalizations.of(context).kycBankAccount,
             status: bankVerified
-                ? 'ยืนยันแล้ว'
-                : 'ยังไม่ได้ยืนยัน',
+                ? AppLocalizations.of(context).kycVerified
+                : AppLocalizations.of(context).kycNotVerifiedLabel,
             isVerified: bankVerified,
           ),
         ],

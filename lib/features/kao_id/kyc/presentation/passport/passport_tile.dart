@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 final class PassportTile extends StatelessWidget {
@@ -63,37 +64,34 @@ final class PassportTile extends StatelessWidget {
     return Icons.remove_circle_outline;
   }
 
-  String _statusText() {
+  String _statusText(BuildContext context) {
     if (_isVerified) {
-      return 'ยืนยันแล้ว';
+      return AppLocalizations.of(context).kycVerified;
     }
 
     if (_isPending) {
-      return 'กำลังตรวจสอบ';
+      return AppLocalizations.of(context).kycUnderReview;
     }
 
     if (_isRejected) {
-      return 'ไม่ผ่าน';
+      return AppLocalizations.of(context).kycRejectedLabel;
     }
 
     if (_isExpired) {
-      return 'หมดอายุ';
+      return AppLocalizations.of(context).kycExpired;
     }
 
-    return 'ยังไม่ได้เพิ่ม';
+    return AppLocalizations.of(context).kycNotAdded;
   }
 
-  String _expiryText() {
+  String _expiryText(BuildContext context) {
     final date = expiryDate;
 
     if (date == null) {
-      return 'ยังไม่ได้ระบุวันหมดอายุ';
+      return AppLocalizations.of(context).kycExpiryDateNotProvided;
     }
 
-    return 'หมดอายุ '
-        '${date.day.toString().padLeft(2, '0')}/'
-        '${date.month.toString().padLeft(2, '0')}/'
-        '${date.year}';
+    return AppLocalizations.of(context).kycExpiresOnDate(MaterialLocalizations.of(context).formatMediumDate(date));
   }
 
   @override
@@ -154,7 +152,7 @@ final class PassportTile extends StatelessWidget {
                       CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'หนังสือเดินทาง',
+                      AppLocalizations.of(context).kycPassport,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.titleSmall?.copyWith(
@@ -163,7 +161,7 @@ final class PassportTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      _expiryText(),
+                      _expiryText(context),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodySmall?.copyWith(
@@ -195,7 +193,7 @@ final class PassportTile extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      _statusText(),
+                      _statusText(context),
                       style: theme.textTheme.labelSmall?.copyWith(
                         color: statusColor,
                         fontWeight: FontWeight.w700,

@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 final class UploadArea extends StatelessWidget {
@@ -6,9 +7,9 @@ final class UploadArea extends StatelessWidget {
     required this.onPressed,
     this.isLoading = false,
     this.icon = Icons.cloud_upload_outlined,
-    this.title = 'อัปโหลดเอกสาร',
-    this.description = 'แตะเพื่อเลือกไฟล์จากเครื่อง',
-    this.buttonText = 'เลือกไฟล์',
+    this.title,
+    this.description,
+    this.buttonText,
     this.backgroundColor,
     this.borderColor,
     this.iconColor,
@@ -21,11 +22,11 @@ final class UploadArea extends StatelessWidget {
 
   final IconData icon;
 
-  final String title;
+  final String? title;
 
-  final String description;
+  final String? description;
 
-  final String buttonText;
+  final String? buttonText;
 
   final Color? backgroundColor;
 
@@ -73,7 +74,7 @@ final class UploadArea extends StatelessWidget {
               const SizedBox(height: 20),
 
               Text(
-                title,
+                title ?? AppLocalizations.of(context).kycChooseDocument,
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge
@@ -85,7 +86,7 @@ final class UploadArea extends StatelessWidget {
               const SizedBox(height: 8),
 
               Text(
-                description,
+                description ?? AppLocalizations.of(context).kycTapToSelectAFileFrom61,
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
@@ -111,8 +112,8 @@ final class UploadArea extends StatelessWidget {
                       ),
                 label: Text(
                   isLoading
-                      ? 'กำลังดำเนินการ...'
-                      : buttonText,
+                      ? AppLocalizations.of(context).kycProcessing
+                      : buttonText ?? AppLocalizations.of(context).kycChooseFile,
                 ),
               ),
 
@@ -126,7 +127,7 @@ final class UploadArea extends StatelessWidget {
 
                 const SizedBox(height: 16),
 
-                const Row(
+                 Row(
                   children: [
                     Icon(
                       Icons.check_circle_outline,
@@ -136,7 +137,7 @@ final class UploadArea extends StatelessWidget {
                     SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'รองรับ JPG, PNG และ PDF',
+                        AppLocalizations.of(context).kycJpgAndPngSupported,
                       ),
                     ),
                   ],
@@ -144,7 +145,7 @@ final class UploadArea extends StatelessWidget {
 
                 const SizedBox(height: 10),
 
-                const Row(
+                 Row(
                   children: [
                     Icon(
                       Icons.check_circle_outline,
@@ -154,7 +155,7 @@ final class UploadArea extends StatelessWidget {
                     SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'ขนาดไฟล์ไม่เกิน 10 MB',
+                        AppLocalizations.of(context).kycCheckThatTheImageIsClear64,
                       ),
                     ),
                   ],
@@ -162,7 +163,7 @@ final class UploadArea extends StatelessWidget {
 
                 const SizedBox(height: 10),
 
-                const Row(
+                 Row(
                   children: [
                     Icon(
                       Icons.lock_outline,
@@ -172,7 +173,7 @@ final class UploadArea extends StatelessWidget {
                     SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'ไฟล์ถูกเข้ารหัสและจัดเก็บอย่างปลอดภัย',
+                        AppLocalizations.of(context).kycSelectingAFileDoesNotUpload65,
                       ),
                     ),
                   ],

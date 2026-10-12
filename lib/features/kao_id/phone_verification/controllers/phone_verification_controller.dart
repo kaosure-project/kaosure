@@ -1,144 +1,107 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-
 import '../application/states/phone_verification_state.dart';
+import '../domain/phone_verification_repository.dart';
 
-final class PhoneVerificationController
-    extends StateNotifier<PhoneVerificationState> {
-  PhoneVerificationController(
-    this._supabase,
-  ) : super(
-          const PhoneVerificationState(),
-        );
+final class PhoneVerificationController extends StateNotifier<PhoneVerificationState> {
+  PhoneVerificationController(this._repository, {DateTime Function()? clock})
+      : _clock = clock ?? DateTime.now, super(const PhoneVerificationState());
+  final PhoneVerificationRepository _repository;
+  final DateTime Function() _clock;
+  String? _owner;
 
-  final SupabaseClient _supabase;
+  bool get canSend => !state.isLoading &&
+      (state.retryAt == null || !_clock().isBefore(state.retryAt!));
 
-  void load() {
-  final user = _supabase.auth.currentUser;
-
-  if (user == null) {
-    state = state.copyWith(
-      errorMessage: 'User is not signed in.',
-    );
-    return;
-  }
-
-  final phone = user.phone ?? '';
-
-  final isVerified =
-      phone.isNotEmpty &&
-      user.phoneConfirmedAt != null;
-
-  state = state.copyWith(
-    phoneNumber: phone,
-    isVerified: isVerified,
-    clearError: true,
-  );
-}
-
-  Future<void> sendOtp({
-    required String phoneNumber,
-  }) async {
-    final phone = phoneNumber.trim();
-
-    if (phone.isEmpty) {
-      state = state.copyWith(
-        errorMessage: 'กรุณากรอกเบอร์โทรศัพท์',
-      );
-      return;
-    }
-
-    state = state.copyWith(
-      isLoading: true,
-      clearError: true,
-    );
-
+  Future<void> load() async {
+    if (!mounted || state.isLoading) return;
+    state = state.copyWith(isLoading: true, clearError: true);
     try {
-      final user = _supabase.auth.currentUser;
-
-      if (user == null) {
-        throw const AuthException(
-          'User is not signed in.',
-        );
+      final user = await _repository.current();
+      if (!mounted) return;
+      if (_owner != null && _owner != user.userId) {
+        state = const PhoneVerificationState();
       }
-
-      await _supabase.auth.updateUser(
-        UserAttributes(
-          phone: phone,
-        ),
-      );
-
-      state = state.copyWith(
-        phoneNumber: phone,
-        isLoading: false,
-        isOtpSent: true,
-        clearError: true,
-      );
-    } catch (error) {
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: error.toString(),
-      );
+      _owner = user.userId;
+      state = state.copyWith(phoneNumber: user.phone, isVerified: user.confirmed,
+        statusKnown: true, isLoading: false,
+        isOtpSent: user.confirmed && user.phone == state.pendingPhone ? false : state.isOtpSent,
+        pendingPhone: user.confirmed && user.phone == state.pendingPhone ? '' : state.pendingPhone);
+    } catch (_) {
+      if (mounted) {
+        state = state.copyWith(isLoading: false, statusKnown: false, errorMessage: 'load');
+      }
     }
   }
 
-  Future<void> verifyOtp({
-    required String otp,
-  }) async {
-    final token = otp.trim();
-
-    if (token.isEmpty) {
-      state = state.copyWith(
-        errorMessage: 'กรุณากรอกรหัส OTP',
-      );
+  Future<void> sendOtp({required String phoneNumber}) async {
+    if (!mounted || !canSend) return;
+    final phone = normalizePhone(phoneNumber);
+    if (phone == null) {
+      state = state.copyWith(errorMessage: 'phone');
       return;
     }
-
-    if (state.phoneNumber.isEmpty) {
-      state = state.copyWith(
-        errorMessage: 'ไม่พบหมายเลขโทรศัพท์',
-      );
-      return;
-    }
-
-    state = state.copyWith(
-      isLoading: true,
-      clearError: true,
-    );
-
+    final resend = state.isOtpSent && state.pendingPhone == phone;
+    // Reserve cooldown before the request, including uncertain network outcomes.
+    state = state.copyWith(isLoading: true, clearError: true,
+      retryAt: _clock().add(const Duration(seconds: 60)));
     try {
-      await _supabase.auth.verifyOTP(
-        type: OtpType.phoneChange,
-        token: token,
-        phone: state.phoneNumber,
-      );
-
-      load();
-
-      state = state.copyWith(
-        isLoading: false,
-        isOtpSent: false,
-        isVerified: true,
-        clearError: true,
-      );
-    } catch (error) {
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: error.toString(),
-      );
+      final user = await _repository.current();
+      if (!mounted) return;
+      if (_owner != null && _owner != user.userId) {
+        state = const PhoneVerificationState(errorMessage: 'session');
+        _owner = null;
+        return;
+      }
+      _owner = user.userId;
+      if (resend) {
+        await _repository.resend(phone);
+      } else {
+        await _repository.send(phone);
+      }
+      if (!mounted) return;
+      state = state.copyWith(isLoading: false, pendingPhone: phone,
+        phoneNumber: user.phone, isVerified: user.confirmed,
+        statusKnown: true, isOtpSent: true);
+    } catch (_) {
+      if (mounted) state = state.copyWith(isLoading: false, errorMessage: 'send');
     }
   }
 
-  void clearError() {
-    state = state.copyWith(
-      clearError: true,
-    );
+  Future<void> verifyOtp({required String otp}) async {
+    if (!mounted || state.isLoading || !state.isOtpSent) return;
+    final token = otp.trim();
+    if (!RegExp(r'^[0-9]{6,10}$').hasMatch(token)) {
+      state = state.copyWith(errorMessage: 'otp');
+      return;
+    }
+    final target = state.pendingPhone;
+    state = state.copyWith(isLoading: true, clearError: true);
+    try {
+      final before = await _repository.current();
+      if (!mounted) return;
+      if (before.userId != _owner) {
+        state = const PhoneVerificationState(errorMessage: 'session');
+        _owner = null;
+        return;
+      }
+      await _repository.verify(target, token);
+      final after = await _repository.current();
+      if (!mounted) return;
+      if (after.userId != _owner) {
+        state = const PhoneVerificationState(errorMessage: 'session');
+        _owner = null;
+        return;
+      }
+      final confirmed = after.confirmed && after.phone == target;
+      state = state.copyWith(isLoading: false, phoneNumber: after.phone,
+        isVerified: after.confirmed, statusKnown: true,
+        isOtpSent: !confirmed, pendingPhone: confirmed ? '' : target,
+        errorMessage: confirmed ? null : 'pending', clearError: confirmed);
+    } catch (_) {
+      if (mounted) state = state.copyWith(isLoading: false, errorMessage: 'verify');
+    }
   }
 
-  void clearOtp() {
-    state = state.copyWith(
-      otp: '',
-      clearError: true,
-    );
-  }
+  void clearError() => state = state.copyWith(clearError: true);
+  void clearOtp() => state = state.copyWith(otp: '', clearError: true);
 }

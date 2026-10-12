@@ -4,6 +4,14 @@ import '../../domain/entities/verification.dart';
 import '../../domain/entities/verification_history.dart';
 import '../../domain/entities/verification_request.dart';
 
+enum KycResource {
+  verification,
+  request,
+  documents,
+  bank,
+  history,
+}
+
 final class KycState {
   const KycState({
     required this.isLoading,
@@ -13,6 +21,8 @@ final class KycState {
     required this.bankVerification,
     required this.verificationHistory,
     required this.errorMessage,
+    this.loadedResources = const {},
+    this.failedResources = const {},
   });
 
   factory KycState.initial() {
@@ -35,6 +45,14 @@ final class KycState {
   final List<VerificationHistory> verificationHistory;
   final String? errorMessage;
 
+  final Set<KycResource> loadedResources;
+  final Set<KycResource> failedResources;
+
+  bool isAvailable(KycResource resource) =>
+      !isLoading &&
+      loadedResources.contains(resource) &&
+      !failedResources.contains(resource);
+
   KycIdentityDocument? get identityCard =>
       _documentByType('thai_national_id');
 
@@ -44,9 +62,7 @@ final class KycState {
   KycIdentityDocument? get residencePermit =>
       _documentByType('residence_card');
 
-  KycIdentityDocument? _documentByType(
-    String documentType,
-  ) {
+  KycIdentityDocument? _documentByType(String documentType) {
     for (final document in identityDocuments) {
       if (document.documentType == documentType) {
         return document;
@@ -56,29 +72,21 @@ final class KycState {
     return null;
   }
 
-  bool get hasVerification =>
-      verification != null;
+  bool get hasVerification => verification != null;
 
-  bool get hasVerificationRequest =>
-      verificationRequest != null;
+  bool get hasVerificationRequest => verificationRequest != null;
 
-  bool get hasIdentityCard =>
-      identityCard != null;
+  bool get hasIdentityCard => identityCard != null;
 
-  bool get hasPassport =>
-      passport != null;
+  bool get hasPassport => passport != null;
 
-  bool get hasResidencePermit =>
-      residencePermit != null;
+  bool get hasResidencePermit => residencePermit != null;
 
-  bool get hasBankVerification =>
-      bankVerification != null;
+  bool get hasBankVerification => bankVerification != null;
 
-  bool get hasVerificationHistory =>
-      verificationHistory.isNotEmpty;
+  bool get hasVerificationHistory => verificationHistory.isNotEmpty;
 
-  bool get hasError =>
-      errorMessage != null;
+  bool get hasError => errorMessage != null;
 
   bool get isRequestPending =>
       verificationRequest?.isPending ?? false;
@@ -96,6 +104,12 @@ final class KycState {
       verificationRequest?.isCancelled ?? false;
 
   bool get canSubmitVerificationRequest {
+    if (!isAvailable(KycResource.request) ||
+        !isAvailable(KycResource.verification) ||
+        !isAvailable(KycResource.documents)) {
+      return false;
+    }
+
     final request = verificationRequest;
 
     if (request == null) {
@@ -131,6 +145,8 @@ final class KycState {
 
   KycState copyWith({
     bool? isLoading,
+    Set<KycResource>? loadedResources,
+    Set<KycResource>? failedResources,
     Verification? verification,
     VerificationRequest? verificationRequest,
     List<KycIdentityDocument>? identityDocuments,
@@ -145,31 +161,24 @@ final class KycState {
     bool clearError = false,
   }) {
     return KycState(
-      isLoading:
-          isLoading ?? this.isLoading,
+      isLoading: isLoading ?? this.isLoading,
+      loadedResources: loadedResources ?? this.loadedResources,
+      failedResources: failedResources ?? this.failedResources,
       verification: clearVerification
           ? null
           : verification ?? this.verification,
-      verificationRequest:
-          clearVerificationRequest
-              ? null
-              : verificationRequest ??
-                  this.verificationRequest,
-      identityDocuments:
-          clearIdentityDocuments
-              ? const []
-              : identityDocuments ??
-                  this.identityDocuments,
-      bankVerification:
-          clearBankVerification
-              ? null
-              : bankVerification ??
-                  this.bankVerification,
-      verificationHistory:
-          clearVerificationHistory
-              ? const []
-              : verificationHistory ??
-                  this.verificationHistory,
+      verificationRequest: clearVerificationRequest
+          ? null
+          : verificationRequest ?? this.verificationRequest,
+      identityDocuments: clearIdentityDocuments
+          ? const []
+          : identityDocuments ?? this.identityDocuments,
+      bankVerification: clearBankVerification
+          ? null
+          : bankVerification ?? this.bankVerification,
+      verificationHistory: clearVerificationHistory
+          ? const []
+          : verificationHistory ?? this.verificationHistory,
       errorMessage: clearError
           ? null
           : errorMessage ?? this.errorMessage,

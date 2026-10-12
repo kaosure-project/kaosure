@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 final class KycPageHeader extends StatelessWidget {
@@ -43,7 +44,7 @@ final class KycPageHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'การยืนยันตัวตน',
+                AppLocalizations.of(context).kycIdentityVerification,
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.w800,
                   letterSpacing: -0.5,
@@ -110,13 +111,13 @@ final class KycSecurityBadge extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'บัญชีปลอดภัย',
+                AppLocalizations.of(context).kycAccountSecurity,
                 style: theme.textTheme.labelMedium?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                'ข้อมูลได้รับการปกป้อง',
+                AppLocalizations.of(context).kycDocumentPrivacyLabel,
                 style: theme.textTheme.labelSmall?.copyWith(
                   color: colors.onSurfaceVariant,
                 ),

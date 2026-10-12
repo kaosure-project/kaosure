@@ -1,3 +1,4 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 final class EmailTile extends StatelessWidget {
@@ -21,8 +22,8 @@ final class EmailTile extends StatelessWidget {
             ? Colors.green
             : Colors.orange,
       ),
-      title: const Text(
-        'อีเมล',
+      title:  Text(
+        AppLocalizations.of(context).kycEmail,
       ),
       subtitle: Text(
         email,
@@ -32,8 +33,8 @@ final class EmailTile extends StatelessWidget {
         children: [
           Text(
             isVerified
-                ? 'ยืนยันแล้ว'
-                : 'ยังไม่ยืนยัน',
+                ? AppLocalizations.of(context).kycVerified
+                : AppLocalizations.of(context).kycNotVerifiedLabelText,
             style: TextStyle(
               color: isVerified
                   ? Colors.green

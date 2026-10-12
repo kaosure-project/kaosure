@@ -1,7 +1,6 @@
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../shared/design_system/responsive/app_layout.dart';
-import '../../../../../shared/design_system/responsive/app_page_layout.dart';
 import '../../../../../shared/widgets/cards/app_card.dart';
 
 import 'document_info_card.dart';
@@ -60,19 +59,7 @@ final class DocumentUploadCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return AppPageLayout(
-      maxWidth: AppLayout.formMaxWidth,
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 760,
-          ),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 28,
-            ),
-            child: AppCard(
+    return AppCard(
               padding: EdgeInsets.zero,
               child: Column(
                 crossAxisAlignment:
@@ -105,7 +92,7 @@ final class DocumentUploadCard extends StatelessWidget {
                           CrossAxisAlignment.stretch,
                       children: [
                         _DocumentSideSection(
-                          title: 'ด้านหน้าบัตร',
+                          title: AppLocalizations.of(context).kycFrontOfCard,
                           fileName: frontFileName,
                           fileSize: frontFileSize,
                           onChange: onChangeFrontFile,
@@ -123,7 +110,7 @@ final class DocumentUploadCard extends StatelessWidget {
                         const SizedBox(height: 32),
 
                         _DocumentSideSection(
-                          title: 'ด้านหลังบัตร',
+                          title: AppLocalizations.of(context).kycBackOfCard,
                           fileName: backFileName,
                           fileSize: backFileSize,
                           onChange: onChangeBackFile,
@@ -139,11 +126,7 @@ final class DocumentUploadCard extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          ),
-        ),
-      ),
-    );
+            );
   }
 }
 
@@ -279,7 +262,7 @@ final class _DocumentInformation
         ),
         child: InfoTile(
           icon: Icons.event_outlined,
-          title: 'วันหมดอายุ',
+          title: AppLocalizations.of(context).kycExpiryDate,
           value: expiryText,
         ),
       ),
@@ -334,12 +317,11 @@ final class _DocumentSideSection
 
         const SizedBox(height: 14),
 
-        if (hasFile &&
-            fileSize != null) ...[
+        if (hasFile) ...[
           DocumentInfoCard(
             fileName: fileName!,
-            fileSize: fileSize!,
-            uploadDate: 'วันนี้',
+            fileSize: fileSize ?? '—',
+            uploadDate: AppLocalizations.of(context).kycToday,
             onChange: onChange,
           ),
           const SizedBox(height: 14),
@@ -353,7 +335,7 @@ final class _DocumentSideSection
 
         Text(
           hasFile
-              ? 'สามารถเลือกไฟล์ใหม่เพื่อแทนที่ไฟล์เดิมได้'
+              ? AppLocalizations.of(context).kycYouCanChooseAnotherFileTo
               : buttonText,
           textAlign: TextAlign.center,
           style: theme.textTheme.bodySmall
@@ -397,7 +379,7 @@ final class _UploadedBadge
           ),
           const SizedBox(width: 5),
           Text(
-            'เลือกแล้ว',
+            AppLocalizations.of(context).kycSelected,
             style: Theme.of(context)
                 .textTheme
                 .labelSmall
@@ -465,7 +447,7 @@ final class _UploadRequirements
                       CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'ข้อกำหนดการอัปโหลด',
+                      AppLocalizations.of(context).kycUploadRequirements,
                       style: theme
                           .textTheme
                           .titleSmall
@@ -476,7 +458,7 @@ final class _UploadRequirements
                     ),
                     const SizedBox(height: 3),
                     Text(
-                      'ตรวจสอบข้อมูลก่อนส่งเอกสาร',
+                      AppLocalizations.of(context).kycCheckTheInformationBeforeSubmitting,
                       style: theme
                           .textTheme
                           .bodySmall
@@ -493,34 +475,34 @@ final class _UploadRequirements
 
           const SizedBox(height: 18),
 
-          const _RequirementItem(
+           _RequirementItem(
             icon: Icons.credit_card_outlined,
             text:
-                'อัปโหลดรูปด้านหน้าและด้านหลังของบัตรประชาชน',
+                AppLocalizations.of(context).kycChooseImagesOfBothSidesOf,
           ),
 
           const SizedBox(height: 12),
 
-          const _RequirementItem(
+           _RequirementItem(
             icon: Icons.image_outlined,
             text:
-                'รองรับ JPG, PNG และ PDF',
+                AppLocalizations.of(context).kycJpgAndPngSupported,
           ),
 
           const SizedBox(height: 12),
 
-          const _RequirementItem(
+           _RequirementItem(
             icon: Icons.data_usage_outlined,
             text:
-                'ขนาดไฟล์ไม่เกิน 10 MB ต่อไฟล์',
+                AppLocalizations.of(context).kycCheckThatTheImageIsClear,
           ),
 
           const SizedBox(height: 12),
 
-          const _RequirementItem(
+           _RequirementItem(
             icon: Icons.lock_outline,
             text:
-                'ข้อมูลถูกเข้ารหัสและจัดเก็บอย่างปลอดภัย',
+                AppLocalizations.of(context).kycSelectingAFileDoesNotUpload,
           ),
         ],
       ),

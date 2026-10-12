@@ -2,10 +2,13 @@ final class KaoIdRoutes {
   const KaoIdRoutes._();
 
   static const String landing = '/';
+  static const String kaoIdLanding = '/kao-id';
+  static const String completeProfile = '/complete-profile';
 
   static const String login = '/login';
   static const String register = '/register';
   static const String forgotPassword = '/forgot-password';
+  static const String resetPassword = '/reset-password';
   static const String verifyEmail = '/verify-email';
 
   static const String bootstrap = '/bootstrap';
@@ -23,5 +26,7 @@ final class KaoIdRoutes {
   static const String sessions = '/sessions';
 
   static const String security = '/security';
+  static const String changePassword = '/security/password';
+
   static const String settings = '/settings';
 }

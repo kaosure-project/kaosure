@@ -17,10 +17,26 @@ abstract class AuthRepository {
     required String email,
   });
 
-  /// ส่งอีเมลยืนยันอีกครั้ง
+  /// Updates the password during the password recovery flow.
+  Future<void> updatePassword({
+    required String password,
+  });
+
+  /// Sends a reauthentication OTP to the signed-in user.
+  Future<void> reauthenticate();
+
+  /// Changes the password for an authenticated user
+  /// after successful reauthentication.
+  Future<void> changePassword({
+    required String password,
+    required String nonce,
+  });
+
+  /// Resends the email verification message.
   Future<void> resendEmailVerification();
 
-  /// รีโหลดข้อมูลผู้ใช้ล่าสุดและสถานะการยืนยันจาก Auth provider
+  /// Reloads the latest user and verification state
+  /// from the authentication provider.
   Future<UserEntity?> refreshCurrentUser();
 
   Future<void> logout();

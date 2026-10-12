@@ -69,6 +69,38 @@ class AuthNotifier extends StateNotifier<AsyncValue<UserEntity?>> {
     );
   }
 
+  Future<void> updatePassword({
+    required String password,
+  }) async {
+    final useCase = _ref.read(updatePasswordUseCaseProvider);
+
+    await useCase(
+      password: password,
+    );
+  }
+
+  Future<void> reauthenticate() async {
+    final useCase = _ref.read(
+      reauthenticateUseCaseProvider,
+    );
+
+    await useCase();
+  }
+
+  Future<void> changePassword({
+    required String password,
+    required String nonce,
+  }) async {
+    final useCase = _ref.read(
+      changePasswordUseCaseProvider,
+    );
+
+    await useCase(
+      password: password,
+      nonce: nonce,
+    );
+  }
+
   Future<void> resendEmailVerification() async {
     final useCase = _ref.read(
       resendEmailVerificationUseCaseProvider,

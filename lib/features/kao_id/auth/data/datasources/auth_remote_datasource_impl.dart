@@ -1,5 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../../core/config/app_config.dart';
 import '../models/user_model.dart';
 import 'auth_remote_data_source.dart';
 
@@ -79,6 +80,68 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }) async {
     await client.auth.resetPasswordForEmail(
       email,
+      redirectTo: AppConfig.passwordRecoveryUrl,
+    );
+  }
+
+  @override
+  Future<void> updatePassword({
+    required String password,
+  }) async {
+    final user = client.auth.currentUser;
+
+    if (user == null) {
+      throw const AuthException(
+        'Password recovery session is not available.',
+      );
+    }
+
+    await client.auth.updateUser(
+      UserAttributes(
+        password: password,
+      ),
+    );
+  }
+
+  @override
+  Future<void> reauthenticate() async {
+    final session = client.auth.currentSession;
+
+    if (session == null) {
+      throw const AuthException(
+        'User is not authenticated.',
+      );
+    }
+
+    await client.auth.reauthenticate();
+  }
+
+  @override
+  Future<void> changePassword({
+    required String password,
+    required String nonce,
+  }) async {
+    final session = client.auth.currentSession;
+
+    if (session == null) {
+      throw const AuthException(
+        'User is not authenticated.',
+      );
+    }
+
+    final trimmedNonce = nonce.trim();
+
+    if (trimmedNonce.isEmpty) {
+      throw const AuthException(
+        'Reauthentication code is required.',
+      );
+    }
+
+    await client.auth.updateUser(
+      UserAttributes(
+        password: password,
+        nonce: trimmedNonce,
+      ),
     );
   }
 
@@ -100,14 +163,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<UserModel?> refreshCurrentUser() async {
-    await client.auth.refreshSession();
-
-    final user = client.auth.currentUser;
-
-    if (user == null) {
+    final owner = client.auth.currentUser?.id;
+    if (owner == null) {
       return null;
     }
-
+    final user = (await client.auth.getUser()).user;
+    if (user == null || user.id != owner || client.auth.currentUser?.id != owner) {
+      throw const AuthException('Session changed.');
+    }
     return _mapUser(user);
   }
 

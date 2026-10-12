@@ -17,10 +17,25 @@ abstract class AuthRemoteDataSource {
     required String email,
   });
 
-  /// ส่งอีเมลยืนยันใหม่
+  /// Updates the password during the password recovery flow.
+  Future<void> updatePassword({
+    required String password,
+  });
+
+  /// Sends a reauthentication OTP to the signed-in user.
+  Future<void> reauthenticate();
+
+  /// Changes the password for an authenticated user
+  /// after successful reauthentication.
+  Future<void> changePassword({
+    required String password,
+    required String nonce,
+  });
+
+  /// Resends the email verification message.
   Future<void> resendEmailVerification();
 
-  /// รีโหลดข้อมูลผู้ใช้จาก Supabase
+  /// Reloads the latest authenticated user from Supabase.
   Future<UserModel?> refreshCurrentUser();
 
   Future<void> logout();

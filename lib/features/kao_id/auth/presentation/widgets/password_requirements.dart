@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
 class PasswordRequirements extends StatelessWidget {
   final String password;
@@ -18,22 +19,6 @@ class PasswordRequirements extends StatelessWidget {
   bool get _hasSpecial =>
       RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-+=/\\[\]~`]').hasMatch(password);
 
-  /// มีตัวอักษร (รองรับทุกภาษา)
-  bool get _hasLetter {
-    for (final rune in password.runes) {
-      final char = String.fromCharCode(rune);
-
-      // ถ้าไม่ใช่ตัวเลข ไม่ใช่ช่องว่าง และไม่ใช่อักขระพิเศษ
-      if (!RegExp(r'[0-9]').hasMatch(char) &&
-          !RegExp(r'\s').hasMatch(char) &&
-          !RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-+=/\\[\]~`]').hasMatch(char)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   Widget _item(bool passed, String text) {
     return Text(
       '${passed ? "✓" : "○"} $text',
@@ -52,16 +37,16 @@ class PasswordRequirements extends StatelessWidget {
       runSpacing: 4,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        const Text(
-          'รหัสผ่านต้องมี:',
-          style: TextStyle(
+        Text(
+          AppLocalizations.of(context).authRequirementsTitle,
+          style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
             color: Colors.black87,
           ),
         ),
 
-        _item(_hasMinLength, '8 ตัวขึ้นไป'),
+        _item(_hasMinLength, AppLocalizations.of(context).authRequirementLength),
 
         const Text(
           '•',
@@ -70,7 +55,7 @@ class PasswordRequirements extends StatelessWidget {
           ),
         ),
 
-        _item(_hasLetter, 'ตัวอักษร'),
+        _item(_hasNumber, AppLocalizations.of(context).authRequirementNumber),
 
         const Text(
           '•',
@@ -79,16 +64,7 @@ class PasswordRequirements extends StatelessWidget {
           ),
         ),
 
-        _item(_hasNumber, 'ตัวเลข'),
-
-        const Text(
-          '•',
-          style: TextStyle(
-            color: Colors.black38,
-          ),
-        ),
-
-        _item(_hasSpecial, 'อักขระพิเศษ'),
+        _item(_hasSpecial, AppLocalizations.of(context).authRequirementSpecial),
       ],
     );
   }

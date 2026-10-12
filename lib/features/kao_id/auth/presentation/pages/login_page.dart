@@ -1,5 +1,9 @@
-﻿import 'package:flutter/material.dart';
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
 import '../../../../../shared/design_system/spacing/app_spacing.dart';
 import '../../../../../shared/widgets/app_bar/app_app_bar.dart';
@@ -8,6 +12,7 @@ import '../../../../../shared/widgets/cards/app_card.dart';
 import '../../../../../shared/widgets/forms/app_email_field.dart';
 import '../../../../../shared/widgets/forms/app_password_field.dart';
 import '../../application/providers/auth_provider.dart';
+import '../../application/kao_id_sso_handoff.dart';
 import '../../../router/kao_id_routes.dart';
 import '../widgets/auth_logo.dart';
 
@@ -29,6 +34,34 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   bool _isLoading = false;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(_continueExistingServiceSession());
+    });
+  }
+
+  Future<void> _continueExistingServiceSession() async {
+    if (!mounted || !kIsWeb) return;
+
+    try {
+      if (!await KaoIdSsoHandoff.hasPendingLoginReturn()) return;
+
+      final user = await ref
+          .read(authProvider.notifier)
+          .refreshCurrentUser();
+      if (user == null || !mounted) return;
+    } catch (error, stackTrace) {
+      debugPrint('Unable to restore existing Kao ID session: $error');
+      debugPrintStack(stackTrace: stackTrace);
+      return;
+    }
+
+    if (!mounted) return;
+    Navigator.of(context).pushReplacementNamed(KaoIdRoutes.bootstrap);
+  }
+
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -36,6 +69,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   Future<void> _login() async {
+    if (_isLoading) return;
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -56,12 +91,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         context,
         KaoIdRoutes.bootstrap,
       );
-    } catch (e) {
+    } catch (_) {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(e.toString()),
+          content: Text(AppLocalizations.of(context).authLoginFailed),
         ),
       );
     } finally {
@@ -75,7 +110,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   String? _validateEmail(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'กรุณากรอกอีเมล';
+      return AppLocalizations.of(context).authEmailRequired;
     }
 
     final emailRegExp = RegExp(
@@ -83,7 +118,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
 
     if (!emailRegExp.hasMatch(value.trim())) {
-      return 'รูปแบบอีเมลไม่ถูกต้อง';
+      return AppLocalizations.of(context).authEmailInvalid;
     }
 
     return null;
@@ -91,11 +126,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'กรุณากรอกรหัสผ่าน';
+      return AppLocalizations.of(context).authPasswordRequired;
     }
 
     if (value.runes.length < 8) {
-      return 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร';
+      return AppLocalizations.of(context).authPasswordMinLength;
     }
 
     return null;
@@ -104,8 +139,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppAppBar(
-        title: 'เข้าสู่ระบบ',
+      appBar: AppAppBar(
+        title: AppLocalizations.of(context).authLogin,
       ),
       body: SafeArea(
         child: Center(
@@ -136,8 +171,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         AppEmailField(
                           controller: _emailController,
                           validator: _validateEmail,
-                          label: 'อีเมล',
-                          hint: 'กรอกอีเมล',
+                          label: AppLocalizations.of(context).authEmail,
+                          hint: AppLocalizations.of(context).authEmailHint,
                         ),
 
                         const SizedBox(
@@ -148,8 +183,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           controller: _passwordController,
                           validator: _validatePassword,
                           onSubmitted: (_) => _login(),
-                          label: 'รหัสผ่าน',
-                          hint: 'กรอกรหัสผ่าน',
+                          label: AppLocalizations.of(context).password,
+                          hint: AppLocalizations.of(context).authPasswordHint,
                         ),
 
                         const SizedBox(
@@ -157,7 +192,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         ),
 
                         PrimaryButton(
-                          text: 'เข้าสู่ระบบ',
+                          text: AppLocalizations.of(context).authLogin,
                           isLoading: _isLoading,
                           onPressed: _login,
                         ),
@@ -173,8 +208,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               KaoIdRoutes.forgotPassword,
                             );
                           },
-                          child: const Text(
-                            'ลืมรหัสผ่าน?',
+                          child: Text(
+                            AppLocalizations.of(context).authForgotPasswordLink,
                           ),
                         ),
 
@@ -185,8 +220,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               KaoIdRoutes.register,
                             );
                           },
-                          child: const Text(
-                            'สมัครสมาชิก',
+                          child: Text(
+                            AppLocalizations.of(context).authRegister,
                           ),
                         ),
                       ],

@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../shared/design_system/spacing/app_spacing.dart';
@@ -35,6 +36,8 @@ class _ForgotPasswordPageState
   }
 
   Future<void> _submit() async {
+    if (_isLoading) return;
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -51,20 +54,20 @@ class _ForgotPasswordPageState
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'ส่งลิงก์สำหรับรีเซ็ตรหัสผ่านไปยังอีเมลเรียบร้อยแล้ว',
+            AppLocalizations.of(context).authResetLinkSent,
           ),
         ),
       );
 
       Navigator.pop(context);
-    } catch (e) {
+    } catch (_) {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(e.toString()),
+          content: Text(AppLocalizations.of(context).authResetRequestFailed),
         ),
       );
     } finally {
@@ -78,7 +81,7 @@ class _ForgotPasswordPageState
 
   String? _validateEmail(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'กรุณากรอกอีเมล';
+      return AppLocalizations.of(context).authEmailRequired;
     }
 
     final emailRegExp = RegExp(
@@ -86,7 +89,7 @@ class _ForgotPasswordPageState
     );
 
     if (!emailRegExp.hasMatch(value.trim())) {
-      return 'รูปแบบอีเมลไม่ถูกต้อง';
+      return AppLocalizations.of(context).authEmailInvalid;
     }
 
     return null;
@@ -95,8 +98,8 @@ class _ForgotPasswordPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppAppBar(
-        title: 'ลืมรหัสผ่าน',
+      appBar: AppAppBar(
+        title: AppLocalizations.of(context).authForgotPassword,
       ),
       body: SafeArea(
         child: Center(
@@ -128,8 +131,8 @@ class _ForgotPasswordPageState
                           controller: _emailController,
                           validator: _validateEmail,
                           onSubmitted: (_) => _submit(),
-                          label: 'อีเมล',
-                          hint: 'กรอกอีเมล',
+                          label: AppLocalizations.of(context).authEmail,
+                          hint: AppLocalizations.of(context).authEmailHint,
                         ),
 
                         const SizedBox(
@@ -137,7 +140,7 @@ class _ForgotPasswordPageState
                         ),
 
                         PrimaryButton(
-                          text: 'ส่งลิงก์รีเซ็ตรหัสผ่าน',
+                          text: AppLocalizations.of(context).authSendResetLink,
                           isLoading: _isLoading,
                           onPressed: _submit,
                         ),

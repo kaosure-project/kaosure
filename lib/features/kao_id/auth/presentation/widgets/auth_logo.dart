@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 
 import '../../../../../shared/design_system/spacing/app_spacing.dart';
 import '../../../../../shared/design_system/typography/app_text_styles.dart';
@@ -35,7 +36,7 @@ class AuthLogo extends StatelessWidget {
         if (showSubtitle) ...[
           const SizedBox(height: AppSpacing.sm),
           Text(
-            'ยินดีต้อนรับสู่ KaoSure',
+            AppLocalizations.of(context).authWelcome,
             style: AppTextStyles.bodyMedium,
             textAlign: TextAlign.center,
           ),

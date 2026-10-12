@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../shared/design_system/spacing/app_spacing.dart';
@@ -44,13 +45,13 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'ส่งอีเมลยืนยันเรียบร้อยแล้ว',
+            AppLocalizations.of(context).authVerificationEmailSent,
           ),
         ),
       );
-    } catch (e) {
+    } catch (_) {
       if (!mounted) {
         return;
       }
@@ -58,7 +59,7 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            e.toString(),
+            AppLocalizations.of(context).authVerificationFailed,
           ),
         ),
       );
@@ -91,9 +92,9 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
 
       if (user?.emailConfirmed != true) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text(
-              'ยังไม่ได้ยืนยันอีเมล',
+              AppLocalizations.of(context).authEmailNotVerified,
             ),
           ),
         );
@@ -102,9 +103,9 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'ยืนยันอีเมลสำเร็จ',
+            AppLocalizations.of(context).authEmailVerified,
           ),
         ),
       );
@@ -114,7 +115,7 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
         KaoIdRoutes.bootstrap,
         (_) => false,
       );
-    } catch (e) {
+    } catch (_) {
       if (!mounted) {
         return;
       }
@@ -122,7 +123,7 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            e.toString(),
+            AppLocalizations.of(context).authVerificationFailed,
           ),
         ),
       );
@@ -141,8 +142,8 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
     final email = authState.value?.email ?? '-';
 
     return Scaffold(
-      appBar: const AppAppBar(
-        title: 'ยืนยันอีเมล',
+      appBar: AppAppBar(
+        title: AppLocalizations.of(context).authVerifyEmail,
       ),
       body: SafeArea(
         child: Center(
@@ -178,10 +179,10 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                         height: AppSpacing.lg,
                       ),
 
-                      const Text(
-                        'ยืนยันอีเมล',
+                      Text(
+                        AppLocalizations.of(context).authVerifyEmail,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
@@ -203,9 +204,8 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                         height: AppSpacing.lg,
                       ),
 
-                      const Text(
-                        'ระบบได้ส่งอีเมลยืนยันบัญชีแล้ว\n'
-                        'กรุณาเปิดอีเมลและกดลิงก์ยืนยัน',
+                      Text(
+                        AppLocalizations.of(context).authVerifyEmailInstructions,
                         textAlign: TextAlign.center,
                       ),
 
@@ -214,7 +214,7 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                       ),
 
                       PrimaryButton(
-                        text: 'ส่งอีเมลยืนยันอีกครั้ง',
+                        text: AppLocalizations.of(context).authResendVerificationEmail,
                         icon: Icons.send,
                         isLoading: _sending,
                         onPressed: _sendEmail,
@@ -225,7 +225,7 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                       ),
 
                       PrimaryButton(
-                        text: 'ตรวจสอบอีกครั้ง',
+                        text: AppLocalizations.of(context).authCheckAgain,
                         icon: Icons.refresh,
                         isLoading: _checking,
                         onPressed: _checkVerification,
@@ -243,8 +243,8 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                             (_) => false,
                           );
                         },
-                        child: const Text(
-                          'ยืนยันภายหลัง',
+                        child: Text(
+                          AppLocalizations.of(context).authVerifyLater,
                         ),
                       ),
                     ],

@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../shared/design_system/spacing/app_spacing.dart';
@@ -52,6 +53,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
   }
 
   Future<void> _register() async {
+    if (_isLoading) return;
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -69,23 +72,23 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'สมัครสมาชิกสำเร็จ กรุณาตรวจสอบอีเมลเพื่อยืนยันบัญชี',
+            AppLocalizations.of(context).authRegistrationSucceeded,
           ),
         ),
       );
 
       Navigator.pushReplacementNamed(
         context,
-        KaoIdRoutes.verifyEmail,
+        KaoIdRoutes.bootstrap,
       );
-    } catch (e) {
+    } catch (_) {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(e.toString()),
+          content: Text(AppLocalizations.of(context).authRegistrationFailed),
         ),
       );
     } finally {
@@ -97,15 +100,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     }
   }
 
-  void _openBusinessRegistration() {
-    Navigator.of(context).pushNamed(
-      '/kao-id/business/register',
-    );
-  }
-
   String? _validateEmail(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'กรุณากรอกอีเมล';
+      return AppLocalizations.of(context).authEmailRequired;
     }
 
     final emailRegExp = RegExp(
@@ -113,7 +110,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     );
 
     if (!emailRegExp.hasMatch(value.trim())) {
-      return 'รูปแบบอีเมลไม่ถูกต้อง';
+      return AppLocalizations.of(context).authEmailInvalid;
     }
 
     return null;
@@ -121,21 +118,21 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'กรุณากรอกรหัสผ่าน';
+      return AppLocalizations.of(context).authPasswordRequired;
     }
 
     if (value.runes.length < 8) {
-      return 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร';
+      return AppLocalizations.of(context).authPasswordMinLength;
     }
 
     if (!RegExp(r'[0-9]').hasMatch(value)) {
-      return 'รหัสผ่านต้องมีตัวเลขอย่างน้อย 1 ตัว';
+      return AppLocalizations.of(context).authPasswordNumberRequired;
     }
 
     if (!RegExp(
       r'[!@#\$%^&*(),.?":{}|<>_\-+=/\\[\]~`]',
     ).hasMatch(value)) {
-      return 'รหัสผ่านต้องมีอักขระพิเศษอย่างน้อย 1 ตัว';
+      return AppLocalizations.of(context).authPasswordSpecialRequired;
     }
 
     return null;
@@ -143,11 +140,11 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
   String? _validateConfirmPassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'กรุณายืนยันรหัสผ่าน';
+      return AppLocalizations.of(context).authConfirmPasswordRequired;
     }
 
     if (value != _passwordController.text) {
-      return 'รหัสผ่านไม่ตรงกัน';
+      return AppLocalizations.of(context).authPasswordMismatch;
     }
 
     return null;
@@ -156,8 +153,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppAppBar(
-        title: 'สร้างบัญชี',
+      appBar: AppAppBar(
+        title: AppLocalizations.of(context).authCreateAccount,
       ),
       body: SafeArea(
         child: Center(
@@ -189,8 +186,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         AppEmailField(
                           controller: _emailController,
                           validator: _validateEmail,
-                          label: 'อีเมล',
-                          hint: 'กรอกอีเมล',
+                          label: AppLocalizations.of(context).authEmail,
+                          hint: AppLocalizations.of(context).authEmailHint,
                         ),
 
                         const SizedBox(
@@ -200,8 +197,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         AppPasswordField(
                           controller: _passwordController,
                           validator: _validatePassword,
-                          label: 'รหัสผ่าน',
-                          hint: 'กรอกรหัสผ่าน',
+                          label: AppLocalizations.of(context).password,
+                          hint: AppLocalizations.of(context).authPasswordHint,
                         ),
 
                         const SizedBox(
@@ -221,8 +218,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                               _confirmPasswordController,
                           validator:
                               _validateConfirmPassword,
-                          label: 'ยืนยันรหัสผ่าน',
-                          hint: 'กรอกรหัสผ่านอีกครั้ง',
+                          label: AppLocalizations.of(context).authConfirmPassword,
+                          hint: AppLocalizations.of(context).authConfirmPasswordHint,
                         ),
 
                         const SizedBox(
@@ -230,7 +227,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         ),
 
                         PrimaryButton(
-                          text: 'สร้างบัญชี',
+                          text: AppLocalizations.of(context).authCreateAccount,
                           isLoading: _isLoading,
                           onPressed: _register,
                         ),
@@ -243,32 +240,11 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: const Text(
-                            'มีบัญชีอยู่แล้ว? เข้าสู่ระบบ',
+                          child: Text(
+                            AppLocalizations.of(context).authExistingAccount,
                           ),
                         ),
 
-                        const SizedBox(
-                          height: AppSpacing.sm,
-                        ),
-
-                        const Divider(),
-
-                        const SizedBox(
-                          height: AppSpacing.sm,
-                        ),
-
-                        TextButton.icon(
-                          onPressed:
-                              _openBusinessRegistration,
-                          icon: const Icon(
-                            Icons.business_outlined,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            'สมัครในนามบริษัท / ผู้ประกอบการ',
-                          ),
-                        ),
                       ],
                     ),
                   ),

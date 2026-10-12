@@ -5,13 +5,16 @@ import '../../data/datasources/auth_remote_data_source.dart';
 import '../../data/datasources/auth_remote_datasource_impl.dart';
 import '../../data/repositories/auth_repository_impl.dart';
 import '../../domain/repositories/auth_repository.dart';
+import '../../domain/usecases/change_password_usecase.dart';
 import '../../domain/usecases/forgot_password_usecase.dart';
 import '../../domain/usecases/get_current_user_usecase.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/logout_usecase.dart';
+import '../../domain/usecases/reauthenticate_usecase.dart';
 import '../../domain/usecases/refresh_current_user_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
 import '../../domain/usecases/resend_email_verification_usecase.dart';
+import '../../domain/usecases/update_password_usecase.dart';
 
 final supabaseClientProvider = Provider<SupabaseClient>((ref) {
   return Supabase.instance.client;
@@ -26,6 +29,12 @@ final authRemoteDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepositoryImpl(
     ref.read(authRemoteDataSourceProvider),
+  );
+});
+
+final changePasswordUseCaseProvider = Provider((ref) {
+  return ChangePasswordUseCase(
+    ref.read(authRepositoryProvider),
   );
 });
 
@@ -53,6 +62,12 @@ final logoutUseCaseProvider = Provider((ref) {
   );
 });
 
+final reauthenticateUseCaseProvider = Provider((ref) {
+  return ReauthenticateUseCase(
+    ref.read(authRepositoryProvider),
+  );
+});
+
 final refreshCurrentUserUseCaseProvider = Provider((ref) {
   return RefreshCurrentUserUseCase(
     ref.read(authRepositoryProvider),
@@ -67,6 +82,12 @@ final registerUseCaseProvider = Provider((ref) {
 
 final resendEmailVerificationUseCaseProvider = Provider((ref) {
   return ResendEmailVerificationUseCase(
+    ref.read(authRepositoryProvider),
+  );
+});
+
+final updatePasswordUseCaseProvider = Provider((ref) {
+  return UpdatePasswordUseCase(
     ref.read(authRepositoryProvider),
   );
 });

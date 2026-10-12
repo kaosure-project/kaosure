@@ -1,0 +1,129 @@
+import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../core/config/env.dart';
+
+/// Validates and completes a same-origin web handoff to a service app.
+/// Session tokens and identity data are never placed in the return URL.
+final class KaoIdSsoHandoff {
+  KaoIdSsoHandoff._();
+
+  static const String _pendingReturnKey = 'kao_id.pending_service_return_to';
+
+  static Uri? validateReturnTo({
+    required String rawReturnTo,
+    required String appUrl,
+    required String allowedServicePaths,
+  }) {
+    final appUri = Uri.tryParse(appUrl.trim());
+    final target = Uri.tryParse(rawReturnTo.trim());
+    if (appUri == null || target == null ||
+        !_isAllowedWebUri(appUri) || !_isAllowedWebUri(target) ||
+        appUri.origin != target.origin ||
+        target.userInfo.isNotEmpty || target.hasQuery || target.hasFragment ||
+        target.pathSegments.any((segment) => segment == '.' || segment == '..')) {
+      return null;
+    }
+
+    final allowedPrefixes = allowedServicePaths
+        .split(',')
+        .map((path) => path.trim())
+        .where((path) => path.startsWith('/') && path != '/')
+        .toList(growable: false);
+    if (!allowedPrefixes.any((prefix) =>
+        target.path == prefix || target.path.startsWith('$prefix/'))) {
+      return null;
+    }
+    return target;
+  }
+
+  /// Captures the service return target only when entering Kao ID Login.
+  static Future<void> captureLoginReturnTarget(Uri currentUri) async {
+    if (currentUri.path != '/login') return;
+    final rawReturnTo = currentUri.queryParameters['return_to'];
+
+    try {
+      final storage = SharedPreferencesAsync();
+      final appUri = Uri.tryParse(Env.appUrl.trim());
+      if (rawReturnTo == null || appUri == null ||
+          currentUri.origin != appUri.origin) {
+        await storage.remove(_pendingReturnKey);
+        return;
+      }
+      final target = validateReturnTo(
+        rawReturnTo: rawReturnTo,
+        appUrl: Env.appUrl,
+        allowedServicePaths: Env.kaoIdAllowedServicePaths,
+      );
+      if (target == null) {
+        await storage.remove(_pendingReturnKey);
+        return;
+      }
+      await storage.setString(_pendingReturnKey, target.toString());
+    } catch (error, stackTrace) {
+      debugPrint('Unable to store Kao ID service return target: $error');
+      debugPrintStack(stackTrace: stackTrace);
+    }
+  }
+
+  static Future<bool> hasPendingLoginReturn() async {
+    if (!kIsWeb) return false;
+    final rawReturnTo =
+        await SharedPreferencesAsync().getString(_pendingReturnKey);
+    if (rawReturnTo == null) return false;
+    return validateReturnTo(
+          rawReturnTo: rawReturnTo,
+          appUrl: Env.appUrl,
+          allowedServicePaths: Env.kaoIdAllowedServicePaths,
+        ) !=
+        null;
+  }
+
+  /// Returns only after Supabase confirms the current account is active.
+  /// The stored URL is one-shot to prevent replay after refresh or back.
+  static Future<bool> tryReturnToService() async {
+    try {
+      final storage = SharedPreferencesAsync();
+      final rawReturnTo = await storage.getString(_pendingReturnKey);
+      if (rawReturnTo == null) return false;
+      await storage.remove(_pendingReturnKey);
+
+      final target = validateReturnTo(
+        rawReturnTo: rawReturnTo,
+        appUrl: Env.appUrl,
+        allowedServicePaths: Env.kaoIdAllowedServicePaths,
+      );
+      final appUri = Uri.tryParse(Env.appUrl.trim());
+      if (!kIsWeb || target == null || appUri == null ||
+          Uri.base.origin != appUri.origin) {
+        return false;
+      }
+
+      final client = Supabase.instance.client;
+      final user = client.auth.currentUser;
+      if (user == null || user.isAnonymous) return false;
+
+      final access = await client.rpc('account_access_r10d');
+      if (access is! Map || access['state'] != 'active') return false;
+
+      return launchUrl(target, webOnlyWindowName: '_self');
+    } catch (error, stackTrace) {
+      debugPrint('Kao ID service handoff failed: $error');
+      debugPrintStack(stackTrace: stackTrace);
+      return false;
+    }
+  }
+
+  static bool _isAllowedWebUri(Uri uri) {
+    if (!uri.hasAuthority || uri.host.isEmpty || uri.userInfo.isNotEmpty) {
+      return false;
+    }
+    if (uri.scheme == 'https') return true;
+    return uri.scheme == 'http' &&
+        (uri.host == 'localhost' ||
+            uri.host == '127.0.0.1' ||
+            uri.host == '::1');
+  }
+}

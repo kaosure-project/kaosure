@@ -5,6 +5,7 @@ import '../../../../../../shared/design_system/colors/app_colors.dart';
 import '../../../../account/presentation/pages/security/mfa_page.dart';
 import '../../../../account/presentation/pages/security/sessions_page.dart';
 import '../../../../kyc/presentation/pages/document_health_page.dart';
+import '../../../../sso/presentation/pages/connected_apps_page.dart';
 import '../section/menu_panel.dart';
 import '../section/section_body.dart';
 import 'dashboard_menu_tile.dart';
@@ -45,8 +46,16 @@ class SecuritySection extends StatelessWidget {
             icon: Icons.devices_outlined,
             title: l10n.sessionTitle,
             subtitle: l10n.accountSessionsDescription,
-            showDivider: false,
             onTap: () => open(const SessionsPage()),
+          ),
+          DashboardMenuTile(
+            icon: Icons.apps_outlined,
+            title: l10n.ssoConnectedAppsTitle,
+            subtitle: l10n.ssoConnectedAppsDescription,
+            color: AppColors.kaoGreen,
+            tint: AppColors.kaoGreenSoft,
+            showDivider: false,
+            onTap: () => open(const ConnectedAppsPage()),
           ),
         ]),
         MenuPanel(title: l10n.secDocumentsTitle, children: [

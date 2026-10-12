@@ -3205,4 +3205,237 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get thaiDocLegacy => 'Giấy tờ cư trú đã gửi trước bản cập nhật này';
+
+  @override
+  String ssoConsentTitle(String app) {
+    return '$app muốn sử dụng Kao ID của bạn';
+  }
+
+  @override
+  String ssoConsentSignedInAs(String account) {
+    return 'Đang đăng nhập với $account';
+  }
+
+  @override
+  String get ssoConsentReceives => 'Ứng dụng này sẽ nhận được';
+
+  @override
+  String get ssoConsentNeverShared =>
+      'Mật khẩu, giấy tờ tùy thân và số tài khoản ngân hàng của bạn không bao giờ được chia sẻ với ứng dụng.';
+
+  @override
+  String ssoConsentReturnTo(String host) {
+    return 'Sau khi chọn, bạn sẽ quay lại $host';
+  }
+
+  @override
+  String get ssoConsentAllow => 'Cho phép';
+
+  @override
+  String get ssoConsentDeny => 'Không cho phép';
+
+  @override
+  String get ssoConsentRedirecting => 'Đang quay lại ứng dụng…';
+
+  @override
+  String get ssoConsentManageHint =>
+      'Bạn có thể ngắt kết nối ứng dụng bất cứ lúc nào tại Đăng nhập và bảo mật › Ứng dụng đã kết nối.';
+
+  @override
+  String get ssoAppBlocked =>
+      'Ứng dụng này chưa đăng ký với Kao ID hoặc đang bị tạm ngưng nên không thể cho phép.';
+
+  @override
+  String get ssoFirstParty => 'Ứng dụng của Kao';
+
+  @override
+  String get ssoScopeOpenid => 'Xác nhận đó là bạn bằng Kao ID';
+
+  @override
+  String get ssoScopeProfile => 'Tên và ảnh hồ sơ của bạn';
+
+  @override
+  String get ssoScopeEmail => 'Địa chỉ email của bạn';
+
+  @override
+  String get ssoScopePhone => 'Số điện thoại của bạn';
+
+  @override
+  String get ssoScopeOffline => 'Giữ bạn đăng nhập vào ứng dụng';
+
+  @override
+  String get ssoClaimProfile =>
+      'Hồ sơ Kao ID: tên hiển thị, tên người dùng và quốc gia';
+
+  @override
+  String get ssoClaimVerification =>
+      'Trạng thái xác minh email, điện thoại, danh tính (KYC) và tài khoản ngân hàng — chỉ có hoặc không';
+
+  @override
+  String get ssoClaimBusiness =>
+      'Doanh nghiệp bạn tham gia, vai trò của bạn và trạng thái xác minh của doanh nghiệp';
+
+  @override
+  String get ssoClaimRoles => 'Vai trò quản trị viên Kao của bạn';
+
+  @override
+  String get ssoConnectedAppsTitle => 'Ứng dụng đã kết nối';
+
+  @override
+  String get ssoConnectedAppsDescription => 'Ứng dụng đăng nhập bằng Kao ID';
+
+  @override
+  String get ssoConnectedAppsHelp =>
+      'Các ứng dụng bạn đã cho phép dùng Kao ID. Ngắt kết nối sẽ đăng xuất bạn khỏi ứng dụng đó và ứng dụng phải xin phép lại.';
+
+  @override
+  String get ssoConnectedAppsEmpty => 'Bạn chưa kết nối ứng dụng nào.';
+
+  @override
+  String ssoGrantedAt(String date) {
+    return 'Kết nối ngày $date';
+  }
+
+  @override
+  String ssoLastUsed(String date) {
+    return 'Dùng gần nhất $date';
+  }
+
+  @override
+  String get ssoDisconnect => 'Ngắt kết nối';
+
+  @override
+  String ssoDisconnectConfirm(String app) {
+    return 'Ngắt kết nối $app? Bạn sẽ bị đăng xuất khỏi ứng dụng và lần sau ứng dụng phải xin phép lại.';
+  }
+
+  @override
+  String get ssoDisconnected => 'Đã ngắt kết nối ứng dụng';
+
+  @override
+  String get ssoBackToKaoId => 'Đến Kao ID';
+
+  @override
+  String get ssoErrorRequestNotFound =>
+      'Yêu cầu đăng nhập này đã hết hạn hoặc không hợp lệ. Vui lòng bắt đầu lại từ ứng dụng.';
+
+  @override
+  String get ssoErrorInvalidRedirect =>
+      'Địa chỉ quay lại của ứng dụng không được phép.';
+
+  @override
+  String get ssoErrorOwner =>
+      'Chỉ chủ sở hữu công ty mới quản lý được các ứng dụng đăng nhập bằng Kao ID.';
+
+  @override
+  String get ssoErrorInvalidClient =>
+      'Một số thông tin không hợp lệ. Hãy kiểm tra các trường được đánh dấu.';
+
+  @override
+  String get ssoErrorOauthClientNotFound =>
+      'Client ID này chưa được đăng ký trong máy chủ OAuth của Supabase Auth.';
+
+  @override
+  String get ssoErrorClientTaken =>
+      'Client ID này đã được ứng dụng khác sử dụng.';
+
+  @override
+  String get ssoErrorUnknown => 'Đã xảy ra lỗi. Vui lòng thử lại.';
+
+  @override
+  String get ssoAppsAdminTitle => 'Ứng dụng đăng nhập bằng Kao ID';
+
+  @override
+  String get ssoAppsAdminHubHelp =>
+      'Ứng dụng thành viên, thông tin nhận được và danh sách quyền truy cập';
+
+  @override
+  String get ssoAppsAdminHelp =>
+      'Các ứng dụng thành viên được phép đăng nhập bằng Kao ID, thông tin chúng đọc được và các hàm, bảng mà token của chúng truy cập được. Dữ liệu quản trị, KYC và bảo mật của Kao ID luôn bị chặn.';
+
+  @override
+  String get ssoAppsEmpty => 'Chưa có ứng dụng nào được đăng ký.';
+
+  @override
+  String get ssoAppRegister => 'Đăng ký ứng dụng';
+
+  @override
+  String get ssoAppEdit => 'Chỉnh sửa';
+
+  @override
+  String get ssoAppSuspend => 'Tạm ngưng';
+
+  @override
+  String get ssoAppActivate => 'Kích hoạt';
+
+  @override
+  String ssoAppSuspendConfirm(String app) {
+    return 'Tạm ngưng $app? Mọi token của ứng dụng sẽ ngừng hoạt động ngay.';
+  }
+
+  @override
+  String get ssoAppActive => 'Đang hoạt động';
+
+  @override
+  String get ssoAppSuspended => 'Đã tạm ngưng';
+
+  @override
+  String get ssoAppOauthMissing => 'Không tìm thấy client trong máy chủ OAuth';
+
+  @override
+  String ssoAppMembers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count thành viên đã dùng',
+      zero: 'Chưa có thành viên dùng',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ssoAppRedirects => 'URI chuyển hướng';
+
+  @override
+  String get ssoAppAllowedRpcs => 'Hàm được phép (RPC)';
+
+  @override
+  String get ssoAppAllowedTables => 'Bảng được phép';
+
+  @override
+  String get ssoAppClaims => 'Thông tin ứng dụng đọc được';
+
+  @override
+  String get ssoAppCode => 'Mã ứng dụng';
+
+  @override
+  String get ssoAppCodeHelp =>
+      'Chữ thường, chữ số và _, 3–40 ký tự, ví dụ secondhand_web';
+
+  @override
+  String get ssoAppClientId => 'ID client OAuth';
+
+  @override
+  String get ssoAppClientIdHelp =>
+      'Sao chép từ Supabase Dashboard › Authentication › OAuth Apps sau khi tạo client ở đó';
+
+  @override
+  String get ssoAppName => 'Tên hiển thị cho thành viên';
+
+  @override
+  String get ssoAppNameHelp => '2–80 ký tự';
+
+  @override
+  String get ssoAppFirstPartyHelp =>
+      'Được đánh dấu là ứng dụng của Kao trên màn hình cấp quyền. Không cấp thêm quyền truy cập.';
+
+  @override
+  String get ssoAppNamesHelp =>
+      'Tên chữ thường, phân tách bằng dấu phẩy hoặc xuống dòng. Tên liên quan quản trị, KYC và bảo mật của Kao ID sẽ bị từ chối.';
+
+  @override
+  String get ssoAppSaved => 'Đã lưu ứng dụng';
+
+  @override
+  String get ssoAppNone => 'Không có';
 }

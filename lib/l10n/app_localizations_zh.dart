@@ -2974,6 +2974,223 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get thaiDocLegacy => '本次更新前提交的居留证件';
+
+  @override
+  String ssoConsentTitle(String app) {
+    return '$app 请求使用您的 Kao ID';
+  }
+
+  @override
+  String ssoConsentSignedInAs(String account) {
+    return '当前登录账户：$account';
+  }
+
+  @override
+  String get ssoConsentReceives => '此应用将获得';
+
+  @override
+  String get ssoConsentNeverShared => '您的密码、身份证件和银行账号绝不会提供给任何应用。';
+
+  @override
+  String ssoConsentReturnTo(String host) {
+    return '选择后，您将返回 $host';
+  }
+
+  @override
+  String get ssoConsentAllow => '允许';
+
+  @override
+  String get ssoConsentDeny => '不允许';
+
+  @override
+  String get ssoConsentRedirecting => '正在返回应用…';
+
+  @override
+  String get ssoConsentManageHint => '您可以随时在“登录与安全 › 已连接的应用”中断开应用。';
+
+  @override
+  String get ssoAppBlocked => '此应用未在 Kao ID 注册或已被暂停，无法允许。';
+
+  @override
+  String get ssoFirstParty => 'Kao 旗下应用';
+
+  @override
+  String get ssoScopeOpenid => '通过 Kao ID 确认是您本人';
+
+  @override
+  String get ssoScopeProfile => '您的姓名和头像';
+
+  @override
+  String get ssoScopeEmail => '您的电子邮箱';
+
+  @override
+  String get ssoScopePhone => '您的电话号码';
+
+  @override
+  String get ssoScopeOffline => '让您保持登录该应用';
+
+  @override
+  String get ssoClaimProfile => 'Kao ID 资料：显示名称、用户名和国家/地区';
+
+  @override
+  String get ssoClaimVerification => '电子邮箱、电话、身份（KYC）和银行账户的验证状态——仅显示是否已验证';
+
+  @override
+  String get ssoClaimBusiness => '您所属的企业、您的角色及企业的验证状态';
+
+  @override
+  String get ssoClaimRoles => '您的 Kao 管理员角色';
+
+  @override
+  String get ssoConnectedAppsTitle => '已连接的应用';
+
+  @override
+  String get ssoConnectedAppsDescription => '使用 Kao ID 登录的应用';
+
+  @override
+  String get ssoConnectedAppsHelp => '您已允许使用 Kao ID 的应用。断开后您将退出该应用，应用需要重新请求授权。';
+
+  @override
+  String get ssoConnectedAppsEmpty => '您尚未连接任何应用。';
+
+  @override
+  String ssoGrantedAt(String date) {
+    return '连接于 $date';
+  }
+
+  @override
+  String ssoLastUsed(String date) {
+    return '最近使用 $date';
+  }
+
+  @override
+  String get ssoDisconnect => '断开连接';
+
+  @override
+  String ssoDisconnectConfirm(String app) {
+    return '要断开 $app 吗？您将退出该应用，下次需要重新授权。';
+  }
+
+  @override
+  String get ssoDisconnected => '已断开应用';
+
+  @override
+  String get ssoBackToKaoId => '前往 Kao ID';
+
+  @override
+  String get ssoErrorRequestNotFound => '此登录请求已过期或无效，请从应用重新开始。';
+
+  @override
+  String get ssoErrorInvalidRedirect => '应用的返回地址不被允许。';
+
+  @override
+  String get ssoErrorOwner => '只有公司所有者可以管理使用 Kao ID 登录的应用。';
+
+  @override
+  String get ssoErrorInvalidClient => '部分信息无效，请检查标出的字段。';
+
+  @override
+  String get ssoErrorOauthClientNotFound =>
+      '此客户端 ID 尚未在 Supabase Auth 的 OAuth 服务器中注册。';
+
+  @override
+  String get ssoErrorClientTaken => '此客户端 ID 已被其他应用使用。';
+
+  @override
+  String get ssoErrorUnknown => '出现问题，请重试。';
+
+  @override
+  String get ssoAppsAdminTitle => '使用 Kao ID 登录的应用';
+
+  @override
+  String get ssoAppsAdminHubHelp => '旗下应用、可获取的信息及访问清单';
+
+  @override
+  String get ssoAppsAdminHelp =>
+      '允许成员使用 Kao ID 登录的旗下应用，以及它们可读取的信息和令牌可访问的函数与数据表。Kao ID 的管理、KYC 和安全数据始终被阻止。';
+
+  @override
+  String get ssoAppsEmpty => '尚未注册任何应用。';
+
+  @override
+  String get ssoAppRegister => '注册应用';
+
+  @override
+  String get ssoAppEdit => '编辑';
+
+  @override
+  String get ssoAppSuspend => '暂停';
+
+  @override
+  String get ssoAppActivate => '启用';
+
+  @override
+  String ssoAppSuspendConfirm(String app) {
+    return '要暂停 $app 吗？其所有令牌将立即失效。';
+  }
+
+  @override
+  String get ssoAppActive => '已启用';
+
+  @override
+  String get ssoAppSuspended => '已暂停';
+
+  @override
+  String get ssoAppOauthMissing => 'OAuth 服务器中找不到该客户端';
+
+  @override
+  String ssoAppMembers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '已有 $count 位成员使用',
+      zero: '暂无成员使用',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ssoAppRedirects => '重定向 URI';
+
+  @override
+  String get ssoAppAllowedRpcs => '允许的函数（RPC）';
+
+  @override
+  String get ssoAppAllowedTables => '允许的数据表';
+
+  @override
+  String get ssoAppClaims => '应用可读取的信息';
+
+  @override
+  String get ssoAppCode => '应用代码';
+
+  @override
+  String get ssoAppCodeHelp => '小写字母、数字和 _，3–40 个字符，例如 secondhand_web';
+
+  @override
+  String get ssoAppClientId => 'OAuth 客户端 ID';
+
+  @override
+  String get ssoAppClientIdHelp =>
+      '在 Supabase Dashboard › Authentication › OAuth Apps 创建客户端后从那里复制';
+
+  @override
+  String get ssoAppName => '向成员显示的名称';
+
+  @override
+  String get ssoAppNameHelp => '2–80 个字符';
+
+  @override
+  String get ssoAppFirstPartyHelp => '在授权页面标记为 Kao 旗下应用，不会增加任何访问权限。';
+
+  @override
+  String get ssoAppNamesHelp => '小写名称，以逗号或换行分隔。Kao ID 管理、KYC 和安全相关名称会被拒绝。';
+
+  @override
+  String get ssoAppSaved => '应用已保存';
+
+  @override
+  String get ssoAppNone => '无';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -5946,4 +6163,221 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get thaiDocLegacy => '本次更新前提交的居留证件';
+
+  @override
+  String ssoConsentTitle(String app) {
+    return '$app 请求使用您的 Kao ID';
+  }
+
+  @override
+  String ssoConsentSignedInAs(String account) {
+    return '当前登录账户：$account';
+  }
+
+  @override
+  String get ssoConsentReceives => '此应用将获得';
+
+  @override
+  String get ssoConsentNeverShared => '您的密码、身份证件和银行账号绝不会提供给任何应用。';
+
+  @override
+  String ssoConsentReturnTo(String host) {
+    return '选择后，您将返回 $host';
+  }
+
+  @override
+  String get ssoConsentAllow => '允许';
+
+  @override
+  String get ssoConsentDeny => '不允许';
+
+  @override
+  String get ssoConsentRedirecting => '正在返回应用…';
+
+  @override
+  String get ssoConsentManageHint => '您可以随时在“登录与安全 › 已连接的应用”中断开应用。';
+
+  @override
+  String get ssoAppBlocked => '此应用未在 Kao ID 注册或已被暂停，无法允许。';
+
+  @override
+  String get ssoFirstParty => 'Kao 旗下应用';
+
+  @override
+  String get ssoScopeOpenid => '通过 Kao ID 确认是您本人';
+
+  @override
+  String get ssoScopeProfile => '您的姓名和头像';
+
+  @override
+  String get ssoScopeEmail => '您的电子邮箱';
+
+  @override
+  String get ssoScopePhone => '您的电话号码';
+
+  @override
+  String get ssoScopeOffline => '让您保持登录该应用';
+
+  @override
+  String get ssoClaimProfile => 'Kao ID 资料：显示名称、用户名和国家/地区';
+
+  @override
+  String get ssoClaimVerification => '电子邮箱、电话、身份（KYC）和银行账户的验证状态——仅显示是否已验证';
+
+  @override
+  String get ssoClaimBusiness => '您所属的企业、您的角色及企业的验证状态';
+
+  @override
+  String get ssoClaimRoles => '您的 Kao 管理员角色';
+
+  @override
+  String get ssoConnectedAppsTitle => '已连接的应用';
+
+  @override
+  String get ssoConnectedAppsDescription => '使用 Kao ID 登录的应用';
+
+  @override
+  String get ssoConnectedAppsHelp => '您已允许使用 Kao ID 的应用。断开后您将退出该应用，应用需要重新请求授权。';
+
+  @override
+  String get ssoConnectedAppsEmpty => '您尚未连接任何应用。';
+
+  @override
+  String ssoGrantedAt(String date) {
+    return '连接于 $date';
+  }
+
+  @override
+  String ssoLastUsed(String date) {
+    return '最近使用 $date';
+  }
+
+  @override
+  String get ssoDisconnect => '断开连接';
+
+  @override
+  String ssoDisconnectConfirm(String app) {
+    return '要断开 $app 吗？您将退出该应用，下次需要重新授权。';
+  }
+
+  @override
+  String get ssoDisconnected => '已断开应用';
+
+  @override
+  String get ssoBackToKaoId => '前往 Kao ID';
+
+  @override
+  String get ssoErrorRequestNotFound => '此登录请求已过期或无效，请从应用重新开始。';
+
+  @override
+  String get ssoErrorInvalidRedirect => '应用的返回地址不被允许。';
+
+  @override
+  String get ssoErrorOwner => '只有公司所有者可以管理使用 Kao ID 登录的应用。';
+
+  @override
+  String get ssoErrorInvalidClient => '部分信息无效，请检查标出的字段。';
+
+  @override
+  String get ssoErrorOauthClientNotFound =>
+      '此客户端 ID 尚未在 Supabase Auth 的 OAuth 服务器中注册。';
+
+  @override
+  String get ssoErrorClientTaken => '此客户端 ID 已被其他应用使用。';
+
+  @override
+  String get ssoErrorUnknown => '出现问题，请重试。';
+
+  @override
+  String get ssoAppsAdminTitle => '使用 Kao ID 登录的应用';
+
+  @override
+  String get ssoAppsAdminHubHelp => '旗下应用、可获取的信息及访问清单';
+
+  @override
+  String get ssoAppsAdminHelp =>
+      '允许成员使用 Kao ID 登录的旗下应用，以及它们可读取的信息和令牌可访问的函数与数据表。Kao ID 的管理、KYC 和安全数据始终被阻止。';
+
+  @override
+  String get ssoAppsEmpty => '尚未注册任何应用。';
+
+  @override
+  String get ssoAppRegister => '注册应用';
+
+  @override
+  String get ssoAppEdit => '编辑';
+
+  @override
+  String get ssoAppSuspend => '暂停';
+
+  @override
+  String get ssoAppActivate => '启用';
+
+  @override
+  String ssoAppSuspendConfirm(String app) {
+    return '要暂停 $app 吗？其所有令牌将立即失效。';
+  }
+
+  @override
+  String get ssoAppActive => '已启用';
+
+  @override
+  String get ssoAppSuspended => '已暂停';
+
+  @override
+  String get ssoAppOauthMissing => 'OAuth 服务器中找不到该客户端';
+
+  @override
+  String ssoAppMembers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '已有 $count 位成员使用',
+      zero: '暂无成员使用',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ssoAppRedirects => '重定向 URI';
+
+  @override
+  String get ssoAppAllowedRpcs => '允许的函数（RPC）';
+
+  @override
+  String get ssoAppAllowedTables => '允许的数据表';
+
+  @override
+  String get ssoAppClaims => '应用可读取的信息';
+
+  @override
+  String get ssoAppCode => '应用代码';
+
+  @override
+  String get ssoAppCodeHelp => '小写字母、数字和 _，3–40 个字符，例如 secondhand_web';
+
+  @override
+  String get ssoAppClientId => 'OAuth 客户端 ID';
+
+  @override
+  String get ssoAppClientIdHelp =>
+      '在 Supabase Dashboard › Authentication › OAuth Apps 创建客户端后从那里复制';
+
+  @override
+  String get ssoAppName => '向成员显示的名称';
+
+  @override
+  String get ssoAppNameHelp => '2–80 个字符';
+
+  @override
+  String get ssoAppFirstPartyHelp => '在授权页面标记为 Kao 旗下应用，不会增加任何访问权限。';
+
+  @override
+  String get ssoAppNamesHelp => '小写名称，以逗号或换行分隔。Kao ID 管理、KYC 和安全相关名称会被拒绝。';
+
+  @override
+  String get ssoAppSaved => '应用已保存';
+
+  @override
+  String get ssoAppNone => '无';
 }

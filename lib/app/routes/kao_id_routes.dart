@@ -31,6 +31,10 @@ final class KaoIdRoutes {
 
   static const String settings = '/settings';
 
+  /// Supabase Auth's OAuth server sends members here with `?authorization_id=`.
+  static const String oauthConsent = '/oauth/consent';
+  static const String connectedApps = '/security/apps';
+
   /// Routes behind the Kao ID header tabs, in tab order.
   static const List<String> accountTabs = [dashboard, profile, security, settings];
 

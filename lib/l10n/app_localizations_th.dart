@@ -3191,4 +3191,236 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get thaiDocLegacy => 'เอกสารพำนักที่ส่งไว้ก่อนการปรับปรุง';
+
+  @override
+  String ssoConsentTitle(String app) {
+    return '$app ขอใช้ Kao ID ของคุณ';
+  }
+
+  @override
+  String ssoConsentSignedInAs(String account) {
+    return 'เข้าสู่ระบบในชื่อ $account';
+  }
+
+  @override
+  String get ssoConsentReceives => 'แอปนี้จะได้รับข้อมูล';
+
+  @override
+  String get ssoConsentNeverShared =>
+      'รหัสผ่าน เอกสารยืนยันตัวตน และเลขบัญชีธนาคารของคุณจะไม่ถูกส่งให้แอปใดๆ';
+
+  @override
+  String ssoConsentReturnTo(String host) {
+    return 'เมื่อเลือกแล้ว ระบบจะพาคุณกลับไปที่ $host';
+  }
+
+  @override
+  String get ssoConsentAllow => 'อนุญาต';
+
+  @override
+  String get ssoConsentDeny => 'ไม่อนุญาต';
+
+  @override
+  String get ssoConsentRedirecting => 'กำลังกลับไปที่แอป…';
+
+  @override
+  String get ssoConsentManageHint =>
+      'คุณยกเลิกการเชื่อมต่อแอปได้ทุกเมื่อที่ การเข้าสู่ระบบและความปลอดภัย › แอปที่เชื่อมต่อ';
+
+  @override
+  String get ssoAppBlocked =>
+      'แอปนี้ยังไม่ได้ลงทะเบียนกับ Kao ID หรือถูกระงับอยู่ จึงอนุญาตไม่ได้';
+
+  @override
+  String get ssoFirstParty => 'แอปในเครือ Kao';
+
+  @override
+  String get ssoScopeOpenid => 'ยืนยันว่าเป็นคุณด้วย Kao ID';
+
+  @override
+  String get ssoScopeProfile => 'ชื่อและรูปโปรไฟล์ของคุณ';
+
+  @override
+  String get ssoScopeEmail => 'อีเมลของคุณ';
+
+  @override
+  String get ssoScopePhone => 'เบอร์โทรศัพท์ของคุณ';
+
+  @override
+  String get ssoScopeOffline => 'ให้คุณอยู่ในระบบของแอปต่อเนื่อง';
+
+  @override
+  String get ssoClaimProfile =>
+      'โปรไฟล์ Kao ID: ชื่อที่แสดง ชื่อผู้ใช้ และประเทศ';
+
+  @override
+  String get ssoClaimVerification =>
+      'สถานะการยืนยันอีเมล โทรศัพท์ ตัวตน (KYC) และบัญชีธนาคาร — เฉพาะผ่านหรือไม่ผ่าน';
+
+  @override
+  String get ssoClaimBusiness =>
+      'ธุรกิจที่คุณเป็นสมาชิก บทบาทของคุณ และสถานะการยืนยันของธุรกิจ';
+
+  @override
+  String get ssoClaimRoles => 'บทบาทผู้ดูแลระบบ Kao ของคุณ';
+
+  @override
+  String get ssoConnectedAppsTitle => 'แอปที่เชื่อมต่อ';
+
+  @override
+  String get ssoConnectedAppsDescription => 'แอปที่ใช้ Kao ID เข้าสู่ระบบ';
+
+  @override
+  String get ssoConnectedAppsHelp =>
+      'แอปที่คุณอนุญาตให้ใช้ Kao ID เมื่อยกเลิกการเชื่อมต่อ คุณจะออกจากระบบของแอปนั้นและแอปต้องขออนุญาตใหม่';
+
+  @override
+  String get ssoConnectedAppsEmpty => 'คุณยังไม่ได้เชื่อมต่อแอปใด';
+
+  @override
+  String ssoGrantedAt(String date) {
+    return 'เชื่อมต่อเมื่อ $date';
+  }
+
+  @override
+  String ssoLastUsed(String date) {
+    return 'ใช้งานล่าสุด $date';
+  }
+
+  @override
+  String get ssoDisconnect => 'ยกเลิกการเชื่อมต่อ';
+
+  @override
+  String ssoDisconnectConfirm(String app) {
+    return 'ยกเลิกการเชื่อมต่อ $app หรือไม่ คุณจะออกจากระบบของแอปนี้ และครั้งหน้าแอปต้องขออนุญาตใหม่';
+  }
+
+  @override
+  String get ssoDisconnected => 'ยกเลิกการเชื่อมต่อแอปแล้ว';
+
+  @override
+  String get ssoBackToKaoId => 'ไปที่ Kao ID';
+
+  @override
+  String get ssoErrorRequestNotFound =>
+      'คำขอเข้าสู่ระบบนี้หมดอายุหรือไม่ถูกต้อง โปรดเริ่มใหม่จากแอป';
+
+  @override
+  String get ssoErrorInvalidRedirect =>
+      'ที่อยู่สำหรับกลับไปยังแอปไม่ได้รับอนุญาต';
+
+  @override
+  String get ssoErrorOwner =>
+      'เฉพาะเจ้าของบริษัทเท่านั้นที่จัดการแอปที่เข้าสู่ระบบด้วย Kao ID ได้';
+
+  @override
+  String get ssoErrorInvalidClient =>
+      'ข้อมูลบางส่วนไม่ถูกต้อง โปรดตรวจสอบช่องที่ไฮไลต์';
+
+  @override
+  String get ssoErrorOauthClientNotFound =>
+      'Client ID นี้ยังไม่ได้ลงทะเบียนใน OAuth server ของ Supabase Auth';
+
+  @override
+  String get ssoErrorClientTaken => 'Client ID นี้ถูกใช้กับแอปอื่นแล้ว';
+
+  @override
+  String get ssoErrorUnknown => 'เกิดข้อผิดพลาด โปรดลองอีกครั้ง';
+
+  @override
+  String get ssoAppsAdminTitle => 'แอปที่เข้าสู่ระบบด้วย Kao ID';
+
+  @override
+  String get ssoAppsAdminHubHelp =>
+      'แอปในเครือ ข้อมูลที่ได้รับ และรายการสิทธิ์เข้าถึง';
+
+  @override
+  String get ssoAppsAdminHelp =>
+      'แอปในเครือที่ให้สมาชิกเข้าสู่ระบบด้วย Kao ID ได้ ข้อมูลที่แต่ละแอปอ่านได้ และฟังก์ชันกับตารางที่โทเคนของแอปเรียกได้ ข้อมูลผู้ดูแล KYC และความปลอดภัยของ Kao ID ถูกปิดกั้นเสมอ';
+
+  @override
+  String get ssoAppsEmpty => 'ยังไม่มีแอปที่ลงทะเบียน';
+
+  @override
+  String get ssoAppRegister => 'ลงทะเบียนแอป';
+
+  @override
+  String get ssoAppEdit => 'แก้ไข';
+
+  @override
+  String get ssoAppSuspend => 'ระงับ';
+
+  @override
+  String get ssoAppActivate => 'เปิดใช้งาน';
+
+  @override
+  String ssoAppSuspendConfirm(String app) {
+    return 'ระงับ $app หรือไม่ โทเคนทั้งหมดของแอปนี้จะใช้งานไม่ได้ทันที';
+  }
+
+  @override
+  String get ssoAppActive => 'ใช้งานอยู่';
+
+  @override
+  String get ssoAppSuspended => 'ถูกระงับ';
+
+  @override
+  String get ssoAppOauthMissing => 'ไม่พบ Client ใน OAuth server';
+
+  @override
+  String ssoAppMembers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'สมาชิกใช้งานแล้ว $count คน',
+      zero: 'ยังไม่มีสมาชิกใช้งาน',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ssoAppRedirects => 'Redirect URI ที่อนุญาต';
+
+  @override
+  String get ssoAppAllowedRpcs => 'ฟังก์ชันที่อนุญาต (RPC)';
+
+  @override
+  String get ssoAppAllowedTables => 'ตารางที่อนุญาต';
+
+  @override
+  String get ssoAppClaims => 'ข้อมูลที่แอปอ่านได้';
+
+  @override
+  String get ssoAppCode => 'รหัสแอป';
+
+  @override
+  String get ssoAppCodeHelp =>
+      'ตัวพิมพ์เล็ก ตัวเลข และ _ ยาว 3–40 ตัว เช่น secondhand_web';
+
+  @override
+  String get ssoAppClientId => 'OAuth Client ID';
+
+  @override
+  String get ssoAppClientIdHelp =>
+      'คัดลอกจาก Supabase Dashboard › Authentication › OAuth Apps หลังสร้าง Client ที่นั่นแล้ว';
+
+  @override
+  String get ssoAppName => 'ชื่อที่แสดงต่อสมาชิก';
+
+  @override
+  String get ssoAppNameHelp => '2–80 ตัวอักษร';
+
+  @override
+  String get ssoAppFirstPartyHelp =>
+      'แสดงว่าเป็นแอปในเครือ Kao บนหน้าขออนุญาต ไม่ได้เพิ่มสิทธิ์เข้าถึงใดๆ';
+
+  @override
+  String get ssoAppNamesHelp =>
+      'ชื่อตัวพิมพ์เล็ก คั่นด้วยจุลภาคหรือขึ้นบรรทัดใหม่ ชื่อของงานผู้ดูแล KYC และความปลอดภัยของ Kao ID จะไม่ได้รับอนุญาต';
+
+  @override
+  String get ssoAppSaved => 'บันทึกแอปแล้ว';
+
+  @override
+  String get ssoAppNone => 'ไม่มี';
 }

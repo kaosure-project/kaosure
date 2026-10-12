@@ -5952,6 +5952,390 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Residence document sent before this update'**
   String get thaiDocLegacy;
+
+  /// No description provided for @ssoConsentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{app} wants to use your Kao ID'**
+  String ssoConsentTitle(String app);
+
+  /// No description provided for @ssoConsentSignedInAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in as {account}'**
+  String ssoConsentSignedInAs(String account);
+
+  /// No description provided for @ssoConsentReceives.
+  ///
+  /// In en, this message translates to:
+  /// **'This app will receive'**
+  String get ssoConsentReceives;
+
+  /// No description provided for @ssoConsentNeverShared.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password, identity documents and bank account numbers are never shared with apps.'**
+  String get ssoConsentNeverShared;
+
+  /// No description provided for @ssoConsentReturnTo.
+  ///
+  /// In en, this message translates to:
+  /// **'After you choose, you will return to {host}'**
+  String ssoConsentReturnTo(String host);
+
+  /// No description provided for @ssoConsentAllow.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow'**
+  String get ssoConsentAllow;
+
+  /// No description provided for @ssoConsentDeny.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t allow'**
+  String get ssoConsentDeny;
+
+  /// No description provided for @ssoConsentRedirecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Returning to the app…'**
+  String get ssoConsentRedirecting;
+
+  /// No description provided for @ssoConsentManageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You can disconnect apps at any time in Sign-in and security › Connected apps.'**
+  String get ssoConsentManageHint;
+
+  /// No description provided for @ssoAppBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'This app is not registered with Kao ID or has been suspended, so it cannot be allowed.'**
+  String get ssoAppBlocked;
+
+  /// No description provided for @ssoFirstParty.
+  ///
+  /// In en, this message translates to:
+  /// **'Kao app'**
+  String get ssoFirstParty;
+
+  /// No description provided for @ssoScopeOpenid.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm it is you with your Kao ID'**
+  String get ssoScopeOpenid;
+
+  /// No description provided for @ssoScopeProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name and profile picture'**
+  String get ssoScopeProfile;
+
+  /// No description provided for @ssoScopeEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Your email address'**
+  String get ssoScopeEmail;
+
+  /// No description provided for @ssoScopePhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Your phone number'**
+  String get ssoScopePhone;
+
+  /// No description provided for @ssoScopeOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep you signed in to the app'**
+  String get ssoScopeOffline;
+
+  /// No description provided for @ssoClaimProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Kao ID profile: display name, username and country'**
+  String get ssoClaimProfile;
+
+  /// No description provided for @ssoClaimVerification.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification status of your email, phone, identity (KYC) and bank account — yes or no only'**
+  String get ssoClaimVerification;
+
+  /// No description provided for @ssoClaimBusiness.
+  ///
+  /// In en, this message translates to:
+  /// **'Businesses you belong to, your role and their verification status'**
+  String get ssoClaimBusiness;
+
+  /// No description provided for @ssoClaimRoles.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Kao administrator roles'**
+  String get ssoClaimRoles;
+
+  /// No description provided for @ssoConnectedAppsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected apps'**
+  String get ssoConnectedAppsTitle;
+
+  /// No description provided for @ssoConnectedAppsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Apps that sign you in with Kao ID'**
+  String get ssoConnectedAppsDescription;
+
+  /// No description provided for @ssoConnectedAppsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Apps you allowed to use your Kao ID. Disconnecting signs you out of that app and it must ask again.'**
+  String get ssoConnectedAppsHelp;
+
+  /// No description provided for @ssoConnectedAppsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'You have not connected any apps yet.'**
+  String get ssoConnectedAppsEmpty;
+
+  /// No description provided for @ssoGrantedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected {date}'**
+  String ssoGrantedAt(String date);
+
+  /// No description provided for @ssoLastUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Last used {date}'**
+  String ssoLastUsed(String date);
+
+  /// No description provided for @ssoDisconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get ssoDisconnect;
+
+  /// No description provided for @ssoDisconnectConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect {app}? You will be signed out of it, and it will need your permission again next time.'**
+  String ssoDisconnectConfirm(String app);
+
+  /// No description provided for @ssoDisconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'App disconnected'**
+  String get ssoDisconnected;
+
+  /// No description provided for @ssoBackToKaoId.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Kao ID'**
+  String get ssoBackToKaoId;
+
+  /// No description provided for @ssoErrorRequestNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This sign-in request has expired or is not valid. Please start again from the app.'**
+  String get ssoErrorRequestNotFound;
+
+  /// No description provided for @ssoErrorInvalidRedirect.
+  ///
+  /// In en, this message translates to:
+  /// **'The app\'s return address is not allowed.'**
+  String get ssoErrorInvalidRedirect;
+
+  /// No description provided for @ssoErrorOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the company owner can manage apps that sign in with Kao ID.'**
+  String get ssoErrorOwner;
+
+  /// No description provided for @ssoErrorInvalidClient.
+  ///
+  /// In en, this message translates to:
+  /// **'Some details are not valid. Check the highlighted fields.'**
+  String get ssoErrorInvalidClient;
+
+  /// No description provided for @ssoErrorOauthClientNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This client ID is not registered in Supabase Auth\'s OAuth server yet.'**
+  String get ssoErrorOauthClientNotFound;
+
+  /// No description provided for @ssoErrorClientTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'This client ID is already used by another app.'**
+  String get ssoErrorClientTaken;
+
+  /// No description provided for @ssoErrorUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get ssoErrorUnknown;
+
+  /// No description provided for @ssoAppsAdminTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Apps signing in with Kao ID'**
+  String get ssoAppsAdminTitle;
+
+  /// No description provided for @ssoAppsAdminHubHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sub-apps, their claims and access lists'**
+  String get ssoAppsAdminHubHelp;
+
+  /// No description provided for @ssoAppsAdminHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sub-apps allowed to sign members in with Kao ID: the claims they read and the functions and tables their tokens may reach. Kao ID admin, KYC and security data are always blocked.'**
+  String get ssoAppsAdminHelp;
+
+  /// No description provided for @ssoAppsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No apps registered yet.'**
+  String get ssoAppsEmpty;
+
+  /// No description provided for @ssoAppRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Register app'**
+  String get ssoAppRegister;
+
+  /// No description provided for @ssoAppEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get ssoAppEdit;
+
+  /// No description provided for @ssoAppSuspend.
+  ///
+  /// In en, this message translates to:
+  /// **'Suspend'**
+  String get ssoAppSuspend;
+
+  /// No description provided for @ssoAppActivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate'**
+  String get ssoAppActivate;
+
+  /// No description provided for @ssoAppSuspendConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Suspend {app}? Every token it holds stops working immediately.'**
+  String ssoAppSuspendConfirm(String app);
+
+  /// No description provided for @ssoAppActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get ssoAppActive;
+
+  /// No description provided for @ssoAppSuspended.
+  ///
+  /// In en, this message translates to:
+  /// **'Suspended'**
+  String get ssoAppSuspended;
+
+  /// No description provided for @ssoAppOauthMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Client not found in the OAuth server'**
+  String get ssoAppOauthMissing;
+
+  /// No description provided for @ssoAppMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No members yet} =1{1 member used it} other{{count} members used it}}'**
+  String ssoAppMembers(int count);
+
+  /// No description provided for @ssoAppRedirects.
+  ///
+  /// In en, this message translates to:
+  /// **'Redirect URIs'**
+  String get ssoAppRedirects;
+
+  /// No description provided for @ssoAppAllowedRpcs.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed functions (RPC)'**
+  String get ssoAppAllowedRpcs;
+
+  /// No description provided for @ssoAppAllowedTables.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed tables'**
+  String get ssoAppAllowedTables;
+
+  /// No description provided for @ssoAppClaims.
+  ///
+  /// In en, this message translates to:
+  /// **'Claims the app reads'**
+  String get ssoAppClaims;
+
+  /// No description provided for @ssoAppCode.
+  ///
+  /// In en, this message translates to:
+  /// **'App code'**
+  String get ssoAppCode;
+
+  /// No description provided for @ssoAppCodeHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowercase letters, digits and _, 3–40 characters, for example secondhand_web'**
+  String get ssoAppCodeHelp;
+
+  /// No description provided for @ssoAppClientId.
+  ///
+  /// In en, this message translates to:
+  /// **'OAuth client ID'**
+  String get ssoAppClientId;
+
+  /// No description provided for @ssoAppClientIdHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy it from Supabase Dashboard › Authentication › OAuth Apps after creating the client there'**
+  String get ssoAppClientIdHelp;
+
+  /// No description provided for @ssoAppName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name shown to members'**
+  String get ssoAppName;
+
+  /// No description provided for @ssoAppNameHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'2–80 characters'**
+  String get ssoAppNameHelp;
+
+  /// No description provided for @ssoAppFirstPartyHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked as a Kao app on the consent screen. It grants no extra access.'**
+  String get ssoAppFirstPartyHelp;
+
+  /// No description provided for @ssoAppNamesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowercase names separated by commas or new lines. Kao ID admin, KYC and security names are rejected.'**
+  String get ssoAppNamesHelp;
+
+  /// No description provided for @ssoAppSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'App saved'**
+  String get ssoAppSaved;
+
+  /// No description provided for @ssoAppNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get ssoAppNone;
 }
 
 class _AppLocalizationsDelegate

@@ -3228,4 +3228,237 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get thaiDocLegacy => 'Residence document sent before this update';
+
+  @override
+  String ssoConsentTitle(String app) {
+    return '$app wants to use your Kao ID';
+  }
+
+  @override
+  String ssoConsentSignedInAs(String account) {
+    return 'Signed in as $account';
+  }
+
+  @override
+  String get ssoConsentReceives => 'This app will receive';
+
+  @override
+  String get ssoConsentNeverShared =>
+      'Your password, identity documents and bank account numbers are never shared with apps.';
+
+  @override
+  String ssoConsentReturnTo(String host) {
+    return 'After you choose, you will return to $host';
+  }
+
+  @override
+  String get ssoConsentAllow => 'Allow';
+
+  @override
+  String get ssoConsentDeny => 'Don\'t allow';
+
+  @override
+  String get ssoConsentRedirecting => 'Returning to the app…';
+
+  @override
+  String get ssoConsentManageHint =>
+      'You can disconnect apps at any time in Sign-in and security › Connected apps.';
+
+  @override
+  String get ssoAppBlocked =>
+      'This app is not registered with Kao ID or has been suspended, so it cannot be allowed.';
+
+  @override
+  String get ssoFirstParty => 'Kao app';
+
+  @override
+  String get ssoScopeOpenid => 'Confirm it is you with your Kao ID';
+
+  @override
+  String get ssoScopeProfile => 'Your name and profile picture';
+
+  @override
+  String get ssoScopeEmail => 'Your email address';
+
+  @override
+  String get ssoScopePhone => 'Your phone number';
+
+  @override
+  String get ssoScopeOffline => 'Keep you signed in to the app';
+
+  @override
+  String get ssoClaimProfile =>
+      'Kao ID profile: display name, username and country';
+
+  @override
+  String get ssoClaimVerification =>
+      'Verification status of your email, phone, identity (KYC) and bank account — yes or no only';
+
+  @override
+  String get ssoClaimBusiness =>
+      'Businesses you belong to, your role and their verification status';
+
+  @override
+  String get ssoClaimRoles => 'Your Kao administrator roles';
+
+  @override
+  String get ssoConnectedAppsTitle => 'Connected apps';
+
+  @override
+  String get ssoConnectedAppsDescription => 'Apps that sign you in with Kao ID';
+
+  @override
+  String get ssoConnectedAppsHelp =>
+      'Apps you allowed to use your Kao ID. Disconnecting signs you out of that app and it must ask again.';
+
+  @override
+  String get ssoConnectedAppsEmpty => 'You have not connected any apps yet.';
+
+  @override
+  String ssoGrantedAt(String date) {
+    return 'Connected $date';
+  }
+
+  @override
+  String ssoLastUsed(String date) {
+    return 'Last used $date';
+  }
+
+  @override
+  String get ssoDisconnect => 'Disconnect';
+
+  @override
+  String ssoDisconnectConfirm(String app) {
+    return 'Disconnect $app? You will be signed out of it, and it will need your permission again next time.';
+  }
+
+  @override
+  String get ssoDisconnected => 'App disconnected';
+
+  @override
+  String get ssoBackToKaoId => 'Go to Kao ID';
+
+  @override
+  String get ssoErrorRequestNotFound =>
+      'This sign-in request has expired or is not valid. Please start again from the app.';
+
+  @override
+  String get ssoErrorInvalidRedirect =>
+      'The app\'s return address is not allowed.';
+
+  @override
+  String get ssoErrorOwner =>
+      'Only the company owner can manage apps that sign in with Kao ID.';
+
+  @override
+  String get ssoErrorInvalidClient =>
+      'Some details are not valid. Check the highlighted fields.';
+
+  @override
+  String get ssoErrorOauthClientNotFound =>
+      'This client ID is not registered in Supabase Auth\'s OAuth server yet.';
+
+  @override
+  String get ssoErrorClientTaken =>
+      'This client ID is already used by another app.';
+
+  @override
+  String get ssoErrorUnknown => 'Something went wrong. Please try again.';
+
+  @override
+  String get ssoAppsAdminTitle => 'Apps signing in with Kao ID';
+
+  @override
+  String get ssoAppsAdminHubHelp => 'Sub-apps, their claims and access lists';
+
+  @override
+  String get ssoAppsAdminHelp =>
+      'Sub-apps allowed to sign members in with Kao ID: the claims they read and the functions and tables their tokens may reach. Kao ID admin, KYC and security data are always blocked.';
+
+  @override
+  String get ssoAppsEmpty => 'No apps registered yet.';
+
+  @override
+  String get ssoAppRegister => 'Register app';
+
+  @override
+  String get ssoAppEdit => 'Edit';
+
+  @override
+  String get ssoAppSuspend => 'Suspend';
+
+  @override
+  String get ssoAppActivate => 'Activate';
+
+  @override
+  String ssoAppSuspendConfirm(String app) {
+    return 'Suspend $app? Every token it holds stops working immediately.';
+  }
+
+  @override
+  String get ssoAppActive => 'Active';
+
+  @override
+  String get ssoAppSuspended => 'Suspended';
+
+  @override
+  String get ssoAppOauthMissing => 'Client not found in the OAuth server';
+
+  @override
+  String ssoAppMembers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count members used it',
+      one: '1 member used it',
+      zero: 'No members yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ssoAppRedirects => 'Redirect URIs';
+
+  @override
+  String get ssoAppAllowedRpcs => 'Allowed functions (RPC)';
+
+  @override
+  String get ssoAppAllowedTables => 'Allowed tables';
+
+  @override
+  String get ssoAppClaims => 'Claims the app reads';
+
+  @override
+  String get ssoAppCode => 'App code';
+
+  @override
+  String get ssoAppCodeHelp =>
+      'Lowercase letters, digits and _, 3–40 characters, for example secondhand_web';
+
+  @override
+  String get ssoAppClientId => 'OAuth client ID';
+
+  @override
+  String get ssoAppClientIdHelp =>
+      'Copy it from Supabase Dashboard › Authentication › OAuth Apps after creating the client there';
+
+  @override
+  String get ssoAppName => 'Name shown to members';
+
+  @override
+  String get ssoAppNameHelp => '2–80 characters';
+
+  @override
+  String get ssoAppFirstPartyHelp =>
+      'Marked as a Kao app on the consent screen. It grants no extra access.';
+
+  @override
+  String get ssoAppNamesHelp =>
+      'Lowercase names separated by commas or new lines. Kao ID admin, KYC and security names are rejected.';
+
+  @override
+  String get ssoAppSaved => 'App saved';
+
+  @override
+  String get ssoAppNone => 'None';
 }

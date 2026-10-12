@@ -15,6 +15,7 @@ import '../../../dashboard/presentation/widgets/section/section_body.dart';
 import '../../../dashboard/presentation/widgets/security/dashboard_menu_tile.dart';
 import '../../../kyc/application/providers/kyc_review_providers.dart';
 import '../../../kyc/presentation/pages/review/kyc_review_page.dart';
+import '../../../sso/presentation/pages/app_clients_page.dart';
 import '../../application/providers/admin_pending_providers.dart';
 import '../../application/providers/member_access_provider.dart';
 import '../../application/services/access_refresh.dart';
@@ -125,7 +126,10 @@ class _AdminHubPageState extends ConsumerState<AdminHubPage>
         onTap: () => _open(const PartnerPage())),
       DashboardMenuTile(icon: Icons.local_shipping_outlined, color: AppColors.kaoGreen,
         tint: AppColors.kaoGreenSoft, title: l.carrierTitle, subtitle: l.partnerHelp,
-        showDivider: false, onTap: () => _open(const PartnerPage(shipping: true))),
+        onTap: () => _open(const PartnerPage(shipping: true))),
+      DashboardMenuTile(icon: Icons.hub_outlined, title: l.ssoAppsAdminTitle,
+        subtitle: l.ssoAppsAdminHubHelp, showDivider: false,
+        onTap: () => _open(const AppClientsPage())),
     ]);
 
     final security = MenuPanel(title: l.adminGroupSecurity, children: [

@@ -106,6 +106,17 @@ final class _CompleteProfilePageState
       AppLocalizations.of(context).profileSaved,
     );
 
+    final consent = await KaoIdSsoHandoff.takePendingConsent();
+    if (!mounted) return;
+    if (consent != null) {
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        KaoIdRoutes.oauthConsent,
+        (_) => false,
+        arguments: consent,
+      );
+      return;
+    }
+
     final returnedToService =
         await KaoIdSsoHandoff.tryReturnToService();
     if (!mounted || returnedToService) {

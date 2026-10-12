@@ -94,15 +94,20 @@ final class _KaoIdBootstrapScreenState
   }
 
   Future<void> _finishDashboardBootstrap() async {
+    final consent = await KaoIdSsoHandoff.takePendingConsent();
+    if (consent != null) {
+      _replaceWith(KaoIdRoutes.oauthConsent, arguments: consent);
+      return;
+    }
     if (await KaoIdSsoHandoff.tryReturnToService()) return;
     _replaceWith(KaoIdRoutes.dashboard);
   }
 
-  void _replaceWith(String route) {
+  void _replaceWith(String route, {Object? arguments}) {
     if (!mounted) {
       return;
     }
 
-    Navigator.of(context).pushReplacementNamed(route);
+    Navigator.of(context).pushReplacementNamed(route, arguments: arguments);
   }
 }

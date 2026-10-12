@@ -26,6 +26,7 @@ Future<void> bootstrap() async {
   );
 
   await KaoIdSsoHandoff.captureLoginReturnTarget(Uri.base);
+  await KaoIdSsoHandoff.captureConsentRequest(Uri.base);
 
   final didRestorePasswordRecovery =
       await _restoreInitialPasswordRecoverySession();

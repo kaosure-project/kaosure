@@ -21,6 +21,8 @@ import '../features/kao_id/business/presentation/pages/business_registration_pag
 import '../features/kao_id/dashboard/presentation/screens/dashboard_screen.dart';
 import '../features/kao_id/kyc/presentation/screens/kyc_page.dart';
 import '../features/kao_id/personal_info/presentation/pages/personal_info_page.dart';
+import '../features/kao_id/sso/presentation/pages/connected_apps_page.dart';
+import '../features/kao_id/sso/presentation/pages/oauth_consent_page.dart';
 
 final class AppRouter {
   const AppRouter._();
@@ -148,6 +150,28 @@ final class AppRouter {
       // -----------------------------------------------------------------------
       // Kao ID Security
       // -----------------------------------------------------------------------
+      case KaoIdRoutes.connectedApps:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AuthGuard(authenticatedChild: ConnectedAppsPage()),
+        );
+
+      // -----------------------------------------------------------------------
+      // Kao ID as identity provider for sub-apps (OAuth 2.1 consent)
+      // -----------------------------------------------------------------------
+      case KaoIdRoutes.oauthConsent:
+        final authorizationId = settings.arguments is String
+            ? settings.arguments as String
+            : Uri.base.path == KaoIdRoutes.oauthConsent
+                ? Uri.base.queryParameters['authorization_id'] ?? ''
+                : '';
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => AuthGuard(
+            authenticatedChild: OAuthConsentPage(authorizationId: authorizationId),
+          ),
+        );
+
       case ChangePasswordPage.routeName:
         return MaterialPageRoute(
           settings: settings,

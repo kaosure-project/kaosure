@@ -3,7 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../app/routes/kao_id_routes.dart';
 import '../../../../core/config/env.dart';
+import '../../sso/domain/usecases/oauth_consent_use_cases.dart';
 
 /// Validates and completes a same-origin web handoff to a service app.
 /// Session tokens and identity data are never placed in the return URL.
@@ -11,6 +13,40 @@ final class KaoIdSsoHandoff {
   KaoIdSsoHandoff._();
 
   static const String _pendingReturnKey = 'kao_id.pending_service_return_to';
+  static const String _pendingConsentKey = 'kao_id.pending_oauth_authorization_id';
+
+  /// Keeps an OAuth consent request opened before sign-in, so the member lands
+  /// back on the consent screen after login or profile completion.
+  static Future<void> captureConsentRequest(Uri currentUri) async {
+    if (currentUri.path != KaoIdRoutes.oauthConsent) return;
+    final authorizationId = currentUri.queryParameters['authorization_id'];
+    try {
+      final storage = SharedPreferencesAsync();
+      if (!OAuthConsentUseCases.isValidAuthorizationId(authorizationId)) {
+        await storage.remove(_pendingConsentKey);
+        return;
+      }
+      await storage.setString(_pendingConsentKey, authorizationId!);
+    } catch (error, stackTrace) {
+      debugPrint('Unable to store OAuth consent request: $error');
+      debugPrintStack(stackTrace: stackTrace);
+    }
+  }
+
+  /// One-shot: the stored request is cleared once read.
+  static Future<String?> takePendingConsent() async {
+    try {
+      final storage = SharedPreferencesAsync();
+      final authorizationId = await storage.getString(_pendingConsentKey);
+      if (authorizationId == null) return null;
+      await storage.remove(_pendingConsentKey);
+      return OAuthConsentUseCases.isValidAuthorizationId(authorizationId) ? authorizationId : null;
+    } catch (error, stackTrace) {
+      debugPrint('Unable to read OAuth consent request: $error');
+      debugPrintStack(stackTrace: stackTrace);
+      return null;
+    }
+  }
 
   static Uri? validateReturnTo({
     required String rawReturnTo,

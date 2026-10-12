@@ -3226,4 +3226,237 @@ class AppLocalizationsMy extends AppLocalizations {
   @override
   String get thaiDocLegacy =>
       'ဤအပ်ဒိတ်မတိုင်မီ ပို့ထားသော နေထိုင်ခွင့် စာရွက်စာတမ်း';
+
+  @override
+  String ssoConsentTitle(String app) {
+    return '$app က သင်၏ Kao ID ကို အသုံးပြုရန် တောင်းဆိုနေသည်';
+  }
+
+  @override
+  String ssoConsentSignedInAs(String account) {
+    return '$account အဖြစ် ဝင်ရောက်ထားသည်';
+  }
+
+  @override
+  String get ssoConsentReceives => 'ဤအက်ပ်က ရရှိမည့်အချက်အလက်';
+
+  @override
+  String get ssoConsentNeverShared =>
+      'သင်၏ စကားဝှက်၊ အထောက်အထားစာရွက်စာတမ်းနှင့် ဘဏ်အကောင့်နံပါတ်များကို မည်သည့်အက်ပ်ကိုမျှ မျှဝေမည်မဟုတ်ပါ။';
+
+  @override
+  String ssoConsentReturnTo(String host) {
+    return 'ရွေးချယ်ပြီးနောက် $host သို့ ပြန်သွားပါမည်';
+  }
+
+  @override
+  String get ssoConsentAllow => 'ခွင့်ပြုမည်';
+
+  @override
+  String get ssoConsentDeny => 'ခွင့်မပြုပါ';
+
+  @override
+  String get ssoConsentRedirecting => 'အက်ပ်သို့ ပြန်သွားနေသည်…';
+
+  @override
+  String get ssoConsentManageHint =>
+      'ဝင်ရောက်ခြင်းနှင့် လုံခြုံရေး › ချိတ်ဆက်ထားသော အက်ပ်များ တွင် အချိန်မရွေး ချိတ်ဆက်မှုဖြုတ်နိုင်သည်။';
+
+  @override
+  String get ssoAppBlocked =>
+      'ဤအက်ပ်ကို Kao ID တွင် မှတ်ပုံမတင်ရသေးပါ သို့မဟုတ် ဆိုင်းငံ့ထားသောကြောင့် ခွင့်ပြု၍မရပါ။';
+
+  @override
+  String get ssoFirstParty => 'Kao အုပ်စုဝင် အက်ပ်';
+
+  @override
+  String get ssoScopeOpenid => 'Kao ID ဖြင့် သင်ဖြစ်ကြောင်း အတည်ပြုရန်';
+
+  @override
+  String get ssoScopeProfile => 'သင်၏ အမည်နှင့် ပရိုဖိုင်ပုံ';
+
+  @override
+  String get ssoScopeEmail => 'သင်၏ အီးမေးလ်လိပ်စာ';
+
+  @override
+  String get ssoScopePhone => 'သင်၏ ဖုန်းနံပါတ်';
+
+  @override
+  String get ssoScopeOffline => 'အက်ပ်တွင် ဆက်လက်ဝင်ရောက်ထားစေရန်';
+
+  @override
+  String get ssoClaimProfile =>
+      'Kao ID ပရိုဖိုင်- ပြသအမည်၊ အသုံးပြုသူအမည်နှင့် နိုင်ငံ';
+
+  @override
+  String get ssoClaimVerification =>
+      'အီးမေးလ်၊ ဖုန်း၊ အထောက်အထား (KYC) နှင့် ဘဏ်အကောင့် အတည်ပြုမှုအခြေအနေ — ဟုတ်/မဟုတ် သာ';
+
+  @override
+  String get ssoClaimBusiness =>
+      'သင်ပါဝင်သော လုပ်ငန်းများ၊ သင်၏ အခန်းကဏ္ဍနှင့် လုပ်ငန်း၏ အတည်ပြုမှုအခြေအနေ';
+
+  @override
+  String get ssoClaimRoles => 'သင်၏ Kao စီမံခန့်ခွဲသူ အခန်းကဏ္ဍများ';
+
+  @override
+  String get ssoConnectedAppsTitle => 'ချိတ်ဆက်ထားသော အက်ပ်များ';
+
+  @override
+  String get ssoConnectedAppsDescription =>
+      'Kao ID ဖြင့် ဝင်ရောက်သော အက်ပ်များ';
+
+  @override
+  String get ssoConnectedAppsHelp =>
+      'သင် Kao ID အသုံးပြုခွင့်ပေးထားသော အက်ပ်များ။ ချိတ်ဆက်မှုဖြုတ်ပါက ထိုအက်ပ်မှ ထွက်သွားပြီး ခွင့်ပြုချက် ပြန်တောင်းရပါမည်။';
+
+  @override
+  String get ssoConnectedAppsEmpty => 'သင် မည်သည့်အက်ပ်ကိုမျှ မချိတ်ဆက်ရသေးပါ။';
+
+  @override
+  String ssoGrantedAt(String date) {
+    return '$date တွင် ချိတ်ဆက်ခဲ့သည်';
+  }
+
+  @override
+  String ssoLastUsed(String date) {
+    return 'နောက်ဆုံးအသုံးပြုချိန် $date';
+  }
+
+  @override
+  String get ssoDisconnect => 'ချိတ်ဆက်မှုဖြုတ်မည်';
+
+  @override
+  String ssoDisconnectConfirm(String app) {
+    return '$app နှင့် ချိတ်ဆက်မှု ဖြုတ်မလား။ ထိုအက်ပ်မှ ထွက်သွားပြီး နောက်တစ်ကြိမ် ခွင့်ပြုချက် ပြန်လိုပါမည်။';
+  }
+
+  @override
+  String get ssoDisconnected => 'အက်ပ်ချိတ်ဆက်မှု ဖြုတ်ပြီးပါပြီ';
+
+  @override
+  String get ssoBackToKaoId => 'Kao ID သို့ သွားမည်';
+
+  @override
+  String get ssoErrorRequestNotFound =>
+      'ဤဝင်ရောက်ရန် တောင်းဆိုချက် သက်တမ်းကုန်သွားပြီ သို့မဟုတ် မမှန်ကန်ပါ။ အက်ပ်မှ ပြန်စပါ။';
+
+  @override
+  String get ssoErrorInvalidRedirect => 'အက်ပ်၏ ပြန်လည်လိပ်စာကို ခွင့်မပြုပါ။';
+
+  @override
+  String get ssoErrorOwner =>
+      'Kao ID ဖြင့် ဝင်ရောက်သော အက်ပ်များကို ကုမ္ပဏီပိုင်ရှင်သာ စီမံနိုင်သည်။';
+
+  @override
+  String get ssoErrorInvalidClient =>
+      'အချက်အလက်အချို့ မမှန်ကန်ပါ။ အမှတ်အသားပြထားသော အကွက်များကို စစ်ဆေးပါ။';
+
+  @override
+  String get ssoErrorOauthClientNotFound =>
+      'ဤ client ID ကို Supabase Auth ၏ OAuth server တွင် မှတ်ပုံမတင်ရသေးပါ။';
+
+  @override
+  String get ssoErrorClientTaken =>
+      'ဤ client ID ကို အခြားအက်ပ်က အသုံးပြုထားပြီးဖြစ်သည်။';
+
+  @override
+  String get ssoErrorUnknown => 'တစ်ခုခု မှားယွင်းသွားသည်။ ထပ်စမ်းကြည့်ပါ။';
+
+  @override
+  String get ssoAppsAdminTitle => 'Kao ID ဖြင့် ဝင်ရောက်သော အက်ပ်များ';
+
+  @override
+  String get ssoAppsAdminHubHelp =>
+      'အုပ်စုဝင်အက်ပ်များ၊ ရရှိသည့်အချက်အလက်နှင့် ဝင်ရောက်ခွင့်စာရင်း';
+
+  @override
+  String get ssoAppsAdminHelp =>
+      'အဖွဲ့ဝင်များကို Kao ID ဖြင့် ဝင်ရောက်စေနိုင်သော အုပ်စုဝင်အက်ပ်များ၊ ဖတ်နိုင်သည့်အချက်အလက်နှင့် token ဖြင့် ခေါ်နိုင်သော function နှင့် ဇယားများ။ Kao ID ၏ စီမံခန့်ခွဲမှု၊ KYC နှင့် လုံခြုံရေးဒေတာကို အမြဲ ပိတ်ထားသည်။';
+
+  @override
+  String get ssoAppsEmpty => 'မှတ်ပုံတင်ထားသော အက်ပ် မရှိသေးပါ။';
+
+  @override
+  String get ssoAppRegister => 'အက်ပ် မှတ်ပုံတင်မည်';
+
+  @override
+  String get ssoAppEdit => 'ပြင်ဆင်မည်';
+
+  @override
+  String get ssoAppSuspend => 'ဆိုင်းငံ့မည်';
+
+  @override
+  String get ssoAppActivate => 'ဖွင့်မည်';
+
+  @override
+  String ssoAppSuspendConfirm(String app) {
+    return '$app ကို ဆိုင်းငံ့မလား။ ၎င်း၏ token အားလုံး ချက်ချင်း အလုပ်မလုပ်တော့ပါ။';
+  }
+
+  @override
+  String get ssoAppActive => 'အသုံးပြုနေသည်';
+
+  @override
+  String get ssoAppSuspended => 'ဆိုင်းငံ့ထားသည်';
+
+  @override
+  String get ssoAppOauthMissing => 'OAuth server တွင် client မတွေ့ပါ';
+
+  @override
+  String ssoAppMembers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'အဖွဲ့ဝင် $count ဦး အသုံးပြုပြီး',
+      zero: 'အသုံးပြုသူ မရှိသေးပါ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ssoAppRedirects => 'Redirect URI များ';
+
+  @override
+  String get ssoAppAllowedRpcs => 'ခွင့်ပြုထားသော function များ (RPC)';
+
+  @override
+  String get ssoAppAllowedTables => 'ခွင့်ပြုထားသော ဇယားများ';
+
+  @override
+  String get ssoAppClaims => 'အက်ပ်ဖတ်နိုင်သော အချက်အလက်';
+
+  @override
+  String get ssoAppCode => 'အက်ပ်ကုဒ်';
+
+  @override
+  String get ssoAppCodeHelp =>
+      'စာလုံးအသေး၊ ဂဏန်းနှင့် _ ၃–၄၀ လုံး၊ ဥပမာ secondhand_web';
+
+  @override
+  String get ssoAppClientId => 'OAuth client ID နံပါတ်';
+
+  @override
+  String get ssoAppClientIdHelp =>
+      'Supabase Dashboard › Authentication › OAuth Apps တွင် client ဖန်တီးပြီးနောက် ထိုနေရာမှ ကူးယူပါ';
+
+  @override
+  String get ssoAppName => 'အဖွဲ့ဝင်များအား ပြသမည့်အမည်';
+
+  @override
+  String get ssoAppNameHelp => 'စာလုံး ၂–၈၀';
+
+  @override
+  String get ssoAppFirstPartyHelp =>
+      'ခွင့်ပြုချက်စာမျက်နှာတွင် Kao အုပ်စုဝင်အက်ပ်အဖြစ် ပြသသည်။ ဝင်ရောက်ခွင့် ထပ်မတိုးပါ။';
+
+  @override
+  String get ssoAppNamesHelp =>
+      'ကော်မာ သို့မဟုတ် စာကြောင်းအသစ်ဖြင့် ခွဲထားသော စာလုံးအသေးအမည်များ။ Kao ID စီမံခန့်ခွဲမှု၊ KYC နှင့် လုံခြုံရေးအမည်များကို ငြင်းပယ်သည်။';
+
+  @override
+  String get ssoAppSaved => 'အက်ပ်ကို သိမ်းဆည်းပြီးပါပြီ';
+
+  @override
+  String get ssoAppNone => 'မရှိပါ';
 }

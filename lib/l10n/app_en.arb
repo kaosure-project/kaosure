@@ -1025,5 +1025,125 @@
   "thaiDocSubmit": "Send document for review",
   "thaiDocPendingHelp": "Sending a document is not approval. An authorized officer must review it before your identity is verified.",
   "thaiDocCompleteForm": "Not sent yet. Check the document type, required fields, dates, address and images.",
-  "thaiDocLegacy": "Residence document sent before this update"
+  "thaiDocLegacy": "Residence document sent before this update",
+  "ssoConsentTitle": "{app} wants to use your Kao ID",
+  "@ssoConsentTitle": {
+    "placeholders": {
+      "app": {
+        "type": "String"
+      }
+    }
+  },
+  "ssoConsentSignedInAs": "Signed in as {account}",
+  "@ssoConsentSignedInAs": {
+    "placeholders": {
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "ssoConsentReceives": "This app will receive",
+  "ssoConsentNeverShared": "Your password, identity documents and bank account numbers are never shared with apps.",
+  "ssoConsentReturnTo": "After you choose, you will return to {host}",
+  "@ssoConsentReturnTo": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "ssoConsentAllow": "Allow",
+  "ssoConsentDeny": "Don't allow",
+  "ssoConsentRedirecting": "Returning to the app…",
+  "ssoConsentManageHint": "You can disconnect apps at any time in Sign-in and security › Connected apps.",
+  "ssoAppBlocked": "This app is not registered with Kao ID or has been suspended, so it cannot be allowed.",
+  "ssoFirstParty": "Kao app",
+  "ssoScopeOpenid": "Confirm it is you with your Kao ID",
+  "ssoScopeProfile": "Your name and profile picture",
+  "ssoScopeEmail": "Your email address",
+  "ssoScopePhone": "Your phone number",
+  "ssoScopeOffline": "Keep you signed in to the app",
+  "ssoClaimProfile": "Kao ID profile: display name, username and country",
+  "ssoClaimVerification": "Verification status of your email, phone, identity (KYC) and bank account — yes or no only",
+  "ssoClaimBusiness": "Businesses you belong to, your role and their verification status",
+  "ssoClaimRoles": "Your Kao administrator roles",
+  "ssoConnectedAppsTitle": "Connected apps",
+  "ssoConnectedAppsDescription": "Apps that sign you in with Kao ID",
+  "ssoConnectedAppsHelp": "Apps you allowed to use your Kao ID. Disconnecting signs you out of that app and it must ask again.",
+  "ssoConnectedAppsEmpty": "You have not connected any apps yet.",
+  "ssoGrantedAt": "Connected {date}",
+  "@ssoGrantedAt": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "ssoLastUsed": "Last used {date}",
+  "@ssoLastUsed": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "ssoDisconnect": "Disconnect",
+  "ssoDisconnectConfirm": "Disconnect {app}? You will be signed out of it, and it will need your permission again next time.",
+  "@ssoDisconnectConfirm": {
+    "placeholders": {
+      "app": {
+        "type": "String"
+      }
+    }
+  },
+  "ssoDisconnected": "App disconnected",
+  "ssoBackToKaoId": "Go to Kao ID",
+  "ssoErrorRequestNotFound": "This sign-in request has expired or is not valid. Please start again from the app.",
+  "ssoErrorInvalidRedirect": "The app's return address is not allowed.",
+  "ssoErrorOwner": "Only the company owner can manage apps that sign in with Kao ID.",
+  "ssoErrorInvalidClient": "Some details are not valid. Check the highlighted fields.",
+  "ssoErrorOauthClientNotFound": "This client ID is not registered in Supabase Auth's OAuth server yet.",
+  "ssoErrorClientTaken": "This client ID is already used by another app.",
+  "ssoErrorUnknown": "Something went wrong. Please try again.",
+  "ssoAppsAdminTitle": "Apps signing in with Kao ID",
+  "ssoAppsAdminHubHelp": "Sub-apps, their claims and access lists",
+  "ssoAppsAdminHelp": "Sub-apps allowed to sign members in with Kao ID: the claims they read and the functions and tables their tokens may reach. Kao ID admin, KYC and security data are always blocked.",
+  "ssoAppsEmpty": "No apps registered yet.",
+  "ssoAppRegister": "Register app",
+  "ssoAppEdit": "Edit",
+  "ssoAppSuspend": "Suspend",
+  "ssoAppActivate": "Activate",
+  "ssoAppSuspendConfirm": "Suspend {app}? Every token it holds stops working immediately.",
+  "@ssoAppSuspendConfirm": {
+    "placeholders": {
+      "app": {
+        "type": "String"
+      }
+    }
+  },
+  "ssoAppActive": "Active",
+  "ssoAppSuspended": "Suspended",
+  "ssoAppOauthMissing": "Client not found in the OAuth server",
+  "ssoAppMembers": "{count, plural, =0{No members yet} =1{1 member used it} other{{count} members used it}}",
+  "@ssoAppMembers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ssoAppRedirects": "Redirect URIs",
+  "ssoAppAllowedRpcs": "Allowed functions (RPC)",
+  "ssoAppAllowedTables": "Allowed tables",
+  "ssoAppClaims": "Claims the app reads",
+  "ssoAppCode": "App code",
+  "ssoAppCodeHelp": "Lowercase letters, digits and _, 3–40 characters, for example secondhand_web",
+  "ssoAppClientId": "OAuth client ID",
+  "ssoAppClientIdHelp": "Copy it from Supabase Dashboard › Authentication › OAuth Apps after creating the client there",
+  "ssoAppName": "Name shown to members",
+  "ssoAppNameHelp": "2–80 characters",
+  "ssoAppFirstPartyHelp": "Marked as a Kao app on the consent screen. It grants no extra access.",
+  "ssoAppNamesHelp": "Lowercase names separated by commas or new lines. Kao ID admin, KYC and security names are rejected.",
+  "ssoAppSaved": "App saved",
+  "ssoAppNone": "None"
 }

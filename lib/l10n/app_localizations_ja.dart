@@ -3023,4 +3023,225 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get thaiDocLegacy => 'この更新前に送信された在留書類';
+
+  @override
+  String ssoConsentTitle(String app) {
+    return '$app があなたの Kao ID の利用を求めています';
+  }
+
+  @override
+  String ssoConsentSignedInAs(String account) {
+    return '$account としてログイン中';
+  }
+
+  @override
+  String get ssoConsentReceives => 'このアプリが受け取る情報';
+
+  @override
+  String get ssoConsentNeverShared => 'パスワード、本人確認書類、銀行口座番号がアプリに共有されることはありません。';
+
+  @override
+  String ssoConsentReturnTo(String host) {
+    return '選択後、$host に戻ります';
+  }
+
+  @override
+  String get ssoConsentAllow => '許可する';
+
+  @override
+  String get ssoConsentDeny => '許可しない';
+
+  @override
+  String get ssoConsentRedirecting => 'アプリに戻っています…';
+
+  @override
+  String get ssoConsentManageHint =>
+      'アプリの連携は「ログインとセキュリティ › 連携中のアプリ」からいつでも解除できます。';
+
+  @override
+  String get ssoAppBlocked => 'このアプリは Kao ID に登録されていないか停止中のため、許可できません。';
+
+  @override
+  String get ssoFirstParty => 'Kao グループのアプリ';
+
+  @override
+  String get ssoScopeOpenid => 'Kao ID で本人であることを確認';
+
+  @override
+  String get ssoScopeProfile => '名前とプロフィール写真';
+
+  @override
+  String get ssoScopeEmail => 'メールアドレス';
+
+  @override
+  String get ssoScopePhone => '電話番号';
+
+  @override
+  String get ssoScopeOffline => 'アプリへのログイン状態を維持';
+
+  @override
+  String get ssoClaimProfile => 'Kao ID プロフィール：表示名、ユーザー名、国';
+
+  @override
+  String get ssoClaimVerification => 'メール・電話・本人確認（KYC）・銀行口座の確認状況（済みかどうかのみ）';
+
+  @override
+  String get ssoClaimBusiness => '所属する事業者、あなたの役割、事業者の確認状況';
+
+  @override
+  String get ssoClaimRoles => 'Kao の管理者ロール';
+
+  @override
+  String get ssoConnectedAppsTitle => '連携中のアプリ';
+
+  @override
+  String get ssoConnectedAppsDescription => 'Kao ID でログインするアプリ';
+
+  @override
+  String get ssoConnectedAppsHelp =>
+      'Kao ID の利用を許可したアプリです。連携を解除するとそのアプリからログアウトし、再度許可が必要になります。';
+
+  @override
+  String get ssoConnectedAppsEmpty => '連携中のアプリはまだありません。';
+
+  @override
+  String ssoGrantedAt(String date) {
+    return '連携日 $date';
+  }
+
+  @override
+  String ssoLastUsed(String date) {
+    return '最終利用 $date';
+  }
+
+  @override
+  String get ssoDisconnect => '連携を解除';
+
+  @override
+  String ssoDisconnectConfirm(String app) {
+    return '$app との連携を解除しますか？ログアウトされ、次回は再度許可が必要になります。';
+  }
+
+  @override
+  String get ssoDisconnected => 'アプリの連携を解除しました';
+
+  @override
+  String get ssoBackToKaoId => 'Kao ID へ移動';
+
+  @override
+  String get ssoErrorRequestNotFound =>
+      'このログイン要求は期限切れか無効です。アプリからもう一度やり直してください。';
+
+  @override
+  String get ssoErrorInvalidRedirect => 'アプリの戻り先アドレスは許可されていません。';
+
+  @override
+  String get ssoErrorOwner => 'Kao ID でログインするアプリを管理できるのは会社オーナーのみです。';
+
+  @override
+  String get ssoErrorInvalidClient => '一部の内容が正しくありません。強調表示された項目を確認してください。';
+
+  @override
+  String get ssoErrorOauthClientNotFound =>
+      'このクライアント ID は Supabase Auth の OAuth サーバーにまだ登録されていません。';
+
+  @override
+  String get ssoErrorClientTaken => 'このクライアント ID は別のアプリで使用されています。';
+
+  @override
+  String get ssoErrorUnknown => '問題が発生しました。もう一度お試しください。';
+
+  @override
+  String get ssoAppsAdminTitle => 'Kao ID でログインするアプリ';
+
+  @override
+  String get ssoAppsAdminHubHelp => 'グループアプリ、受け取る情報、アクセス許可リスト';
+
+  @override
+  String get ssoAppsAdminHelp =>
+      'Kao ID でメンバーをログインさせられるグループアプリと、読み取れる情報、トークンで利用できる関数とテーブルです。Kao ID の管理・KYC・セキュリティのデータは常にブロックされます。';
+
+  @override
+  String get ssoAppsEmpty => '登録済みのアプリはまだありません。';
+
+  @override
+  String get ssoAppRegister => 'アプリを登録';
+
+  @override
+  String get ssoAppEdit => '編集';
+
+  @override
+  String get ssoAppSuspend => '停止';
+
+  @override
+  String get ssoAppActivate => '有効にする';
+
+  @override
+  String ssoAppSuspendConfirm(String app) {
+    return '$app を停止しますか？このアプリのトークンはすべて直ちに使えなくなります。';
+  }
+
+  @override
+  String get ssoAppActive => '有効';
+
+  @override
+  String get ssoAppSuspended => '停止中';
+
+  @override
+  String get ssoAppOauthMissing => 'OAuth サーバーにクライアントが見つかりません';
+
+  @override
+  String ssoAppMembers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 人のメンバーが利用',
+      zero: '利用メンバーなし',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ssoAppRedirects => 'リダイレクト URI';
+
+  @override
+  String get ssoAppAllowedRpcs => '許可する関数（RPC）';
+
+  @override
+  String get ssoAppAllowedTables => '許可するテーブル';
+
+  @override
+  String get ssoAppClaims => 'アプリが読み取る情報';
+
+  @override
+  String get ssoAppCode => 'アプリコード';
+
+  @override
+  String get ssoAppCodeHelp => '小文字・数字・_ の 3〜40 文字（例：secondhand_web）';
+
+  @override
+  String get ssoAppClientId => 'OAuth クライアント ID';
+
+  @override
+  String get ssoAppClientIdHelp =>
+      'Supabase Dashboard › Authentication › OAuth Apps でクライアントを作成後、そこからコピーします';
+
+  @override
+  String get ssoAppName => 'メンバーに表示する名前';
+
+  @override
+  String get ssoAppNameHelp => '2〜80 文字';
+
+  @override
+  String get ssoAppFirstPartyHelp => '許可画面で Kao グループのアプリとして表示されます。アクセス権は増えません。';
+
+  @override
+  String get ssoAppNamesHelp =>
+      '小文字の名前をカンマまたは改行で区切ります。Kao ID の管理・KYC・セキュリティ関連の名前は拒否されます。';
+
+  @override
+  String get ssoAppSaved => 'アプリを保存しました';
+
+  @override
+  String get ssoAppNone => 'なし';
 }

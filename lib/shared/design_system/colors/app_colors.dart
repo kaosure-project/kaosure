@@ -19,6 +19,20 @@ class AppColors {
   static const Color onAccent = Colors.white;
 
   // ==========================================================================
+  // Kao ID
+  // ==========================================================================
+
+  static const Color kaoBlue = Color(0xFF1565C0);
+  static const Color kaoBlueSoft = Color(0xFFE3EEFB);
+  static const Color kaoGreen = Color(0xFF2E7D32);
+  static const Color kaoGreenSoft = Color(0xFFE6F4EA);
+  static const Color kaoTeal = Color(0xFF00897B);
+  static const Color kaoTealSoft = Color(0xFFE0F2F1);
+  static const Color kaoSlate = Color(0xFF455A64);
+  static const Color kaoSlateSoft = Color(0xFFECEFF1);
+  static const Color kaoPage = Color(0xFFF3F5F8);
+
+  // ==========================================================================
   // Status
   // ==========================================================================
 

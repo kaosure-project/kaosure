@@ -2612,6 +2612,68 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get businessRegStatusReasonLabel => '审核员备注';
+
+  @override
+  String get dashAccountInfoTitle => '账户信息';
+
+  @override
+  String get dashDetails => '详情';
+
+  @override
+  String get dashDisplayNameLabel => '显示名称';
+
+  @override
+  String dashKaoIdLine(String kaoId) {
+    return 'Kao ID：$kaoId';
+  }
+
+  @override
+  String get dashKaoIdPending => '完成全部验证后将发放 Kao ID';
+
+  @override
+  String get dashFinanceTitle => '资金';
+
+  @override
+  String get dashServicesTitle => '使用 Kao ID 的服务';
+
+  @override
+  String get dashSecondhandName => 'KaoSure Secondhand';
+
+  @override
+  String get dashBusinessName => '企业';
+
+  @override
+  String get dashServiceAvailable => '可使用';
+
+  @override
+  String get dashServiceOpen => '打开';
+
+  @override
+  String get dashBusinessRegister => '注册';
+
+  @override
+  String get dashNotRegistered => '未注册';
+
+  @override
+  String get dashDraft => '草稿';
+
+  @override
+  String get dashNotApproved => '未获批准';
+
+  @override
+  String get dashNotAdded => '未添加';
+
+  @override
+  String get dashLoadFailedShort => '无法加载';
+
+  @override
+  String get dashSecurityTitle => '登录与安全';
+
+  @override
+  String get dashSecurityDescription => '管理密码、两步验证和已登录的设备。';
+
+  @override
+  String get dashAdminCenter => '管理中心';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -5222,4 +5284,66 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get businessRegStatusReasonLabel => '审核员备注';
+
+  @override
+  String get dashAccountInfoTitle => '账户信息';
+
+  @override
+  String get dashDetails => '详情';
+
+  @override
+  String get dashDisplayNameLabel => '显示名称';
+
+  @override
+  String dashKaoIdLine(String kaoId) {
+    return 'Kao ID：$kaoId';
+  }
+
+  @override
+  String get dashKaoIdPending => '完成全部验证后将发放 Kao ID';
+
+  @override
+  String get dashFinanceTitle => '资金';
+
+  @override
+  String get dashServicesTitle => '使用 Kao ID 的服务';
+
+  @override
+  String get dashSecondhandName => 'KaoSure Secondhand';
+
+  @override
+  String get dashBusinessName => '企业';
+
+  @override
+  String get dashServiceAvailable => '可使用';
+
+  @override
+  String get dashServiceOpen => '打开';
+
+  @override
+  String get dashBusinessRegister => '注册';
+
+  @override
+  String get dashNotRegistered => '未注册';
+
+  @override
+  String get dashDraft => '草稿';
+
+  @override
+  String get dashNotApproved => '未获批准';
+
+  @override
+  String get dashNotAdded => '未添加';
+
+  @override
+  String get dashLoadFailedShort => '无法加载';
+
+  @override
+  String get dashSecurityTitle => '登录与安全';
+
+  @override
+  String get dashSecurityDescription => '管理密码、两步验证和已登录的设备。';
+
+  @override
+  String get dashAdminCenter => '管理中心';
 }

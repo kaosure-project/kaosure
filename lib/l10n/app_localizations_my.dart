@@ -2841,4 +2841,68 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get businessRegStatusReasonLabel => 'စိစစ်သူ၏ မှတ်ချက်';
+
+  @override
+  String get dashAccountInfoTitle => 'အကောင့်အချက်အလက်';
+
+  @override
+  String get dashDetails => 'အသေးစိတ်';
+
+  @override
+  String get dashDisplayNameLabel => 'ပြသမည့်အမည်';
+
+  @override
+  String dashKaoIdLine(String kaoId) {
+    return 'Kao ID နံပါတ်: $kaoId';
+  }
+
+  @override
+  String get dashKaoIdPending =>
+      'အတည်ပြုချက်အားလုံး ပြီးမြောက်ပါက Kao ID ထုတ်ပေးပါမည်';
+
+  @override
+  String get dashFinanceTitle => 'ငွေကြေး';
+
+  @override
+  String get dashServicesTitle => 'Kao ID ဖြင့် သုံးနိုင်သော ဝန်ဆောင်မှုများ';
+
+  @override
+  String get dashSecondhandName => 'KaoSure Secondhand';
+
+  @override
+  String get dashBusinessName => 'လုပ်ငန်း';
+
+  @override
+  String get dashServiceAvailable => 'သုံးနိုင်သည်';
+
+  @override
+  String get dashServiceOpen => 'ဖွင့်ရန်';
+
+  @override
+  String get dashBusinessRegister => 'မှတ်ပုံတင်ရန်';
+
+  @override
+  String get dashNotRegistered => 'မှတ်ပုံမတင်ရသေးပါ';
+
+  @override
+  String get dashDraft => 'မူကြမ်း';
+
+  @override
+  String get dashNotApproved => 'အတည်မပြုပါ';
+
+  @override
+  String get dashNotAdded => 'မထည့်ရသေးပါ';
+
+  @override
+  String get dashLoadFailedShort => 'ဖွင့်၍မရပါ';
+
+  @override
+  String get dashSecurityTitle => 'အကောင့်ဝင်ခြင်းနှင့် လုံခြုံရေး';
+
+  @override
+  String get dashSecurityDescription =>
+      'စကားဝှက်၊ အဆင့်နှစ်ဆင့် အတည်ပြုခြင်းနှင့် ဝင်ထားသော စက်များ။';
+
+  @override
+  String get dashAdminCenter => 'စီမံခန့်ခွဲမှုစင်တာ';
 }

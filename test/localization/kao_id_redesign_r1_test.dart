@@ -7,7 +7,10 @@ import 'package:kaosure/app/router.dart';
 import 'package:kaosure/features/kao_id/account/domain/entities/profile.dart';
 import 'package:kaosure/features/kao_id/account/presentation/pages/edit_profile_page.dart';
 import 'package:kaosure/features/kao_id/auth/presentation/guards/auth_guard.dart';
+import 'package:kaosure/features/kao_id/business/domain/entities/payout_bank_account.dart';
+import 'package:kaosure/features/kao_id/dashboard/application/providers/dashboard_summary_providers.dart';
 import 'package:kaosure/features/kao_id/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:kaosure/features/kao_id/issuance/application/providers/kao_id_issuance_provider.dart';
 import 'package:kaosure/features/kao_id/dashboard/presentation/widgets/dashboard_home_content.dart';
 import 'package:kaosure/features/kao_id/dashboard/presentation/widgets/kao_id_scaffold.dart';
 import 'package:kaosure/app/routes/kao_id_routes.dart';
@@ -23,6 +26,10 @@ Widget testApp(String language, Widget child, {double scale = 1}) => ProviderSco
   overrides: [
     memberAccessProvider.overrideWith((ref) async => false),
     noticeInboxProvider.overrideWith((ref) async => <String, dynamic>{'unread': 0, 'items': <Map<String, dynamic>>[]}),
+    dashboardAdminAccessProvider.overrideWith((ref) async => false),
+    dashboardBankProvider.overrideWith((ref) async => PayoutBankAccount.none),
+    dashboardBusinessProvider.overrideWith((ref) async => null),
+    currentKaoIdIdentityProvider.overrideWith((ref) async => null),
   ],
   child: MaterialApp(
   locale: Locale(language),
@@ -80,11 +87,8 @@ void main() {
         expect(find.text(hidden), findsNothing);
       }
       final l = AppLocalizations.of(tester.element(find.byType(DashboardHomeContent)));
-      final profileButton = find.widgetWithText(OutlinedButton, l.viewProfile);
-      expect(profileButton, findsOneWidget);
-      await tester.ensureVisible(profileButton);
-      await tester.tap(profileButton);
-      final identity = find.byType(FilledButton);
+      await tester.tap(find.text('Example User'));
+      final identity = find.text(l.identityVerification);
       await tester.scrollUntilVisible(identity, 180, scrollable: find.byType(Scrollable).first);
       await Scrollable.ensureVisible(tester.element(identity), alignment: 0.5);
       await tester.pumpAndSettle();

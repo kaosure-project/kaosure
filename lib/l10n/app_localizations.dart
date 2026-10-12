@@ -5250,6 +5250,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reviewer\'s note'**
   String get businessRegStatusReasonLabel;
+
+  /// No description provided for @dashAccountInfoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account information'**
+  String get dashAccountInfoTitle;
+
+  /// No description provided for @dashDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get dashDetails;
+
+  /// No description provided for @dashDisplayNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Display name'**
+  String get dashDisplayNameLabel;
+
+  /// No description provided for @dashKaoIdLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Kao ID: {kaoId}'**
+  String dashKaoIdLine(String kaoId);
+
+  /// No description provided for @dashKaoIdPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Kao ID is issued after full verification'**
+  String get dashKaoIdPending;
+
+  /// No description provided for @dashFinanceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Money'**
+  String get dashFinanceTitle;
+
+  /// No description provided for @dashServicesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Services using Kao ID'**
+  String get dashServicesTitle;
+
+  /// No description provided for @dashSecondhandName.
+  ///
+  /// In en, this message translates to:
+  /// **'KaoSure Secondhand'**
+  String get dashSecondhandName;
+
+  /// No description provided for @dashBusinessName.
+  ///
+  /// In en, this message translates to:
+  /// **'Business'**
+  String get dashBusinessName;
+
+  /// No description provided for @dashServiceAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get dashServiceAvailable;
+
+  /// No description provided for @dashServiceOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get dashServiceOpen;
+
+  /// No description provided for @dashBusinessRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get dashBusinessRegister;
+
+  /// No description provided for @dashNotRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'Not registered'**
+  String get dashNotRegistered;
+
+  /// No description provided for @dashDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get dashDraft;
+
+  /// No description provided for @dashNotApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Not approved'**
+  String get dashNotApproved;
+
+  /// No description provided for @dashNotAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Not added'**
+  String get dashNotAdded;
+
+  /// No description provided for @dashLoadFailedShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load'**
+  String get dashLoadFailedShort;
+
+  /// No description provided for @dashSecurityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-in and security'**
+  String get dashSecurityTitle;
+
+  /// No description provided for @dashSecurityDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Password, two-step verification and signed-in devices.'**
+  String get dashSecurityDescription;
+
+  /// No description provided for @dashAdminCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin center'**
+  String get dashAdminCenter;
 }
 
 class _AppLocalizationsDelegate

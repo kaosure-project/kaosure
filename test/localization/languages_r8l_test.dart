@@ -33,7 +33,7 @@ void main() {
         expect(text.trim(), isNotEmpty, reason: key);
         expect(placeholders(text), placeholders(source[key] as String), reason: key);
         expect(text.contains('\uFFFD'), isFalse, reason: key);
-        if (!['appName', 'kaoId', 'kaoCode', 'kaoPay', 'authEmail', 'kycEmailTitle', 'kycEmail'].contains(key)) {
+        if (!['appName', 'kaoId', 'kaoCode', 'kaoPay', 'dashSecondhandName', 'authEmail', 'kycEmailTitle', 'kycEmail'].contains(key)) {
           expect(text, isNot(source[key]), reason: 'Untranslated: $tag / $key');
         }
       }

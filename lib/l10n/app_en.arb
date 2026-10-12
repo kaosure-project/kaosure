@@ -894,5 +894,32 @@
   "noticeBusinessReviewRestart": "Reviewers disagreed on a business registration; review again",
   "noticeBusinessApproved": "Your business is verified",
   "noticeBusinessRejected": "Business registration not approved. View the reason.",
-  "businessRegStatusReasonLabel": "Reviewer's note"
+  "businessRegStatusReasonLabel": "Reviewer's note",
+  "dashAccountInfoTitle": "Account information",
+  "dashDetails": "Details",
+  "dashDisplayNameLabel": "Display name",
+  "dashKaoIdLine": "Kao ID: {kaoId}",
+  "@dashKaoIdLine": {
+    "placeholders": {
+      "kaoId": {
+        "type": "String"
+      }
+    }
+  },
+  "dashKaoIdPending": "Your Kao ID is issued after full verification",
+  "dashFinanceTitle": "Money",
+  "dashServicesTitle": "Services using Kao ID",
+  "dashSecondhandName": "KaoSure Secondhand",
+  "dashBusinessName": "Business",
+  "dashServiceAvailable": "Available",
+  "dashServiceOpen": "Open",
+  "dashBusinessRegister": "Register",
+  "dashNotRegistered": "Not registered",
+  "dashDraft": "Draft",
+  "dashNotApproved": "Not approved",
+  "dashNotAdded": "Not added",
+  "dashLoadFailedShort": "Couldn't load",
+  "dashSecurityTitle": "Sign-in and security",
+  "dashSecurityDescription": "Password, two-step verification and signed-in devices.",
+  "dashAdminCenter": "Admin center"
 }

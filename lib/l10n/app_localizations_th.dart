@@ -2815,4 +2815,67 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get businessRegStatusReasonLabel => 'หมายเหตุจากผู้ตรวจ';
+
+  @override
+  String get dashAccountInfoTitle => 'ข้อมูลบัญชี';
+
+  @override
+  String get dashDetails => 'รายละเอียด';
+
+  @override
+  String get dashDisplayNameLabel => 'ชื่อที่แสดง';
+
+  @override
+  String dashKaoIdLine(String kaoId) {
+    return 'รหัส Kao ID: $kaoId';
+  }
+
+  @override
+  String get dashKaoIdPending => 'จะได้รับ Kao ID เมื่อยืนยันตัวตนครบ';
+
+  @override
+  String get dashFinanceTitle => 'การเงิน';
+
+  @override
+  String get dashServicesTitle => 'บริการที่ใช้ Kao ID';
+
+  @override
+  String get dashSecondhandName => 'KaoSure Secondhand';
+
+  @override
+  String get dashBusinessName => 'ธุรกิจ';
+
+  @override
+  String get dashServiceAvailable => 'ใช้งานได้';
+
+  @override
+  String get dashServiceOpen => 'เปิด';
+
+  @override
+  String get dashBusinessRegister => 'สมัคร';
+
+  @override
+  String get dashNotRegistered => 'ยังไม่ลงทะเบียน';
+
+  @override
+  String get dashDraft => 'ร่างคำขอ';
+
+  @override
+  String get dashNotApproved => 'ไม่ผ่านการอนุมัติ';
+
+  @override
+  String get dashNotAdded => 'ยังไม่ได้เพิ่ม';
+
+  @override
+  String get dashLoadFailedShort => 'โหลดไม่สำเร็จ';
+
+  @override
+  String get dashSecurityTitle => 'การเข้าสู่ระบบและความปลอดภัย';
+
+  @override
+  String get dashSecurityDescription =>
+      'รหัสผ่าน การยืนยันสองขั้นตอน และอุปกรณ์ที่เข้าสู่ระบบ';
+
+  @override
+  String get dashAdminCenter => 'ศูนย์ผู้ดูแล';
 }

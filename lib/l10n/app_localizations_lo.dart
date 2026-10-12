@@ -2772,4 +2772,67 @@ class AppLocalizationsLo extends AppLocalizations {
 
   @override
   String get businessRegStatusReasonLabel => 'ໝາຍເຫດຈາກຜູ້ກວດ';
+
+  @override
+  String get dashAccountInfoTitle => 'ຂໍ້ມູນບັນຊີ';
+
+  @override
+  String get dashDetails => 'ລາຍລະອຽດ';
+
+  @override
+  String get dashDisplayNameLabel => 'ຊື່ທີ່ສະແດງ';
+
+  @override
+  String dashKaoIdLine(String kaoId) {
+    return 'ລະຫັດ Kao ID: $kaoId';
+  }
+
+  @override
+  String get dashKaoIdPending => 'ຈະໄດ້ຮັບ Kao ID ເມື່ອຢືນຢັນຕົວຕົນຄົບ';
+
+  @override
+  String get dashFinanceTitle => 'ການເງິນ';
+
+  @override
+  String get dashServicesTitle => 'ບໍລິການທີ່ໃຊ້ Kao ID';
+
+  @override
+  String get dashSecondhandName => 'KaoSure Secondhand';
+
+  @override
+  String get dashBusinessName => 'ທຸລະກິດ';
+
+  @override
+  String get dashServiceAvailable => 'ໃຊ້ງານໄດ້';
+
+  @override
+  String get dashServiceOpen => 'ເປີດ';
+
+  @override
+  String get dashBusinessRegister => 'ລົງທະບຽນ';
+
+  @override
+  String get dashNotRegistered => 'ຍັງບໍ່ໄດ້ລົງທະບຽນ';
+
+  @override
+  String get dashDraft => 'ສະບັບຮ່າງ';
+
+  @override
+  String get dashNotApproved => 'ບໍ່ຜ່ານການອະນຸມັດ';
+
+  @override
+  String get dashNotAdded => 'ຍັງບໍ່ໄດ້ເພີ່ມ';
+
+  @override
+  String get dashLoadFailedShort => 'ໂຫຼດບໍ່ສຳເລັດ';
+
+  @override
+  String get dashSecurityTitle => 'ການເຂົ້າສູ່ລະບົບ ແລະ ຄວາມປອດໄພ';
+
+  @override
+  String get dashSecurityDescription =>
+      'ລະຫັດຜ່ານ, ການຢືນຢັນສອງຂັ້ນຕອນ ແລະ ອຸປະກອນທີ່ເຂົ້າສູ່ລະບົບ.';
+
+  @override
+  String get dashAdminCenter => 'ສູນຜູ້ດູແລ';
 }

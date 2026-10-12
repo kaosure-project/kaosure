@@ -2828,4 +2828,67 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get businessRegStatusReasonLabel => 'Ghi chú của người duyệt';
+
+  @override
+  String get dashAccountInfoTitle => 'Thông tin tài khoản';
+
+  @override
+  String get dashDetails => 'Chi tiết';
+
+  @override
+  String get dashDisplayNameLabel => 'Tên hiển thị';
+
+  @override
+  String dashKaoIdLine(String kaoId) {
+    return 'Mã Kao ID: $kaoId';
+  }
+
+  @override
+  String get dashKaoIdPending => 'Kao ID được cấp sau khi xác minh đầy đủ';
+
+  @override
+  String get dashFinanceTitle => 'Tài chính';
+
+  @override
+  String get dashServicesTitle => 'Dịch vụ dùng Kao ID';
+
+  @override
+  String get dashSecondhandName => 'KaoSure Secondhand';
+
+  @override
+  String get dashBusinessName => 'Doanh nghiệp';
+
+  @override
+  String get dashServiceAvailable => 'Có thể dùng';
+
+  @override
+  String get dashServiceOpen => 'Mở';
+
+  @override
+  String get dashBusinessRegister => 'Đăng ký';
+
+  @override
+  String get dashNotRegistered => 'Chưa đăng ký';
+
+  @override
+  String get dashDraft => 'Bản nháp';
+
+  @override
+  String get dashNotApproved => 'Không được duyệt';
+
+  @override
+  String get dashNotAdded => 'Chưa thêm';
+
+  @override
+  String get dashLoadFailedShort => 'Không tải được';
+
+  @override
+  String get dashSecurityTitle => 'Đăng nhập và bảo mật';
+
+  @override
+  String get dashSecurityDescription =>
+      'Mật khẩu, xác minh hai bước và thiết bị đang đăng nhập.';
+
+  @override
+  String get dashAdminCenter => 'Trung tâm quản trị';
 }

@@ -2847,4 +2847,68 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get businessRegStatusReasonLabel => 'Reviewer\'s note';
+
+  @override
+  String get dashAccountInfoTitle => 'Account information';
+
+  @override
+  String get dashDetails => 'Details';
+
+  @override
+  String get dashDisplayNameLabel => 'Display name';
+
+  @override
+  String dashKaoIdLine(String kaoId) {
+    return 'Kao ID: $kaoId';
+  }
+
+  @override
+  String get dashKaoIdPending =>
+      'Your Kao ID is issued after full verification';
+
+  @override
+  String get dashFinanceTitle => 'Money';
+
+  @override
+  String get dashServicesTitle => 'Services using Kao ID';
+
+  @override
+  String get dashSecondhandName => 'KaoSure Secondhand';
+
+  @override
+  String get dashBusinessName => 'Business';
+
+  @override
+  String get dashServiceAvailable => 'Available';
+
+  @override
+  String get dashServiceOpen => 'Open';
+
+  @override
+  String get dashBusinessRegister => 'Register';
+
+  @override
+  String get dashNotRegistered => 'Not registered';
+
+  @override
+  String get dashDraft => 'Draft';
+
+  @override
+  String get dashNotApproved => 'Not approved';
+
+  @override
+  String get dashNotAdded => 'Not added';
+
+  @override
+  String get dashLoadFailedShort => 'Couldn\'t load';
+
+  @override
+  String get dashSecurityTitle => 'Sign-in and security';
+
+  @override
+  String get dashSecurityDescription =>
+      'Password, two-step verification and signed-in devices.';
+
+  @override
+  String get dashAdminCenter => 'Admin center';
 }

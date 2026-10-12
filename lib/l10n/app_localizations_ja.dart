@@ -2660,4 +2660,66 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get businessRegStatusReasonLabel => '審査者からのメモ';
+
+  @override
+  String get dashAccountInfoTitle => '登録情報';
+
+  @override
+  String get dashDetails => '詳細';
+
+  @override
+  String get dashDisplayNameLabel => '表示名';
+
+  @override
+  String dashKaoIdLine(String kaoId) {
+    return 'Kao ID：$kaoId';
+  }
+
+  @override
+  String get dashKaoIdPending => '本人確認がすべて完了するとKao IDが発行されます';
+
+  @override
+  String get dashFinanceTitle => 'お金';
+
+  @override
+  String get dashServicesTitle => 'Kao IDで使えるサービス';
+
+  @override
+  String get dashSecondhandName => 'KaoSure Secondhand';
+
+  @override
+  String get dashBusinessName => 'ビジネス';
+
+  @override
+  String get dashServiceAvailable => '利用可能';
+
+  @override
+  String get dashServiceOpen => '開く';
+
+  @override
+  String get dashBusinessRegister => '登録する';
+
+  @override
+  String get dashNotRegistered => '未登録';
+
+  @override
+  String get dashDraft => '下書き';
+
+  @override
+  String get dashNotApproved => '承認されませんでした';
+
+  @override
+  String get dashNotAdded => '未登録';
+
+  @override
+  String get dashLoadFailedShort => '読み込めません';
+
+  @override
+  String get dashSecurityTitle => 'ログインとセキュリティ';
+
+  @override
+  String get dashSecurityDescription => 'パスワード、2段階認証、ログイン中の端末を管理します。';
+
+  @override
+  String get dashAdminCenter => '管理センター';
 }

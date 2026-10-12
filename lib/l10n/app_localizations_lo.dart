@@ -1639,6 +1639,10 @@ class AppLocalizationsLo extends AppLocalizations {
   String get bankHolderName => 'ຊື່ເຈົ້າຂອງບັນຊີຕາມເອກະສານທະນາຄານ';
 
   @override
+  String get bankHolderProfileHint =>
+      'ສຳລັບຜູ້ຂາຍທີ່ຍັງບໍ່ໄດ້ຢືນຢັນຕົວຕົນ (KYC) ກະລຸນາໃສ່ຊື່ ແລະ ນາມສະກຸນໃນໂປຣໄຟລ໌ໃຫ້ກົງກັບຊື່ບັນຊີທະນາຄານ';
+
+  @override
   String get bankBranchOptional => 'ສາຂາ (ບໍ່ບັງຄັບ)';
 
   @override

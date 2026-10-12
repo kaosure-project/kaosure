@@ -1703,6 +1703,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Account holder name as shown on the bank document';
 
   @override
+  String get bankHolderProfileHint =>
+      'Sellers who have not verified their identity (KYC) yet: make the first and last name in your profile match the bank account name.';
+
+  @override
   String get bankBranchOptional => 'Branch (optional)';
 
   @override

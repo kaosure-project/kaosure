@@ -525,6 +525,7 @@
   "bankViewEvidence": "查看已提交的证明材料",
   "bankInstitutionName": "证件上的银行名称",
   "bankHolderName": "银行文件上的账户持有人姓名",
+  "bankHolderProfileHint": "尚未完成身份验证（KYC）的卖家，请让个人资料中的姓名与银行账户姓名一致。",
   "bankBranchOptional": "支行（选填）",
   "bankAccountType": "账户类型",
   "bankSavings": "储蓄账户",

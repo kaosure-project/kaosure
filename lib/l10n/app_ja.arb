@@ -525,6 +525,7 @@
   "bankViewEvidence": "提出した証明資料を見る",
   "bankInstitutionName": "書類記載の銀行名",
   "bankHolderName": "銀行書類記載の口座名義",
+  "bankHolderProfileHint": "本人確認（KYC）前の出品者は、プロフィールの氏名を口座名義と一致させてください。",
   "bankBranchOptional": "支店（任意）",
   "bankAccountType": "口座の種類",
   "bankSavings": "普通預金",

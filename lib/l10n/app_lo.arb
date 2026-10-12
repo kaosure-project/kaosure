@@ -525,6 +525,7 @@
   "bankViewEvidence": "ເບິ່ງຫຼັກຖານທີ່ສົ່ງ",
   "bankInstitutionName": "ຊື່ທະນາຄານຕາມເອກະສານ",
   "bankHolderName": "ຊື່ເຈົ້າຂອງບັນຊີຕາມເອກະສານທະນາຄານ",
+  "bankHolderProfileHint": "ສຳລັບຜູ້ຂາຍທີ່ຍັງບໍ່ໄດ້ຢືນຢັນຕົວຕົນ (KYC) ກະລຸນາໃສ່ຊື່ ແລະ ນາມສະກຸນໃນໂປຣໄຟລ໌ໃຫ້ກົງກັບຊື່ບັນຊີທະນາຄານ",
   "bankBranchOptional": "ສາຂາ (ບໍ່ບັງຄັບ)",
   "bankAccountType": "ປະເພດບັນຊີ",
   "bankSavings": "ອອມຊັບ",

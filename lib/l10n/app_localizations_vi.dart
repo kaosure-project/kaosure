@@ -1681,6 +1681,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get bankHolderName => 'Tên chủ tài khoản theo giấy tờ ngân hàng';
 
   @override
+  String get bankHolderProfileHint =>
+      'Người bán chưa xác minh danh tính (KYC): hãy để họ tên trong hồ sơ khớp với tên tài khoản ngân hàng.';
+
+  @override
   String get bankBranchOptional => 'Chi nhánh (không bắt buộc)';
 
   @override

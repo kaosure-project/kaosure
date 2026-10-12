@@ -3175,6 +3175,12 @@ abstract class AppLocalizations {
   /// **'Account holder name as shown on the bank document'**
   String get bankHolderName;
 
+  /// No description provided for @bankHolderProfileHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Sellers who have not verified their identity (KYC) yet: make the first and last name in your profile match the bank account name.'**
+  String get bankHolderProfileHint;
+
   /// No description provided for @bankBranchOptional.
   ///
   /// In en, this message translates to:

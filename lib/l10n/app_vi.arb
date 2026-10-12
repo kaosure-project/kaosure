@@ -525,6 +525,7 @@
   "bankViewEvidence": "Xem bằng chứng đã gửi",
   "bankInstitutionName": "Tên ngân hàng theo giấy tờ",
   "bankHolderName": "Tên chủ tài khoản theo giấy tờ ngân hàng",
+  "bankHolderProfileHint": "Người bán chưa xác minh danh tính (KYC): hãy để họ tên trong hồ sơ khớp với tên tài khoản ngân hàng.",
   "bankBranchOptional": "Chi nhánh (không bắt buộc)",
   "bankAccountType": "Loại tài khoản",
   "bankSavings": "Tiết kiệm",

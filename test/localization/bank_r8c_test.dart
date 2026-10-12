@@ -81,6 +81,7 @@ void main() {
       await tap(tester, 'bank-submit');
       expect(repo.submitted, isEmpty);
       final l = AppLocalizations.of(tester.element(find.byType(BankVerificationPage)));
+      expect(find.text(l.bankHolderProfileHint, skipOffstage: false), findsOneWidget);
       expect(find.text(l.bankEvidenceRequired), findsOneWidget);
       expect(find.text(l.bankCompleteForm), findsNothing);
       await tap(tester, 'bank-pick', delta: -180);

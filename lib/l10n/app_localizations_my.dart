@@ -1684,6 +1684,10 @@ class AppLocalizationsMy extends AppLocalizations {
   String get bankHolderName => 'ဘဏ်စာရွက်စာတမ်းပေါ်ရှိ အကောင့်ပိုင်ရှင်အမည်';
 
   @override
+  String get bankHolderProfileHint =>
+      'ကိုယ်ရေးအတည်ပြုခြင်း (KYC) မပြီးသေးသော ရောင်းသူများသည် ပရိုဖိုင်ရှိ အမည်ကို ဘဏ်အကောင့်အမည်နှင့် ကိုက်ညီအောင် ဖြည့်ပါ။';
+
+  @override
   String get bankBranchOptional => 'ဘဏ်ခွဲ (မဖြစ်မနေမလို)';
 
   @override

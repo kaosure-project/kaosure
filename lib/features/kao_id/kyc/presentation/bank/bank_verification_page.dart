@@ -213,6 +213,8 @@ final class _BankVerificationPageState extends ConsumerState<BankVerificationPag
             if (_known && !_pending && _adding) ...[
               const SizedBox(height: 20),
               field('bank-name', _bank, l.bankInstitutionName, 100),
+              Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(l.bankHolderProfileHint,
+                key: const ValueKey('bank-holder-hint'), style: Theme.of(context).textTheme.bodySmall)),
               field('bank-holder', _name, l.bankHolderName, 200),
               field('bank-number', _number, l.bankAccountNumber, 20, number: true),
               field('bank-branch', _branch, l.bankBranchOptional, 100, optional: true),

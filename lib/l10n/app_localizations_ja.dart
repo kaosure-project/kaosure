@@ -1585,6 +1585,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get bankHolderName => '銀行書類記載の口座名義';
 
   @override
+  String get bankHolderProfileHint =>
+      '本人確認（KYC）前の出品者は、プロフィールの氏名を口座名義と一致させてください。';
+
+  @override
   String get bankBranchOptional => '支店（任意）';
 
   @override

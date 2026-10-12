@@ -525,6 +525,7 @@
   "bankViewEvidence": "View submitted evidence",
   "bankInstitutionName": "Bank name as shown on the document",
   "bankHolderName": "Account holder name as shown on the bank document",
+  "bankHolderProfileHint": "Sellers who have not verified their identity (KYC) yet: make the first and last name in your profile match the bank account name.",
   "bankBranchOptional": "Branch (optional)",
   "bankAccountType": "Account type",
   "bankSavings": "Savings",

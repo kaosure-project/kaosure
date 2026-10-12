@@ -1555,6 +1555,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get bankHolderName => '银行文件上的账户持有人姓名';
 
   @override
+  String get bankHolderProfileHint => '尚未完成身份验证（KYC）的卖家，请让个人资料中的姓名与银行账户姓名一致。';
+
+  @override
   String get bankBranchOptional => '支行（选填）';
 
   @override
@@ -4782,6 +4785,9 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get bankHolderName => '银行文件上的账户持有人姓名';
+
+  @override
+  String get bankHolderProfileHint => '尚未完成身份验证（KYC）的卖家，请让个人资料中的姓名与银行账户姓名一致。';
 
   @override
   String get bankBranchOptional => '支行（选填）';

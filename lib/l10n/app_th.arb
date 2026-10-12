@@ -525,6 +525,7 @@
   "bankViewEvidence": "ดูหลักฐานที่ส่ง",
   "bankInstitutionName": "ชื่อธนาคารตามเอกสาร",
   "bankHolderName": "ชื่อเจ้าของบัญชีตามเอกสารธนาคาร",
+  "bankHolderProfileHint": "สำหรับผู้ขายที่ยังไม่ได้ยืนยันตัวตน (KYC) กรุณากรอกชื่อ-นามสกุลในโปรไฟล์ให้ตรงกับชื่อบัญชีธนาคาร",
   "bankBranchOptional": "สาขา (ไม่บังคับ)",
   "bankAccountType": "ประเภทบัญชี",
   "bankSavings": "ออมทรัพย์",

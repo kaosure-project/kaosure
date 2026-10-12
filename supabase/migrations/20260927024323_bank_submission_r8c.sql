@@ -91,4 +91,3 @@ create or replace function public.list_banks_r8c() returns jsonb
 language sql security invoker set search_path='' as $$select kaoid_private.list_banks_r8c();$$;
 revoke all on function public.list_banks_r8c() from public,anon;
 grant execute on function public.list_banks_r8c() to authenticated;
-;

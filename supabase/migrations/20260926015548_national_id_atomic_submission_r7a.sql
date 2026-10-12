@@ -79,4 +79,3 @@ grant execute on function public.submit_national_id_r7a(uuid,text,text,date,date
 -- Read-only nested file metadata remains filtered by the existing owner RLS.
 grant select on public.document_files to authenticated;
 
-;

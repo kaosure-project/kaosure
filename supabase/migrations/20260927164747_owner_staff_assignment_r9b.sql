@@ -63,4 +63,3 @@ create or replace function public.assign_admin_role(p_target_kao_id text,p_role_
 create or replace function public.revoke_admin_assignment(p_assignment_id uuid) returns boolean language sql security invoker set search_path='' as $$ select kaoid_private.staff_revoke_r9b(p_assignment_id); $$;
 revoke all on function public.staff_snapshot_r9b(),public.assign_admin_role(text,text,timestamptz),public.revoke_admin_assignment(uuid) from public,anon;
 grant execute on function public.staff_snapshot_r9b(),public.assign_admin_role(text,text,timestamptz),public.revoke_admin_assignment(uuid) to authenticated;
-;

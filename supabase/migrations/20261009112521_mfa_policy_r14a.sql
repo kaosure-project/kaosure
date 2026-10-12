@@ -49,4 +49,3 @@ create function kaoid_private.require_fresh_mfa_r14a() returns void language plp
  where session_id::text=auth.jwt()->>'session_id' and authentication_method in ('totp','webauthn') and updated_at>now()-interval '10 minutes') then raise exception 'mfa_required' using errcode='42501';end if;
 end $$;
 revoke all on function kaoid_private.require_fresh_mfa_r14a() from public,anon,authenticated;
-;

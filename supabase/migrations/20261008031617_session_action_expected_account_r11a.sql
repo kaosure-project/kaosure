@@ -5,4 +5,4 @@ begin
 end $$;
 revoke execute on function public.revoke_session_r11a(uuid,boolean) from public,anon,authenticated;
 revoke execute on function public.revoke_session_r11a(uuid,boolean,uuid) from public,anon;
-grant execute on function public.revoke_session_r11a(uuid,boolean,uuid) to authenticated;;
+grant execute on function public.revoke_session_r11a(uuid,boolean,uuid) to authenticated;

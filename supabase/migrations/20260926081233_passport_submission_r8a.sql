@@ -81,4 +81,3 @@ create or replace function public.submit_passport_r8a(
 $$;
 revoke all on function public.submit_passport_r8a(uuid,text,text,text,boolean,boolean,text,date,date,date,text) from public,anon;
 grant execute on function public.submit_passport_r8a(uuid,text,text,text,boolean,boolean,text,date,date,date,text) to authenticated;
-;

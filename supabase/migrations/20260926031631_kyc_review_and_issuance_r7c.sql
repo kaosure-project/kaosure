@@ -162,4 +162,3 @@ revoke all on function kaoid_private.can_read_evidence_r7c(text) from public,ano
 grant execute on function kaoid_private.can_read_evidence_r7c(text) to authenticated;
 create policy national_id_reviewer_read_r7c on storage.objects for select to authenticated
 using(bucket_id='identity-documents' and kaoid_private.can_read_evidence_r7c(name));
-;

@@ -109,4 +109,4 @@ begin
  jsonb_build_object('previous',previous,'next',p_next,'reason',btrim(p_reason))::text);
  return true;
 end $function$
-;;
+;

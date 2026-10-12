@@ -17,4 +17,4 @@ begin
  'history',(select coalesce(jsonb_agg(x),'[]') from(select al.id,al.profile_id,al.action,al.target_id,al.description,al.created_at,al.actor_name_at_event,al.actor_roles_at_event,ac.account_code as actor_code,tc.account_code as target_code,p.display_name as target_name from public.activity_logs al left join kaoid_private.account_refs_r10c ac on ac.profile_id=al.profile_id left join public.admin_assignments aa on aa.id=al.target_id left join kaoid_private.account_refs_r10c tc on tc.profile_id=aa.profile_id left join public.profiles p on p.id=aa.profile_id where al.action in ('governance.role.assign','governance.role.revoke') order by al.created_at desc,al.id limit 100)x)) into result;
  return result;
 end $function$
-;
+

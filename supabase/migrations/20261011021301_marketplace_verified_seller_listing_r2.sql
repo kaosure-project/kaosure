@@ -205,4 +205,3 @@ revoke all on function public.create_marketplace_listing(
 grant execute on function public.create_marketplace_listing(
   uuid, uuid, text, text, smallint, numeric, text[]
 ) to authenticated;
-;

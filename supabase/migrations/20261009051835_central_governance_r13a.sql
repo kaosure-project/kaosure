@@ -67,4 +67,3 @@ create or replace function public.is_admin() returns boolean language sql stable
  select kaoid_private.company_owner_authority() or exists(select 1 from kaoid_private.effective_roles_r13a() where code in ('admin','super_admin')); $$;
 revoke all on function public.is_admin() from public,anon;
 grant execute on function public.is_admin() to authenticated;
-;

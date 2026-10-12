@@ -66,4 +66,3 @@ end $$;
 revoke all on function kaoid_private.review_vote_r14a(uuid,boolean,text,boolean),kaoid_private.review_fingerprint_r14a(uuid),kaoid_private.review_decision_base_r10e(uuid,boolean,text),kaoid_private.review_bank_r9c(uuid,boolean,text) from public,anon,authenticated;
 
 revoke insert,update,delete,truncate on public.approval_requests,public.approval_steps,public.approval_histories,public.approval_policies from anon,authenticated;
-;

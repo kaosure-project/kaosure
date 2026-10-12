@@ -428,4 +428,4 @@ begin
  end loop;
  raise exception 'identity_generation_failed';
 end $function$
-;;
+;

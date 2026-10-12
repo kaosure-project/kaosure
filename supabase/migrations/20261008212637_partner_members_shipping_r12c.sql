@@ -136,4 +136,3 @@ begin
  return blockers;$replacement$);
  execute body;
 end $migration$;
-;

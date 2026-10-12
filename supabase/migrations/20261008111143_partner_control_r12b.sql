@@ -140,4 +140,3 @@ create function public.partner_receive_r12b(p_id uuid,p_environment text,p_event
 revoke all on function public.partner_receive_r12b(uuid,text,text,text,text) from public,anon,authenticated;
 grant execute on function public.partner_receive_r12b(uuid,text,text,text,text) to service_role;
 revoke all on function kaoid_private.partner_owner_r12b(uuid),kaoid_private.partner_ready_r12b(uuid) from public,anon,authenticated;
-;

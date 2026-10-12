@@ -18,4 +18,3 @@ begin
 end $$;
 drop trigger audit_actor_r10c on public.activity_logs;
 create trigger audit_actor_r10c before insert or update or delete on public.activity_logs for each row execute function kaoid_private.audit_actor_r10c();
-;

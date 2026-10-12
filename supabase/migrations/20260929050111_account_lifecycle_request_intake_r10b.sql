@@ -49,4 +49,3 @@ create function public.lifecycle_submit_r10b(p_kind text,p_reason text) returns 
 create function public.lifecycle_cancel_r10b(p_id uuid) returns boolean language sql security invoker set search_path='' as $$select kaoid_private.lifecycle_cancel_r10b(p_id);$$;
 revoke all on function kaoid_private.lifecycle_snapshot_r10b(),kaoid_private.lifecycle_submit_r10b(text,text),kaoid_private.lifecycle_cancel_r10b(uuid),public.lifecycle_snapshot_r10b(),public.lifecycle_submit_r10b(text,text),public.lifecycle_cancel_r10b(uuid) from public,anon;
 grant execute on function kaoid_private.lifecycle_snapshot_r10b(),kaoid_private.lifecycle_submit_r10b(text,text),kaoid_private.lifecycle_cancel_r10b(uuid),public.lifecycle_snapshot_r10b(),public.lifecycle_submit_r10b(text,text),public.lifecycle_cancel_r10b(uuid) to authenticated;
-;

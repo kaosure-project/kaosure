@@ -107,4 +107,3 @@ begin
  update kaoid_private.partners_r12b set approval=next_approval,enabled=next_enabled,revision=revision+1,updated_at=now() where id=p.id;
  insert into kaoid_private.partner_history_r12b(partner_id,action,actor_id,actor_role,reason,revision) values(p.id,p_action,auth.uid(),'Owner',btrim(p_reason),p.revision+1);
 end $function$;
-;

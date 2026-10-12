@@ -22,4 +22,3 @@ create or replace function kaoid_private.review_queue_r7c() returns jsonb langua
  left join public.approval_requests ar on ar.resource_id=(q->>'id')::uuid and ar.resource in ('kaoid_review','kaoid_recovery') and ar.status='pending' and ar.expires_at>now()
  left join public.approval_histories h on h.approval_request_id=ar.id and h.event='request_created');
 end $$;
-;

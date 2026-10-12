@@ -14,4 +14,3 @@ declare u uuid;fid uuid;code text;begin
  if tg_op='DELETE' then return old;else return new;end if;
 end $$;
 revoke all on function kaoid_private.mfa_notice_r14a() from public,anon,authenticated;
-;

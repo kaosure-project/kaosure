@@ -81,4 +81,3 @@ create or replace function public.submit_residence_r8b(
 $$;
 revoke all on function public.submit_residence_r8b(uuid,text,text,text,boolean,boolean,text,text,boolean,date,date,text,text) from public,anon;
 grant execute on function public.submit_residence_r8b(uuid,text,text,text,boolean,boolean,text,text,boolean,date,date,text,text) to authenticated;
-;

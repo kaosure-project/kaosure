@@ -66,4 +66,4 @@ begin
  perform kaoid_private.emit_notice_r10a(u,'recovery-result:'||e.id,case when p_approve then 'account_recovered' else 'lifecycle_rejected' end,e.lifecycle_id);
  return true;
 end $function$
-;;
+;

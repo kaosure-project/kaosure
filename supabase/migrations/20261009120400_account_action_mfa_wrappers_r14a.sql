@@ -11,4 +11,4 @@ create function kaoid_private.close_account_r10d(p_request uuid,p_reason text) r
 perform kaoid_private.require_fresh_mfa_r14a();
 return kaoid_private.close_account_execute_r14a(p_request,p_reason);end $$;
 revoke all on function kaoid_private.close_account_r10d(uuid,text) from public,anon;
-grant execute on function kaoid_private.close_account_r10d(uuid,text) to authenticated;;
+grant execute on function kaoid_private.close_account_r10d(uuid,text) to authenticated;

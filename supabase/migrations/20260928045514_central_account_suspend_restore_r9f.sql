@@ -66,4 +66,3 @@ create or replace function public.set_account_state_r9f(p_target uuid,p_expected
 create or replace function public.account_history_r9f(p_target uuid) returns jsonb language sql security invoker set search_path='' as $$ select kaoid_private.account_history_r9f(p_target); $$;
 revoke all on function public.set_account_state_r9f(uuid,text,text,text),public.account_history_r9f(uuid) from public,anon;
 grant execute on function public.set_account_state_r9f(uuid,text,text,text),public.account_history_r9f(uuid) to authenticated;
-;

@@ -38,4 +38,3 @@ create or replace function public.find_member_r9a(p_query text) returns jsonb la
 security invoker set search_path='' as $$ select kaoid_private.find_member_r9a(p_query); $$;
 revoke all on function public.find_member_r9a(text) from public,anon;
 grant execute on function public.find_member_r9a(text) to authenticated;
-;

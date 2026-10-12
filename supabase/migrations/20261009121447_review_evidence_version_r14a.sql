@@ -10,4 +10,3 @@ create or replace function kaoid_private.review_fingerprint_r14a(p_id uuid) retu
  'objects',(select jsonb_agg(jsonb_build_object('id',o.id,'name',o.name,'updated_at',o.updated_at,'metadata',o.metadata) order by o.name) from storage.objects o where o.bucket_id='identity-documents' and (o.name in (select f.file_path from public.document_files f join public.verification_requests r on r.document_id=f.document_id where r.id=p_id) or o.name in (select f.file_path from public.document_files f join kaoid_private.recovery_evidence_r10e e on e.previous_document=f.document_id where e.id=p_id) or o.name in (select b.evidence_path from public.bank_accounts b join public.financial_verifications v on v.bank_account_id=b.id where v.id=p_id))),
  'recovery',(select to_jsonb(e) from kaoid_private.recovery_evidence_r10e e where e.id=p_id)
  )::text,'UTF8')),'hex'); $$;
-;

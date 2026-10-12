@@ -20,4 +20,3 @@ create function kaoid_private.security_operations_r14a() returns jsonb language 
 create function public.security_operations_r14a() returns jsonb language sql set search_path='' as $$ select kaoid_private.security_operations_r14a(); $$;
 revoke all on function kaoid_private.service_context_r14a(uuid),kaoid_private.security_operations_r14a(),public.service_context_r14a(uuid),public.security_operations_r14a() from public,anon;
 grant execute on function kaoid_private.service_context_r14a(uuid),kaoid_private.security_operations_r14a(),public.service_context_r14a(uuid),public.security_operations_r14a() to authenticated;
-;

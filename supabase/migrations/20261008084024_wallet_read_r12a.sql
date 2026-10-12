@@ -28,4 +28,3 @@ create or replace function public.wallet_snapshot_r12a(p_expected_user uuid,p_be
 returns jsonb language sql security invoker set search_path='' as $$ select kaoid_private.wallet_snapshot_r12a(p_expected_user,p_before_time,p_before_id); $$;
 revoke all on function public.wallet_snapshot_r12a(uuid,timestamptz,uuid) from public,anon;
 grant execute on function public.wallet_snapshot_r12a(uuid,timestamptz,uuid) to authenticated;
-;

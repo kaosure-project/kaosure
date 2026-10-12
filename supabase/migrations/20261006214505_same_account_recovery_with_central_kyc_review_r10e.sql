@@ -409,4 +409,4 @@ begin
  if s is null then raise exception 'account_unavailable';end if;
  return jsonb_build_object('account_status',s,'owner',exists(select 1 from public.company_owners where profile_id=u),
  'requests',(select coalesce(jsonb_agg(to_jsonb(x)),'[]') from (select r.id,r.kind,r.status,r.reason,r.created_at,(select a.description from public.activity_logs a where a.target_table='lifecycle_requests_r10b' and a.target_id=r.id and a.action in ('account.request.reject','account.request.close','account.request.recover') order by a.created_at desc,a.id desc limit 1) as decision_reason from kaoid_private.lifecycle_requests_r10b r where r.profile_id=u order by r.created_at desc,r.id desc limit 20)x));
-end $$;;
+end $$;

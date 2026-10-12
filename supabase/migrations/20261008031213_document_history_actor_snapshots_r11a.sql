@@ -15,4 +15,4 @@ begin
  from public.activity_logs a where a.action in ('kyc.revoke','kyc.expire') and a.target_id in (select id from public.identity_documents where owner_id=target)
  order by a.created_at desc,a.id desc limit 100)x));
 end $function$
-;;
+;

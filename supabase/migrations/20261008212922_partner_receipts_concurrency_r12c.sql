@@ -11,4 +11,3 @@ begin
  if not found or r.payload_hash is distinct from p_hash or r.capability is distinct from p_capability then raise exception 'event_conflict' using errcode='23505';end if;
  return r.id;
 end $$;
-;

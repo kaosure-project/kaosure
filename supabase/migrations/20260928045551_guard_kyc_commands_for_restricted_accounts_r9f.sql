@@ -293,4 +293,4 @@ begin
  set residence_permit_status='pending',residence_permit_expiry=p_expiry,updated_at=now();
  return p_id;
 end;
-$function$;;
+$function$;

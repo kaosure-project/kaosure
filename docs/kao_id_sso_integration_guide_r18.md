@@ -28,12 +28,12 @@ Secondhand                         Supabase Auth (issuer)                Kao ID 
 
 Issuer: `https://dyfpzmhalfmykvxjdcoq.supabase.co/auth/v1`
 Discovery: `{issuer}/.well-known/openid-configuration` (authorize `/oauth/authorize`, token `/oauth/token`, userinfo `/oauth/userinfo`, JWKS `/.well-known/jwks.json`).
-Scopes: `openid email profile phone`. PKCE `S256` is mandatory for public clients.
+Supported scopes: `openid email profile phone`; Secondhand requests `openid email profile` and reads phone verification from `kao_id_claims_r18`. PKCE `S256` is mandatory for public clients.
 
 ## 2. One-time setup (Supabase Dashboard + Kao ID)
 
 1. **Enable the OAuth server** — Dashboard › Authentication › OAuth Server: enable, authorization path `/oauth/consent`. Site URL must be the Kao ID web app (dev: `http://localhost:<kao-id-port>`).
-2. **Create the client** — Dashboard › Authentication › OAuth Apps › Add: name `Kao Secondhand`, type **Public** (no secret; browser apps cannot keep one), redirect URI `http://localhost:5000/auth/callback` for development. Copy the client ID.
+2. **Create the client** — Dashboard › Authentication › OAuth Apps › Add: name `Kao Secondhand`, type **Public** (no secret; browser apps cannot keep one), redirect URI `http://localhost:7357/auth/callback` for development. Copy the client ID.
 3. **Register it in Kao ID** — Admin Center › Partners › Apps signing in with Kao ID › Register app (company owner, MFA when the policy is on):
    - App code `secondhand_web`, the client ID, name `Kao Secondhand`, Kao app on.
    - Claims: profile, verification, business.
@@ -57,7 +57,7 @@ final class KaoIdOAuthConfig {
 
   final Uri issuer;          // https://<project>.supabase.co/auth/v1
   final String clientId;     // from Dashboard › OAuth Apps
-  final Uri redirectUri;     // http://localhost:5000/auth/callback (dev)
+  final Uri redirectUri;     // http://localhost:7357/auth/callback (dev)
 
   static const scopes = 'openid email profile';
   Uri get authorize => issuer.replace(path: '${issuer.path}/oauth/authorize');

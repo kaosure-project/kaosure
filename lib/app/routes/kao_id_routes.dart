@@ -46,4 +46,5 @@ final class KaoIdRoutes {
   static const String businessDocument = '/kao-id/business/document';
   static const String businessReview = '/kao-id/business/review';
   static const String businessCompleted = '/kao-id/business/completed';
+  static const String businessOrganizations = '/kao-id/business/organizations';
 }

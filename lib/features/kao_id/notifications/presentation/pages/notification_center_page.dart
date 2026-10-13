@@ -30,6 +30,8 @@ String noticeLabel(AppLocalizations l, String code) => switch(code) {
   'business_review_restart' => l.noticeBusinessReviewRestart,
   'business_approved' => l.noticeBusinessApproved,
   'business_rejected' => l.noticeBusinessRejected,
+  'business_bank_approved' => l.noticeBusinessBankApproved,
+  'business_bank_rejected' => l.noticeBusinessBankRejected,
   'suspended' => l.noticeSuspended,
   'restored' => l.noticeRestored,
   _ => l.noticeUpdated,
@@ -62,7 +64,8 @@ class NotificationCenter extends ConsumerWidget {
                   return date == null ? '' : '${MaterialLocalizations.of(context).formatMediumDate(date)} ${MaterialLocalizations.of(context).formatTimeOfDay(TimeOfDay.fromDateTime(date))}';
                 }()),
                 trailing: const {'review_new', 'review_second', 'review_restart', 'role_assigned', 'role_revoked', 'submitted', 'approved', 'rejected', 'bank_approved', 'bank_rejected',
-                    'business_review_new', 'business_review_second', 'business_review_restart', 'business_approved', 'business_rejected'}.contains(row['message'])
+                    'business_review_new', 'business_review_second', 'business_review_restart', 'business_approved', 'business_rejected',
+                    'business_bank_approved', 'business_bank_rejected'}.contains(row['message'])
                     ? IconButton(tooltip: l.noticeOpenItem, icon: const Icon(Icons.open_in_new), onPressed: () async {
                         try {
                           await ref.read(noticeRepositoryProvider).read(row['id'] as String);

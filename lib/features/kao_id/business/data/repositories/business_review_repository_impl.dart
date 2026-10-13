@@ -18,9 +18,9 @@ final class BusinessReviewRepositoryImpl implements BusinessReviewRepository {
 
   @override
   Future<List<BusinessReviewItem>> queue(String reviewerId) => _pinned(reviewerId, () async {
-        final rows = await _remoteDataSource.queue();
-        return [for (final row in rows) BusinessReviewItemModel.fromJson(row)];
-      });
+    final rows = await _remoteDataSource.queue();
+    return [for (final row in rows) BusinessReviewItemModel.fromJson(row)];
+  });
 
   @override
   Future<Uint8List> downloadDocument(String reviewerId, String path) =>
@@ -28,39 +28,43 @@ final class BusinessReviewRepositoryImpl implements BusinessReviewRepository {
 
   @override
   Future<Uri> documentLink(String reviewerId, String path) => _pinned(reviewerId, () async {
-        final link = Uri.tryParse(await _remoteDataSource.signedUrl(path));
-        if (link == null || !link.hasScheme) {
-          throw const BusinessReviewFailure(BusinessReviewFailureCode.documentUnavailable);
-        }
-        return link;
-      });
+    final link = Uri.tryParse(await _remoteDataSource.signedUrl(path));
+    if (link == null || !link.hasScheme) {
+      throw const BusinessReviewFailure(BusinessReviewFailureCode.documentUnavailable);
+    }
+    return link;
+  });
 
   @override
   Future<BusinessReviewOutcome> decide({
     required String reviewerId,
     required String registrationId,
     required bool approve,
+    bool directorConfirmed = false,
     String? reason,
-  }) =>
-      _pinned(reviewerId, () async {
-        final trimmed = reason?.trim() ?? '';
-        if (!approve && trimmed.length < 3) {
-          throw const BusinessReviewFailure(BusinessReviewFailureCode.reasonRequired);
-        }
-        // The server re-checks the expected reviewer inside the decision transaction.
-        final status = await _remoteDataSource.decide(
-          expectedUserId: reviewerId,
-          registrationId: registrationId,
-          approve: approve,
-          reason: trimmed.isEmpty ? null : trimmed,
-        );
-        return switch (status) {
-          'approved' => BusinessReviewOutcome.approved,
-          'rejected' => BusinessReviewOutcome.rejected,
-          'awaiting_second' => BusinessReviewOutcome.awaitingSecond,
-          _ => throw const BusinessReviewFailure(BusinessReviewFailureCode.unknown),
-        };
-      });
+  }) => _pinned(reviewerId, () async {
+    final trimmed = reason?.trim() ?? '';
+    if (!approve && trimmed.length < 3) {
+      throw const BusinessReviewFailure(BusinessReviewFailureCode.reasonRequired);
+    }
+    if (approve && !directorConfirmed) {
+      throw const BusinessReviewFailure(BusinessReviewFailureCode.directorRequired);
+    }
+    // The server re-checks the expected reviewer inside the decision transaction.
+    final status = await _remoteDataSource.decide(
+      expectedUserId: reviewerId,
+      registrationId: registrationId,
+      approve: approve,
+      directorConfirmed: approve && directorConfirmed,
+      reason: trimmed.isEmpty ? null : trimmed,
+    );
+    return switch (status) {
+      'approved' => BusinessReviewOutcome.approved,
+      'rejected' => BusinessReviewOutcome.rejected,
+      'awaiting_second' => BusinessReviewOutcome.awaitingSecond,
+      _ => throw const BusinessReviewFailure(BusinessReviewFailureCode.unknown),
+    };
+  });
 
   Future<T> _pinned<T>(String reviewerId, Future<T> Function() run) async {
     try {

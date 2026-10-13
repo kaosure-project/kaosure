@@ -1,12 +1,19 @@
 enum BusinessRegistrationFailureCode {
   session,
   restricted,
+  kaoIdRequired,
   activeExists,
   notEditable,
   documentRequired,
-  bankRequired,
   invalidFile,
   duplicateRegistration,
+  invalidName,
+  invalidNumber,
+  invalidNameEn,
+  invalidCertificateDate,
+  certificateTooOld,
+  certificateDateRequired,
+  declarationRequired,
   unknown,
 }
 

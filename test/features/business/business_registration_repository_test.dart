@@ -5,7 +5,9 @@ import 'package:kaosure/features/kao_id/business/data/datasources/remote/busines
 import 'package:kaosure/features/kao_id/business/data/models/business_registration_model.dart';
 import 'package:kaosure/features/kao_id/business/data/repositories/business_registration_repository_impl.dart';
 import 'package:kaosure/features/kao_id/business/domain/entities/business_document_file.dart';
+import 'package:kaosure/features/kao_id/business/domain/entities/business_document_kind.dart';
 import 'package:kaosure/features/kao_id/business/domain/failures/business_registration_failure.dart';
+import 'package:kaosure/features/kao_id/business/domain/validators/business_registration_rules.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'business_registration_fakes.dart';
@@ -15,17 +17,14 @@ final class RecordingRemote implements BusinessRegistrationRemoteDataSource {
   String? uploadedPath;
   String? uploadedType;
   Map<String, String>? attached;
+  bool? declared;
   Object? submitError;
 
   @override
   String? currentUserId() => userId;
 
   @override
-  Future<void> uploadDocumentFile({
-    required String path,
-    required Uint8List bytes,
-    required String contentType,
-  }) async {
+  Future<void> uploadDocumentFile({required String path, required Uint8List bytes, required String contentType}) async {
     uploadedPath = path;
     uploadedType = contentType;
   }
@@ -33,17 +32,24 @@ final class RecordingRemote implements BusinessRegistrationRemoteDataSource {
   @override
   Future<BusinessRegistrationModel> attachDocument({
     required String registrationId,
+    required BusinessDocumentKind kind,
     required String documentId,
     required String path,
     required String fileName,
   }) async {
-    attached = {'registrationId': registrationId, 'documentId': documentId,
-        'path': path, 'fileName': fileName};
+    attached = {
+      'registrationId': registrationId,
+      'kind': kind.name,
+      'documentId': documentId,
+      'path': path,
+      'fileName': fileName,
+    };
     return BusinessRegistrationModel.fromEntity(draft(documentId: documentId));
   }
 
   @override
-  Future<BusinessRegistrationModel> submit(String registrationId) async {
+  Future<BusinessRegistrationModel> submit(String registrationId, {required bool directorDeclared}) async {
+    declared = directorDeclared;
     final error = submitError;
     if (error != null) throw error;
     return BusinessRegistrationModel.fromEntity(draft());
@@ -59,10 +65,7 @@ void main() {
 
   setUp(() {
     remote = RecordingRemote();
-    repository = BusinessRegistrationRepositoryImpl(
-      remoteDataSource: remote,
-      newId: () => 'doc-42',
-    );
+    repository = BusinessRegistrationRepositoryImpl(remoteDataSource: remote, newId: () => 'doc-42');
   });
 
   test('uploads into the owner folder and attaches through the server', () async {
@@ -71,11 +74,12 @@ void main() {
       bytes: Uint8List.fromList([0xFF, 0xD8, 0xFF, 0xE0]),
       extension: 'JPEG',
     );
-    final result = await repository.attachDocument(registrationId: 'reg-1', file: jpeg);
+    final result = await repository.attachDocument(registrationId: 'reg-1', kind: BusinessDocumentKind.vat, file: jpeg);
     expect(remote.uploadedPath, '$ownerId/business-registration/reg-1/doc-42.jpg');
     expect(remote.uploadedType, 'image/jpeg');
     expect(remote.attached, {
       'registrationId': 'reg-1',
+      'kind': 'vat',
       'documentId': 'doc-42',
       'path': '$ownerId/business-registration/reg-1/doc-42.jpg',
       'fileName': 'scan.JPEG',
@@ -90,9 +94,10 @@ void main() {
       extension: 'pdf',
     );
     await expectLater(
-      repository.attachDocument(registrationId: 'reg-1', file: fake),
-      throwsA(isA<BusinessRegistrationFailure>().having(
-          (f) => f.code, 'code', BusinessRegistrationFailureCode.invalidFile)),
+      repository.attachDocument(registrationId: 'reg-1', kind: BusinessDocumentKind.certificate, file: fake),
+      throwsA(
+        isA<BusinessRegistrationFailure>().having((f) => f.code, 'code', BusinessRegistrationFailureCode.invalidFile),
+      ),
     );
     expect(remote.uploadedPath, isNull);
   });
@@ -110,19 +115,59 @@ void main() {
   test('requires a signed-in owner before uploading', () async {
     remote.userId = null;
     await expectLater(
-      repository.attachDocument(registrationId: 'reg-1', file: pdfFile()),
-      throwsA(isA<BusinessRegistrationFailure>().having(
-          (f) => f.code, 'code', BusinessRegistrationFailureCode.session)),
+      repository.attachDocument(registrationId: 'reg-1', kind: BusinessDocumentKind.certificate, file: pdfFile()),
+      throwsA(
+        isA<BusinessRegistrationFailure>().having((f) => f.code, 'code', BusinessRegistrationFailureCode.session),
+      ),
     );
     expect(remote.uploadedPath, isNull);
   });
 
-  test('maps the server bank gate to a typed failure', () async {
-    remote.submitError = const PostgrestException(message: 'VERIFIED_BANK_REQUIRED');
+  test('submit requires the director declaration before calling the server', () async {
     await expectLater(
-      repository.submit('reg-1'),
-      throwsA(isA<BusinessRegistrationFailure>().having(
-          (f) => f.code, 'code', BusinessRegistrationFailureCode.bankRequired)),
+      repository.submit('reg-1', directorDeclared: false),
+      throwsA(
+        isA<BusinessRegistrationFailure>().having(
+          (f) => f.code,
+          'code',
+          BusinessRegistrationFailureCode.declarationRequired,
+        ),
+      ),
     );
+    expect(remote.declared, isNull);
+
+    await repository.submit('reg-1', directorDeclared: true);
+    expect(remote.declared, isTrue);
+  });
+
+  test('maps the server certificate and Kao ID rules to typed failures', () async {
+    for (final (message, code) in [
+      ('certificate_too_old', BusinessRegistrationFailureCode.certificateTooOld),
+      ('CERTIFICATE_DATE_REQUIRED', BusinessRegistrationFailureCode.certificateDateRequired),
+      ('DIRECTOR_DECLARATION_REQUIRED', BusinessRegistrationFailureCode.declarationRequired),
+      ('KAO_ID_REQUIRED', BusinessRegistrationFailureCode.kaoIdRequired),
+      ('invalid_registration_number', BusinessRegistrationFailureCode.invalidNumber),
+    ]) {
+      remote.submitError = PostgrestException(message: message);
+      await expectLater(
+        repository.submit('reg-1', directorDeclared: true),
+        throwsA(isA<BusinessRegistrationFailure>().having((f) => f.code, 'code', code)),
+      );
+    }
+  });
+
+  test('client rules mirror the server checks', () {
+    expect(BusinessRegistrationRules.isValidJuristicNumber(validJuristicNumber), isTrue);
+    expect(BusinessRegistrationRules.isValidJuristicNumber('0105561234567'), isFalse);
+    expect(BusinessRegistrationRules.isValidJuristicNumber('010556123456'), isFalse);
+    expect(BusinessRegistrationRules.isValidLegalNameEn(''), isTrue);
+    expect(BusinessRegistrationRules.isValidLegalNameEn("KAO (THAILAND) CO., LTD."), isTrue);
+    expect(BusinessRegistrationRules.isValidLegalNameEn('บริษัท'), isFalse);
+    expect(BusinessRegistrationRules.oldestCertificateDate(DateTime(2026, 8, 31)), DateTime(2026, 2, 28));
+    expect(BusinessRegistrationRules.oldestCertificateDate(DateTime(2026, 3, 15)), DateTime(2025, 9, 15));
+    final today = DateTime(2026, 10, 13);
+    expect(BusinessRegistrationRules.isCertificateDateAccepted(DateTime(2026, 4, 13), today), isTrue);
+    expect(BusinessRegistrationRules.isCertificateDateAccepted(DateTime(2026, 4, 12), today), isFalse);
+    expect(BusinessRegistrationRules.isCertificateDateAccepted(DateTime(2026, 10, 14), today), isFalse);
   });
 }

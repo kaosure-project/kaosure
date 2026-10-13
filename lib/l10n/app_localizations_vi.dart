@@ -2525,7 +2525,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get businessRegNumberLabel => 'Mã số đăng ký';
 
   @override
-  String get businessRegNumberHelp => 'Chỉ gồm 13 chữ số';
+  String get businessRegNumberHelp =>
+      'Mã số pháp nhân 13 chữ số trên giấy chứng nhận';
 
   @override
   String get businessRegCategoryLabel => 'Ngành nghề kinh doanh';
@@ -2553,14 +2554,15 @@ class AppLocalizationsVi extends AppLocalizations {
   String get businessRegFieldRequired => 'Vui lòng điền thông tin này';
 
   @override
-  String get businessRegNumberInvalid => 'Nhập mã số đăng ký gồm 13 chữ số';
+  String get businessRegNumberInvalid =>
+      'Nhập mã số pháp nhân 13 chữ số hợp lệ';
 
   @override
-  String get businessRegDocumentHeading => 'Tải lên giấy đăng ký';
+  String get businessRegDocumentHeading => 'Tải lên giấy tờ công ty';
 
   @override
   String get businessRegDocumentDescription =>
-      'Giấy chứng nhận công ty hoặc giấy đăng ký có ghi tên và mã số doanh nghiệp.';
+      'Bắt buộc có giấy chứng nhận công ty cấp trong vòng 6 tháng. Đăng ký VAT (Por.Por.20) là không bắt buộc.';
 
   @override
   String get businessRegDocumentRequirements =>
@@ -2668,7 +2670,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get businessRegStatusApprovedBody =>
-      'Giờ đây bạn có thể dùng doanh nghiệp với các dịch vụ Kao.';
+      'Kao ID doanh nghiệp của bạn đã sẵn sàng. Tiếp theo, hãy thêm tài khoản ngân hàng công ty để nhận tiền.';
 
   @override
   String get businessRegStatusRejectedTitle =>
@@ -2791,7 +2793,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get businessReviewChecked =>
-      'Tôi đã kiểm tra giấy tờ khớp với tên doanh nghiệp, mã số đăng ký và người đăng ký.';
+      'Tôi đã kiểm tra giấy chứng nhận khớp với tên doanh nghiệp, số đăng ký và ngày cấp.';
 
   @override
   String get businessReviewReason =>
@@ -4048,4 +4050,245 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get orderIssueErrorGone => 'Không tìm thấy báo cáo này.';
+
+  @override
+  String get businessReviewErrorDirector =>
+      'Xác nhận người nộp là giám đốc có tên trong giấy chứng nhận.';
+
+  @override
+  String get businessReviewErrorCertificateOld =>
+      'Giấy chứng nhận công ty đã được cấp quá 6 tháng.';
+
+  @override
+  String get businessReviewErrorNumber =>
+      'Số đăng ký không đúng chữ số kiểm tra.';
+
+  @override
+  String get businessReviewNumberTaken =>
+      'Số đăng ký này đã được một công ty đã xác minh khác sử dụng.';
+
+  @override
+  String get businessReviewDirectorNotDeclared =>
+      'Người nộp chưa khai báo quyền giám đốc.';
+
+  @override
+  String get businessReviewBlockersTitle => 'Không thể phê duyệt hồ sơ này';
+
+  @override
+  String get businessReviewDirectorDeclared => 'Đã khai là giám đốc';
+
+  @override
+  String get businessReviewYes => 'Có';
+
+  @override
+  String get businessReviewNo => 'Không';
+
+  @override
+  String get businessReviewDirectorConfirm =>
+      'Tên đã xác minh của người nộp có trong danh sách giám đốc của giấy chứng nhận';
+
+  @override
+  String get businessReviewDirectorConfirmHelp =>
+      'So sánh tên người nộp ở trên với danh sách giám đốc trong giấy chứng nhận. Người nộp sẽ trở thành chủ sở hữu công ty.';
+
+  @override
+  String get businessRegCertificateTitle => 'Giấy chứng nhận đăng ký công ty';
+
+  @override
+  String get businessRegVatTitle => 'Đăng ký VAT (Por.Por.20, không bắt buộc)';
+
+  @override
+  String get businessRegNameEnLabel => 'Tên pháp lý tiếng Anh (không bắt buộc)';
+
+  @override
+  String get businessRegCertificateDateLabel => 'Ngày cấp giấy chứng nhận';
+
+  @override
+  String get reviewBusinessBankTitle => 'Tài khoản ngân hàng công ty';
+
+  @override
+  String get reviewOrganizationName => 'Công ty';
+
+  @override
+  String get reviewBusinessKaoId => 'Kao ID doanh nghiệp';
+
+  @override
+  String get reviewLegalName => 'Tên pháp lý (tiếng Thái)';
+
+  @override
+  String get reviewLegalNameEn => 'Tên pháp lý (tiếng Anh)';
+
+  @override
+  String get reviewNameMatched =>
+      'Tên tài khoản khớp với tên pháp lý của công ty';
+
+  @override
+  String get reviewNameMismatch =>
+      'Tên tài khoản không khớp với tên pháp lý của công ty';
+
+  @override
+  String get noticeBusinessBankApproved =>
+      'Tài khoản ngân hàng công ty đã được xác minh';
+
+  @override
+  String get noticeBusinessBankRejected =>
+      'Tài khoản ngân hàng công ty chưa được phê duyệt';
+
+  @override
+  String get businessRegNameHelp =>
+      'Tên pháp lý tiếng Thái đúng như trên giấy chứng nhận';
+
+  @override
+  String get businessRegNameEnHelp =>
+      'Như trên giấy chứng nhận, ví dụ EXAMPLE CO., LTD. Dùng để đối chiếu tên tài khoản ngân hàng công ty.';
+
+  @override
+  String get businessRegNameEnInvalid =>
+      'Chỉ dùng chữ cái tiếng Anh, chữ số và . , & ( ) \' / -';
+
+  @override
+  String get businessRegCertificateDateRequired =>
+      'Chọn ngày cấp giấy chứng nhận';
+
+  @override
+  String get businessRegCertificateTooOld =>
+      'Giấy chứng nhận phải được cấp trong vòng 6 tháng. Hãy xin bản mới từ DBD.';
+
+  @override
+  String get businessRegCertificateDateHelp =>
+      'Ngày in trên giấy chứng nhận. Không được quá 6 tháng tại thời điểm nộp.';
+
+  @override
+  String get businessRegCertificateDateInvalid =>
+      'Ngày cấp không thể ở tương lai.';
+
+  @override
+  String get businessRegDocumentRemove => 'Gỡ bỏ';
+
+  @override
+  String get businessRegAuthorityHeading => 'Xác nhận thẩm quyền';
+
+  @override
+  String get businessRegAuthorityDescription =>
+      'Chỉ giám đốc có tên trong giấy chứng nhận mới có thể đăng ký công ty. Bạn sẽ trở thành chủ sở hữu trong Kao ID.';
+
+  @override
+  String get businessRegAuthorityKaoIdVerified =>
+      'Kao ID của bạn đã được xác minh';
+
+  @override
+  String get businessRegAuthorityMatchHelp =>
+      'Nhân viên sẽ đối chiếu tên trên danh tính đã xác minh của bạn với danh sách giám đốc trong giấy chứng nhận.';
+
+  @override
+  String get businessRegDirectorDeclaration =>
+      'Tôi là giám đốc có tên trong giấy chứng nhận công ty và có thẩm quyền đăng ký công ty này.';
+
+  @override
+  String get businessRegKaoIdRequiredTitle => 'Hãy xác minh danh tính trước';
+
+  @override
+  String get businessRegKaoIdRequiredBody =>
+      'Chỉ người có Kao ID đã xác minh (email, điện thoại, ngân hàng và giấy tờ tùy thân) mới có thể đăng ký công ty.';
+
+  @override
+  String get businessRegKaoIdVerifyAction => 'Đến xác minh danh tính';
+
+  @override
+  String get businessRegKaoIdCheckAgain => 'Kiểm tra lại';
+
+  @override
+  String get businessRegVatNotProvided => 'Không cung cấp';
+
+  @override
+  String get businessRegStepAuthority => 'Thẩm quyền';
+
+  @override
+  String get businessRegErrorDetails =>
+      'Kiểm tra thông tin doanh nghiệp và thử lại.';
+
+  @override
+  String get businessRegDeclarationRequired =>
+      'Xác nhận bạn là giám đốc có tên trong giấy chứng nhận.';
+
+  @override
+  String get businessOrgManage => 'Quản lý công ty';
+
+  @override
+  String get businessOrgErrorRole =>
+      'Chỉ chủ sở hữu, giám đốc hoặc người được ủy quyền mới có thể quản lý tài khoản ngân hàng công ty.';
+
+  @override
+  String get businessOrgErrorBusinessKaoId =>
+      'Công ty cần có Kao ID doanh nghiệp đang hoạt động trước.';
+
+  @override
+  String get businessOrgErrorNameMismatch =>
+      'Tên tài khoản phải khớp với tên pháp lý tiếng Thái hoặc tiếng Anh của công ty.';
+
+  @override
+  String get businessOrgRoleOwner => 'Chủ sở hữu';
+
+  @override
+  String get businessOrgRoleDirector => 'Giám đốc';
+
+  @override
+  String get businessOrgRoleAuthorized => 'Người được ủy quyền';
+
+  @override
+  String get businessOrgRoleFinance => 'Tài chính';
+
+  @override
+  String get businessOrgRoleMember => 'Thành viên';
+
+  @override
+  String get businessOrgBankFormTitle => 'Thêm tài khoản ngân hàng công ty';
+
+  @override
+  String businessOrgBankNameRule(String names) {
+    return 'Tên tài khoản phải khớp với tên pháp lý của công ty: $names';
+  }
+
+  @override
+  String get businessOrgBankHolder => 'Tên tài khoản (công ty)';
+
+  @override
+  String get businessOrgBankEvidenceHelp =>
+      'Ảnh sổ tài khoản hoặc sao kê ngân hàng của công ty có tên và số tài khoản.';
+
+  @override
+  String get businessOrgIdentityTitle => 'Thông tin pháp nhân';
+
+  @override
+  String get businessOrgBusinessKaoId => 'Kao ID doanh nghiệp';
+
+  @override
+  String get businessOrgKaoIdPending => 'Chưa được cấp';
+
+  @override
+  String get businessOrgShop => 'Cửa hàng đồ cũ';
+
+  @override
+  String get businessOrgBankTitle => 'Tài khoản ngân hàng công ty';
+
+  @override
+  String get businessOrgBankReplace => 'Đổi tài khoản ngân hàng công ty';
+
+  @override
+  String get businessOrgBankAdd => 'Thêm tài khoản ngân hàng công ty';
+
+  @override
+  String get businessOrgBankSubmitted =>
+      'Đã gửi tài khoản ngân hàng công ty để xét duyệt';
+
+  @override
+  String get businessOrgTitle => 'Công ty của bạn';
+
+  @override
+  String get businessOrgSubtitle =>
+      'Kao ID doanh nghiệp và tài khoản ngân hàng công ty dùng để nhận tiền.';
+
+  @override
+  String get businessOrgEmpty =>
+      'Bạn chưa là thành viên của công ty nào đã xác minh.';
 }

@@ -8,7 +8,9 @@ enum BusinessReviewFailureCode {
   documentMissing,
   documentUnavailable,
   ownerKaoIdRequired,
-  ownerBankRequired,
+  directorRequired,
+  certificateTooOld,
+  invalidNumber,
   applicantInactive,
   unknown,
 }

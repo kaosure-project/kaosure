@@ -17,15 +17,17 @@ BusinessReviewFailure businessReviewFailureFrom(Object error) {
 }
 
 BusinessReviewFailureCode _codeFor(String message) => switch (message) {
-      'session_required' => BusinessReviewFailureCode.session,
-      'reviewer_required' => BusinessReviewFailureCode.noPermission,
-      'mfa_required' => BusinessReviewFailureCode.mfaRequired,
-      'request_already_reviewed' => BusinessReviewFailureCode.alreadyReviewed,
-      'request_not_available' => BusinessReviewFailureCode.unavailable,
-      'invalid_decision' => BusinessReviewFailureCode.reasonRequired,
-      'document_files_missing' => BusinessReviewFailureCode.documentMissing,
-      'owner_kao_id_required' => BusinessReviewFailureCode.ownerKaoIdRequired,
-      'owner_bank_required' => BusinessReviewFailureCode.ownerBankRequired,
-      'inactive_account' => BusinessReviewFailureCode.applicantInactive,
-      _ => BusinessReviewFailureCode.unknown,
-    };
+  'session_required' => BusinessReviewFailureCode.session,
+  'reviewer_required' => BusinessReviewFailureCode.noPermission,
+  'mfa_required' => BusinessReviewFailureCode.mfaRequired,
+  'request_already_reviewed' => BusinessReviewFailureCode.alreadyReviewed,
+  'request_not_available' => BusinessReviewFailureCode.unavailable,
+  'invalid_decision' => BusinessReviewFailureCode.reasonRequired,
+  'document_files_missing' => BusinessReviewFailureCode.documentMissing,
+  'owner_kao_id_required' => BusinessReviewFailureCode.ownerKaoIdRequired,
+  'director_confirmation_required' => BusinessReviewFailureCode.directorRequired,
+  'certificate_too_old' => BusinessReviewFailureCode.certificateTooOld,
+  'invalid_registration_number' => BusinessReviewFailureCode.invalidNumber,
+  'inactive_account' => BusinessReviewFailureCode.applicantInactive,
+  _ => BusinessReviewFailureCode.unknown,
+};

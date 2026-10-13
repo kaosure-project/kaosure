@@ -6,20 +6,24 @@ class ReviewDecisionPanel extends StatelessWidget {
     super.key,
     required this.reasonController,
     required this.checked,
+    required this.directorConfirmed,
     required this.busy,
     required this.ownVote,
     required this.documentsViewed,
     required this.onCheckedChanged,
+    required this.onDirectorChanged,
     required this.onApprove,
     required this.onReject,
   });
 
   final TextEditingController reasonController;
   final bool checked;
+  final bool directorConfirmed;
   final bool busy;
   final bool ownVote;
   final bool documentsViewed;
   final ValueChanged<bool>? onCheckedChanged;
+  final ValueChanged<bool>? onDirectorChanged;
   final VoidCallback? onApprove;
   final VoidCallback? onReject;
 
@@ -31,8 +35,10 @@ class ReviewDecisionPanel extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(l10n.businessReviewDecisionHeading,
-            style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
+        Text(
+          l10n.businessReviewDecisionHeading,
+          style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+        ),
         const SizedBox(height: 8),
         CheckboxListTile(
           contentPadding: EdgeInsets.zero,
@@ -41,6 +47,14 @@ class ReviewDecisionPanel extends StatelessWidget {
           title: Text(l10n.businessReviewChecked),
           onChanged: onCheckedChanged == null ? null : (value) => onCheckedChanged!(value ?? false),
         ),
+        CheckboxListTile(
+          contentPadding: EdgeInsets.zero,
+          controlAffinity: ListTileControlAffinity.leading,
+          value: directorConfirmed,
+          title: Text(l10n.businessReviewDirectorConfirm),
+          subtitle: Text(l10n.businessReviewDirectorConfirmHelp),
+          onChanged: onDirectorChanged == null ? null : (value) => onDirectorChanged!(value ?? false),
+        ),
         const SizedBox(height: 8),
         TextField(
           controller: reasonController,
@@ -48,21 +62,17 @@ class ReviewDecisionPanel extends StatelessWidget {
           maxLength: 1000,
           minLines: 2,
           maxLines: 4,
-          decoration: InputDecoration(
-            labelText: l10n.businessReviewReason,
-            border: const OutlineInputBorder(),
-          ),
+          decoration: InputDecoration(labelText: l10n.businessReviewReason, border: const OutlineInputBorder()),
         ),
         if (ownVote)
           Text(l10n.dualOwnVote, style: theme.textTheme.bodySmall?.copyWith(color: scheme.tertiary))
         else if (!documentsViewed)
-          Text(l10n.businessReviewViewAllHint,
-              style: theme.textTheme.bodySmall?.copyWith(color: scheme.onSurfaceVariant)),
+          Text(
+            l10n.businessReviewViewAllHint,
+            style: theme.textTheme.bodySmall?.copyWith(color: scheme.onSurfaceVariant),
+          ),
         const SizedBox(height: 16),
-        if (busy) const Padding(
-          padding: EdgeInsets.only(bottom: 12),
-          child: LinearProgressIndicator(),
-        ),
+        if (busy) const Padding(padding: EdgeInsets.only(bottom: 12), child: LinearProgressIndicator()),
         FilledButton.icon(
           style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(48)),
           onPressed: onApprove,

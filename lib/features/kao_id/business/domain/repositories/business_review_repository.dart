@@ -15,10 +15,12 @@ abstract interface class BusinessReviewRepository {
   /// Short-lived link for documents the app cannot render inline (PDF).
   Future<Uri> documentLink(String reviewerId, String path);
 
+  /// [directorConfirmed]: the reviewer matched the applicant to a director named in the certificate.
   Future<BusinessReviewOutcome> decide({
     required String reviewerId,
     required String registrationId,
     required bool approve,
+    bool directorConfirmed = false,
     String? reason,
   });
 }

@@ -17,34 +17,56 @@ void main() {
     openSucceeds = true;
   });
 
-  BusinessReviewDecisionController controllerFor(BusinessReviewItem item) =>
-      BusinessReviewDecisionController(
-        repository: repository,
-        openLink: (link) async {
-          opened.add(link);
-          return openSucceeds;
-        },
-        item: item,
-        reviewerId: reviewerId,
-      );
+  BusinessReviewDecisionController controllerFor(BusinessReviewItem item) => BusinessReviewDecisionController(
+    repository: repository,
+    openLink: (link) async {
+      opened.add(link);
+      return openSucceeds;
+    },
+    item: item,
+    reviewerId: reviewerId,
+  );
 
-  test('approval needs every document viewed and the checklist confirmed', () async {
-    final item = reviewItem(paths: const ['a.png', 'b.png']);
+  test('approval needs every document viewed, the checklist and the director check', () async {
+    final item = reviewItem(paths: const ['a.png', 'b.png'], vatPaths: const ['vat.png']);
     final controller = controllerFor(item);
     expect(controller.canApprove, isFalse);
 
     controller.setChecked(true);
     await controller.loadImage('a.png');
+    await controller.loadImage('b.png');
     expect(controller.canApprove, isFalse);
 
-    await controller.loadImage('b.png');
-    expect(controller.state.viewedPaths, {'a.png', 'b.png'});
+    await controller.loadImage('vat.png');
+    expect(controller.state.viewedPaths, {'a.png', 'b.png', 'vat.png'});
+    expect(controller.allDocumentsViewed, isTrue);
+    expect(controller.canApprove, isFalse);
+
+    controller.setDirectorConfirmed(true);
     expect(controller.canApprove, isTrue);
 
     expect(await controller.decide(approve: true), BusinessReviewOutcome.approved);
     expect(repository.decisions.single.approve, isTrue);
+    expect(repository.decisions.single.directorConfirmed, isTrue);
     expect(controller.state.outcome, BusinessReviewOutcome.approved);
   });
+
+  for (final (label, item) in [
+    ('a stale certificate', reviewItem(certificateFresh: false)),
+    ('an invalid number', reviewItem(numberValid: false)),
+    ('a number held by another company', reviewItem(numberTaken: true)),
+  ]) {
+    test('$label blocks approval but still allows rejection', () async {
+      final controller = controllerFor(item);
+      controller
+        ..setChecked(true)
+        ..setDirectorConfirmed(true);
+      await controller.loadImage(item.documentPaths.single);
+      expect(controller.approvable, isFalse);
+      expect(controller.canApprove, isFalse);
+      expect(controller.canReject, isTrue);
+    });
+  }
 
   test('approve is ignored while requirements are missing', () async {
     final controller = controllerFor(reviewItem());
@@ -75,9 +97,9 @@ void main() {
     expect(repository.decisions, isEmpty);
 
     repository.outcome = BusinessReviewOutcome.rejected;
-    expect(await controller.decide(approve: false, reason: 'Document is blurry'),
-        BusinessReviewOutcome.rejected);
+    expect(await controller.decide(approve: false, reason: 'Document is blurry'), BusinessReviewOutcome.rejected);
     expect(controller.state.failure, isNull);
+    expect(repository.decisions.single.directorConfirmed, isFalse);
   });
 
   test('server failures surface as codes and release the busy state', () async {

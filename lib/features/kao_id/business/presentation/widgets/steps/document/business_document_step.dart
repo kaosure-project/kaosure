@@ -9,17 +9,25 @@ class BusinessDocumentStep extends StatelessWidget {
   const BusinessDocumentStep({
     super.key,
     required this.uploaded,
+    required this.vatUploaded,
     required this.uploading,
     required this.fileName,
+    required this.vatFileName,
     required this.onPick,
+    required this.onPickVat,
+    required this.onRemoveVat,
     required this.onBack,
     required this.onContinue,
   });
 
   final bool uploaded;
+  final bool vatUploaded;
   final bool uploading;
   final String? fileName;
+  final String? vatFileName;
   final VoidCallback onPick;
+  final VoidCallback onPickVat;
+  final VoidCallback onRemoveVat;
   final VoidCallback onBack;
   final VoidCallback onContinue;
 
@@ -30,22 +38,39 @@ class BusinessDocumentStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        StepHeader(title: l10n.businessRegDocumentHeading,
-            description: l10n.businessRegDocumentDescription),
+        StepHeader(title: l10n.businessRegDocumentHeading, description: l10n.businessRegDocumentDescription),
         DocumentUploadCard(
+          key: const ValueKey('certificate-card'),
+          label: l10n.businessRegCertificateTitle,
           uploaded: uploaded,
           uploading: uploading,
           fileName: fileName,
           onPick: onPick,
         ),
+        const SizedBox(height: 16),
+        DocumentUploadCard(
+          key: const ValueKey('vat-card'),
+          label: l10n.businessRegVatTitle,
+          uploaded: vatUploaded,
+          uploading: uploading,
+          fileName: vatFileName,
+          onPick: onPickVat,
+          onRemove: onRemoveVat,
+        ),
         const SizedBox(height: 12),
-        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Icon(Icons.info_outline, size: 16, color: theme.colorScheme.onSurfaceVariant),
-          const SizedBox(width: 8),
-          Expanded(child: Text(l10n.businessRegDocumentRequirements,
-              style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant))),
-        ]),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(Icons.info_outline, size: 16, color: theme.colorScheme.onSurfaceVariant),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                l10n.businessRegDocumentRequirements,
+                style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+              ),
+            ),
+          ],
+        ),
         StepActions(
           primaryLabel: l10n.businessRegContinue,
           onPrimary: uploaded ? onContinue : null,

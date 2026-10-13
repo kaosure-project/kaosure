@@ -25,8 +25,7 @@ final class BusinessReviewRemoteDataSourceImpl implements BusinessReviewRemoteDa
   }
 
   @override
-  Future<Uint8List> download(String path) =>
-      _supabase.storage.from(_documentBucket).download(path);
+  Future<Uint8List> download(String path) => _supabase.storage.from(_documentBucket).download(path);
 
   @override
   Future<String> signedUrl(String path) =>
@@ -37,14 +36,19 @@ final class BusinessReviewRemoteDataSourceImpl implements BusinessReviewRemoteDa
     required String expectedUserId,
     required String registrationId,
     required bool approve,
+    required bool directorConfirmed,
     String? reason,
   }) async {
-    final response = await _supabase.rpc('business_review_decide_r15b', params: {
-      'p_expected_user': expectedUserId,
-      'p_registration': registrationId,
-      'p_approve': approve,
-      'p_reason': reason,
-    });
+    final response = await _supabase.rpc(
+      'business_review_decide_r27c',
+      params: {
+        'p_expected_user': expectedUserId,
+        'p_registration': registrationId,
+        'p_approve': approve,
+        'p_reason': reason,
+        'p_director_confirmed': directorConfirmed,
+      },
+    );
     if (response is Map && response['status'] is String) {
       return response['status'] as String;
     }

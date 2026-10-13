@@ -2,14 +2,12 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../domain/entities/business_document_kind.dart';
 import '../../models/business_registration_model.dart';
 import 'business_registration_remote_data_source.dart';
 
-final class BusinessRegistrationRemoteDataSourceImpl
-    implements BusinessRegistrationRemoteDataSource {
-  BusinessRegistrationRemoteDataSourceImpl({
-    required this._supabase,
-  });
+final class BusinessRegistrationRemoteDataSourceImpl implements BusinessRegistrationRemoteDataSource {
+  BusinessRegistrationRemoteDataSourceImpl({required this._supabase});
 
   static const _documentBucket = 'identity-documents';
 
@@ -19,9 +17,7 @@ final class BusinessRegistrationRemoteDataSourceImpl
   String? currentUserId() => _supabase.auth.currentUser?.id;
 
   @override
-  Future<BusinessRegistrationModel> createDraft(
-    BusinessRegistrationModel registration,
-  ) async {
+  Future<BusinessRegistrationModel> createDraft(BusinessRegistrationModel registration) async {
     final response = await _supabase.rpc(
       'create_business_registration',
       params: {
@@ -30,6 +26,8 @@ final class BusinessRegistrationRemoteDataSourceImpl
         'p_registration_number': registration.registrationNumber,
         'p_business_category': registration.businessCategory,
         'p_business_description': registration.businessDescription,
+        'p_legal_name_en': registration.legalNameEn,
+        'p_certificate_issued_on': BusinessRegistrationModel.dateParam(registration.certificateIssuedOn),
       },
     );
 
@@ -37,15 +35,8 @@ final class BusinessRegistrationRemoteDataSourceImpl
   }
 
   @override
-  Future<BusinessRegistrationModel?> getById(
-    String registrationId,
-  ) async {
-    final response = await _supabase.rpc(
-      'get_business_registration',
-      params: {
-        'p_registration_id': registrationId,
-      },
-    );
+  Future<BusinessRegistrationModel?> getById(String registrationId) async {
+    final response = await _supabase.rpc('get_business_registration', params: {'p_registration_id': registrationId});
 
     if (response == null) {
       return null;
@@ -55,12 +46,8 @@ final class BusinessRegistrationRemoteDataSourceImpl
   }
 
   @override
-  Future<BusinessRegistrationModel?> getCurrent(
-    String userId,
-  ) async {
-    final response = await _supabase.rpc(
-      'get_current_business_registration',
-    );
+  Future<BusinessRegistrationModel?> getCurrent(String userId) async {
+    final response = await _supabase.rpc('get_current_business_registration');
 
     // A composite-returning SQL function yields an all-null row when empty.
     if (response == null || (response is Map && response['id'] == null)) {
@@ -71,16 +58,11 @@ final class BusinessRegistrationRemoteDataSourceImpl
   }
 
   @override
-  Future<BusinessRegistrationModel> updateDraft(
-    BusinessRegistrationModel registration,
-  ) async {
+  Future<BusinessRegistrationModel> updateDraft(BusinessRegistrationModel registration) async {
     final registrationId = registration.id;
 
-    if (registrationId == null ||
-        registrationId.trim().isEmpty) {
-      throw ArgumentError(
-        'Registration ID is required to update a draft.',
-      );
+    if (registrationId == null || registrationId.trim().isEmpty) {
+      throw ArgumentError('Registration ID is required to update a draft.');
     }
 
     final response = await _supabase.rpc(
@@ -92,6 +74,8 @@ final class BusinessRegistrationRemoteDataSourceImpl
         'p_registration_number': registration.registrationNumber,
         'p_business_category': registration.businessCategory,
         'p_business_description': registration.businessDescription,
+        'p_legal_name_en': registration.legalNameEn,
+        'p_certificate_issued_on': BusinessRegistrationModel.dateParam(registration.certificateIssuedOn),
       },
     );
 
@@ -99,29 +83,25 @@ final class BusinessRegistrationRemoteDataSourceImpl
   }
 
   @override
-  Future<void> uploadDocumentFile({
-    required String path,
-    required Uint8List bytes,
-    required String contentType,
-  }) async {
-    await _supabase.storage.from(_documentBucket).uploadBinary(
-          path,
-          bytes,
-          fileOptions: FileOptions(contentType: contentType, upsert: false),
-        );
+  Future<void> uploadDocumentFile({required String path, required Uint8List bytes, required String contentType}) async {
+    await _supabase.storage
+        .from(_documentBucket)
+        .uploadBinary(path, bytes, fileOptions: FileOptions(contentType: contentType, upsert: false));
   }
 
   @override
   Future<BusinessRegistrationModel> attachDocument({
     required String registrationId,
+    required BusinessDocumentKind kind,
     required String documentId,
     required String path,
     required String fileName,
   }) async {
     final response = await _supabase.rpc(
-      'attach_business_document_r15a',
+      'attach_business_document_r27c',
       params: {
         'p_registration_id': registrationId,
+        'p_kind': kind.name,
         'p_document_id': documentId,
         'p_path': path,
         'p_file_name': fileName,
@@ -132,56 +112,47 @@ final class BusinessRegistrationRemoteDataSourceImpl
   }
 
   @override
-  Future<BusinessRegistrationModel> submit(
-    String registrationId,
-  ) async {
+  Future<BusinessRegistrationModel> removeVatDocument(String registrationId) async {
+    final response = await _supabase.rpc(
+      'remove_business_vat_document_r27c',
+      params: {'p_registration_id': registrationId},
+    );
+
+    return _parseRegistration(response);
+  }
+
+  @override
+  Future<BusinessRegistrationModel> submit(String registrationId, {required bool directorDeclared}) async {
     final response = await _supabase.rpc(
       'submit_business_registration',
-      params: {
-        'p_registration_id': registrationId,
-      },
+      params: {'p_registration_id': registrationId, 'p_director_declared': directorDeclared},
     );
 
     return _parseRegistration(response);
   }
 
   @override
-  Future<BusinessRegistrationModel> refreshStatus(
-    String registrationId,
-  ) async {
+  Future<BusinessRegistrationModel> refreshStatus(String registrationId) async {
     final response = await _supabase.rpc(
       'refresh_business_registration_status',
-      params: {
-        'p_registration_id': registrationId,
-      },
+      params: {'p_registration_id': registrationId},
     );
 
     return _parseRegistration(response);
   }
 
   @override
-  Future<void> cancelDraft(
-    String registrationId,
-  ) async {
-    await _supabase.rpc(
-      'cancel_business_registration',
-      params: {
-        'p_registration_id': registrationId,
-      },
-    );
+  Future<void> cancelDraft(String registrationId) async {
+    await _supabase.rpc('cancel_business_registration', params: {'p_registration_id': registrationId});
   }
 
-  BusinessRegistrationModel _parseRegistration(
-    dynamic response,
-  ) {
+  BusinessRegistrationModel _parseRegistration(dynamic response) {
     if (response is Map<String, dynamic>) {
       return BusinessRegistrationModel.fromJson(response);
     }
 
     if (response is Map) {
-      return BusinessRegistrationModel.fromJson(
-        Map<String, dynamic>.from(response),
-      );
+      return BusinessRegistrationModel.fromJson(Map<String, dynamic>.from(response));
     }
 
     throw StateError(

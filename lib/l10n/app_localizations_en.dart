@@ -2547,7 +2547,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get businessRegNumberLabel => 'Registration number';
 
   @override
-  String get businessRegNumberHelp => '13 digits, numbers only';
+  String get businessRegNumberHelp =>
+      '13-digit juristic person number from the certificate';
 
   @override
   String get businessRegCategoryLabel => 'Business category';
@@ -2574,14 +2575,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get businessRegFieldRequired => 'This field is required';
 
   @override
-  String get businessRegNumberInvalid => 'Enter a 13-digit registration number';
+  String get businessRegNumberInvalid =>
+      'Enter a valid 13-digit juristic person number';
 
   @override
-  String get businessRegDocumentHeading => 'Upload your registration document';
+  String get businessRegDocumentHeading => 'Upload company documents';
 
   @override
   String get businessRegDocumentDescription =>
-      'A company certificate or registration certificate showing the business name and number.';
+      'The company certificate issued within the last 6 months is required. The VAT registration (Por.Por.20) is optional.';
 
   @override
   String get businessRegDocumentRequirements =>
@@ -2686,7 +2688,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get businessRegStatusApprovedBody =>
-      'You can now use your business with Kao services.';
+      'Your Business Kao ID is ready. Next, add the company bank account for payouts.';
 
   @override
   String get businessRegStatusRejectedTitle => 'Registration not approved';
@@ -2811,7 +2813,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get businessReviewChecked =>
-      'I checked that the document matches the business name, registration number and applicant.';
+      'I checked that the certificate matches the business name, registration number and issue date.';
 
   @override
   String get businessReviewReason => 'Note to applicant (required to reject)';
@@ -4069,4 +4071,244 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get orderIssueErrorGone => 'This report wasn\'t found.';
+
+  @override
+  String get businessReviewErrorDirector =>
+      'Confirm that the applicant is a director named in the certificate.';
+
+  @override
+  String get businessReviewErrorCertificateOld =>
+      'The company certificate was issued more than 6 months ago.';
+
+  @override
+  String get businessReviewErrorNumber =>
+      'The registration number fails the check digit.';
+
+  @override
+  String get businessReviewNumberTaken =>
+      'Another verified company already uses this registration number.';
+
+  @override
+  String get businessReviewDirectorNotDeclared =>
+      'The applicant has not declared director authority.';
+
+  @override
+  String get businessReviewBlockersTitle =>
+      'This application cannot be approved';
+
+  @override
+  String get businessReviewDirectorDeclared => 'Declared as director';
+
+  @override
+  String get businessReviewYes => 'Yes';
+
+  @override
+  String get businessReviewNo => 'No';
+
+  @override
+  String get businessReviewDirectorConfirm =>
+      'The applicant\'s verified name appears as a director in the certificate';
+
+  @override
+  String get businessReviewDirectorConfirmHelp =>
+      'Compare the applicant name above with the directors listed in the certificate. The applicant becomes the company owner.';
+
+  @override
+  String get businessRegCertificateTitle => 'Company certificate';
+
+  @override
+  String get businessRegVatTitle => 'VAT registration (Por.Por.20, optional)';
+
+  @override
+  String get businessRegNameEnLabel => 'Legal name in English (optional)';
+
+  @override
+  String get businessRegCertificateDateLabel => 'Certificate issue date';
+
+  @override
+  String get reviewBusinessBankTitle => 'Company bank account';
+
+  @override
+  String get reviewOrganizationName => 'Company';
+
+  @override
+  String get reviewBusinessKaoId => 'Business Kao ID';
+
+  @override
+  String get reviewLegalName => 'Legal name (Thai)';
+
+  @override
+  String get reviewLegalNameEn => 'Legal name (English)';
+
+  @override
+  String get reviewNameMatched =>
+      'Account name matches the company\'s legal name';
+
+  @override
+  String get reviewNameMismatch =>
+      'Account name does not match the company\'s legal name';
+
+  @override
+  String get noticeBusinessBankApproved =>
+      'Your company bank account is verified';
+
+  @override
+  String get noticeBusinessBankRejected =>
+      'Your company bank account was not approved';
+
+  @override
+  String get businessRegNameHelp =>
+      'Thai legal name exactly as on the certificate';
+
+  @override
+  String get businessRegNameEnHelp =>
+      'As on the certificate, e.g. EXAMPLE CO., LTD. Used to match the company bank account.';
+
+  @override
+  String get businessRegNameEnInvalid =>
+      'Use English letters, numbers and . , & ( ) \' / - only';
+
+  @override
+  String get businessRegCertificateDateRequired =>
+      'Choose the certificate issue date';
+
+  @override
+  String get businessRegCertificateTooOld =>
+      'The certificate must be issued within the last 6 months. Request a new one from DBD.';
+
+  @override
+  String get businessRegCertificateDateHelp =>
+      'Printed on the company certificate. It must be no more than 6 months old when you submit.';
+
+  @override
+  String get businessRegCertificateDateInvalid =>
+      'The issue date cannot be in the future.';
+
+  @override
+  String get businessRegDocumentRemove => 'Remove';
+
+  @override
+  String get businessRegAuthorityHeading => 'Confirm your authority';
+
+  @override
+  String get businessRegAuthorityDescription =>
+      'Only a director named in the company certificate can register the company. You will become its owner in Kao ID.';
+
+  @override
+  String get businessRegAuthorityKaoIdVerified => 'Your Kao ID is verified';
+
+  @override
+  String get businessRegAuthorityMatchHelp =>
+      'Our staff will compare the name on your verified identity with the directors listed in the certificate.';
+
+  @override
+  String get businessRegDirectorDeclaration =>
+      'I am a director named in the company certificate and I am authorized to register this company.';
+
+  @override
+  String get businessRegKaoIdRequiredTitle => 'Verify your identity first';
+
+  @override
+  String get businessRegKaoIdRequiredBody =>
+      'A company can only be registered by a person with a verified Kao ID (email, phone, bank and identity).';
+
+  @override
+  String get businessRegKaoIdVerifyAction => 'Go to identity verification';
+
+  @override
+  String get businessRegKaoIdCheckAgain => 'Check again';
+
+  @override
+  String get businessRegVatNotProvided => 'Not provided';
+
+  @override
+  String get businessRegStepAuthority => 'Authority';
+
+  @override
+  String get businessRegErrorDetails =>
+      'Check the business details and try again.';
+
+  @override
+  String get businessRegDeclarationRequired =>
+      'Confirm that you are a director named in the certificate.';
+
+  @override
+  String get businessOrgManage => 'Manage company';
+
+  @override
+  String get businessOrgErrorRole =>
+      'Only the owner, a director or an authorized person can manage the company bank account.';
+
+  @override
+  String get businessOrgErrorBusinessKaoId =>
+      'The company needs an active Business Kao ID first.';
+
+  @override
+  String get businessOrgErrorNameMismatch =>
+      'The account name must match the company\'s legal name in Thai or English.';
+
+  @override
+  String get businessOrgRoleOwner => 'Owner';
+
+  @override
+  String get businessOrgRoleDirector => 'Director';
+
+  @override
+  String get businessOrgRoleAuthorized => 'Authorized person';
+
+  @override
+  String get businessOrgRoleFinance => 'Finance';
+
+  @override
+  String get businessOrgRoleMember => 'Member';
+
+  @override
+  String get businessOrgBankFormTitle => 'Add company bank account';
+
+  @override
+  String businessOrgBankNameRule(String names) {
+    return 'The account name must match the company\'s legal name: $names';
+  }
+
+  @override
+  String get businessOrgBankHolder => 'Account name (company)';
+
+  @override
+  String get businessOrgBankEvidenceHelp =>
+      'Photo of the company bank book or a bank statement showing the account name and number.';
+
+  @override
+  String get businessOrgIdentityTitle => 'Company identity';
+
+  @override
+  String get businessOrgBusinessKaoId => 'Business Kao ID';
+
+  @override
+  String get businessOrgKaoIdPending => 'Not issued yet';
+
+  @override
+  String get businessOrgShop => 'Secondhand store';
+
+  @override
+  String get businessOrgBankTitle => 'Company bank account';
+
+  @override
+  String get businessOrgBankReplace => 'Change company bank account';
+
+  @override
+  String get businessOrgBankAdd => 'Add company bank account';
+
+  @override
+  String get businessOrgBankSubmitted => 'Company bank account sent for review';
+
+  @override
+  String get businessOrgTitle => 'Your companies';
+
+  @override
+  String get businessOrgSubtitle =>
+      'Business Kao ID and the company bank account used for payouts.';
+
+  @override
+  String get businessOrgEmpty =>
+      'You are not a member of a verified company yet.';
 }

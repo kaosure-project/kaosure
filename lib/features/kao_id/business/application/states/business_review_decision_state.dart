@@ -5,6 +5,7 @@ final class BusinessReviewDecisionState {
   const BusinessReviewDecisionState({
     this.viewedPaths = const {},
     this.checked = false,
+    this.directorConfirmed = false,
     this.busy = false,
     this.failure,
     this.outcome,
@@ -13,6 +14,9 @@ final class BusinessReviewDecisionState {
   /// Documents the reviewer has opened; approval requires all of them.
   final Set<String> viewedPaths;
   final bool checked;
+
+  /// The applicant's verified name appears as a director in the company certificate.
+  final bool directorConfirmed;
   final bool busy;
   final BusinessReviewFailureCode? failure;
   final BusinessReviewOutcome? outcome;
@@ -20,6 +24,7 @@ final class BusinessReviewDecisionState {
   BusinessReviewDecisionState copyWith({
     Set<String>? viewedPaths,
     bool? checked,
+    bool? directorConfirmed,
     bool? busy,
     BusinessReviewFailureCode? failure,
     bool clearFailure = false,
@@ -28,6 +33,7 @@ final class BusinessReviewDecisionState {
     return BusinessReviewDecisionState(
       viewedPaths: viewedPaths ?? this.viewedPaths,
       checked: checked ?? this.checked,
+      directorConfirmed: directorConfirmed ?? this.directorConfirmed,
       busy: busy ?? this.busy,
       failure: clearFailure ? null : failure ?? this.failure,
       outcome: outcome ?? this.outcome,

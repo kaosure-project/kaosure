@@ -3,19 +3,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 
 import '../../../../../app/routes/kao_id_routes.dart';
-import '../../../kyc/presentation/bank/bank_verification_page.dart';
 import '../../application/controllers/business_registration_controller.dart';
 import '../../application/providers/business_registration_provider.dart';
 import '../../application/states/business_registration_state.dart';
+import '../../domain/entities/business_document_kind.dart';
 import '../../domain/entities/business_registration_step.dart';
-import '../../domain/entities/payout_bank_account.dart';
 import '../utils/business_registration_texts.dart';
 import '../widgets/common/failure_banner.dart';
 import '../widgets/dialogs/confirm_dialog.dart';
 import '../widgets/layout/registration_layout.dart';
+import '../widgets/status/kao_id_required_view.dart';
 import '../widgets/status/registration_status_view.dart';
 import '../widgets/stepper/registration_stepper.dart';
-import '../widgets/steps/bank/bank_account_step.dart';
+import '../widgets/steps/authority/director_authority_step.dart';
 import '../widgets/steps/details/business_details_step.dart';
 import '../widgets/steps/document/business_document_step.dart';
 import '../widgets/steps/review/review_step.dart';
@@ -39,23 +39,16 @@ class BusinessRegistrationPage extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (!state.showsStatus && !state.isLoading)
-              RegistrationStepper(
-                current: state.step,
-                canOpen: state.canOpen,
-                onSelect: controller.goTo,
-              ),
+            if (!state.showsStatus && !state.isLoading && !state.needsKaoId)
+              RegistrationStepper(current: state.step, canOpen: state.canOpen, onSelect: controller.goTo),
             if (failure != null) ...[
-              FailureBanner(
-                message: l10n.businessFailureMessage(failure),
-                onDismiss: controller.dismissFailure,
-              ),
+              FailureBanner(message: l10n.businessFailureMessage(failure), onDismiss: controller.dismissFailure),
               const SizedBox(height: 20),
             ],
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 200),
               child: KeyedSubtree(
-                key: ValueKey((state.showsStatus, state.isLoading && !state.showsStatus, state.step)),
+                key: ValueKey((state.showsStatus, state.isLoading && !state.showsStatus, state.needsKaoId, state.step)),
                 child: _body(context, ref, state, controller),
               ),
             ),
@@ -90,6 +83,7 @@ class BusinessRegistrationPage extends ConsumerWidget {
         refreshing: state.isLoading,
         onRefresh: controller.refreshStatus,
         onStartNew: controller.startNew,
+        onManage: () => Navigator.of(context).pushNamed(KaoIdRoutes.businessOrganizations),
         onDone: () => _leave(context),
       );
     }
@@ -99,45 +93,55 @@ class BusinessRegistrationPage extends ConsumerWidget {
         child: Center(child: CircularProgressIndicator()),
       );
     }
+    if (state.needsKaoId) {
+      return KaoIdRequiredView(
+        checking: state.isCheckingKaoId,
+        onVerify: () async {
+          await Navigator.of(context).pushNamed(KaoIdRoutes.kyc);
+          await controller.refreshKaoId();
+        },
+        onCheckAgain: controller.refreshKaoId,
+      );
+    }
+    Future<void> pick(BusinessDocumentKind kind) async {
+      final file = await ref.read(businessDocumentPickerProvider)();
+      if (file != null) await controller.uploadDocument(file, kind: kind);
+    }
+
     return switch (state.step) {
       BusinessRegistrationStep.details => BusinessDetailsStep(
-          initial: registration,
-          busy: state.isSaving,
-          onSave: controller.saveDetails,
-        ),
+        initial: registration,
+        busy: state.isSaving,
+        onSave: controller.saveDetails,
+      ),
       BusinessRegistrationStep.document => BusinessDocumentStep(
-          uploaded: state.documentComplete,
-          uploading: state.isUploading,
-          fileName: state.documentName,
-          onPick: () async {
-            final file = await ref.read(businessDocumentPickerProvider)();
-            if (file != null) await controller.uploadDocument(file);
-          },
-          onBack: controller.back,
-          onContinue: controller.next,
-        ),
-      BusinessRegistrationStep.bankAccount => BankAccountStep(
-          bank: state.bank,
-          checking: state.isCheckingBank,
-          onVerify: () async {
-            await Navigator.of(context).push(
-              MaterialPageRoute<void>(builder: (_) => const BankVerificationPage()),
-            );
-            await controller.refreshBank();
-          },
-          onCheckAgain: controller.refreshBank,
-          onBack: controller.back,
-          onContinue: controller.next,
-        ),
+        uploaded: state.documentComplete,
+        vatUploaded: registration?.hasVatDocument ?? false,
+        uploading: state.isUploading,
+        fileName: state.documentName,
+        vatFileName: state.vatDocumentName,
+        onPick: () => pick(BusinessDocumentKind.certificate),
+        onPickVat: () => pick(BusinessDocumentKind.vat),
+        onRemoveVat: controller.removeVatDocument,
+        onBack: controller.back,
+        onContinue: controller.next,
+      ),
+      BusinessRegistrationStep.authority => DirectorAuthorityStep(
+        declared: state.directorDeclared,
+        busy: state.isBusy,
+        onDeclaredChanged: controller.setDirectorDeclared,
+        onBack: controller.back,
+        onContinue: controller.next,
+      ),
       BusinessRegistrationStep.review => ReviewStep(
-          registration: registration!,
-          bank: state.bank ?? PayoutBankAccount.none,
-          documentName: state.documentName,
-          submitting: state.isSubmitting,
-          onEdit: controller.goTo,
-          onBack: controller.back,
-          onSubmit: () => _submit(context, controller),
-        ),
+        registration: registration!,
+        documentName: state.documentName,
+        vatDocumentName: state.vatDocumentName,
+        submitting: state.isSubmitting,
+        onEdit: controller.goTo,
+        onBack: controller.back,
+        onSubmit: () => _submit(context, controller),
+      ),
     };
   }
 

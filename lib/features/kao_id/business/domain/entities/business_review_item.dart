@@ -7,15 +7,21 @@ class BusinessReviewItem {
     required this.registrationNumber,
     required this.businessCategory,
     this.businessDescription,
+    this.legalNameEn,
+    this.registrationNumberValid = false,
+    this.registrationNumberTaken = false,
+    this.certificateIssuedOn,
+    this.certificateFresh = false,
     this.submittedAt,
     this.documentName,
     this.documentMime,
     this.documentPaths = const [],
+    this.vatDocumentName,
+    this.vatDocumentMime,
+    this.vatPaths = const [],
     this.ownerKaoId,
     this.ownerName,
-    this.bankName,
-    this.bankAccountLast4,
-    this.bankAccountName,
+    this.directorDeclared = false,
     this.dualReview = false,
     this.firstReviewerId,
     this.firstDecisionApprove,
@@ -28,10 +34,27 @@ class BusinessReviewItem {
   final String registrationNumber;
   final String businessCategory;
   final String? businessDescription;
+  final String? legalNameEn;
+
+  /// The 13-digit juristic number passes the Thai check digit.
+  final bool registrationNumberValid;
+
+  /// Another active company already holds this number.
+  final bool registrationNumberTaken;
+
+  /// Issue date of the company certificate (หนังสือรับรอง); approval needs it within 6 months.
+  final DateTime? certificateIssuedOn;
+  final bool certificateFresh;
+
   final DateTime? submittedAt;
   final String? documentName;
   final String? documentMime;
   final List<String> documentPaths;
+
+  /// Optional VAT certificate (ภ.พ.20).
+  final String? vatDocumentName;
+  final String? vatDocumentMime;
+  final List<String> vatPaths;
 
   /// The applicant's active personal Kao ID.
   final String? ownerKaoId;
@@ -39,9 +62,8 @@ class BusinessReviewItem {
   /// Name on the applicant's approved identity document.
   final String? ownerName;
 
-  final String? bankName;
-  final String? bankAccountLast4;
-  final String? bankAccountName;
+  /// The applicant declared they are a director named in the certificate.
+  final bool directorDeclared;
 
   /// Two independent reviewers must agree before the result is applied.
   final bool dualReview;
@@ -52,6 +74,10 @@ class BusinessReviewItem {
   bool get hasFirstVote => firstReviewerId != null;
 
   bool get isPdf => documentMime == 'application/pdf';
+
+  bool get isVatPdf => vatDocumentMime == 'application/pdf';
+
+  List<String> get allPaths => [...documentPaths, ...vatPaths];
 
   bool isOwnVote(String reviewerId) => dualReview && firstReviewerId == reviewerId;
 }

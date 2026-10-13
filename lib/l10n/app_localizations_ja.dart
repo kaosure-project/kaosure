@@ -2389,7 +2389,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get businessRegNumberLabel => '登記番号';
 
   @override
-  String get businessRegNumberHelp => '13桁の数字のみ';
+  String get businessRegNumberHelp => '登記簿記載の13桁の法人番号';
 
   @override
   String get businessRegCategoryLabel => '業種';
@@ -2416,13 +2416,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get businessRegFieldRequired => 'この項目は必須です';
 
   @override
-  String get businessRegNumberInvalid => '13桁の登記番号を入力してください';
+  String get businessRegNumberInvalid => '有効な13桁の法人番号を入力してください';
 
   @override
-  String get businessRegDocumentHeading => '登記書類をアップロード';
+  String get businessRegDocumentHeading => '会社書類をアップロード';
 
   @override
-  String get businessRegDocumentDescription => '事業者名と登記番号が記載された会社証明書または登記証明書。';
+  String get businessRegDocumentDescription =>
+      '発行から6か月以内の登記簿が必要です。付加価値税登録証(Por.Por.20)は任意です。';
 
   @override
   String get businessRegDocumentRequirements =>
@@ -2519,7 +2520,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get businessRegStatusApprovedTitle => 'ビジネスが確認されました';
 
   @override
-  String get businessRegStatusApprovedBody => 'Kao の各サービスでビジネスを利用できるようになりました。';
+  String get businessRegStatusApprovedBody =>
+      'ビジネス Kao ID の準備ができました。次に入金用の法人口座を追加してください。';
 
   @override
   String get businessRegStatusRejectedTitle => '登録は承認されませんでした';
@@ -2630,7 +2632,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get businessReviewDecisionHeading => '審査結果';
 
   @override
-  String get businessReviewChecked => '書類が事業者名・登記番号・申請者と一致することを確認しました。';
+  String get businessReviewChecked => '登記簿が事業名・法人番号・発行日と一致することを確認しました。';
 
   @override
   String get businessReviewReason => '申請者へのメモ（却下時は必須）';
@@ -3830,4 +3832,220 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get orderIssueErrorGone => 'この報告は見つかりません。';
+
+  @override
+  String get businessReviewErrorDirector => '申請者が登記簿に記載された取締役であることを確認してください。';
+
+  @override
+  String get businessReviewErrorCertificateOld => '登記簿の発行日から6か月を超えています。';
+
+  @override
+  String get businessReviewErrorNumber => '法人番号のチェックデジットが一致しません。';
+
+  @override
+  String get businessReviewNumberTaken => 'この法人番号は確認済みの別の会社で使用されています。';
+
+  @override
+  String get businessReviewDirectorNotDeclared => '申請者は取締役の権限を申告していません。';
+
+  @override
+  String get businessReviewBlockersTitle => 'この申請は承認できません';
+
+  @override
+  String get businessReviewDirectorDeclared => '取締役として申告';
+
+  @override
+  String get businessReviewYes => 'はい';
+
+  @override
+  String get businessReviewNo => 'いいえ';
+
+  @override
+  String get businessReviewDirectorConfirm => '申請者の確認済みの氏名が登記簿に取締役として記載されている';
+
+  @override
+  String get businessReviewDirectorConfirmHelp =>
+      '上記の申請者名を登記簿の取締役一覧と照合してください。申請者が会社のオーナーになります。';
+
+  @override
+  String get businessRegCertificateTitle => '履歴事項全部証明書(登記簿)';
+
+  @override
+  String get businessRegVatTitle => '付加価値税登録証(Por.Por.20・任意)';
+
+  @override
+  String get businessRegNameEnLabel => '英文の法人名(任意)';
+
+  @override
+  String get businessRegCertificateDateLabel => '証明書の発行日';
+
+  @override
+  String get reviewBusinessBankTitle => '法人の銀行口座';
+
+  @override
+  String get reviewOrganizationName => '会社';
+
+  @override
+  String get reviewBusinessKaoId => 'ビジネス Kao ID';
+
+  @override
+  String get reviewLegalName => '法人名(タイ語)';
+
+  @override
+  String get reviewLegalNameEn => '法人名(英語)';
+
+  @override
+  String get reviewNameMatched => '口座名義が法人名と一致しています';
+
+  @override
+  String get reviewNameMismatch => '口座名義が法人名と一致しません';
+
+  @override
+  String get noticeBusinessBankApproved => '法人の銀行口座が確認されました';
+
+  @override
+  String get noticeBusinessBankRejected => '法人の銀行口座は承認されませんでした';
+
+  @override
+  String get businessRegNameHelp => '登記簿どおりのタイ語の法人名';
+
+  @override
+  String get businessRegNameEnHelp =>
+      '登記簿どおり(例: EXAMPLE CO., LTD.)。法人口座名義の照合に使います。';
+
+  @override
+  String get businessRegNameEnInvalid => '英字・数字と . , & ( ) \' / - のみ使用できます';
+
+  @override
+  String get businessRegCertificateDateRequired => '証明書の発行日を選択してください';
+
+  @override
+  String get businessRegCertificateTooOld =>
+      '証明書は発行から6か月以内のものが必要です。DBDで再発行してください。';
+
+  @override
+  String get businessRegCertificateDateHelp =>
+      '登記簿に記載された日付です。提出時点で発行から6か月以内である必要があります。';
+
+  @override
+  String get businessRegCertificateDateInvalid => '発行日に未来の日付は指定できません。';
+
+  @override
+  String get businessRegDocumentRemove => '削除';
+
+  @override
+  String get businessRegAuthorityHeading => '権限の確認';
+
+  @override
+  String get businessRegAuthorityDescription =>
+      '会社を登録できるのは登記簿に記載された取締役のみです。あなたが Kao ID 上の会社オーナーになります。';
+
+  @override
+  String get businessRegAuthorityKaoIdVerified => 'Kao ID は本人確認済みです';
+
+  @override
+  String get businessRegAuthorityMatchHelp => 'スタッフが確認済みの本人氏名と登記簿の取締役一覧を照合します。';
+
+  @override
+  String get businessRegDirectorDeclaration =>
+      '私は登記簿に記載された取締役であり、この会社を登録する権限があります。';
+
+  @override
+  String get businessRegKaoIdRequiredTitle => '先に本人確認を行ってください';
+
+  @override
+  String get businessRegKaoIdRequiredBody =>
+      '会社の登録は、本人確認済みの Kao ID(メール・電話・銀行口座・身分証)を持つ人のみ行えます。';
+
+  @override
+  String get businessRegKaoIdVerifyAction => '本人確認へ進む';
+
+  @override
+  String get businessRegKaoIdCheckAgain => '再確認';
+
+  @override
+  String get businessRegVatNotProvided => '未提出';
+
+  @override
+  String get businessRegStepAuthority => '権限';
+
+  @override
+  String get businessRegErrorDetails => '事業情報を確認して、もう一度お試しください。';
+
+  @override
+  String get businessRegDeclarationRequired => '登記簿に記載された取締役であることを確認してください。';
+
+  @override
+  String get businessOrgManage => '会社を管理';
+
+  @override
+  String get businessOrgErrorRole => '法人口座を管理できるのはオーナー、取締役、または権限者のみです。';
+
+  @override
+  String get businessOrgErrorBusinessKaoId => '先に会社の有効なビジネス Kao ID が必要です。';
+
+  @override
+  String get businessOrgErrorNameMismatch => '口座名義は法人名(タイ語または英語)と一致する必要があります。';
+
+  @override
+  String get businessOrgRoleOwner => 'オーナー';
+
+  @override
+  String get businessOrgRoleDirector => '取締役';
+
+  @override
+  String get businessOrgRoleAuthorized => '権限者';
+
+  @override
+  String get businessOrgRoleFinance => '経理';
+
+  @override
+  String get businessOrgRoleMember => 'メンバー';
+
+  @override
+  String get businessOrgBankFormTitle => '法人口座を追加';
+
+  @override
+  String businessOrgBankNameRule(String names) {
+    return '口座名義は法人名と一致する必要があります: $names';
+  }
+
+  @override
+  String get businessOrgBankHolder => '口座名義(法人)';
+
+  @override
+  String get businessOrgBankEvidenceHelp => '口座名義と口座番号が写った法人の通帳または取引明細の写真。';
+
+  @override
+  String get businessOrgIdentityTitle => '法人情報';
+
+  @override
+  String get businessOrgBusinessKaoId => 'ビジネス Kao ID';
+
+  @override
+  String get businessOrgKaoIdPending => '未発行';
+
+  @override
+  String get businessOrgShop => 'セカンドハンドストア';
+
+  @override
+  String get businessOrgBankTitle => '法人の銀行口座';
+
+  @override
+  String get businessOrgBankReplace => '法人口座を変更';
+
+  @override
+  String get businessOrgBankAdd => '法人口座を追加';
+
+  @override
+  String get businessOrgBankSubmitted => '法人口座を審査に送信しました';
+
+  @override
+  String get businessOrgTitle => 'あなたの会社';
+
+  @override
+  String get businessOrgSubtitle => 'ビジネス Kao ID と入金用の法人口座。';
+
+  @override
+  String get businessOrgEmpty => '確認済みの会社のメンバーではありません。';
 }

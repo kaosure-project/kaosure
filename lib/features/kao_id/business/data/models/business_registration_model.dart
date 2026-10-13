@@ -10,64 +10,45 @@ class BusinessRegistrationModel extends BusinessRegistration {
     required super.registrationNumber,
     required super.businessCategory,
     super.businessDescription,
+    super.legalNameEn,
+    super.certificateIssuedOn,
     super.documentId,
+    super.vatDocumentId,
     super.documentStatus,
     super.status,
     super.createdAt,
     super.updatedAt,
     super.submittedAt,
+    super.directorDeclaredAt,
     super.reviewReason,
   });
 
-  factory BusinessRegistrationModel.fromJson(
-    Map<String, dynamic> json,
-  ) {
+  factory BusinessRegistrationModel.fromJson(Map<String, dynamic> json) {
     return BusinessRegistrationModel(
       id: json['id']?.toString(),
       organizationId: json['organization_id']?.toString(),
-      userId: json['user_id']?.toString() ??
-          json['profile_id']?.toString() ??
-          '',
-      businessType:
-          json['business_type']?.toString() ??
-          json['organization_type']?.toString() ??
-          '',
+      userId: json['user_id']?.toString() ?? json['profile_id']?.toString() ?? '',
+      businessType: json['business_type']?.toString() ?? json['organization_type']?.toString() ?? '',
       businessName:
-          json['business_name']?.toString() ??
-          json['name']?.toString() ??
-          json['legal_name']?.toString() ??
-          '',
-      registrationNumber:
-          json['registration_number']?.toString() ?? '',
-      businessCategory:
-          json['business_category']?.toString() ?? '',
-      businessDescription:
-          json['business_description']?.toString() ??
-          json['description']?.toString(),
-      documentId:
-          json['document_id']?.toString(),
-      documentStatus:
-          _documentStatusFromJson(
-        json['document_status'],
-      ),
-      status:
-          _registrationStatusFromJson(
-        json['status'] ??
-            json['verification_status'],
-      ),
-      createdAt:
-          _dateTimeFromJson(json['created_at']),
-      updatedAt:
-          _dateTimeFromJson(json['updated_at']),
-      submittedAt:
-          _dateTimeFromJson(json['submitted_at']),
+          json['business_name']?.toString() ?? json['name']?.toString() ?? json['legal_name']?.toString() ?? '',
+      registrationNumber: json['registration_number']?.toString() ?? '',
+      businessCategory: json['business_category']?.toString() ?? '',
+      businessDescription: json['business_description']?.toString() ?? json['description']?.toString(),
+      legalNameEn: json['legal_name_en']?.toString(),
+      certificateIssuedOn: _dateTimeFromJson(json['certificate_issued_on']),
+      documentId: json['document_id']?.toString(),
+      vatDocumentId: json['vat_document_id']?.toString(),
+      documentStatus: _documentStatusFromJson(json['document_status']),
+      status: _registrationStatusFromJson(json['status'] ?? json['verification_status']),
+      createdAt: _dateTimeFromJson(json['created_at']),
+      updatedAt: _dateTimeFromJson(json['updated_at']),
+      submittedAt: _dateTimeFromJson(json['submitted_at']),
+      directorDeclaredAt: _dateTimeFromJson(json['director_declared_at']),
       reviewReason: json['review_reason']?.toString(),
     );
   }
 
-  factory BusinessRegistrationModel.fromEntity(
-    BusinessRegistration entity,
-  ) {
+  factory BusinessRegistrationModel.fromEntity(BusinessRegistration entity) {
     return BusinessRegistrationModel(
       id: entity.id,
       organizationId: entity.organizationId,
@@ -77,64 +58,61 @@ class BusinessRegistrationModel extends BusinessRegistration {
       registrationNumber: entity.registrationNumber,
       businessCategory: entity.businessCategory,
       businessDescription: entity.businessDescription,
+      legalNameEn: entity.legalNameEn,
+      certificateIssuedOn: entity.certificateIssuedOn,
       documentId: entity.documentId,
+      vatDocumentId: entity.vatDocumentId,
       documentStatus: entity.documentStatus,
       status: entity.status,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       submittedAt: entity.submittedAt,
+      directorDeclaredAt: entity.directorDeclaredAt,
       reviewReason: entity.reviewReason,
     );
   }
 
+  /// `yyyy-MM-dd` for SQL `date` parameters.
+  static String? dateParam(DateTime? value) => value == null
+      ? null
+      : '${value.year.toString().padLeft(4, '0')}-${value.month.toString().padLeft(2, '0')}-'
+            '${value.day.toString().padLeft(2, '0')}';
+
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
-      if (organizationId != null)
-        'organization_id': organizationId,
+      if (organizationId != null) 'organization_id': organizationId,
       'user_id': userId,
       'business_type': businessType,
       'business_name': businessName,
       'registration_number': registrationNumber,
       'business_category': businessCategory,
-      if (businessDescription != null)
-        'business_description': businessDescription,
-      if (documentId != null)
-        'document_id': documentId,
-      'document_status':
-          _documentStatusToJson(documentStatus),
+      if (businessDescription != null) 'business_description': businessDescription,
+      if (documentId != null) 'document_id': documentId,
+      'document_status': _documentStatusToJson(documentStatus),
       'status': _registrationStatusToJson(status),
-      if (createdAt != null)
-        'created_at': createdAt!.toIso8601String(),
-      if (updatedAt != null)
-        'updated_at': updatedAt!.toIso8601String(),
-      if (submittedAt != null)
-        'submitted_at': submittedAt!.toIso8601String(),
+      if (createdAt != null) 'created_at': createdAt!.toIso8601String(),
+      if (updatedAt != null) 'updated_at': updatedAt!.toIso8601String(),
+      if (submittedAt != null) 'submitted_at': submittedAt!.toIso8601String(),
     };
   }
 
   Map<String, dynamic> toCreateJson() {
     return {
-      if (organizationId != null)
-        'organization_id': organizationId,
+      if (organizationId != null) 'organization_id': organizationId,
       'user_id': userId,
       'business_type': businessType,
       'business_name': businessName,
       'registration_number': registrationNumber,
       'business_category': businessCategory,
-      if (businessDescription != null)
-        'business_description': businessDescription,
-      if (documentId != null)
-        'document_id': documentId,
-      'document_status':
-          _documentStatusToJson(documentStatus),
+      if (businessDescription != null) 'business_description': businessDescription,
+      if (documentId != null) 'document_id': documentId,
+      'document_status': _documentStatusToJson(documentStatus),
       'status': _registrationStatusToJson(status),
     };
   }
 
-  static BusinessDocumentStatus _documentStatusFromJson(
-    dynamic value,
-  ) {
+  static BusinessDocumentStatus _documentStatusFromJson(dynamic value) {
     switch (value?.toString()) {
       case 'uploaded':
         return BusinessDocumentStatus.uploaded;
@@ -151,9 +129,7 @@ class BusinessRegistrationModel extends BusinessRegistration {
     }
   }
 
-  static String _documentStatusToJson(
-    BusinessDocumentStatus value,
-  ) {
+  static String _documentStatusToJson(BusinessDocumentStatus value) {
     switch (value) {
       case BusinessDocumentStatus.pending:
         return 'pending';
@@ -169,10 +145,7 @@ class BusinessRegistrationModel extends BusinessRegistration {
     }
   }
 
-  static BusinessRegistrationStatus
-      _registrationStatusFromJson(
-    dynamic value,
-  ) {
+  static BusinessRegistrationStatus _registrationStatusFromJson(dynamic value) {
     switch (value?.toString()) {
       case 'submitted':
         return BusinessRegistrationStatus.submitted;
@@ -195,9 +168,7 @@ class BusinessRegistrationModel extends BusinessRegistration {
     }
   }
 
-  static String _registrationStatusToJson(
-    BusinessRegistrationStatus value,
-  ) {
+  static String _registrationStatusToJson(BusinessRegistrationStatus value) {
     switch (value) {
       case BusinessRegistrationStatus.draft:
         return 'draft';
@@ -219,9 +190,7 @@ class BusinessRegistrationModel extends BusinessRegistration {
     }
   }
 
-  static DateTime? _dateTimeFromJson(
-    dynamic value,
-  ) {
+  static DateTime? _dateTimeFromJson(dynamic value) {
     if (value == null) {
       return null;
     }
@@ -230,8 +199,6 @@ class BusinessRegistrationModel extends BusinessRegistration {
       return value;
     }
 
-    return DateTime.tryParse(
-      value.toString(),
-    );
+    return DateTime.tryParse(value.toString());
   }
 }

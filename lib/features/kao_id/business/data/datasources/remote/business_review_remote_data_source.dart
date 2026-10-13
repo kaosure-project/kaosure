@@ -14,6 +14,7 @@ abstract interface class BusinessReviewRemoteDataSource {
     required String expectedUserId,
     required String registrationId,
     required bool approve,
+    required bool directorConfirmed,
     String? reason,
   });
 }

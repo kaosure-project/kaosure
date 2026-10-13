@@ -8,6 +8,7 @@ import 'package:kaosure/features/kao_id/business/domain/entities/business_review
 import 'package:kaosure/features/kao_id/business/domain/failures/business_review_failure.dart';
 import 'package:kaosure/features/kao_id/business/presentation/pages/review/business_review_detail_page.dart';
 import 'package:kaosure/features/kao_id/business/presentation/pages/review/business_review_queue_page.dart';
+import 'package:kaosure/features/kao_id/business/presentation/utils/business_review_texts.dart';
 import 'package:kaosure/features/kao_id/business/presentation/widgets/status/registration_status_view.dart';
 import 'package:kaosure/features/kao_id/notifications/data/repositories/supabase_notice_target_repository.dart';
 import 'package:kaosure/features/kao_id/notifications/presentation/pages/notice_target_page.dart';
@@ -23,7 +24,9 @@ void main() {
 
   setUp(() => repository = FakeBusinessReviewRepository());
 
-  Future<AppLocalizations> pump(WidgetTester tester, Widget home, {
+  Future<AppLocalizations> pump(
+    WidgetTester tester,
+    Widget home, {
     String language = 'en',
     Size size = const Size(1024, 1600),
     List<Override> overrides = const [],
@@ -31,19 +34,21 @@ void main() {
     tester.view.physicalSize = size;
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
-    await tester.pumpWidget(ProviderScope(
-      overrides: [
-        authProvider.overrideWith((ref) => TestAuthNotifier(ref)),
-        businessReviewRepositoryProvider.overrideWithValue(repository),
-        ...overrides,
-      ],
-      child: MaterialApp(
-        locale: Locale(language),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: home,
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          authProvider.overrideWith((ref) => TestAuthNotifier(ref)),
+          businessReviewRepositoryProvider.overrideWithValue(repository),
+          ...overrides,
+        ],
+        child: MaterialApp(
+          locale: Locale(language),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: home,
+        ),
       ),
-    ));
+    );
     await tester.pumpAndSettle();
     return lookupAppLocalizations(Locale(language));
   }
@@ -58,14 +63,14 @@ void main() {
 
   bool enabled(WidgetTester tester, String label) {
     final button = tester.widget<ButtonStyleButton>(
-        find.ancestor(of: find.text(label), matching: find.bySubtype<ButtonStyleButton>()).first);
+      find.ancestor(of: find.text(label), matching: find.bySubtype<ButtonStyleButton>()).first,
+    );
     return button.onPressed != null;
   }
 
   for (final language in ['th', 'en', 'my', 'lo']) {
     testWidgets('queue lists pending businesses on a phone in $language', (tester) async {
-      final l10n = await pump(tester, const BusinessReviewQueuePage(),
-          language: language, size: const Size(360, 780));
+      final l10n = await pump(tester, const BusinessReviewQueuePage(), language: language, size: const Size(360, 780));
       expect(find.text(l10n.businessReviewTitle), findsOneWidget);
       expect(find.text('ร้านเก้าเทรดดิ้ง'), findsOneWidget);
       expect(tester.takeException(), isNull);
@@ -75,8 +80,13 @@ void main() {
   testWidgets('filters split new requests from those awaiting a second reviewer', (tester) async {
     repository.items = [
       reviewItem(),
-      reviewItem(id: 'reg-2', name: 'Second Vote Shop', dualReview: true,
-          firstReviewerId: 'other', firstDecisionApprove: true),
+      reviewItem(
+        id: 'reg-2',
+        name: 'Second Vote Shop',
+        dualReview: true,
+        firstReviewerId: 'other',
+        firstDecisionApprove: true,
+      ),
     ];
     final l10n = await pump(tester, const BusinessReviewQueuePage(onlySecondVote: true));
     expect(find.text('Second Vote Shop'), findsOneWidget);
@@ -104,18 +114,25 @@ void main() {
   });
 
   testWidgets('approving needs the document opened and the checklist ticked', (tester) async {
-    final l10n = await pump(tester, Builder(builder: (context) => Scaffold(
+    final l10n = await pump(
+      tester,
+      Builder(
+        builder: (context) => Scaffold(
           body: TextButton(
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
-                builder: (_) => BusinessReviewDetailPage(item: reviewItem()))),
+            onPressed: () => Navigator.of(
+              context,
+            ).push(MaterialPageRoute<void>(builder: (_) => BusinessReviewDetailPage(item: reviewItem()))),
             child: const Text('open'),
           ),
-        )));
+        ),
+      ),
+    );
     await tester.tap(find.text('open'));
     await tester.pumpAndSettle();
 
     expect(find.text('KAB12CD34EF'), findsOneWidget);
-    expect(find.text(l10n.businessReviewBankAccountEnding('7890')), findsOneWidget);
+    expect(find.text('KAO TRADING CO., LTD.'), findsOneWidget);
+    expect(find.text(l10n.businessReviewBlockersTitle), findsNothing);
     expect(find.text(l10n.businessReviewViewAllHint), findsOneWidget);
     expect(enabled(tester, l10n.businessReviewApprove), isFalse);
 
@@ -127,6 +144,8 @@ void main() {
     expect(enabled(tester, l10n.businessReviewApprove), isFalse);
 
     await tapText(tester, l10n.businessReviewChecked);
+    expect(enabled(tester, l10n.businessReviewApprove), isFalse);
+    await tapText(tester, l10n.businessReviewDirectorConfirm);
     expect(enabled(tester, l10n.businessReviewApprove), isTrue);
 
     await tapText(tester, l10n.businessReviewApprove);
@@ -135,6 +154,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.decisions.single.approve, isTrue);
+    expect(repository.decisions.single.directorConfirmed, isTrue);
     expect(find.byType(BusinessReviewDetailPage), findsNothing);
     expect(find.text(l10n.businessReviewApprovedMessage), findsOneWidget);
   });
@@ -155,9 +175,30 @@ void main() {
     expect(repository.decisions.single.reason, 'เลขทะเบียนไม่ตรงกับเอกสาร');
   });
 
+  testWidgets('a stale certificate is listed as a blocker and approval stays locked', (tester) async {
+    final l10n = await pump(
+      tester,
+      BusinessReviewDetailPage(item: reviewItem(certificateFresh: false)),
+      language: 'th',
+    );
+    expect(find.text(l10n.businessReviewBlockersTitle), findsOneWidget);
+    expect(find.text('• ${l10n.businessReviewErrorCertificateOld}'), findsOneWidget);
+    await tapText(tester, l10n.businessReviewOpenDocument);
+    await tester.tap(find.byIcon(Icons.close));
+    await tester.pumpAndSettle();
+    await tapText(tester, l10n.businessReviewChecked);
+    await tapText(tester, l10n.businessReviewDirectorConfirm);
+    expect(enabled(tester, l10n.businessReviewApprove), isFalse);
+    expect(enabled(tester, l10n.businessReviewReject), isTrue);
+  });
+
   testWidgets('first reviewer sees the pending vote and cannot decide again', (tester) async {
-    final l10n = await pump(tester, BusinessReviewDetailPage(
-        item: reviewItem(dualReview: true, firstReviewerId: reviewerId, firstDecisionApprove: true)));
+    final l10n = await pump(
+      tester,
+      BusinessReviewDetailPage(
+        item: reviewItem(dualReview: true, firstReviewerId: reviewerId, firstDecisionApprove: true),
+      ),
+    );
     expect(find.text(l10n.dualReviewHelp), findsOneWidget);
     expect(find.text(l10n.dualOwnVote), findsWidgets);
     expect(enabled(tester, l10n.businessReviewReject), isFalse);
@@ -165,30 +206,36 @@ void main() {
 
   testWidgets('server failure is shown without leaving the page', (tester) async {
     final l10n = await pump(tester, BusinessReviewDetailPage(item: reviewItem()));
-    repository.failNext = BusinessReviewFailureCode.ownerBankRequired;
-    await tester.enterText(find.byType(TextField), 'Bank changed');
+    repository.failNext = BusinessReviewFailureCode.applicantInactive;
+    await tester.enterText(find.byType(TextField), 'Account suspended');
     await tapText(tester, l10n.businessReviewReject);
     await tester.tap(find.widgetWithText(FilledButton, l10n.businessReviewReject).last);
     await tester.pumpAndSettle();
-    expect(find.text(l10n.businessReviewErrorOwnerBank), findsOneWidget);
+    expect(find.text(l10n.businessReviewFailureMessage(BusinessReviewFailureCode.applicantInactive)), findsOneWidget);
     expect(find.byType(BusinessReviewDetailPage), findsOneWidget);
   });
 
   testWidgets('business review notice opens the review detail', (tester) async {
-    final l10n = await pump(tester, const NoticeTargetPage(noticeId: 'n1'), overrides: [
-      noticeTargetRepositoryProvider.overrideWithValue(TargetFixture({
-        'kind': 'business_review',
-        'row': {
-          'id': 'reg-1',
-          'business_type': 'registered_business',
-          'business_name': 'Kao Trading',
-          'registration_number': '0105561234567',
-          'business_category': 'retail',
-          'paths': ['doc.png'],
-          'document_mime': 'image/png',
-        },
-      })),
-    ]);
+    final l10n = await pump(
+      tester,
+      const NoticeTargetPage(noticeId: 'n1'),
+      overrides: [
+        noticeTargetRepositoryProvider.overrideWithValue(
+          TargetFixture({
+            'kind': 'business_review',
+            'row': {
+              'id': 'reg-1',
+              'business_type': 'registered_business',
+              'business_name': 'Kao Trading',
+              'registration_number': '0105561234567',
+              'business_category': 'retail',
+              'paths': ['doc.png'],
+              'document_mime': 'image/png',
+            },
+          }),
+        ),
+      ],
+    );
     expect(find.byType(BusinessReviewDetailPage), findsOneWidget);
     expect(find.text('Kao Trading'), findsWidgets);
     expect(noticeLabel(l10n, 'business_review_new'), l10n.noticeBusinessReviewNew);
@@ -196,22 +243,30 @@ void main() {
   });
 
   testWidgets('rejected registration shows the reviewer note to the owner', (tester) async {
-    final l10n = await pump(tester, Scaffold(body: SingleChildScrollView(child: RegistrationStatusView(
-      registration: const BusinessRegistration(
-        id: 'reg-1',
-        userId: 'owner',
-        businessType: 'registered_business',
-        businessName: 'Kao Trading',
-        registrationNumber: '0105561234567',
-        businessCategory: 'retail',
-        status: BusinessRegistrationStatus.rejected,
-        reviewReason: 'Document is blurry',
+    final l10n = await pump(
+      tester,
+      Scaffold(
+        body: SingleChildScrollView(
+          child: RegistrationStatusView(
+            registration: const BusinessRegistration(
+              id: 'reg-1',
+              userId: 'owner',
+              businessType: 'registered_business',
+              businessName: 'Kao Trading',
+              registrationNumber: '0105561234567',
+              businessCategory: 'retail',
+              status: BusinessRegistrationStatus.rejected,
+              reviewReason: 'Document is blurry',
+            ),
+            refreshing: false,
+            onRefresh: () {},
+            onStartNew: () {},
+            onDone: () {},
+          ),
+        ),
       ),
-      refreshing: false,
-      onRefresh: () {},
-      onStartNew: () {},
-      onDone: () {},
-    ))), language: 'th');
+      language: 'th',
+    );
     expect(find.text(l10n.businessRegStatusReasonLabel), findsOneWidget);
     expect(find.text('Document is blurry'), findsOneWidget);
   });

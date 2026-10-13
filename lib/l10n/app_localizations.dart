@@ -4720,7 +4720,7 @@ abstract class AppLocalizations {
   /// No description provided for @businessRegNumberHelp.
   ///
   /// In en, this message translates to:
-  /// **'13 digits, numbers only'**
+  /// **'13-digit juristic person number from the certificate'**
   String get businessRegNumberHelp;
 
   /// No description provided for @businessRegCategoryLabel.
@@ -4774,19 +4774,19 @@ abstract class AppLocalizations {
   /// No description provided for @businessRegNumberInvalid.
   ///
   /// In en, this message translates to:
-  /// **'Enter a 13-digit registration number'**
+  /// **'Enter a valid 13-digit juristic person number'**
   String get businessRegNumberInvalid;
 
   /// No description provided for @businessRegDocumentHeading.
   ///
   /// In en, this message translates to:
-  /// **'Upload your registration document'**
+  /// **'Upload company documents'**
   String get businessRegDocumentHeading;
 
   /// No description provided for @businessRegDocumentDescription.
   ///
   /// In en, this message translates to:
-  /// **'A company certificate or registration certificate showing the business name and number.'**
+  /// **'The company certificate issued within the last 6 months is required. The VAT registration (Por.Por.20) is optional.'**
   String get businessRegDocumentDescription;
 
   /// No description provided for @businessRegDocumentRequirements.
@@ -4978,7 +4978,7 @@ abstract class AppLocalizations {
   /// No description provided for @businessRegStatusApprovedBody.
   ///
   /// In en, this message translates to:
-  /// **'You can now use your business with Kao services.'**
+  /// **'Your Business Kao ID is ready. Next, add the company bank account for payouts.'**
   String get businessRegStatusApprovedBody;
 
   /// No description provided for @businessRegStatusRejectedTitle.
@@ -5188,7 +5188,7 @@ abstract class AppLocalizations {
   /// No description provided for @businessReviewChecked.
   ///
   /// In en, this message translates to:
-  /// **'I checked that the document matches the business name, registration number and applicant.'**
+  /// **'I checked that the certificate matches the business name, registration number and issue date.'**
   String get businessReviewChecked;
 
   /// No description provided for @businessReviewReason.
@@ -7440,6 +7440,420 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This report wasn\'t found.'**
   String get orderIssueErrorGone;
+
+  /// No description provided for @businessReviewErrorDirector.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm that the applicant is a director named in the certificate.'**
+  String get businessReviewErrorDirector;
+
+  /// No description provided for @businessReviewErrorCertificateOld.
+  ///
+  /// In en, this message translates to:
+  /// **'The company certificate was issued more than 6 months ago.'**
+  String get businessReviewErrorCertificateOld;
+
+  /// No description provided for @businessReviewErrorNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'The registration number fails the check digit.'**
+  String get businessReviewErrorNumber;
+
+  /// No description provided for @businessReviewNumberTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'Another verified company already uses this registration number.'**
+  String get businessReviewNumberTaken;
+
+  /// No description provided for @businessReviewDirectorNotDeclared.
+  ///
+  /// In en, this message translates to:
+  /// **'The applicant has not declared director authority.'**
+  String get businessReviewDirectorNotDeclared;
+
+  /// No description provided for @businessReviewBlockersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This application cannot be approved'**
+  String get businessReviewBlockersTitle;
+
+  /// No description provided for @businessReviewDirectorDeclared.
+  ///
+  /// In en, this message translates to:
+  /// **'Declared as director'**
+  String get businessReviewDirectorDeclared;
+
+  /// No description provided for @businessReviewYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get businessReviewYes;
+
+  /// No description provided for @businessReviewNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get businessReviewNo;
+
+  /// No description provided for @businessReviewDirectorConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'The applicant\'s verified name appears as a director in the certificate'**
+  String get businessReviewDirectorConfirm;
+
+  /// No description provided for @businessReviewDirectorConfirmHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare the applicant name above with the directors listed in the certificate. The applicant becomes the company owner.'**
+  String get businessReviewDirectorConfirmHelp;
+
+  /// No description provided for @businessRegCertificateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Company certificate'**
+  String get businessRegCertificateTitle;
+
+  /// No description provided for @businessRegVatTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT registration (Por.Por.20, optional)'**
+  String get businessRegVatTitle;
+
+  /// No description provided for @businessRegNameEnLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal name in English (optional)'**
+  String get businessRegNameEnLabel;
+
+  /// No description provided for @businessRegCertificateDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate issue date'**
+  String get businessRegCertificateDateLabel;
+
+  /// No description provided for @reviewBusinessBankTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Company bank account'**
+  String get reviewBusinessBankTitle;
+
+  /// No description provided for @reviewOrganizationName.
+  ///
+  /// In en, this message translates to:
+  /// **'Company'**
+  String get reviewOrganizationName;
+
+  /// No description provided for @reviewBusinessKaoId.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Kao ID'**
+  String get reviewBusinessKaoId;
+
+  /// No description provided for @reviewLegalName.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal name (Thai)'**
+  String get reviewLegalName;
+
+  /// No description provided for @reviewLegalNameEn.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal name (English)'**
+  String get reviewLegalNameEn;
+
+  /// No description provided for @reviewNameMatched.
+  ///
+  /// In en, this message translates to:
+  /// **'Account name matches the company\'s legal name'**
+  String get reviewNameMatched;
+
+  /// No description provided for @reviewNameMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Account name does not match the company\'s legal name'**
+  String get reviewNameMismatch;
+
+  /// No description provided for @noticeBusinessBankApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Your company bank account is verified'**
+  String get noticeBusinessBankApproved;
+
+  /// No description provided for @noticeBusinessBankRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Your company bank account was not approved'**
+  String get noticeBusinessBankRejected;
+
+  /// No description provided for @businessRegNameHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Thai legal name exactly as on the certificate'**
+  String get businessRegNameHelp;
+
+  /// No description provided for @businessRegNameEnHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'As on the certificate, e.g. EXAMPLE CO., LTD. Used to match the company bank account.'**
+  String get businessRegNameEnHelp;
+
+  /// No description provided for @businessRegNameEnInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Use English letters, numbers and . , & ( ) \' / - only'**
+  String get businessRegNameEnInvalid;
+
+  /// No description provided for @businessRegCertificateDateRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the certificate issue date'**
+  String get businessRegCertificateDateRequired;
+
+  /// No description provided for @businessRegCertificateTooOld.
+  ///
+  /// In en, this message translates to:
+  /// **'The certificate must be issued within the last 6 months. Request a new one from DBD.'**
+  String get businessRegCertificateTooOld;
+
+  /// No description provided for @businessRegCertificateDateHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Printed on the company certificate. It must be no more than 6 months old when you submit.'**
+  String get businessRegCertificateDateHelp;
+
+  /// No description provided for @businessRegCertificateDateInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'The issue date cannot be in the future.'**
+  String get businessRegCertificateDateInvalid;
+
+  /// No description provided for @businessRegDocumentRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get businessRegDocumentRemove;
+
+  /// No description provided for @businessRegAuthorityHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your authority'**
+  String get businessRegAuthorityHeading;
+
+  /// No description provided for @businessRegAuthorityDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Only a director named in the company certificate can register the company. You will become its owner in Kao ID.'**
+  String get businessRegAuthorityDescription;
+
+  /// No description provided for @businessRegAuthorityKaoIdVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Kao ID is verified'**
+  String get businessRegAuthorityKaoIdVerified;
+
+  /// No description provided for @businessRegAuthorityMatchHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Our staff will compare the name on your verified identity with the directors listed in the certificate.'**
+  String get businessRegAuthorityMatchHelp;
+
+  /// No description provided for @businessRegDirectorDeclaration.
+  ///
+  /// In en, this message translates to:
+  /// **'I am a director named in the company certificate and I am authorized to register this company.'**
+  String get businessRegDirectorDeclaration;
+
+  /// No description provided for @businessRegKaoIdRequiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your identity first'**
+  String get businessRegKaoIdRequiredTitle;
+
+  /// No description provided for @businessRegKaoIdRequiredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A company can only be registered by a person with a verified Kao ID (email, phone, bank and identity).'**
+  String get businessRegKaoIdRequiredBody;
+
+  /// No description provided for @businessRegKaoIdVerifyAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to identity verification'**
+  String get businessRegKaoIdVerifyAction;
+
+  /// No description provided for @businessRegKaoIdCheckAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get businessRegKaoIdCheckAgain;
+
+  /// No description provided for @businessRegVatNotProvided.
+  ///
+  /// In en, this message translates to:
+  /// **'Not provided'**
+  String get businessRegVatNotProvided;
+
+  /// No description provided for @businessRegStepAuthority.
+  ///
+  /// In en, this message translates to:
+  /// **'Authority'**
+  String get businessRegStepAuthority;
+
+  /// No description provided for @businessRegErrorDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the business details and try again.'**
+  String get businessRegErrorDetails;
+
+  /// No description provided for @businessRegDeclarationRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm that you are a director named in the certificate.'**
+  String get businessRegDeclarationRequired;
+
+  /// No description provided for @businessOrgManage.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage company'**
+  String get businessOrgManage;
+
+  /// No description provided for @businessOrgErrorRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the owner, a director or an authorized person can manage the company bank account.'**
+  String get businessOrgErrorRole;
+
+  /// No description provided for @businessOrgErrorBusinessKaoId.
+  ///
+  /// In en, this message translates to:
+  /// **'The company needs an active Business Kao ID first.'**
+  String get businessOrgErrorBusinessKaoId;
+
+  /// No description provided for @businessOrgErrorNameMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The account name must match the company\'s legal name in Thai or English.'**
+  String get businessOrgErrorNameMismatch;
+
+  /// No description provided for @businessOrgRoleOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get businessOrgRoleOwner;
+
+  /// No description provided for @businessOrgRoleDirector.
+  ///
+  /// In en, this message translates to:
+  /// **'Director'**
+  String get businessOrgRoleDirector;
+
+  /// No description provided for @businessOrgRoleAuthorized.
+  ///
+  /// In en, this message translates to:
+  /// **'Authorized person'**
+  String get businessOrgRoleAuthorized;
+
+  /// No description provided for @businessOrgRoleFinance.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance'**
+  String get businessOrgRoleFinance;
+
+  /// No description provided for @businessOrgRoleMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get businessOrgRoleMember;
+
+  /// No description provided for @businessOrgBankFormTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add company bank account'**
+  String get businessOrgBankFormTitle;
+
+  /// No description provided for @businessOrgBankNameRule.
+  ///
+  /// In en, this message translates to:
+  /// **'The account name must match the company\'s legal name: {names}'**
+  String businessOrgBankNameRule(String names);
+
+  /// No description provided for @businessOrgBankHolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Account name (company)'**
+  String get businessOrgBankHolder;
+
+  /// No description provided for @businessOrgBankEvidenceHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo of the company bank book or a bank statement showing the account name and number.'**
+  String get businessOrgBankEvidenceHelp;
+
+  /// No description provided for @businessOrgIdentityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Company identity'**
+  String get businessOrgIdentityTitle;
+
+  /// No description provided for @businessOrgBusinessKaoId.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Kao ID'**
+  String get businessOrgBusinessKaoId;
+
+  /// No description provided for @businessOrgKaoIdPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Not issued yet'**
+  String get businessOrgKaoIdPending;
+
+  /// No description provided for @businessOrgShop.
+  ///
+  /// In en, this message translates to:
+  /// **'Secondhand store'**
+  String get businessOrgShop;
+
+  /// No description provided for @businessOrgBankTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Company bank account'**
+  String get businessOrgBankTitle;
+
+  /// No description provided for @businessOrgBankReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Change company bank account'**
+  String get businessOrgBankReplace;
+
+  /// No description provided for @businessOrgBankAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add company bank account'**
+  String get businessOrgBankAdd;
+
+  /// No description provided for @businessOrgBankSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Company bank account sent for review'**
+  String get businessOrgBankSubmitted;
+
+  /// No description provided for @businessOrgTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your companies'**
+  String get businessOrgTitle;
+
+  /// No description provided for @businessOrgSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Kao ID and the company bank account used for payouts.'**
+  String get businessOrgSubtitle;
+
+  /// No description provided for @businessOrgEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'You are not a member of a verified company yet.'**
+  String get businessOrgEmpty;
 }
 
 class _AppLocalizationsDelegate

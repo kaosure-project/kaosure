@@ -2536,7 +2536,8 @@ class AppLocalizationsMy extends AppLocalizations {
   String get businessRegNumberLabel => 'မှတ်ပုံတင်နံပါတ်';
 
   @override
-  String get businessRegNumberHelp => 'ဂဏန်း ၁၃ လုံးသာ';
+  String get businessRegNumberHelp =>
+      'လက်မှတ်ပါ ဂဏန်း ၁၃ လုံး တရားဝင်ပုဂ္ဂိုလ်နံပါတ်';
 
   @override
   String get businessRegCategoryLabel => 'လုပ်ငန်းကဏ္ဍ';
@@ -2564,14 +2565,14 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get businessRegNumberInvalid =>
-      'ဂဏန်း ၁၃ လုံးပါ မှတ်ပုံတင်နံပါတ် ထည့်ပါ';
+      'မှန်ကန်သော ဂဏန်း ၁၃ လုံး တရားဝင်ပုဂ္ဂိုလ်နံပါတ် ထည့်ပါ';
 
   @override
-  String get businessRegDocumentHeading => 'မှတ်ပုံတင်စာရွက်စာတမ်း တင်ပါ';
+  String get businessRegDocumentHeading => 'ကုမ္ပဏီ စာရွက်စာတမ်းများ တင်ပါ';
 
   @override
   String get businessRegDocumentDescription =>
-      'လုပ်ငန်းအမည်နှင့် မှတ်ပုံတင်နံပါတ် ပါဝင်သော ကုမ္ပဏီအထောက်အထား သို့မဟုတ် မှတ်ပုံတင်လက်မှတ်။';
+      'လွန်ခဲ့သော ၆ လအတွင်း ထုတ်ပေးထားသော ကုမ္ပဏီလက်မှတ် လိုအပ်သည်။ VAT မှတ်ပုံတင် (Por.Por.20) သည် မဖြစ်မနေမဟုတ်ပါ။';
 
   @override
   String get businessRegDocumentRequirements =>
@@ -2678,7 +2679,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get businessRegStatusApprovedBody =>
-      'ယခု Kao ဝန်ဆောင်မှုများတွင် သင့်လုပ်ငန်းကို အသုံးပြုနိုင်ပါပြီ။';
+      'သင့်လုပ်ငန်း Kao ID အသင့်ဖြစ်ပါပြီ။ နောက်တစ်ဆင့်အနေဖြင့် ငွေလက်ခံရန် ကုမ္ပဏီ ဘဏ်အကောင့် ထည့်ပါ။';
 
   @override
   String get businessRegStatusRejectedTitle => 'မှတ်ပုံတင်မှုကို အတည်မပြုပါ';
@@ -2803,7 +2804,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get businessReviewChecked =>
-      'စာရွက်စာတမ်းသည် လုပ်ငန်းအမည်၊ မှတ်ပုံတင်နံပါတ်နှင့် လျှောက်ထားသူနှင့် ကိုက်ညီကြောင်း စစ်ဆေးပြီးပါပြီ။';
+      'လက်မှတ်သည် လုပ်ငန်းအမည်၊ မှတ်ပုံတင်နံပါတ်နှင့် ထုတ်ပေးသည့်ရက်တို့နှင့် ကိုက်ညီကြောင်း စစ်ဆေးပြီးပါပြီ။';
 
   @override
   String get businessReviewReason =>
@@ -4074,4 +4075,247 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get orderIssueErrorGone => 'ဤတိုင်ကြားချက်ကို ရှာမတွေ့ပါ။';
+
+  @override
+  String get businessReviewErrorDirector =>
+      'လျှောက်ထားသူသည် လက်မှတ်တွင် အမည်ပါသော ဒါရိုက်တာဖြစ်ကြောင်း အတည်ပြုပါ။';
+
+  @override
+  String get businessReviewErrorCertificateOld =>
+      'ကုမ္ပဏီလက်မှတ်ကို ထုတ်ပေးသည်မှာ ၆ လကျော်ပြီ ဖြစ်သည်။';
+
+  @override
+  String get businessReviewErrorNumber =>
+      'မှတ်ပုံတင်နံပါတ်၏ စစ်ဆေးဂဏန်း မမှန်ပါ။';
+
+  @override
+  String get businessReviewNumberTaken =>
+      'ဤမှတ်ပုံတင်နံပါတ်ကို အတည်ပြုပြီး အခြားကုမ္ပဏီက အသုံးပြုနေပြီ။';
+
+  @override
+  String get businessReviewDirectorNotDeclared =>
+      'လျှောက်ထားသူသည် ဒါရိုက်တာ အခွင့်အာဏာကို မကြေညာရသေးပါ။';
+
+  @override
+  String get businessReviewBlockersTitle => 'ဤလျှောက်လွှာကို အတည်မပြုနိုင်ပါ';
+
+  @override
+  String get businessReviewDirectorDeclared => 'ဒါရိုက်တာအဖြစ် ကြေညာထား';
+
+  @override
+  String get businessReviewYes => 'ဟုတ်ကဲ့';
+
+  @override
+  String get businessReviewNo => 'မဟုတ်ပါ';
+
+  @override
+  String get businessReviewDirectorConfirm =>
+      'လျှောက်ထားသူ၏ အတည်ပြုထားသော အမည်သည် လက်မှတ်တွင် ဒါရိုက်တာအဖြစ် ပါဝင်သည်';
+
+  @override
+  String get businessReviewDirectorConfirmHelp =>
+      'အထက်ပါ လျှောက်ထားသူအမည်ကို လက်မှတ်ပါ ဒါရိုက်တာစာရင်းနှင့် တိုက်ဆိုင်စစ်ဆေးပါ။ လျှောက်ထားသူသည် ကုမ္ပဏီပိုင်ရှင် ဖြစ်လာမည်။';
+
+  @override
+  String get businessRegCertificateTitle => 'ကုမ္ပဏီ မှတ်ပုံတင်လက်မှတ်';
+
+  @override
+  String get businessRegVatTitle =>
+      'VAT မှတ်ပုံတင် (Por.Por.20၊ မဖြစ်မနေမဟုတ်)';
+
+  @override
+  String get businessRegNameEnLabel => 'အင်္ဂလိပ် တရားဝင်အမည် (မဖြစ်မနေမဟုတ်)';
+
+  @override
+  String get businessRegCertificateDateLabel => 'လက်မှတ် ထုတ်ပေးသည့်ရက်';
+
+  @override
+  String get reviewBusinessBankTitle => 'ကုမ္ပဏီ ဘဏ်အကောင့်';
+
+  @override
+  String get reviewOrganizationName => 'ကုမ္ပဏီ';
+
+  @override
+  String get reviewBusinessKaoId => 'လုပ်ငန်း Kao ID';
+
+  @override
+  String get reviewLegalName => 'တရားဝင်အမည် (ထိုင်း)';
+
+  @override
+  String get reviewLegalNameEn => 'တရားဝင်အမည် (အင်္ဂလိပ်)';
+
+  @override
+  String get reviewNameMatched =>
+      'အကောင့်အမည်သည် ကုမ္ပဏီ တရားဝင်အမည်နှင့် ကိုက်ညီသည်';
+
+  @override
+  String get reviewNameMismatch =>
+      'အကောင့်အမည်သည် ကုမ္ပဏီ တရားဝင်အမည်နှင့် မကိုက်ညီပါ';
+
+  @override
+  String get noticeBusinessBankApproved =>
+      'သင့်ကုမ္ပဏီ ဘဏ်အကောင့်ကို အတည်ပြုပြီးပါပြီ';
+
+  @override
+  String get noticeBusinessBankRejected =>
+      'သင့်ကုမ္ပဏီ ဘဏ်အကောင့်ကို အတည်မပြုခဲ့ပါ';
+
+  @override
+  String get businessRegNameHelp => 'လက်မှတ်ပါအတိုင်း ထိုင်းတရားဝင်အမည်';
+
+  @override
+  String get businessRegNameEnHelp =>
+      'လက်မှတ်ပါအတိုင်း ဥပမာ EXAMPLE CO., LTD.။ ကုမ္ပဏီဘဏ်အကောင့်အမည် တိုက်ဆိုင်ရန် အသုံးပြုသည်။';
+
+  @override
+  String get businessRegNameEnInvalid =>
+      'အင်္ဂလိပ်အက္ခရာ၊ ဂဏန်းနှင့် . , & ( ) \' / - သာ သုံးပါ';
+
+  @override
+  String get businessRegCertificateDateRequired =>
+      'လက်မှတ် ထုတ်ပေးသည့်ရက်ကို ရွေးပါ';
+
+  @override
+  String get businessRegCertificateTooOld =>
+      'လက်မှတ်ကို လွန်ခဲ့သော ၆ လအတွင်း ထုတ်ပေးထားရမည်။ DBD မှ အသစ်တောင်းယူပါ။';
+
+  @override
+  String get businessRegCertificateDateHelp =>
+      'ကုမ္ပဏီလက်မှတ်ပေါ်တွင် ပါရှိသည်။ တင်သွင်းချိန်တွင် ၆ လထက် မကျော်ရပါ။';
+
+  @override
+  String get businessRegCertificateDateInvalid =>
+      'ထုတ်ပေးသည့်ရက်သည် အနာဂတ်ရက် မဖြစ်ရပါ။';
+
+  @override
+  String get businessRegDocumentRemove => 'ဖယ်ရှားရန်';
+
+  @override
+  String get businessRegAuthorityHeading => 'သင့်အခွင့်အာဏာကို အတည်ပြုပါ';
+
+  @override
+  String get businessRegAuthorityDescription =>
+      'ကုမ္ပဏီလက်မှတ်တွင် အမည်ပါသော ဒါရိုက်တာသာ ကုမ္ပဏီကို မှတ်ပုံတင်နိုင်သည်။ သင်သည် Kao ID တွင် ပိုင်ရှင်ဖြစ်လာမည်။';
+
+  @override
+  String get businessRegAuthorityKaoIdVerified =>
+      'သင့် Kao ID ကို အတည်ပြုပြီးပါပြီ';
+
+  @override
+  String get businessRegAuthorityMatchHelp =>
+      'ဝန်ထမ်းများသည် သင့်အတည်ပြုထားသော အမည်ကို လက်မှတ်ပါ ဒါရိုက်တာစာရင်းနှင့် တိုက်ဆိုင်စစ်ဆေးမည်။';
+
+  @override
+  String get businessRegDirectorDeclaration =>
+      'ကျွန်ုပ်သည် ကုမ္ပဏီလက်မှတ်တွင် အမည်ပါသော ဒါရိုက်တာဖြစ်ပြီး ဤကုမ္ပဏီကို မှတ်ပုံတင်ရန် အခွင့်ရှိသည်။';
+
+  @override
+  String get businessRegKaoIdRequiredTitle =>
+      'ဦးစွာ သင့်ကိုယ်ပိုင်အထောက်အထားကို အတည်ပြုပါ';
+
+  @override
+  String get businessRegKaoIdRequiredBody =>
+      'အတည်ပြုပြီး Kao ID (အီးမေးလ်၊ ဖုန်း၊ ဘဏ်နှင့် အထောက်အထား) ရှိသူသာ ကုမ္ပဏီကို မှတ်ပုံတင်နိုင်သည်။';
+
+  @override
+  String get businessRegKaoIdVerifyAction =>
+      'ကိုယ်ပိုင်အထောက်အထား အတည်ပြုရန် သွားပါ';
+
+  @override
+  String get businessRegKaoIdCheckAgain => 'ထပ်စစ်ပါ';
+
+  @override
+  String get businessRegVatNotProvided => 'မပေးထားပါ';
+
+  @override
+  String get businessRegStepAuthority => 'အခွင့်အာဏာ';
+
+  @override
+  String get businessRegErrorDetails =>
+      'လုပ်ငန်းအသေးစိတ်ကို စစ်ဆေးပြီး ထပ်ကြိုးစားပါ။';
+
+  @override
+  String get businessRegDeclarationRequired =>
+      'သင်သည် လက်မှတ်တွင် အမည်ပါသော ဒါရိုက်တာဖြစ်ကြောင်း အတည်ပြုပါ။';
+
+  @override
+  String get businessOrgManage => 'ကုမ္ပဏီ စီမံရန်';
+
+  @override
+  String get businessOrgErrorRole =>
+      'ပိုင်ရှင်၊ ဒါရိုက်တာ သို့မဟုတ် လုပ်ပိုင်ခွင့်ရသူသာ ကုမ္ပဏီဘဏ်အကောင့်ကို စီမံနိုင်သည်။';
+
+  @override
+  String get businessOrgErrorBusinessKaoId =>
+      'ကုမ္ပဏီတွင် အသက်ဝင်သော လုပ်ငန်း Kao ID ဦးစွာ လိုအပ်သည်။';
+
+  @override
+  String get businessOrgErrorNameMismatch =>
+      'အကောင့်အမည်သည် ကုမ္ပဏီ၏ ထိုင်း သို့မဟုတ် အင်္ဂလိပ် တရားဝင်အမည်နှင့် ကိုက်ညီရမည်။';
+
+  @override
+  String get businessOrgRoleOwner => 'ပိုင်ရှင်';
+
+  @override
+  String get businessOrgRoleDirector => 'ဒါရိုက်တာ';
+
+  @override
+  String get businessOrgRoleAuthorized => 'လုပ်ပိုင်ခွင့်ရသူ';
+
+  @override
+  String get businessOrgRoleFinance => 'ငွေစာရင်း';
+
+  @override
+  String get businessOrgRoleMember => 'အဖွဲ့ဝင်';
+
+  @override
+  String get businessOrgBankFormTitle => 'ကုမ္ပဏီ ဘဏ်အကောင့် ထည့်ရန်';
+
+  @override
+  String businessOrgBankNameRule(String names) {
+    return 'အကောင့်အမည်သည် ကုမ္ပဏီ တရားဝင်အမည်နှင့် ကိုက်ညီရမည်- $names';
+  }
+
+  @override
+  String get businessOrgBankHolder => 'အကောင့်အမည် (ကုမ္ပဏီ)';
+
+  @override
+  String get businessOrgBankEvidenceHelp =>
+      'အကောင့်အမည်နှင့် နံပါတ် ပါသော ကုမ္ပဏီ ဘဏ်စာအုပ် သို့မဟုတ် ဘဏ်စာရင်း ဓာတ်ပုံ။';
+
+  @override
+  String get businessOrgIdentityTitle => 'ကုမ္ပဏီ အထောက်အထား';
+
+  @override
+  String get businessOrgBusinessKaoId => 'လုပ်ငန်း Kao ID';
+
+  @override
+  String get businessOrgKaoIdPending => 'မထုတ်ပေးရသေးပါ';
+
+  @override
+  String get businessOrgShop => 'အသုံးပြုပြီး ပစ္စည်းဆိုင်';
+
+  @override
+  String get businessOrgBankTitle => 'ကုမ္ပဏီ ဘဏ်အကောင့်';
+
+  @override
+  String get businessOrgBankReplace => 'ကုမ္ပဏီ ဘဏ်အကောင့် ပြောင်းရန်';
+
+  @override
+  String get businessOrgBankAdd => 'ကုမ္ပဏီ ဘဏ်အကောင့် ထည့်ရန်';
+
+  @override
+  String get businessOrgBankSubmitted =>
+      'ကုမ္ပဏီ ဘဏ်အကောင့်ကို စစ်ဆေးရန် ပို့ပြီးပါပြီ';
+
+  @override
+  String get businessOrgTitle => 'သင့်ကုမ္ပဏီများ';
+
+  @override
+  String get businessOrgSubtitle =>
+      'လုပ်ငန်း Kao ID နှင့် ငွေလက်ခံရန် ကုမ္ပဏီ ဘဏ်အကောင့်။';
+
+  @override
+  String get businessOrgEmpty =>
+      'သင်သည် အတည်ပြုထားသော ကုမ္ပဏီ၏ အဖွဲ့ဝင် မဟုတ်သေးပါ။';
 }

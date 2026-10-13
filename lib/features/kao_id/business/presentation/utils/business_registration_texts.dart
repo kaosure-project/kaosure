@@ -6,34 +6,40 @@ import '../../domain/failures/business_registration_failure.dart';
 
 extension BusinessRegistrationTexts on AppLocalizations {
   String businessStepLabel(BusinessRegistrationStep step) => switch (step) {
-        BusinessRegistrationStep.details => businessRegStepDetails,
-        BusinessRegistrationStep.document => businessRegStepDocument,
-        BusinessRegistrationStep.bankAccount => businessRegStepBank,
-        BusinessRegistrationStep.review => businessRegStepReview,
-      };
+    BusinessRegistrationStep.details => businessRegStepDetails,
+    BusinessRegistrationStep.document => businessRegStepDocument,
+    BusinessRegistrationStep.authority => businessRegStepAuthority,
+    BusinessRegistrationStep.review => businessRegStepReview,
+  };
 
-  String businessTypeLabel(String type) => type == BusinessType.organization
-      ? businessRegTypeOrganization
-      : businessRegTypeCompany;
+  String businessTypeLabel(String type) =>
+      type == BusinessType.organization ? businessRegTypeOrganization : businessRegTypeCompany;
 
   String businessCategoryLabel(String category) => switch (category) {
-        BusinessCategory.retail => businessRegCategoryRetail,
-        BusinessCategory.food => businessRegCategoryFood,
-        BusinessCategory.services => businessRegCategoryServices,
-        BusinessCategory.technology => businessRegCategoryTechnology,
-        BusinessCategory.other => businessRegCategoryOther,
-        _ => category,
-      };
+    BusinessCategory.retail => businessRegCategoryRetail,
+    BusinessCategory.food => businessRegCategoryFood,
+    BusinessCategory.services => businessRegCategoryServices,
+    BusinessCategory.technology => businessRegCategoryTechnology,
+    BusinessCategory.other => businessRegCategoryOther,
+    _ => category,
+  };
 
   String businessFailureMessage(BusinessRegistrationFailureCode code) => switch (code) {
-        BusinessRegistrationFailureCode.session => businessRegErrorSession,
-        BusinessRegistrationFailureCode.restricted => businessRegErrorRestricted,
-        BusinessRegistrationFailureCode.activeExists => businessRegErrorActiveExists,
-        BusinessRegistrationFailureCode.notEditable => businessRegErrorNotEditable,
-        BusinessRegistrationFailureCode.documentRequired => businessRegErrorDocumentRequired,
-        BusinessRegistrationFailureCode.bankRequired => businessRegErrorBankRequired,
-        BusinessRegistrationFailureCode.invalidFile => businessRegErrorFile,
-        BusinessRegistrationFailureCode.duplicateRegistration => businessRegErrorDuplicate,
-        BusinessRegistrationFailureCode.unknown => businessRegErrorGeneric,
-      };
+    BusinessRegistrationFailureCode.session => businessRegErrorSession,
+    BusinessRegistrationFailureCode.restricted => businessRegErrorRestricted,
+    BusinessRegistrationFailureCode.kaoIdRequired => businessRegKaoIdRequiredBody,
+    BusinessRegistrationFailureCode.activeExists => businessRegErrorActiveExists,
+    BusinessRegistrationFailureCode.notEditable => businessRegErrorNotEditable,
+    BusinessRegistrationFailureCode.documentRequired => businessRegErrorDocumentRequired,
+    BusinessRegistrationFailureCode.invalidFile => businessRegErrorFile,
+    BusinessRegistrationFailureCode.duplicateRegistration => businessRegErrorDuplicate,
+    BusinessRegistrationFailureCode.invalidName => businessRegErrorDetails,
+    BusinessRegistrationFailureCode.invalidNumber => businessRegNumberInvalid,
+    BusinessRegistrationFailureCode.invalidNameEn => businessRegNameEnInvalid,
+    BusinessRegistrationFailureCode.invalidCertificateDate => businessRegCertificateDateInvalid,
+    BusinessRegistrationFailureCode.certificateTooOld => businessRegCertificateTooOld,
+    BusinessRegistrationFailureCode.certificateDateRequired => businessRegCertificateDateRequired,
+    BusinessRegistrationFailureCode.declarationRequired => businessRegDeclarationRequired,
+    BusinessRegistrationFailureCode.unknown => businessRegErrorGeneric,
+  };
 }

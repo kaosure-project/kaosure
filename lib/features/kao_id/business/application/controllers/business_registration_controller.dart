@@ -1,38 +1,33 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/entities/business_document_file.dart';
+import '../../domain/entities/business_document_kind.dart';
 import '../../domain/entities/business_registration.dart';
 import '../../domain/entities/business_registration_step.dart';
-import '../../domain/entities/payout_bank_account.dart';
 import '../../domain/failures/business_registration_failure.dart';
 import '../../domain/usecases/business_registration_use_cases.dart';
-import '../services/payout_bank_reader.dart';
+import '../services/kao_id_status_reader.dart';
 import '../states/business_registration_state.dart';
 
 typedef _Flag = BusinessRegistrationState Function(BusinessRegistrationState state, bool on);
 
-final class BusinessRegistrationController
-    extends StateNotifier<BusinessRegistrationState> {
-  BusinessRegistrationController({
-    required this._useCases,
-    required this._readPayoutBank,
-  }) : super(const BusinessRegistrationState());
+final class BusinessRegistrationController extends StateNotifier<BusinessRegistrationState> {
+  BusinessRegistrationController({required this._useCases, required this._readKaoId})
+    : super(const BusinessRegistrationState());
 
   final BusinessRegistrationUseCases _useCases;
-  final PayoutBankReader _readPayoutBank;
+  final KaoIdStatusReader _readKaoId;
 
   Future<void> load() async {
     state = state.copyWith(isLoading: true, clearFailure: true);
     try {
-      final current = _withoutWithdrawn(
-        await _useCases.getCurrent(_useCases.currentUserId() ?? ''),
-      );
-      final bank = await _bankOrNull();
+      final current = _withoutWithdrawn(await _useCases.getCurrent(_useCases.currentUserId() ?? ''));
+      final kaoId = await _kaoIdOrNull();
       if (!mounted) return;
       state = BusinessRegistrationState(
         registration: current,
-        bank: bank,
-        step: _resumeStep(current, bank),
+        kaoIdActive: kaoId,
+        step: _resumeStep(current),
         isLoading: false,
       );
     } catch (error) {
@@ -40,11 +35,22 @@ final class BusinessRegistrationController
     }
   }
 
+  Future<void> refreshKaoId() async {
+    state = state.copyWith(isCheckingKaoId: true, clearFailure: true);
+    final kaoId = await _kaoIdOrNull();
+    if (!mounted) return;
+    state = kaoId == null
+        ? state.copyWith(isCheckingKaoId: false, failure: BusinessRegistrationFailureCode.unknown)
+        : state.copyWith(isCheckingKaoId: false, kaoIdActive: kaoId);
+  }
+
   Future<bool> saveDetails({
     required String businessType,
     required String businessName,
     required String registrationNumber,
     required String businessCategory,
+    required DateTime certificateIssuedOn,
+    String? legalNameEn,
     String? businessDescription,
   }) async {
     final userId = _useCases.currentUserId();
@@ -54,6 +60,7 @@ final class BusinessRegistrationController
     }
     final current = state.registration;
     final description = businessDescription?.trim() ?? '';
+    final nameEn = legalNameEn?.trim() ?? '';
     final draft = BusinessRegistration(
       id: current?.id,
       organizationId: current?.organizationId,
@@ -63,34 +70,43 @@ final class BusinessRegistrationController
       registrationNumber: registrationNumber.trim(),
       businessCategory: businessCategory,
       businessDescription: description.isEmpty ? null : description,
+      legalNameEn: nameEn.isEmpty ? null : nameEn,
+      certificateIssuedOn: DateTime(certificateIssuedOn.year, certificateIssuedOn.month, certificateIssuedOn.day),
       documentId: current?.documentId,
+      vatDocumentId: current?.vatDocumentId,
       documentStatus: current?.documentStatus ?? BusinessDocumentStatus.pending,
       createdAt: current?.createdAt,
     );
     return _run((s, on) => s.copyWith(isSaving: on), () async {
-      final saved = current?.id == null
-          ? await _useCases.createDraft(draft)
-          : await _useCases.updateDraft(draft);
+      final saved = current?.id == null ? await _useCases.createDraft(draft) : await _useCases.updateDraft(draft);
       state = state.copyWith(registration: saved, step: BusinessRegistrationStep.document);
     });
   }
 
-  Future<bool> uploadDocument(BusinessDocumentFile file) async {
+  Future<bool> uploadDocument(BusinessDocumentFile file, {required BusinessDocumentKind kind}) async {
     final id = state.registration?.id;
     if (id == null) return false;
     return _run((s, on) => s.copyWith(isUploading: on), () async {
-      final updated = await _useCases.attachDocument(registrationId: id, file: file);
-      state = state.copyWith(registration: updated, documentName: file.name);
+      final updated = await _useCases.attachDocument(registrationId: id, kind: kind, file: file);
+      state = switch (kind) {
+        BusinessDocumentKind.certificate => state.copyWith(registration: updated, documentName: file.name),
+        BusinessDocumentKind.vat => state.copyWith(registration: updated, vatDocumentName: file.name),
+      };
     });
   }
 
-  Future<void> refreshBank() async {
-    state = state.copyWith(isCheckingBank: true, clearFailure: true);
-    final bank = await _bankOrNull();
-    if (!mounted) return;
-    state = bank == null
-        ? state.copyWith(isCheckingBank: false, failure: BusinessRegistrationFailureCode.unknown)
-        : state.copyWith(isCheckingBank: false, bank: bank);
+  Future<bool> removeVatDocument() async {
+    final id = state.registration?.id;
+    if (id == null) return false;
+    return _run((s, on) => s.copyWith(isUploading: on), () async {
+      final updated = await _useCases.removeVatDocument(id);
+      state = state.copyWith(registration: updated, clearVatDocumentName: true);
+    });
+  }
+
+  void setDirectorDeclared(bool value) {
+    if (state.isBusy) return;
+    state = state.copyWith(directorDeclared: value, clearFailure: true);
   }
 
   void goTo(BusinessRegistrationStep step) {
@@ -103,11 +119,13 @@ final class BusinessRegistrationController
     if (state.step.index == steps.length - 1) return;
     final target = steps[state.step.index + 1];
     if (state.canOpen(target)) return goTo(target);
-    state = state.copyWith(failure: switch (state.step) {
-      BusinessRegistrationStep.document => BusinessRegistrationFailureCode.documentRequired,
-      BusinessRegistrationStep.bankAccount => BusinessRegistrationFailureCode.bankRequired,
-      _ => BusinessRegistrationFailureCode.unknown,
-    });
+    state = state.copyWith(
+      failure: switch (state.step) {
+        BusinessRegistrationStep.document => BusinessRegistrationFailureCode.documentRequired,
+        BusinessRegistrationStep.authority => BusinessRegistrationFailureCode.declarationRequired,
+        _ => BusinessRegistrationFailureCode.unknown,
+      },
+    );
   }
 
   void back() {
@@ -119,7 +137,7 @@ final class BusinessRegistrationController
     final id = state.registration?.id;
     if (id == null || !state.canOpen(BusinessRegistrationStep.review)) return false;
     return _run((s, on) => s.copyWith(isSubmitting: on), () async {
-      final submitted = await _useCases.submit(id);
+      final submitted = await _useCases.submit(id, directorDeclared: state.directorDeclared);
       state = state.copyWith(registration: submitted);
     });
   }
@@ -129,7 +147,7 @@ final class BusinessRegistrationController
     if (id == null) return false;
     return _run((s, on) => s.copyWith(isCancelling: on), () async {
       await _useCases.cancelDraft(id);
-      state = BusinessRegistrationState(isLoading: false, bank: state.bank);
+      state = BusinessRegistrationState(isLoading: false, kaoIdActive: state.kaoIdActive);
     });
   }
 
@@ -143,7 +161,7 @@ final class BusinessRegistrationController
   }
 
   void startNew() {
-    state = BusinessRegistrationState(isLoading: false, bank: state.bank);
+    state = BusinessRegistrationState(isLoading: false, kaoIdActive: state.kaoIdActive);
   }
 
   void dismissFailure() => state = state.copyWith(clearFailure: true);
@@ -156,14 +174,20 @@ final class BusinessRegistrationController
       if (mounted) state = flag(state, false);
       return true;
     } catch (error) {
-      if (mounted) state = flag(state, false).copyWith(failure: _code(error));
+      if (mounted) {
+        final code = _code(error);
+        state = flag(
+          state,
+          false,
+        ).copyWith(failure: code, kaoIdActive: code == BusinessRegistrationFailureCode.kaoIdRequired ? false : null);
+      }
       return false;
     }
   }
 
-  Future<PayoutBankAccount?> _bankOrNull() async {
+  Future<bool?> _kaoIdOrNull() async {
     try {
-      return await _readPayoutBank();
+      return await _readKaoId();
     } catch (_) {
       return null;
     }
@@ -171,18 +195,14 @@ final class BusinessRegistrationController
 
   /// A draft the owner cancelled is stored as rejected without ever being submitted.
   static BusinessRegistration? _withoutWithdrawn(BusinessRegistration? registration) =>
-      registration != null && registration.isRejected && registration.submittedAt == null
-          ? null
-          : registration;
+      registration != null && registration.isRejected && registration.submittedAt == null ? null : registration;
 
-  static BusinessRegistrationStep _resumeStep(
-    BusinessRegistration? registration,
-    PayoutBankAccount? bank,
-  ) {
+  /// The director declaration is never stored on a draft, so a resumed draft stops at that step.
+  static BusinessRegistrationStep _resumeStep(BusinessRegistration? registration) {
     if (registration == null || !registration.isDraft) return BusinessRegistrationStep.details;
+    if (registration.certificateIssuedOn == null) return BusinessRegistrationStep.details;
     if (!registration.hasDocument) return BusinessRegistrationStep.document;
-    if (!(bank?.isApproved ?? false)) return BusinessRegistrationStep.bankAccount;
-    return BusinessRegistrationStep.review;
+    return BusinessRegistrationStep.authority;
   }
 
   static BusinessRegistrationFailureCode _code(Object error) =>

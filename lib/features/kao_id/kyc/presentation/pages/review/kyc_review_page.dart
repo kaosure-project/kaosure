@@ -9,7 +9,7 @@ import '../../../data/repositories/supabase_kyc_review_repository.dart';
 import '../../utils/review_failure_message.dart';
 
 int requiredEvidenceCount(Map<String, dynamic> row) => switch(row['document_type']) {
-  'passport' || 'bank' => 1,
+  'passport' || 'bank' || 'business_bank' => 1,
   'residence_card' => row['residence_format'] == 'paper' ? 1 : 2,
   null || 'thai_national_id' => 2,
   _ => 0,
@@ -17,7 +17,8 @@ int requiredEvidenceCount(Map<String, dynamic> row) => switch(row['document_type
 
 String reviewTypeLabel(AppLocalizations l, dynamic type) => switch(type) {
   'passport' => l.kycPassportTitle, 'residence_card' => l.kycForeignDocTitle,
-  'bank' => l.kycBankTitle, null || 'thai_national_id' => l.kycIdCardTitle,
+  'bank' => l.kycBankTitle, 'business_bank' => l.reviewBusinessBankTitle,
+  null || 'thai_national_id' => l.kycIdCardTitle,
   _ => l.kycUnknownStatus,
 };
 

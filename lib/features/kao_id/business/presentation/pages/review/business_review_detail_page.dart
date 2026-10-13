@@ -17,6 +17,7 @@ import '../../utils/business_review_texts.dart';
 import '../../widgets/common/failure_banner.dart';
 import '../../widgets/dialogs/confirm_dialog.dart';
 import '../../widgets/review/dual_review_notice.dart';
+import '../../widgets/review/review_blockers_notice.dart';
 import '../../widgets/review/review_decision_panel.dart';
 import '../../widgets/review/review_document_tile.dart';
 import '../../widgets/review/review_info_panel.dart';
@@ -46,14 +47,18 @@ class _BusinessReviewDetailPageState extends ConsumerState<BusinessReviewDetailP
     super.dispose();
   }
 
-  Future<void> _openDocument(BusinessReviewDecisionController controller, String path) async {
-    if (widget.item.isPdf) {
+  Future<void> _openDocument(
+    BusinessReviewDecisionController controller,
+    String path, {
+    required bool isPdf,
+    required String name,
+  }) async {
+    if (isPdf) {
       await controller.openExternally(path);
       return;
     }
     final bytes = await controller.loadImage(path);
     if (bytes == null || !mounted) return;
-    final l10n = AppLocalizations.of(context);
     await showDialog<void>(
       context: context,
       builder: (dialogContext) => Dialog(
@@ -64,7 +69,7 @@ class _BusinessReviewDetailPageState extends ConsumerState<BusinessReviewDetailP
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                title: Text(widget.item.documentName ?? l10n.businessRegStepDocument),
+                title: Text(name),
                 trailing: IconButton(
                   tooltip: MaterialLocalizations.of(dialogContext).closeButtonTooltip,
                   onPressed: () => Navigator.of(dialogContext).pop(),
@@ -72,10 +77,7 @@ class _BusinessReviewDetailPageState extends ConsumerState<BusinessReviewDetailP
                 ),
               ),
               Flexible(
-                child: InteractiveViewer(
-                  maxScale: 5,
-                  child: Image.memory(bytes, fit: BoxFit.contain),
-                ),
+                child: InteractiveViewer(maxScale: 5, child: Image.memory(bytes, fit: BoxFit.contain)),
               ),
             ],
           ),
@@ -101,13 +103,15 @@ class _BusinessReviewDetailPageState extends ConsumerState<BusinessReviewDetailP
     if (!confirmed || !mounted) return;
     final outcome = await controller.decide(approve: approve, reason: _reason.text);
     if (outcome == null || !mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(switch (outcome) {
-        BusinessReviewOutcome.approved => l10n.businessReviewApprovedMessage,
-        BusinessReviewOutcome.rejected => l10n.businessReviewRejectedMessage,
-        BusinessReviewOutcome.awaitingSecond => l10n.businessReviewAwaitingSecond,
-      }),
-    ));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(switch (outcome) {
+          BusinessReviewOutcome.approved => l10n.businessReviewApprovedMessage,
+          BusinessReviewOutcome.rejected => l10n.businessReviewRejectedMessage,
+          BusinessReviewOutcome.awaitingSecond => l10n.businessReviewAwaitingSecond,
+        }),
+      ),
+    );
     Navigator.of(context).pop();
   }
 
@@ -125,6 +129,16 @@ class _BusinessReviewDetailPageState extends ConsumerState<BusinessReviewDetailP
     final controller = ref.read(provider.notifier);
     final submitted = item.submittedAt;
     final missing = l10n.businessReviewNotAvailable;
+    final localizations = MaterialLocalizations.of(context);
+    final issuedOn = item.certificateIssuedOn;
+    final certificateName = item.documentName ?? l10n.businessRegCertificateTitle;
+    final vatName = item.vatDocumentName ?? l10n.businessRegVatTitle;
+    final blockers = [
+      if (!item.registrationNumberValid) l10n.businessReviewErrorNumber,
+      if (item.registrationNumberTaken) l10n.businessReviewNumberTaken,
+      if (!item.certificateFresh) l10n.businessReviewErrorCertificateOld,
+      if (!item.directorDeclared) l10n.businessReviewDirectorNotDeclared,
+    ];
 
     return PopScope(
       canPop: !state.busy,
@@ -135,8 +149,7 @@ class _BusinessReviewDetailPageState extends ConsumerState<BusinessReviewDetailP
             color: AppColors.kaoBlue,
             onPressed: state.busy
                 ? null
-                : () => Navigator.of(context)
-                    .push(MaterialPageRoute<void>(builder: (_) => const MfaPage())),
+                : () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const MfaPage())),
             icon: const Icon(Icons.security),
           ),
         ],
@@ -147,9 +160,9 @@ class _BusinessReviewDetailPageState extends ConsumerState<BusinessReviewDetailP
           title: item.businessName,
           description: submitted == null
               ? l10n.businessReviewTitle
-              : '${l10n.businessReviewTitle} · ${l10n.businessReviewSubmittedOn(
-                  MaterialLocalizations.of(context).formatMediumDate(submitted))}',
+              : '${l10n.businessReviewTitle} · ${l10n.businessReviewSubmittedOn(MaterialLocalizations.of(context).formatMediumDate(submitted))}',
           top: [
+            if (blockers.isNotEmpty) ReviewBlockersNotice(title: l10n.businessReviewBlockersTitle, messages: blockers),
             if (item.dualReview) DualReviewNotice(item: item, ownVote: controller.isOwnVote),
           ],
           start: [
@@ -158,11 +171,15 @@ class _BusinessReviewDetailPageState extends ConsumerState<BusinessReviewDetailP
               icon: Icons.storefront_outlined,
               rows: [
                 (l10n.businessRegNameLabel, item.businessName),
+                if (item.legalNameEn != null) (l10n.businessRegNameEnLabel, item.legalNameEn!),
                 (l10n.businessRegNumberLabel, item.registrationNumber),
                 (l10n.businessRegTypeLabel, l10n.businessTypeLabel(item.businessType)),
                 (l10n.businessRegCategoryLabel, l10n.businessCategoryLabel(item.businessCategory)),
-                if (item.businessDescription != null)
-                  (l10n.businessReviewDescription, item.businessDescription!),
+                if (item.businessDescription != null) (l10n.businessReviewDescription, item.businessDescription!),
+                (
+                  l10n.businessRegCertificateDateLabel,
+                  issuedOn == null ? missing : localizations.formatMediumDate(issuedOn),
+                ),
               ],
             ),
             ReviewInfoPanel(
@@ -172,21 +189,10 @@ class _BusinessReviewDetailPageState extends ConsumerState<BusinessReviewDetailP
               rows: [
                 (l10n.businessReviewOwnerKaoId, item.ownerKaoId ?? missing),
                 (l10n.businessReviewOwnerName, item.ownerName ?? missing),
-              ],
-            ),
-            ReviewInfoPanel(
-              title: l10n.businessRegStepBank,
-              icon: Icons.account_balance_outlined,
-              color: AppColors.kaoTeal,
-              rows: [
-                if (item.bankAccountLast4 == null)
-                  ('', missing)
-                else ...[
-                  (l10n.businessReviewBankName, item.bankName ?? missing),
-                  (l10n.businessReviewBankAccount,
-                      l10n.businessReviewBankAccountEnding(item.bankAccountLast4!)),
-                  (l10n.businessReviewBankAccountName, item.bankAccountName ?? missing),
-                ],
+                (
+                  l10n.businessReviewDirectorDeclared,
+                  item.directorDeclared ? l10n.businessReviewYes : l10n.businessReviewNo,
+                ),
               ],
             ),
           ],
@@ -195,40 +201,59 @@ class _BusinessReviewDetailPageState extends ConsumerState<BusinessReviewDetailP
               title: l10n.businessRegStepDocument,
               icon: Icons.description_outlined,
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                if (item.documentPaths.isEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Text(l10n.businessReviewErrorDocumentMissing),
-                  ),
-                for (final path in item.documentPaths)
-                  ReviewDocumentTile(
-                    name: item.documentName ?? l10n.businessRegStepDocument,
-                    isPdf: item.isPdf,
-                    viewed: state.viewedPaths.contains(path),
-                    onOpen: state.busy ? null : () => _openDocument(controller, path),
-                  ),
-              ]),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (item.documentPaths.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Text(l10n.businessReviewErrorDocumentMissing),
+                    ),
+                  for (final path in item.documentPaths)
+                    ReviewDocumentTile(
+                      name: certificateName,
+                      isPdf: item.isPdf,
+                      viewed: state.viewedPaths.contains(path),
+                      onOpen: state.busy
+                          ? null
+                          : () => _openDocument(controller, path, isPdf: item.isPdf, name: certificateName),
+                    ),
+                  for (final path in item.vatPaths)
+                    ReviewDocumentTile(
+                      name: vatName,
+                      isPdf: item.isVatPdf,
+                      viewed: state.viewedPaths.contains(path),
+                      onOpen: state.busy
+                          ? null
+                          : () => _openDocument(controller, path, isPdf: item.isVatPdf, name: vatName),
+                    ),
+                ],
+              ),
             ),
             DashboardPanel(
               padding: const EdgeInsets.all(20),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                if (state.failure != null)
-                  FailureBanner(
-                    message: l10n.businessReviewFailureMessage(state.failure!),
-                    onDismiss: controller.dismissFailure,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (state.failure != null)
+                    FailureBanner(
+                      message: l10n.businessReviewFailureMessage(state.failure!),
+                      onDismiss: controller.dismissFailure,
+                    ),
+                  ReviewDecisionPanel(
+                    reasonController: _reason,
+                    checked: state.checked,
+                    directorConfirmed: state.directorConfirmed,
+                    busy: state.busy,
+                    ownVote: controller.isOwnVote,
+                    documentsViewed: controller.allDocumentsViewed,
+                    onCheckedChanged: state.busy || controller.isOwnVote ? null : controller.setChecked,
+                    onDirectorChanged: state.busy || controller.isOwnVote ? null : controller.setDirectorConfirmed,
+                    onApprove: controller.canApprove ? () => _decide(controller, true) : null,
+                    onReject: controller.canReject ? () => _decide(controller, false) : null,
                   ),
-                ReviewDecisionPanel(
-                  reasonController: _reason,
-                  checked: state.checked,
-                  busy: state.busy,
-                  ownVote: controller.isOwnVote,
-                  documentsViewed: controller.allDocumentsViewed,
-                  onCheckedChanged: state.busy || controller.isOwnVote ? null : controller.setChecked,
-                  onApprove: controller.canApprove ? () => _decide(controller, true) : null,
-                  onReject: controller.canReject ? () => _decide(controller, false) : null,
-                ),
-              ]),
+                ],
+              ),
             ),
           ],
         ),

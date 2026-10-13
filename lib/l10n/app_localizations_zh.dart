@@ -2343,7 +2343,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get businessRegNumberLabel => '注册号';
 
   @override
-  String get businessRegNumberHelp => '仅限 13 位数字';
+  String get businessRegNumberHelp => '证明文件上的 13 位法人编号';
 
   @override
   String get businessRegCategoryLabel => '业务类别';
@@ -2370,13 +2370,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get businessRegFieldRequired => '此项为必填项';
 
   @override
-  String get businessRegNumberInvalid => '请输入 13 位注册号';
+  String get businessRegNumberInvalid => '请输入有效的 13 位法人编号';
 
   @override
-  String get businessRegDocumentHeading => '上传注册文件';
+  String get businessRegDocumentHeading => '上传公司文件';
 
   @override
-  String get businessRegDocumentDescription => '显示企业名称和注册号的公司证明或注册证书。';
+  String get businessRegDocumentDescription =>
+      '须提供 6 个月内签发的公司证明文件,增值税登记证(Por.Por.20)可选。';
 
   @override
   String get businessRegDocumentRequirements =>
@@ -2473,7 +2474,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get businessRegStatusApprovedTitle => '您的企业已通过验证';
 
   @override
-  String get businessRegStatusApprovedBody => '您现在可以在 Kao 服务中使用您的企业。';
+  String get businessRegStatusApprovedBody =>
+      '您的企业 Kao ID 已就绪,下一步请添加用于收款的公司银行账户。';
 
   @override
   String get businessRegStatusRejectedTitle => '注册未获批准';
@@ -2582,7 +2584,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get businessReviewDecisionHeading => '审核决定';
 
   @override
-  String get businessReviewChecked => '我已核实文件与企业名称、注册号和申请人一致。';
+  String get businessReviewChecked => '我已核对证明文件与企业名称、注册号码及签发日期一致。';
 
   @override
   String get businessReviewReason => '给申请人的备注（拒绝时必填）';
@@ -3767,6 +3769,220 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get orderIssueErrorGone => '未找到此报告。';
+
+  @override
+  String get businessReviewErrorDirector => '请确认申请人是证明文件中列名的董事。';
+
+  @override
+  String get businessReviewErrorCertificateOld => '公司证明文件的签发日期已超过 6 个月。';
+
+  @override
+  String get businessReviewErrorNumber => '注册号码校验位不正确。';
+
+  @override
+  String get businessReviewNumberTaken => '该注册号码已被另一家已验证的公司使用。';
+
+  @override
+  String get businessReviewDirectorNotDeclared => '申请人尚未声明董事权限。';
+
+  @override
+  String get businessReviewBlockersTitle => '此申请无法批准';
+
+  @override
+  String get businessReviewDirectorDeclared => '已声明为董事';
+
+  @override
+  String get businessReviewYes => '是';
+
+  @override
+  String get businessReviewNo => '否';
+
+  @override
+  String get businessReviewDirectorConfirm => '申请人已验证的姓名在证明文件中列为董事';
+
+  @override
+  String get businessReviewDirectorConfirmHelp =>
+      '请将上方申请人姓名与证明文件中的董事名单核对。申请人将成为公司所有者。';
+
+  @override
+  String get businessRegCertificateTitle => '公司注册证明';
+
+  @override
+  String get businessRegVatTitle => '增值税登记证(Por.Por.20,可选)';
+
+  @override
+  String get businessRegNameEnLabel => '英文法定名称(可选)';
+
+  @override
+  String get businessRegCertificateDateLabel => '证明文件签发日期';
+
+  @override
+  String get reviewBusinessBankTitle => '公司银行账户';
+
+  @override
+  String get reviewOrganizationName => '公司';
+
+  @override
+  String get reviewBusinessKaoId => '企业 Kao ID';
+
+  @override
+  String get reviewLegalName => '法定名称(泰文)';
+
+  @override
+  String get reviewLegalNameEn => '法定名称(英文)';
+
+  @override
+  String get reviewNameMatched => '账户名称与公司法定名称一致';
+
+  @override
+  String get reviewNameMismatch => '账户名称与公司法定名称不一致';
+
+  @override
+  String get noticeBusinessBankApproved => '您的公司银行账户已通过验证';
+
+  @override
+  String get noticeBusinessBankRejected => '您的公司银行账户未获批准';
+
+  @override
+  String get businessRegNameHelp => '与证明文件完全一致的泰文法定名称';
+
+  @override
+  String get businessRegNameEnHelp =>
+      '与证明文件一致,例如 EXAMPLE CO., LTD.,用于核对公司银行账户名称。';
+
+  @override
+  String get businessRegNameEnInvalid => '仅可使用英文字母、数字及 . , & ( ) \' / -';
+
+  @override
+  String get businessRegCertificateDateRequired => '请选择证明文件签发日期';
+
+  @override
+  String get businessRegCertificateTooOld => '证明文件须在 6 个月内签发,请向 DBD 申请新证明。';
+
+  @override
+  String get businessRegCertificateDateHelp => '证明文件上印制的日期,提交时不得超过 6 个月。';
+
+  @override
+  String get businessRegCertificateDateInvalid => '签发日期不能是将来的日期。';
+
+  @override
+  String get businessRegDocumentRemove => '移除';
+
+  @override
+  String get businessRegAuthorityHeading => '确认您的权限';
+
+  @override
+  String get businessRegAuthorityDescription =>
+      '只有证明文件中列名的董事才能注册公司,您将成为该公司在 Kao ID 中的所有者。';
+
+  @override
+  String get businessRegAuthorityKaoIdVerified => '您的 Kao ID 已通过验证';
+
+  @override
+  String get businessRegAuthorityMatchHelp =>
+      '工作人员会将您已验证身份上的姓名与证明文件中的董事名单进行核对。';
+
+  @override
+  String get businessRegDirectorDeclaration => '我是公司证明文件中列名的董事,并有权注册该公司。';
+
+  @override
+  String get businessRegKaoIdRequiredTitle => '请先完成身份验证';
+
+  @override
+  String get businessRegKaoIdRequiredBody =>
+      '只有拥有已验证 Kao ID(邮箱、电话、银行账户和身份证件)的人才能注册公司。';
+
+  @override
+  String get businessRegKaoIdVerifyAction => '前往身份验证';
+
+  @override
+  String get businessRegKaoIdCheckAgain => '重新检查';
+
+  @override
+  String get businessRegVatNotProvided => '未提供';
+
+  @override
+  String get businessRegStepAuthority => '权限';
+
+  @override
+  String get businessRegErrorDetails => '请检查企业信息后重试。';
+
+  @override
+  String get businessRegDeclarationRequired => '请确认您是证明文件中列名的董事。';
+
+  @override
+  String get businessOrgManage => '管理公司';
+
+  @override
+  String get businessOrgErrorRole => '只有所有者、董事或授权人才能管理公司银行账户。';
+
+  @override
+  String get businessOrgErrorBusinessKaoId => '公司需要先拥有有效的企业 Kao ID。';
+
+  @override
+  String get businessOrgErrorNameMismatch => '账户名称必须与公司的泰文或英文法定名称一致。';
+
+  @override
+  String get businessOrgRoleOwner => '所有者';
+
+  @override
+  String get businessOrgRoleDirector => '董事';
+
+  @override
+  String get businessOrgRoleAuthorized => '授权人';
+
+  @override
+  String get businessOrgRoleFinance => '财务';
+
+  @override
+  String get businessOrgRoleMember => '成员';
+
+  @override
+  String get businessOrgBankFormTitle => '添加公司银行账户';
+
+  @override
+  String businessOrgBankNameRule(String names) {
+    return '账户名称必须与公司法定名称一致:$names';
+  }
+
+  @override
+  String get businessOrgBankHolder => '账户名称(公司)';
+
+  @override
+  String get businessOrgBankEvidenceHelp => '显示账户名称和号码的公司存折或银行对账单照片。';
+
+  @override
+  String get businessOrgIdentityTitle => '公司身份';
+
+  @override
+  String get businessOrgBusinessKaoId => '企业 Kao ID';
+
+  @override
+  String get businessOrgKaoIdPending => '尚未签发';
+
+  @override
+  String get businessOrgShop => '二手商店';
+
+  @override
+  String get businessOrgBankTitle => '公司银行账户';
+
+  @override
+  String get businessOrgBankReplace => '更换公司银行账户';
+
+  @override
+  String get businessOrgBankAdd => '添加公司银行账户';
+
+  @override
+  String get businessOrgBankSubmitted => '公司银行账户已提交审核';
+
+  @override
+  String get businessOrgTitle => '您的公司';
+
+  @override
+  String get businessOrgSubtitle => '企业 Kao ID 及用于收款的公司银行账户。';
+
+  @override
+  String get businessOrgEmpty => '您还不是任何已验证公司的成员。';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -6108,7 +6324,7 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
   String get businessRegNumberLabel => '注册号';
 
   @override
-  String get businessRegNumberHelp => '仅限 13 位数字';
+  String get businessRegNumberHelp => '证明文件上的 13 位法人编号';
 
   @override
   String get businessRegCategoryLabel => '业务类别';
@@ -6135,13 +6351,14 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
   String get businessRegFieldRequired => '此项为必填项';
 
   @override
-  String get businessRegNumberInvalid => '请输入 13 位注册号';
+  String get businessRegNumberInvalid => '请输入有效的 13 位法人编号';
 
   @override
-  String get businessRegDocumentHeading => '上传注册文件';
+  String get businessRegDocumentHeading => '上传公司文件';
 
   @override
-  String get businessRegDocumentDescription => '显示企业名称和注册号的公司证明或注册证书。';
+  String get businessRegDocumentDescription =>
+      '须提供 6 个月内签发的公司证明文件,增值税登记证(Por.Por.20)可选。';
 
   @override
   String get businessRegDocumentRequirements =>
@@ -6238,7 +6455,8 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
   String get businessRegStatusApprovedTitle => '您的企业已通过验证';
 
   @override
-  String get businessRegStatusApprovedBody => '您现在可以在 Kao 服务中使用您的企业。';
+  String get businessRegStatusApprovedBody =>
+      '您的企业 Kao ID 已就绪,下一步请添加用于收款的公司银行账户。';
 
   @override
   String get businessRegStatusRejectedTitle => '注册未获批准';
@@ -6347,7 +6565,7 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
   String get businessReviewDecisionHeading => '审核决定';
 
   @override
-  String get businessReviewChecked => '我已核实文件与企业名称、注册号和申请人一致。';
+  String get businessReviewChecked => '我已核对证明文件与企业名称、注册号码及签发日期一致。';
 
   @override
   String get businessReviewReason => '给申请人的备注（拒绝时必填）';
@@ -7532,4 +7750,218 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get orderIssueErrorGone => '未找到此报告。';
+
+  @override
+  String get businessReviewErrorDirector => '请确认申请人是证明文件中列名的董事。';
+
+  @override
+  String get businessReviewErrorCertificateOld => '公司证明文件的签发日期已超过 6 个月。';
+
+  @override
+  String get businessReviewErrorNumber => '注册号码校验位不正确。';
+
+  @override
+  String get businessReviewNumberTaken => '该注册号码已被另一家已验证的公司使用。';
+
+  @override
+  String get businessReviewDirectorNotDeclared => '申请人尚未声明董事权限。';
+
+  @override
+  String get businessReviewBlockersTitle => '此申请无法批准';
+
+  @override
+  String get businessReviewDirectorDeclared => '已声明为董事';
+
+  @override
+  String get businessReviewYes => '是';
+
+  @override
+  String get businessReviewNo => '否';
+
+  @override
+  String get businessReviewDirectorConfirm => '申请人已验证的姓名在证明文件中列为董事';
+
+  @override
+  String get businessReviewDirectorConfirmHelp =>
+      '请将上方申请人姓名与证明文件中的董事名单核对。申请人将成为公司所有者。';
+
+  @override
+  String get businessRegCertificateTitle => '公司注册证明';
+
+  @override
+  String get businessRegVatTitle => '增值税登记证(Por.Por.20,可选)';
+
+  @override
+  String get businessRegNameEnLabel => '英文法定名称(可选)';
+
+  @override
+  String get businessRegCertificateDateLabel => '证明文件签发日期';
+
+  @override
+  String get reviewBusinessBankTitle => '公司银行账户';
+
+  @override
+  String get reviewOrganizationName => '公司';
+
+  @override
+  String get reviewBusinessKaoId => '企业 Kao ID';
+
+  @override
+  String get reviewLegalName => '法定名称(泰文)';
+
+  @override
+  String get reviewLegalNameEn => '法定名称(英文)';
+
+  @override
+  String get reviewNameMatched => '账户名称与公司法定名称一致';
+
+  @override
+  String get reviewNameMismatch => '账户名称与公司法定名称不一致';
+
+  @override
+  String get noticeBusinessBankApproved => '您的公司银行账户已通过验证';
+
+  @override
+  String get noticeBusinessBankRejected => '您的公司银行账户未获批准';
+
+  @override
+  String get businessRegNameHelp => '与证明文件完全一致的泰文法定名称';
+
+  @override
+  String get businessRegNameEnHelp =>
+      '与证明文件一致,例如 EXAMPLE CO., LTD.,用于核对公司银行账户名称。';
+
+  @override
+  String get businessRegNameEnInvalid => '仅可使用英文字母、数字及 . , & ( ) \' / -';
+
+  @override
+  String get businessRegCertificateDateRequired => '请选择证明文件签发日期';
+
+  @override
+  String get businessRegCertificateTooOld => '证明文件须在 6 个月内签发,请向 DBD 申请新证明。';
+
+  @override
+  String get businessRegCertificateDateHelp => '证明文件上印制的日期,提交时不得超过 6 个月。';
+
+  @override
+  String get businessRegCertificateDateInvalid => '签发日期不能是将来的日期。';
+
+  @override
+  String get businessRegDocumentRemove => '移除';
+
+  @override
+  String get businessRegAuthorityHeading => '确认您的权限';
+
+  @override
+  String get businessRegAuthorityDescription =>
+      '只有证明文件中列名的董事才能注册公司,您将成为该公司在 Kao ID 中的所有者。';
+
+  @override
+  String get businessRegAuthorityKaoIdVerified => '您的 Kao ID 已通过验证';
+
+  @override
+  String get businessRegAuthorityMatchHelp =>
+      '工作人员会将您已验证身份上的姓名与证明文件中的董事名单进行核对。';
+
+  @override
+  String get businessRegDirectorDeclaration => '我是公司证明文件中列名的董事,并有权注册该公司。';
+
+  @override
+  String get businessRegKaoIdRequiredTitle => '请先完成身份验证';
+
+  @override
+  String get businessRegKaoIdRequiredBody =>
+      '只有拥有已验证 Kao ID(邮箱、电话、银行账户和身份证件)的人才能注册公司。';
+
+  @override
+  String get businessRegKaoIdVerifyAction => '前往身份验证';
+
+  @override
+  String get businessRegKaoIdCheckAgain => '重新检查';
+
+  @override
+  String get businessRegVatNotProvided => '未提供';
+
+  @override
+  String get businessRegStepAuthority => '权限';
+
+  @override
+  String get businessRegErrorDetails => '请检查企业信息后重试。';
+
+  @override
+  String get businessRegDeclarationRequired => '请确认您是证明文件中列名的董事。';
+
+  @override
+  String get businessOrgManage => '管理公司';
+
+  @override
+  String get businessOrgErrorRole => '只有所有者、董事或授权人才能管理公司银行账户。';
+
+  @override
+  String get businessOrgErrorBusinessKaoId => '公司需要先拥有有效的企业 Kao ID。';
+
+  @override
+  String get businessOrgErrorNameMismatch => '账户名称必须与公司的泰文或英文法定名称一致。';
+
+  @override
+  String get businessOrgRoleOwner => '所有者';
+
+  @override
+  String get businessOrgRoleDirector => '董事';
+
+  @override
+  String get businessOrgRoleAuthorized => '授权人';
+
+  @override
+  String get businessOrgRoleFinance => '财务';
+
+  @override
+  String get businessOrgRoleMember => '成员';
+
+  @override
+  String get businessOrgBankFormTitle => '添加公司银行账户';
+
+  @override
+  String businessOrgBankNameRule(String names) {
+    return '账户名称必须与公司法定名称一致:$names';
+  }
+
+  @override
+  String get businessOrgBankHolder => '账户名称(公司)';
+
+  @override
+  String get businessOrgBankEvidenceHelp => '显示账户名称和号码的公司存折或银行对账单照片。';
+
+  @override
+  String get businessOrgIdentityTitle => '公司身份';
+
+  @override
+  String get businessOrgBusinessKaoId => '企业 Kao ID';
+
+  @override
+  String get businessOrgKaoIdPending => '尚未签发';
+
+  @override
+  String get businessOrgShop => '二手商店';
+
+  @override
+  String get businessOrgBankTitle => '公司银行账户';
+
+  @override
+  String get businessOrgBankReplace => '更换公司银行账户';
+
+  @override
+  String get businessOrgBankAdd => '添加公司银行账户';
+
+  @override
+  String get businessOrgBankSubmitted => '公司银行账户已提交审核';
+
+  @override
+  String get businessOrgTitle => '您的公司';
+
+  @override
+  String get businessOrgSubtitle => '企业 Kao ID 及用于收款的公司银行账户。';
+
+  @override
+  String get businessOrgEmpty => '您还不是任何已验证公司的成员。';
 }

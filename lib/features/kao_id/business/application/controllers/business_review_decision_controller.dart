@@ -25,23 +25,28 @@ final class BusinessReviewDecisionController extends StateNotifier<BusinessRevie
 
   bool get isOwnVote => item.isOwnVote(reviewerId);
 
-  bool get allDocumentsViewed =>
-      item.documentPaths.isNotEmpty && item.documentPaths.every(state.viewedPaths.contains);
+  bool get allDocumentsViewed => item.documentPaths.isNotEmpty && item.allPaths.every(state.viewedPaths.contains);
 
-  bool get canApprove => !state.busy && !isOwnVote && state.checked && allDocumentsViewed;
+  /// Facts the server re-checks on approval; the reviewer can only reject when any fails.
+  bool get approvable => item.certificateFresh && item.registrationNumberValid && !item.registrationNumberTaken;
+
+  bool get canApprove =>
+      !state.busy && !isOwnVote && approvable && state.checked && state.directorConfirmed && allDocumentsViewed;
 
   bool get canReject => !state.busy && !isOwnVote;
 
   void setChecked(bool value) => state = state.copyWith(checked: value);
 
+  void setDirectorConfirmed(bool value) => state = state.copyWith(directorConfirmed: value);
+
   void dismissFailure() => state = state.copyWith(clearFailure: true);
 
   /// Image bytes for inline preview; the document counts as viewed once loaded.
   Future<Uint8List?> loadImage(String path) => _run(() async {
-        final bytes = await _repository.downloadDocument(reviewerId, path);
-        _markViewed(path);
-        return bytes;
-      });
+    final bytes = await _repository.downloadDocument(reviewerId, path);
+    _markViewed(path);
+    return bytes;
+  });
 
   /// Opens a short-lived link in the browser for formats shown outside the app (PDF).
   Future<void> openExternally(String path) async {
@@ -61,12 +66,15 @@ final class BusinessReviewDecisionController extends StateNotifier<BusinessRevie
       state = state.copyWith(failure: BusinessReviewFailureCode.reasonRequired);
       return null;
     }
-    final outcome = await _run(() => _repository.decide(
-          reviewerId: reviewerId,
-          registrationId: item.id,
-          approve: approve,
-          reason: reason,
-        ));
+    final outcome = await _run(
+      () => _repository.decide(
+        reviewerId: reviewerId,
+        registrationId: item.id,
+        approve: approve,
+        directorConfirmed: approve && state.directorConfirmed,
+        reason: reason,
+      ),
+    );
     if (outcome != null && mounted) state = state.copyWith(outcome: outcome);
     return outcome;
   }

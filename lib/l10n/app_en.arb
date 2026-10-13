@@ -792,7 +792,7 @@
   "businessRegTypeOrganizationHint": "Registered non-profit organization",
   "businessRegNameLabel": "Registered business name",
   "businessRegNumberLabel": "Registration number",
-  "businessRegNumberHelp": "13 digits, numbers only",
+  "businessRegNumberHelp": "13-digit juristic person number from the certificate",
   "businessRegCategoryLabel": "Business category",
   "businessRegCategoryRetail": "Retail",
   "businessRegCategoryFood": "Food and beverage",
@@ -801,9 +801,9 @@
   "businessRegCategoryOther": "Other",
   "businessRegDescriptionLabel": "About your business (optional)",
   "businessRegFieldRequired": "This field is required",
-  "businessRegNumberInvalid": "Enter a 13-digit registration number",
-  "businessRegDocumentHeading": "Upload your registration document",
-  "businessRegDocumentDescription": "A company certificate or registration certificate showing the business name and number.",
+  "businessRegNumberInvalid": "Enter a valid 13-digit juristic person number",
+  "businessRegDocumentHeading": "Upload company documents",
+  "businessRegDocumentDescription": "The company certificate issued within the last 6 months is required. The VAT registration (Por.Por.20) is optional.",
   "businessRegDocumentRequirements": "JPG, PNG or PDF, up to 10 MB. All text must be clearly readable.",
   "businessRegDocumentChoose": "Choose file",
   "businessRegDocumentReplace": "Replace file",
@@ -835,7 +835,7 @@
   "businessRegStatusReviewTitle": "We're reviewing your business",
   "businessRegStatusReviewBody": "We'll notify you as soon as the review is complete.",
   "businessRegStatusApprovedTitle": "Your business is verified",
-  "businessRegStatusApprovedBody": "You can now use your business with Kao services.",
+  "businessRegStatusApprovedBody": "Your Business Kao ID is ready. Next, add the company bank account for payouts.",
   "businessRegStatusRejectedTitle": "Registration not approved",
   "businessRegStatusRejectedBody": "You can start a new registration with updated information.",
   "businessRegStatusActionTitle": "Action needed",
@@ -884,7 +884,7 @@
   "businessReviewOpenDocument": "Open",
   "businessReviewDocumentViewed": "Viewed",
   "businessReviewDecisionHeading": "Decision",
-  "businessReviewChecked": "I checked that the document matches the business name, registration number and applicant.",
+  "businessReviewChecked": "I checked that the certificate matches the business name, registration number and issue date.",
   "businessReviewReason": "Note to applicant (required to reject)",
   "businessReviewViewAllHint": "Open every document before approving.",
   "businessReviewApprove": "Approve",
@@ -1181,9 +1181,27 @@
   "withdrawalMarkPaid": "Confirm transfer",
   "withdrawalReject": "Reject and refund to wallet",
   "withdrawalPaidConfirm": "Confirm that {amount} was transferred to {bank} {account}? The member will be notified.",
-  "@withdrawalPaidConfirm": {"placeholders": {"amount": {"type": "String"}, "bank": {"type": "String"}, "account": {"type": "String"}}},
+  "@withdrawalPaidConfirm": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "bank": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
   "withdrawalRejectConfirm": "Reject this request? {amount} returns to the member's wallet and they will be notified.",
-  "@withdrawalRejectConfirm": {"placeholders": {"amount": {"type": "String"}}},
+  "@withdrawalRejectConfirm": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "withdrawalPaidDone": "Transfer recorded",
   "withdrawalRejectedDone": "Request rejected and refunded",
   "withdrawalBankChanged": "The member's verified bank account has changed. Reject this request so they can request again.",
@@ -1221,12 +1239,24 @@
   "contentsActive": "Show in apps",
   "contentsHidden": "Hidden",
   "contentsVersion": "Version {version}",
-  "@contentsVersion": {"placeholders": {"version": {"type": "int"}}},
+  "@contentsVersion": {
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
   "contentsSaved": "Content saved",
   "contentsDeleted": "Content deleted",
   "contentsDelete": "Delete",
   "contentsDeleteConfirm": "Delete {key}? Apps stop showing it right away. A copy stays in the revision history.",
-  "@contentsDeleteConfirm": {"placeholders": {"key": {"type": "String"}}},
+  "@contentsDeleteConfirm": {
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
   "contentsErrorChanged": "Someone saved this content after you opened it. Go back, reopen it and make your change again.",
   "contentsErrorKeyTaken": "This content key is already used.",
   "contentsErrorKey": "Check the content key: lowercase letters, numbers and _, with at least one dot.",
@@ -1245,7 +1275,13 @@
   "moderationHiddenBadge": "Hidden from members",
   "moderationVisible": "Shown to members",
   "moderationPendingReports": "{count} reports waiting",
-  "@moderationPendingReports": {"placeholders": {"count": {"type": "int"}}},
+  "@moderationPendingReports": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "moderationVerdict": "Rating",
   "moderationReviewer": "Written by",
   "moderationReviewee": "About",
@@ -1289,7 +1325,13 @@
   "ssoChooseAccountTitle": "Continue to the app",
   "ssoChooseAccountBody": "This app is asking you to sign in with Kao ID. Choose which account to use.",
   "ssoContinueAs": "Continue as {account}",
-  "@ssoContinueAs": {"placeholders": {"account": {"type": "String"}}},
+  "@ssoContinueAs": {
+    "placeholders": {
+      "account": {
+        "type": "String"
+      }
+    }
+  },
   "ssoUseAnotherAccount": "Use another account",
   "ssoSigningOut": "Signing out…",
   "orderIssuesTitle": "Order problems",
@@ -1335,5 +1377,81 @@
   "orderIssueClosedNote": "This report is closed.",
   "orderIssueErrorOwn": "You can't decide on your own order.",
   "orderIssueErrorClosed": "This report is already closed, or the order is no longer in transit.",
-  "orderIssueErrorGone": "This report wasn't found."
+  "orderIssueErrorGone": "This report wasn't found.",
+  "businessReviewErrorDirector": "Confirm that the applicant is a director named in the certificate.",
+  "businessReviewErrorCertificateOld": "The company certificate was issued more than 6 months ago.",
+  "businessReviewErrorNumber": "The registration number fails the check digit.",
+  "businessReviewNumberTaken": "Another verified company already uses this registration number.",
+  "businessReviewDirectorNotDeclared": "The applicant has not declared director authority.",
+  "businessReviewBlockersTitle": "This application cannot be approved",
+  "businessReviewDirectorDeclared": "Declared as director",
+  "businessReviewYes": "Yes",
+  "businessReviewNo": "No",
+  "businessReviewDirectorConfirm": "The applicant's verified name appears as a director in the certificate",
+  "businessReviewDirectorConfirmHelp": "Compare the applicant name above with the directors listed in the certificate. The applicant becomes the company owner.",
+  "businessRegCertificateTitle": "Company certificate",
+  "businessRegVatTitle": "VAT registration (Por.Por.20, optional)",
+  "businessRegNameEnLabel": "Legal name in English (optional)",
+  "businessRegCertificateDateLabel": "Certificate issue date",
+  "reviewBusinessBankTitle": "Company bank account",
+  "reviewOrganizationName": "Company",
+  "reviewBusinessKaoId": "Business Kao ID",
+  "reviewLegalName": "Legal name (Thai)",
+  "reviewLegalNameEn": "Legal name (English)",
+  "reviewNameMatched": "Account name matches the company's legal name",
+  "reviewNameMismatch": "Account name does not match the company's legal name",
+  "noticeBusinessBankApproved": "Your company bank account is verified",
+  "noticeBusinessBankRejected": "Your company bank account was not approved",
+  "businessRegNameHelp": "Thai legal name exactly as on the certificate",
+  "businessRegNameEnHelp": "As on the certificate, e.g. EXAMPLE CO., LTD. Used to match the company bank account.",
+  "businessRegNameEnInvalid": "Use English letters, numbers and . , & ( ) ' / - only",
+  "businessRegCertificateDateRequired": "Choose the certificate issue date",
+  "businessRegCertificateTooOld": "The certificate must be issued within the last 6 months. Request a new one from DBD.",
+  "businessRegCertificateDateHelp": "Printed on the company certificate. It must be no more than 6 months old when you submit.",
+  "businessRegCertificateDateInvalid": "The issue date cannot be in the future.",
+  "businessRegDocumentRemove": "Remove",
+  "businessRegAuthorityHeading": "Confirm your authority",
+  "businessRegAuthorityDescription": "Only a director named in the company certificate can register the company. You will become its owner in Kao ID.",
+  "businessRegAuthorityKaoIdVerified": "Your Kao ID is verified",
+  "businessRegAuthorityMatchHelp": "Our staff will compare the name on your verified identity with the directors listed in the certificate.",
+  "businessRegDirectorDeclaration": "I am a director named in the company certificate and I am authorized to register this company.",
+  "businessRegKaoIdRequiredTitle": "Verify your identity first",
+  "businessRegKaoIdRequiredBody": "A company can only be registered by a person with a verified Kao ID (email, phone, bank and identity).",
+  "businessRegKaoIdVerifyAction": "Go to identity verification",
+  "businessRegKaoIdCheckAgain": "Check again",
+  "businessRegVatNotProvided": "Not provided",
+  "businessRegStepAuthority": "Authority",
+  "businessRegErrorDetails": "Check the business details and try again.",
+  "businessRegDeclarationRequired": "Confirm that you are a director named in the certificate.",
+  "businessOrgManage": "Manage company",
+  "businessOrgErrorRole": "Only the owner, a director or an authorized person can manage the company bank account.",
+  "businessOrgErrorBusinessKaoId": "The company needs an active Business Kao ID first.",
+  "businessOrgErrorNameMismatch": "The account name must match the company's legal name in Thai or English.",
+  "businessOrgRoleOwner": "Owner",
+  "businessOrgRoleDirector": "Director",
+  "businessOrgRoleAuthorized": "Authorized person",
+  "businessOrgRoleFinance": "Finance",
+  "businessOrgRoleMember": "Member",
+  "businessOrgBankFormTitle": "Add company bank account",
+  "businessOrgBankNameRule": "The account name must match the company's legal name: {names}",
+  "@businessOrgBankNameRule": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "businessOrgBankHolder": "Account name (company)",
+  "businessOrgBankEvidenceHelp": "Photo of the company bank book or a bank statement showing the account name and number.",
+  "businessOrgIdentityTitle": "Company identity",
+  "businessOrgBusinessKaoId": "Business Kao ID",
+  "businessOrgKaoIdPending": "Not issued yet",
+  "businessOrgShop": "Secondhand store",
+  "businessOrgBankTitle": "Company bank account",
+  "businessOrgBankReplace": "Change company bank account",
+  "businessOrgBankAdd": "Add company bank account",
+  "businessOrgBankSubmitted": "Company bank account sent for review",
+  "businessOrgTitle": "Your companies",
+  "businessOrgSubtitle": "Business Kao ID and the company bank account used for payouts.",
+  "businessOrgEmpty": "You are not a member of a verified company yet."
 }

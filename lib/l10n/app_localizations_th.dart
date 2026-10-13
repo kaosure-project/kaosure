@@ -2521,7 +2521,8 @@ class AppLocalizationsTh extends AppLocalizations {
   String get businessRegNumberLabel => 'เลขทะเบียนนิติบุคคล';
 
   @override
-  String get businessRegNumberHelp => 'ตัวเลข 13 หลัก';
+  String get businessRegNumberHelp =>
+      'เลขทะเบียนนิติบุคคล 13 หลักตามหนังสือรับรอง';
 
   @override
   String get businessRegCategoryLabel => 'หมวดหมู่ธุรกิจ';
@@ -2548,14 +2549,15 @@ class AppLocalizationsTh extends AppLocalizations {
   String get businessRegFieldRequired => 'กรุณากรอกข้อมูลนี้';
 
   @override
-  String get businessRegNumberInvalid => 'กรุณากรอกเลขทะเบียน 13 หลัก';
+  String get businessRegNumberInvalid =>
+      'กรอกเลขทะเบียนนิติบุคคล 13 หลักให้ถูกต้อง';
 
   @override
-  String get businessRegDocumentHeading => 'อัปโหลดเอกสารจดทะเบียน';
+  String get businessRegDocumentHeading => 'อัปโหลดเอกสารบริษัท';
 
   @override
   String get businessRegDocumentDescription =>
-      'หนังสือรับรองบริษัทหรือใบสำคัญแสดงการจดทะเบียน ที่แสดงชื่อและเลขทะเบียนกิจการ';
+      'ต้องแนบหนังสือรับรองนิติบุคคลที่ออกไม่เกิน 6 เดือน ส่วน ภ.พ.20 แนบเพิ่มได้ (ไม่บังคับ)';
 
   @override
   String get businessRegDocumentRequirements =>
@@ -2660,7 +2662,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get businessRegStatusApprovedBody =>
-      'ตอนนี้คุณใช้งานธุรกิจกับบริการของ Kao ได้แล้ว';
+      'Kao ID ธุรกิจของคุณพร้อมใช้งานแล้ว ขั้นต่อไปให้เพิ่มบัญชีธนาคารบริษัทสำหรับรับเงิน';
 
   @override
   String get businessRegStatusRejectedTitle => 'คำขอไม่ผ่านการอนุมัติ';
@@ -2780,7 +2782,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get businessReviewChecked =>
-      'ฉันตรวจแล้วว่าเอกสารตรงกับชื่อกิจการ เลขทะเบียน และผู้ยื่นคำขอ';
+      'ฉันตรวจแล้วว่าหนังสือรับรองตรงกับชื่อกิจการ เลขทะเบียน และวันที่ออก';
 
   @override
   String get businessReviewReason =>
@@ -4028,4 +4030,240 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get orderIssueErrorGone => 'ไม่พบเรื่องนี้';
+
+  @override
+  String get businessReviewErrorDirector =>
+      'โปรดยืนยันว่าผู้ยื่นเป็นกรรมการที่มีชื่อในหนังสือรับรอง';
+
+  @override
+  String get businessReviewErrorCertificateOld =>
+      'หนังสือรับรองบริษัทออกเกิน 6 เดือนแล้ว';
+
+  @override
+  String get businessReviewErrorNumber =>
+      'เลขทะเบียนนิติบุคคลไม่ถูกต้องตามหลักตรวจสอบ';
+
+  @override
+  String get businessReviewNumberTaken =>
+      'เลขทะเบียนนี้ถูกใช้โดยบริษัทอื่นที่ยืนยันแล้ว';
+
+  @override
+  String get businessReviewDirectorNotDeclared =>
+      'ผู้ยื่นยังไม่ได้ยืนยันอำนาจกรรมการ';
+
+  @override
+  String get businessReviewBlockersTitle => 'ไม่สามารถอนุมัติคำขอนี้ได้';
+
+  @override
+  String get businessReviewDirectorDeclared => 'ยืนยันว่าเป็นกรรมการ';
+
+  @override
+  String get businessReviewYes => 'ใช่';
+
+  @override
+  String get businessReviewNo => 'ไม่';
+
+  @override
+  String get businessReviewDirectorConfirm =>
+      'ชื่อที่ยืนยันแล้วของผู้ยื่นปรากฏเป็นกรรมการในหนังสือรับรอง';
+
+  @override
+  String get businessReviewDirectorConfirmHelp =>
+      'เทียบชื่อผู้ยื่นด้านบนกับรายชื่อกรรมการในหนังสือรับรอง ผู้ยื่นจะเป็นเจ้าของบริษัทในระบบ';
+
+  @override
+  String get businessRegCertificateTitle => 'หนังสือรับรองนิติบุคคล';
+
+  @override
+  String get businessRegVatTitle =>
+      'ใบทะเบียนภาษีมูลค่าเพิ่ม ภ.พ.20 (ไม่บังคับ)';
+
+  @override
+  String get businessRegNameEnLabel => 'ชื่อนิติบุคคลภาษาอังกฤษ (ถ้ามี)';
+
+  @override
+  String get businessRegCertificateDateLabel => 'วันที่ออกหนังสือรับรอง';
+
+  @override
+  String get reviewBusinessBankTitle => 'บัญชีธนาคารบริษัท';
+
+  @override
+  String get reviewOrganizationName => 'บริษัท';
+
+  @override
+  String get reviewBusinessKaoId => 'Kao ID ธุรกิจ';
+
+  @override
+  String get reviewLegalName => 'ชื่อนิติบุคคล (ไทย)';
+
+  @override
+  String get reviewLegalNameEn => 'ชื่อนิติบุคคล (อังกฤษ)';
+
+  @override
+  String get reviewNameMatched => 'ชื่อบัญชีตรงกับชื่อนิติบุคคล';
+
+  @override
+  String get reviewNameMismatch => 'ชื่อบัญชีไม่ตรงกับชื่อนิติบุคคล';
+
+  @override
+  String get noticeBusinessBankApproved =>
+      'บัญชีธนาคารบริษัทได้รับการยืนยันแล้ว';
+
+  @override
+  String get noticeBusinessBankRejected => 'บัญชีธนาคารบริษัทไม่ผ่านการตรวจสอบ';
+
+  @override
+  String get businessRegNameHelp => 'ชื่อนิติบุคคลภาษาไทยตามหนังสือรับรอง';
+
+  @override
+  String get businessRegNameEnHelp =>
+      'ตามหนังสือรับรอง เช่น EXAMPLE CO., LTD. ใช้ตรวจชื่อบัญชีธนาคารบริษัท';
+
+  @override
+  String get businessRegNameEnInvalid =>
+      'ใช้ได้เฉพาะตัวอักษรอังกฤษ ตัวเลข และ . , & ( ) \' / -';
+
+  @override
+  String get businessRegCertificateDateRequired =>
+      'เลือกวันที่ออกหนังสือรับรอง';
+
+  @override
+  String get businessRegCertificateTooOld =>
+      'หนังสือรับรองต้องออกไม่เกิน 6 เดือน โปรดขอฉบับใหม่จากกรมพัฒนาธุรกิจการค้า';
+
+  @override
+  String get businessRegCertificateDateHelp =>
+      'วันที่ระบุบนหนังสือรับรอง ต้องไม่เกิน 6 เดือน ณ วันที่ส่งตรวจ';
+
+  @override
+  String get businessRegCertificateDateInvalid =>
+      'วันที่ออกต้องไม่เป็นวันในอนาคต';
+
+  @override
+  String get businessRegDocumentRemove => 'นำออก';
+
+  @override
+  String get businessRegAuthorityHeading => 'ยืนยันอำนาจกระทำการ';
+
+  @override
+  String get businessRegAuthorityDescription =>
+      'เฉพาะกรรมการที่มีชื่อในหนังสือรับรองเท่านั้นที่ลงทะเบียนบริษัทได้ และคุณจะเป็นเจ้าของบริษัทใน Kao ID';
+
+  @override
+  String get businessRegAuthorityKaoIdVerified =>
+      'Kao ID ของคุณยืนยันตัวตนแล้ว';
+
+  @override
+  String get businessRegAuthorityMatchHelp =>
+      'เจ้าหน้าที่จะตรวจชื่อจากเอกสารยืนยันตัวตนของคุณกับรายชื่อกรรมการในหนังสือรับรอง';
+
+  @override
+  String get businessRegDirectorDeclaration =>
+      'ข้าพเจ้าเป็นกรรมการที่มีชื่อในหนังสือรับรอง และมีอำนาจลงทะเบียนบริษัทนี้';
+
+  @override
+  String get businessRegKaoIdRequiredTitle => 'โปรดยืนยันตัวตนก่อน';
+
+  @override
+  String get businessRegKaoIdRequiredBody =>
+      'การลงทะเบียนบริษัทต้องทำโดยผู้ที่มี Kao ID ที่ยืนยันตัวตนครบแล้ว (อีเมล โทรศัพท์ บัญชีธนาคาร และเอกสารตัวตน)';
+
+  @override
+  String get businessRegKaoIdVerifyAction => 'ไปที่การยืนยันตัวตน';
+
+  @override
+  String get businessRegKaoIdCheckAgain => 'ตรวจสอบอีกครั้ง';
+
+  @override
+  String get businessRegVatNotProvided => 'ไม่ได้แนบ';
+
+  @override
+  String get businessRegStepAuthority => 'อำนาจกรรมการ';
+
+  @override
+  String get businessRegErrorDetails =>
+      'โปรดตรวจสอบข้อมูลธุรกิจแล้วลองอีกครั้ง';
+
+  @override
+  String get businessRegDeclarationRequired =>
+      'โปรดยืนยันว่าคุณเป็นกรรมการที่มีชื่อในหนังสือรับรอง';
+
+  @override
+  String get businessOrgManage => 'จัดการบริษัท';
+
+  @override
+  String get businessOrgErrorRole =>
+      'เฉพาะเจ้าของ กรรมการ หรือผู้มีอำนาจเท่านั้นที่จัดการบัญชีธนาคารบริษัทได้';
+
+  @override
+  String get businessOrgErrorBusinessKaoId =>
+      'บริษัทต้องได้รับ Kao ID ธุรกิจก่อน';
+
+  @override
+  String get businessOrgErrorNameMismatch =>
+      'ชื่อบัญชีต้องตรงกับชื่อนิติบุคคลภาษาไทยหรือภาษาอังกฤษ';
+
+  @override
+  String get businessOrgRoleOwner => 'เจ้าของ';
+
+  @override
+  String get businessOrgRoleDirector => 'กรรมการ';
+
+  @override
+  String get businessOrgRoleAuthorized => 'ผู้มีอำนาจ';
+
+  @override
+  String get businessOrgRoleFinance => 'การเงิน';
+
+  @override
+  String get businessOrgRoleMember => 'สมาชิก';
+
+  @override
+  String get businessOrgBankFormTitle => 'เพิ่มบัญชีธนาคารบริษัท';
+
+  @override
+  String businessOrgBankNameRule(String names) {
+    return 'ชื่อบัญชีต้องตรงกับชื่อนิติบุคคล: $names';
+  }
+
+  @override
+  String get businessOrgBankHolder => 'ชื่อบัญชี (บริษัท)';
+
+  @override
+  String get businessOrgBankEvidenceHelp =>
+      'รูปหน้าสมุดบัญชีหรือรายการเดินบัญชีของบริษัทที่เห็นชื่อและเลขบัญชี';
+
+  @override
+  String get businessOrgIdentityTitle => 'ข้อมูลนิติบุคคล';
+
+  @override
+  String get businessOrgBusinessKaoId => 'Kao ID ธุรกิจ';
+
+  @override
+  String get businessOrgKaoIdPending => 'ยังไม่ได้ออก';
+
+  @override
+  String get businessOrgShop => 'ร้านค้ามือสอง';
+
+  @override
+  String get businessOrgBankTitle => 'บัญชีธนาคารบริษัท';
+
+  @override
+  String get businessOrgBankReplace => 'เปลี่ยนบัญชีธนาคารบริษัท';
+
+  @override
+  String get businessOrgBankAdd => 'เพิ่มบัญชีธนาคารบริษัท';
+
+  @override
+  String get businessOrgBankSubmitted => 'ส่งบัญชีธนาคารบริษัทเพื่อตรวจสอบแล้ว';
+
+  @override
+  String get businessOrgTitle => 'บริษัทของคุณ';
+
+  @override
+  String get businessOrgSubtitle =>
+      'Kao ID ธุรกิจ และบัญชีธนาคารบริษัทสำหรับรับเงิน';
+
+  @override
+  String get businessOrgEmpty => 'คุณยังไม่ได้เป็นสมาชิกของบริษัทที่ยืนยันแล้ว';
 }

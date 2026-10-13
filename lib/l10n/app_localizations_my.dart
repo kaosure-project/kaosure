@@ -4276,4 +4276,372 @@ class AppLocalizationsMy extends AppLocalizations {
   @override
   String get businessOrgEmpty =>
       'သင်သည် အတည်ပြုထားသော ကုမ္ပဏီ၏ အဖွဲ့ဝင် မဟုတ်သေးပါ။';
+
+  @override
+  String get topupTitle => 'Wallet သို့ ငွေဖြည့်ရန်';
+
+  @override
+  String get topupHelp =>
+      'သင့်ကိုယ်ပိုင်အမည်ဖြင့် ဘဏ်အကောင့်မှ PromptPay ဖြင့် ငွေလွှဲပြီး slip ကို ပို့ပါ။ ဝန်ထမ်းများက စစ်ဆေးပြီး KaoSure Wallet ထဲသို့ ငွေထည့်ပေးပါမည်။';
+
+  @override
+  String get topupAmount => 'ငွေပမာဏ (ဘတ်)';
+
+  @override
+  String topupAmountHelp(String min, String max) {
+    return '$min မှ $max အထိ';
+  }
+
+  @override
+  String get topupCreate => 'PromptPay QR ဖန်တီးရန်';
+
+  @override
+  String get topupCreatedDone =>
+      'QR ရပါပြီ။ ဖော်ပြထားသည့် ငွေပမာဏအတိအကျ လွှဲပြီး slip ကို ပို့ပါ။';
+
+  @override
+  String get topupOpenTitle => 'လက်ရှိ ငွေဖြည့်တောင်းဆိုမှု';
+
+  @override
+  String get topupScanHelp =>
+      'ဘဏ် app ဖြင့် scan ဖတ်ပြီး ပြထားသည့် ပမာဏအတိအကျ ပေးချေပါ။';
+
+  @override
+  String get topupReceiver => 'လက်ခံသူ';
+
+  @override
+  String get topupUploadBefore => 'slip ပို့ရမည့် နောက်ဆုံးအချိန်';
+
+  @override
+  String get topupPayerNotice =>
+      'ငွေလွှဲသည့် အကောင့်သည် သင့် Kao ID နှင့် အမည်တူရမည်။ အခြားသူ၏ အကောင့်မှ လွှဲပါက ငြင်းပယ်ခံရပါမည်။';
+
+  @override
+  String get topupSendSlip => 'slip ပို့ရန်';
+
+  @override
+  String get topupSlipHelp =>
+      'ငွေလွှဲ slip ၏ ဓာတ်ပုံ သို့မဟုတ် screenshot (JPEG သို့မဟုတ် PNG)။';
+
+  @override
+  String get topupCancel => 'ငွေဖြည့်ခြင်း ပယ်ဖျက်ရန်';
+
+  @override
+  String topupCancelConfirm(String amount) {
+    return '$amount ငွေဖြည့်ခြင်းကို ပယ်ဖျက်မလား။ ပယ်ဖျက်ပြီးနောက် ဤတောင်းဆိုမှုအတွက် ငွေမလွှဲပါနှင့်။';
+  }
+
+  @override
+  String get topupCancelledDone => 'ငွေဖြည့်ခြင်းကို ပယ်ဖျက်ပြီးပါပြီ';
+
+  @override
+  String get topupCheckingHelp =>
+      'slip ကို လက်ခံရရှိပါပြီ။ ဝန်ထမ်းများ စစ်ဆေးပြီး wallet ထဲ ငွေထည့်ပေးကာ အသိပေးချက် ပို့ပါမည်။';
+
+  @override
+  String get topupSlipSentDone => 'slip ကို စစ်ဆေးရန် ပို့ပြီးပါပြီ';
+
+  @override
+  String get topupHistory => 'ငွေဖြည့် မှတ်တမ်း';
+
+  @override
+  String get topupNoHistory => 'ငွေဖြည့်မှု မရှိသေးပါ';
+
+  @override
+  String topupToday(String today, String max) {
+    return 'ယနေ့: $max အနက် $today';
+  }
+
+  @override
+  String topupSlipHours(int hours) {
+    return 'QR ဖန်တီးပြီးနောက် slip ပို့ရန် $hours နာရီ အချိန်ရှိသည်။';
+  }
+
+  @override
+  String get topupRejectReason => 'အကြောင်းပြချက်';
+
+  @override
+  String get topupStatusAwaitingSlip => 'slip စောင့်နေသည်';
+
+  @override
+  String get topupStatusPendingReview => 'slip စစ်ဆေးနေသည်';
+
+  @override
+  String get topupStatusAwaitingSecond => 'ဒုတိယအကြိမ် စစ်ဆေးရန်';
+
+  @override
+  String get topupStatusApproved => 'wallet ထဲ ထည့်ပြီး';
+
+  @override
+  String get topupStatusRejected => 'ငြင်းပယ်ခံရ';
+
+  @override
+  String get topupStatusCancelled => 'ပယ်ဖျက်ပြီး';
+
+  @override
+  String get topupStatusExpired => 'သက်တမ်းကုန်';
+
+  @override
+  String get topupBlockUnavailable => 'ငွေဖြည့်ခြင်း မရရှိနိုင်သေးပါ။';
+
+  @override
+  String get topupBlockKaoId =>
+      'ငွေဖြည့်ရန် အသက်ဝင်နေသော Kao ID လိုအပ်သည်။ အီးမေးလ်၊ ဖုန်း၊ ဘဏ်နှင့် အထောက်အထား အတည်ပြုခြင်းကို အရင်ပြီးအောင်လုပ်ပါ။';
+
+  @override
+  String get topupBlockWallet =>
+      'ဤ wallet ကို ဆိုင်းငံ့ထားသည်။ အကူအညီဌာနကို ဆက်သွယ်ပါ။';
+
+  @override
+  String get topupBlockDaily =>
+      'ယနေ့ ငွေဖြည့်ကန့်သတ်ချက် ပြည့်သွားပါပြီ။ မနက်ဖြန် ထပ်ကြိုးစားပါ။';
+
+  @override
+  String get topupErrorBelowMinimum => 'ငွေပမာဏသည် အနည်းဆုံးထက် နည်းနေသည်။';
+
+  @override
+  String get topupErrorAboveMaximum => 'ငွေပမာဏသည် ကန့်သတ်ချက်ထက် ကျော်နေသည်။';
+
+  @override
+  String get topupErrorAmount => 'ဘတ်ဖြင့် ငွေပမာဏ ထည့်ပါ (ဒသမ ၂ နေရာအထိ)။';
+
+  @override
+  String get topupErrorOpen =>
+      'လုပ်ဆောင်ဆဲ ငွေဖြည့်မှု ရှိနေပါသည်။ အရင်ပြီးအောင်လုပ်ပါ သို့မဟုတ် ပယ်ဖျက်ပါ။';
+
+  @override
+  String get topupErrorSlipFile =>
+      'ရှင်းလင်းသော slip ပုံ (JPEG သို့မဟုတ် PNG) ကို ရွေးပါ။';
+
+  @override
+  String get topupErrorSlipDuplicate =>
+      'ဤ slip ကို အသုံးပြုပြီးဖြစ်သည်။ ဤငွေဖြည့်မှုကို ပယ်ဖျက်ပြီး အသစ်ဖန်တီးပါ။';
+
+  @override
+  String get topupErrorExpired =>
+      'slip ပို့ရန် အချိန်ကုန်သွားပါပြီ။ ငွေဖြည့်မှု အသစ်ဖန်တီးပါ။';
+
+  @override
+  String get topupErrorNotOpen =>
+      'ဤငွေဖြည့်မှုကို ပြောင်းလဲ၍ မရတော့ပါ။ စာမျက်နှာကို ပြန်ဖွင့်ပါ။';
+
+  @override
+  String get topupErrorFailed => 'ဤအဆင့်ကို မပြီးမြောက်နိုင်ပါ။ ထပ်ကြိုးစားပါ။';
+
+  @override
+  String get topupsTitle => 'Wallet ငွေဖြည့်မှုများ';
+
+  @override
+  String get topupsHubHelp => 'ငွေလွှဲ slip စစ်ဆေးပြီး wallet ထဲ ငွေထည့်ရန်';
+
+  @override
+  String get topupsHelp =>
+      'slip တွင် ကုမ္ပဏီ PromptPay သို့ တောင်းဆိုထားသည့် ပမာဏအတိအကျ လွှဲထားကြောင်းနှင့် ငွေလွှဲသူသည် Kao ID ပါ အမည်ရှင် အဖွဲ့ဝင်ဖြစ်ကြောင်း စစ်ဆေးပါ။ နှစ်ဦးစစ်ဆေးရမည့် ပမာဏအထက်ဖြစ်ပါက ဒုတိယစစ်ဆေးသူက တူညီသော ဘဏ်ကိုးကားနံပါတ်ဖြင့် အတည်ပြုရမည်။';
+
+  @override
+  String get topupReviewVerifiedName => 'Kao ID ပါ အမည်';
+
+  @override
+  String get topupReviewKaoIdInactive =>
+      'အဖွဲ့ဝင်၏ Kao ID အသက်မဝင်သဖြင့် ဤငွေဖြည့်မှုကို အတည်ပြု၍ မရပါ။';
+
+  @override
+  String get topupReviewCode => 'ငွေဖြည့် ကုဒ်';
+
+  @override
+  String get topupReviewStatus => 'အခြေအနေ';
+
+  @override
+  String get topupReviewSource => 'တောင်းဆိုသည့် app';
+
+  @override
+  String get topupReviewSlipSent => 'slip ပို့ချိန်';
+
+  @override
+  String get topupReviewWallet => 'Wallet လက်ကျန်';
+
+  @override
+  String get topupReviewToday => 'ယနေ့ တောင်းဆိုထားသည့် ပမာဏ';
+
+  @override
+  String get topupReviewDual => 'စစ်ဆေးသူ နှစ်ဦး လိုအပ်သည်';
+
+  @override
+  String get topupReviewFirst => 'ပထမ စစ်ဆေးသူ';
+
+  @override
+  String get topupReviewReference => 'ဘဏ် ကိုးကားနံပါတ်';
+
+  @override
+  String get topupReviewReferenceHelp =>
+      'slip ပေါ်ရှိ ငွေလွှဲနံပါတ်၊ စာလုံး ၃ မှ ၁၀၀ အထိ။ တစ်ကြိမ်သာ အသုံးပြုနိုင်သည်။';
+
+  @override
+  String get topupReviewSecondHelp =>
+      'ပထမ စစ်ဆေးသူ မှတ်တမ်းတင်ထားသည့် ဘဏ်ကိုးကားနံပါတ်အတိုင်း ထည့်ပါ။';
+
+  @override
+  String topupReviewPayerConfirm(String name) {
+    return 'slip ပေါ်ရှိ ငွေလွှဲသူမှာ $name ဖြစ်သည်';
+  }
+
+  @override
+  String get topupReviewPayerRequired =>
+      'အတည်မပြုမီ ငွေလွှဲသူ အမည်ကို အတည်ပြုပါ။';
+
+  @override
+  String get topupReviewApprove => 'အတည်ပြုပြီး wallet ထဲ ထည့်ရန်';
+
+  @override
+  String get topupReviewFirstApprove => 'အတည်ပြုရန် (ပထမ စစ်ဆေးသူ)';
+
+  @override
+  String get topupReviewSecondApprove => 'အတည်ပြုရန် (ဒုတိယ စစ်ဆေးသူ)';
+
+  @override
+  String topupReviewApproveConfirm(String amount, String name) {
+    return '$name ၏ wallet ထဲ $amount ထည့်မလား။ အဖွဲ့ဝင်ထံ အသိပေးပါမည်။';
+  }
+
+  @override
+  String topupReviewFirstConfirm(String amount) {
+    return '$amount အတွက် ပထမ အတည်ပြုချက်ကို မှတ်တမ်းတင်မလား။ ငွေမထည့်မီ ဒုတိယ စစ်ဆေးသူက အတည်ပြုရမည်။';
+  }
+
+  @override
+  String get topupReviewReject => 'ငြင်းပယ်ရန်';
+
+  @override
+  String topupReviewRejectConfirm(String amount) {
+    return '$amount ငွေဖြည့်မှုကို ငြင်းပယ်မလား။ အဖွဲ့ဝင်သည် သင့်အကြောင်းပြချက်ကို မြင်ရပါမည်။';
+  }
+
+  @override
+  String get topupReviewApprovedDone => 'အတည်ပြုပြီး wallet ထဲ ထည့်ပြီးပါပြီ';
+
+  @override
+  String get topupReviewFirstDone =>
+      'ပထမ အတည်ပြုချက် မှတ်တမ်းတင်ပြီး။ ဒုတိယ စစ်ဆေးသူကို စောင့်နေသည်။';
+
+  @override
+  String get topupReviewRejectedDone => 'ငွေဖြည့်မှုကို ငြင်းပယ်ပြီးပါပြီ';
+
+  @override
+  String get topupReviewDuplicates =>
+      'ဤ slip ဖိုင်ကို အခြား တောင်းဆိုမှုများတွင်လည်း ပို့ထားသည်';
+
+  @override
+  String get topupReviewSlip => 'ငွေလွှဲ slip';
+
+  @override
+  String get topupReviewSlipFailed => 'slip ကို ဖွင့်၍ မရပါ။ ပြန်ဖွင့်ကြည့်ပါ။';
+
+  @override
+  String get topupReviewOwn =>
+      'ဤသည်မှာ သင်၏ ကိုယ်ပိုင် ငွေဖြည့်မှုဖြစ်သည်။ အခြားဝန်ထမ်းက စစ်ဆေးရမည်။';
+
+  @override
+  String get topupReviewWaitingOther =>
+      'သင်သည် ပထမ အတည်ပြုချက် ပေးပြီးပါပြီ။ ဒုတိယကို အခြား စစ်ဆေးသူက ပေးရမည်။';
+
+  @override
+  String get topupReviewSecondRequired =>
+      'ဒုတိယ အတည်ပြုချက်ကို အခြား စစ်ဆေးသူက ပေးရမည်။';
+
+  @override
+  String get topupReviewReferenceUsed =>
+      'ဤဘဏ်ကိုးကားနံပါတ်ကို အခြား ငွေဖြည့်မှုအတွက် အသုံးပြုပြီးဖြစ်သည်။';
+
+  @override
+  String get topupReviewReferenceMismatch =>
+      'ကိုးကားနံပါတ်သည် ပထမ စစ်ဆေးသူ မှတ်တမ်းနှင့် မကိုက်ညီပါ။';
+
+  @override
+  String get topupSettingsTitle => 'ငွေဖြည့် ဆက်တင်များ';
+
+  @override
+  String get topupSettingsHubHelp =>
+      'PromptPay လက်ခံအကောင့်နှင့် ကန့်သတ်ချက်များ';
+
+  @override
+  String get topupSettingsAccount => 'ငွေလက်ခံ အကောင့်';
+
+  @override
+  String get topupSettingsHelp =>
+      'အဖွဲ့ဝင်များသည် ဤကုမ္ပဏီ PromptPay အကောင့်သို့ ငွေလွှဲမည်။ သတ်မှတ်ပြီးမှသာ ငွေဖြည့်ခြင်း ဖွင့်မည်။ ပြောင်းလဲမှုများကို နံပါတ်ဖုံးကွယ်၍ မှတ်တမ်းတင်သည်။';
+
+  @override
+  String get topupSettingsEnabled => 'ငွေဖြည့်ခြင်း ခွင့်ပြုရန်';
+
+  @override
+  String get topupSettingsType => 'PromptPay အမျိုးအစား';
+
+  @override
+  String get topupSettingsTypePhone => 'မိုဘိုင်းနံပါတ်';
+
+  @override
+  String get topupSettingsTypeNationalId => 'နိုင်ငံသား ID / အခွန် ID';
+
+  @override
+  String get topupSettingsTypeEwallet => 'e-Wallet အမှတ်';
+
+  @override
+  String get topupSettingsId => 'PromptPay နံပါတ်';
+
+  @override
+  String get topupSettingsIdHelp =>
+      'မိုဘိုင်း ဂဏန်း ၁၀ လုံး၊ ID ၁၃ လုံး၊ e-Wallet ၁၅ လုံး';
+
+  @override
+  String get topupSettingsReceiver => 'အဖွဲ့ဝင်များ မြင်ရမည့် အကောင့်အမည်';
+
+  @override
+  String get topupSettingsLimits => 'ကန့်သတ်ချက်များ';
+
+  @override
+  String get topupSettingsMin => 'တစ်ကြိမ် အနည်းဆုံး (ဘတ်)';
+
+  @override
+  String get topupSettingsMax => 'တစ်ကြိမ် အများဆုံး (ဘတ်)';
+
+  @override
+  String get topupSettingsDaily => 'အဖွဲ့ဝင်တစ်ဦး တစ်ရက် အများဆုံး (ဘတ်)';
+
+  @override
+  String get topupSettingsDual => 'စစ်ဆေးသူ နှစ်ဦး လိုအပ်သည့် ပမာဏ (ဘတ်)';
+
+  @override
+  String get topupSettingsDualHelp =>
+      'ဤပမာဏ သို့မဟုတ် ပိုများသော ငွေဖြည့်မှုများအတွက် မတူညီသော စစ်ဆေးသူ နှစ်ဦး လိုအပ်သည်။';
+
+  @override
+  String get topupSettingsHours => 'slip ပို့ရန် နာရီ';
+
+  @override
+  String get topupSettingsHoursHelp => '၁ မှ ၇၂ နာရီ';
+
+  @override
+  String get topupSettingsUpdated => 'နောက်ဆုံး ပြောင်းလဲမှု';
+
+  @override
+  String get topupSettingsSave => 'ဆက်တင်များ သိမ်းရန်';
+
+  @override
+  String get topupSettingsSaved => 'ဆက်တင်များ သိမ်းပြီးပါပြီ';
+
+  @override
+  String get topupSettingsChanged =>
+      'အခြားသူတစ်ဦးက ဤဆက်တင်များကို ပြောင်းလဲထားသည်။ ပြန်ဖွင့်ပြီး ထပ်ကြိုးစားပါ။';
+
+  @override
+  String get topupSettingsInvalid =>
+      'ကန့်သတ်ချက်များကို စစ်ပါ- အများဆုံးသည် အနည်းဆုံးထက် မနည်းရ၊ တစ်ရက်စာသည် တစ်ကြိမ်အများဆုံးထက် မနည်းရ၊ နာရီ ၁ မှ ၇၂။';
+
+  @override
+  String get topupSettingsPromptPayInvalid =>
+      'PromptPay နံပါတ်သည် ရွေးထားသည့် အမျိုးအစားနှင့် မကိုက်ညီပါ။';
+
+  @override
+  String get topupSettingsReceiverRequired =>
+      'ငွေဖြည့်ခြင်း မဖွင့်မီ PromptPay နံပါတ်နှင့် အကောင့်အမည် ထည့်ပါ။';
 }

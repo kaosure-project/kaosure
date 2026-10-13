@@ -4009,4 +4009,346 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get businessOrgEmpty => '確認済みの会社のメンバーではありません。';
+
+  @override
+  String get topupTitle => 'ウォレットにチャージ';
+
+  @override
+  String get topupHelp =>
+      'ご本人名義の銀行口座からPromptPayで振り込み、振込スリップを送信してください。スタッフが確認後、KaoSure Walletに入金します。';
+
+  @override
+  String get topupAmount => '金額(バーツ)';
+
+  @override
+  String topupAmountHelp(String min, String max) {
+    return '$min～$max';
+  }
+
+  @override
+  String get topupCreate => 'PromptPay QRを作成';
+
+  @override
+  String get topupCreatedDone => 'QRを作成しました。表示金額ちょうどを振り込み、スリップを送信してください。';
+
+  @override
+  String get topupOpenTitle => '現在のチャージ申請';
+
+  @override
+  String get topupScanHelp => '銀行アプリで読み取り、表示された金額ちょうどを振り込んでください。';
+
+  @override
+  String get topupReceiver => '受取人';
+
+  @override
+  String get topupUploadBefore => 'スリップ送信期限';
+
+  @override
+  String get topupPayerNotice =>
+      '振込元の口座名義はKao IDと同じ名前である必要があります。他人名義からの振込は承認されません。';
+
+  @override
+  String get topupSendSlip => 'スリップを送信';
+
+  @override
+  String get topupSlipHelp => '振込スリップの写真またはスクリーンショット(JPEG/PNG)。';
+
+  @override
+  String get topupCancel => 'チャージ申請を取り消す';
+
+  @override
+  String topupCancelConfirm(String amount) {
+    return '$amountのチャージ申請を取り消しますか?取り消し後はこの申請への振込をしないでください。';
+  }
+
+  @override
+  String get topupCancelledDone => 'チャージ申請を取り消しました';
+
+  @override
+  String get topupCheckingHelp => 'スリップを受け付けました。スタッフが確認後ウォレットに入金し、通知でお知らせします。';
+
+  @override
+  String get topupSlipSentDone => 'スリップを送信しました';
+
+  @override
+  String get topupHistory => 'チャージ履歴';
+
+  @override
+  String get topupNoHistory => 'チャージ履歴はまだありません';
+
+  @override
+  String topupToday(String today, String max) {
+    return '本日: $today / $max';
+  }
+
+  @override
+  String topupSlipHours(int hours) {
+    return 'QR作成後、$hours時間以内にスリップを送信してください。';
+  }
+
+  @override
+  String get topupRejectReason => '理由';
+
+  @override
+  String get topupStatusAwaitingSlip => 'スリップ待ち';
+
+  @override
+  String get topupStatusPendingReview => 'スリップ確認中';
+
+  @override
+  String get topupStatusAwaitingSecond => '二次確認待ち';
+
+  @override
+  String get topupStatusApproved => '入金済み';
+
+  @override
+  String get topupStatusRejected => '否認';
+
+  @override
+  String get topupStatusCancelled => '取消済み';
+
+  @override
+  String get topupStatusExpired => '期限切れ';
+
+  @override
+  String get topupBlockUnavailable => '現在チャージはご利用いただけません。';
+
+  @override
+  String get topupBlockKaoId =>
+      'チャージには有効なKao IDが必要です。メール・電話・銀行口座・本人確認を先に完了してください。';
+
+  @override
+  String get topupBlockWallet => 'このウォレットは停止中です。サポートにお問い合わせください。';
+
+  @override
+  String get topupBlockDaily => '本日のチャージ上限に達しました。明日もう一度お試しください。';
+
+  @override
+  String get topupErrorBelowMinimum => '金額が最低額を下回っています。';
+
+  @override
+  String get topupErrorAboveMaximum => '金額が上限を超えています。';
+
+  @override
+  String get topupErrorAmount => '金額をバーツで入力してください(小数点以下2桁まで)。';
+
+  @override
+  String get topupErrorOpen => '処理中のチャージ申請があります。完了するか取り消してください。';
+
+  @override
+  String get topupErrorSlipFile => '鮮明なスリップ画像(JPEG/PNG)を選択してください。';
+
+  @override
+  String get topupErrorSlipDuplicate => 'このスリップは使用済みです。この申請を取り消して新しく作成してください。';
+
+  @override
+  String get topupErrorExpired => 'スリップの送信期限が過ぎました。新しく申請してください。';
+
+  @override
+  String get topupErrorNotOpen => 'この申請は変更できません。ページを更新してください。';
+
+  @override
+  String get topupErrorFailed => '処理できませんでした。もう一度お試しください。';
+
+  @override
+  String get topupsTitle => 'ウォレットチャージ';
+
+  @override
+  String get topupsHubHelp => '振込スリップを確認しウォレットに入金';
+
+  @override
+  String get topupsHelp =>
+      'スリップの金額が申請と一致し、会社のPromptPayへの振込であること、振込人がKao IDの名義人本人であることを確認してください。2名確認の基準額以上は、2人目が同じ銀行参照番号で確認する必要があります。';
+
+  @override
+  String get topupReviewVerifiedName => 'Kao IDの氏名';
+
+  @override
+  String get topupReviewKaoIdInactive => '会員のKao IDが有効ではないため、このチャージは承認できません。';
+
+  @override
+  String get topupReviewCode => '申請コード';
+
+  @override
+  String get topupReviewStatus => '状態';
+
+  @override
+  String get topupReviewSource => '申請元アプリ';
+
+  @override
+  String get topupReviewSlipSent => 'スリップ送信日時';
+
+  @override
+  String get topupReviewWallet => 'ウォレット残高';
+
+  @override
+  String get topupReviewToday => '本日の申請額';
+
+  @override
+  String get topupReviewDual => '2名の確認が必要';
+
+  @override
+  String get topupReviewFirst => '1人目の確認者';
+
+  @override
+  String get topupReviewReference => '銀行参照番号';
+
+  @override
+  String get topupReviewReferenceHelp =>
+      'スリップに記載の取引番号(3～100文字)。各番号は1回のみ使用できます。';
+
+  @override
+  String get topupReviewSecondHelp => '1人目の確認者と同じ銀行参照番号を入力してください。';
+
+  @override
+  String topupReviewPayerConfirm(String name) {
+    return 'スリップの振込人は$name本人です';
+  }
+
+  @override
+  String get topupReviewPayerRequired => '承認前に振込人の名前を確認してください。';
+
+  @override
+  String get topupReviewApprove => '承認してウォレットに入金';
+
+  @override
+  String get topupReviewFirstApprove => '承認(1人目)';
+
+  @override
+  String get topupReviewSecondApprove => '承認(2人目)';
+
+  @override
+  String topupReviewApproveConfirm(String amount, String name) {
+    return '$nameさんのウォレットに$amountを入金しますか?会員に通知されます。';
+  }
+
+  @override
+  String topupReviewFirstConfirm(String amount) {
+    return '$amountの1回目の承認を記録しますか?入金には2人目の確認が必要です。';
+  }
+
+  @override
+  String get topupReviewReject => '否認する';
+
+  @override
+  String topupReviewRejectConfirm(String amount) {
+    return '$amountのチャージを否認しますか?会員に理由が表示されます。';
+  }
+
+  @override
+  String get topupReviewApprovedDone => '承認し、ウォレットに入金しました';
+
+  @override
+  String get topupReviewFirstDone => '1回目の承認を記録しました。2人目の確認待ちです。';
+
+  @override
+  String get topupReviewRejectedDone => 'チャージを否認しました';
+
+  @override
+  String get topupReviewDuplicates => '同じスリップが他の申請でも使われています';
+
+  @override
+  String get topupReviewSlip => '振込スリップ';
+
+  @override
+  String get topupReviewSlipFailed => 'スリップを読み込めませんでした。更新してください。';
+
+  @override
+  String get topupReviewOwn => 'ご自身の申請です。別のスタッフが確認する必要があります。';
+
+  @override
+  String get topupReviewWaitingOther => '1回目の承認済みです。2回目は別の確認者が行う必要があります。';
+
+  @override
+  String get topupReviewSecondRequired => '2回目の承認は別の確認者が行う必要があります。';
+
+  @override
+  String get topupReviewReferenceUsed => 'この銀行参照番号は他のチャージで使用済みです。';
+
+  @override
+  String get topupReviewReferenceMismatch => '参照番号が1人目の記録と一致しません。';
+
+  @override
+  String get topupSettingsTitle => 'チャージ設定';
+
+  @override
+  String get topupSettingsHubHelp => 'PromptPay受取口座と上限';
+
+  @override
+  String get topupSettingsAccount => '受取口座';
+
+  @override
+  String get topupSettingsHelp =>
+      '会員はこの会社のPromptPay口座に振り込みます。設定されるまでチャージは利用できません。変更は番号を伏せて記録されます。';
+
+  @override
+  String get topupSettingsEnabled => 'チャージを有効にする';
+
+  @override
+  String get topupSettingsType => 'PromptPayの種類';
+
+  @override
+  String get topupSettingsTypePhone => '携帯電話番号';
+
+  @override
+  String get topupSettingsTypeNationalId => '国民ID / 納税者番号';
+
+  @override
+  String get topupSettingsTypeEwallet => 'eウォレットID';
+
+  @override
+  String get topupSettingsId => 'PromptPay番号';
+
+  @override
+  String get topupSettingsIdHelp => '携帯10桁、ID13桁、eウォレット15桁';
+
+  @override
+  String get topupSettingsReceiver => '会員に表示する口座名義';
+
+  @override
+  String get topupSettingsLimits => '上限';
+
+  @override
+  String get topupSettingsMin => '1回の最低額(バーツ)';
+
+  @override
+  String get topupSettingsMax => '1回の上限額(バーツ)';
+
+  @override
+  String get topupSettingsDaily => '会員1人1日の上限額(バーツ)';
+
+  @override
+  String get topupSettingsDual => '2名確認の基準額(バーツ)';
+
+  @override
+  String get topupSettingsDualHelp => 'この金額以上のチャージは、異なる2名の確認が必要です。';
+
+  @override
+  String get topupSettingsHours => 'スリップ送信の制限時間(時間)';
+
+  @override
+  String get topupSettingsHoursHelp => '1～72時間';
+
+  @override
+  String get topupSettingsUpdated => '最終更新';
+
+  @override
+  String get topupSettingsSave => '設定を保存';
+
+  @override
+  String get topupSettingsSaved => '設定を保存しました';
+
+  @override
+  String get topupSettingsChanged => '他の人が設定を変更しました。再読み込みしてやり直してください。';
+
+  @override
+  String get topupSettingsInvalid =>
+      '上限を確認してください:上限額は最低額以上、1日上限は1回上限以上、時間は1～72。';
+
+  @override
+  String get topupSettingsPromptPayInvalid => 'PromptPay番号が選択した種類と一致しません。';
+
+  @override
+  String get topupSettingsReceiverRequired =>
+      'チャージを有効にする前に、PromptPay番号と口座名義を入力してください。';
 }

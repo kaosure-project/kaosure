@@ -7782,6 +7782,642 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You are not a member of a verified company yet.'**
   String get businessOrgEmpty;
+
+  /// No description provided for @topupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Top up wallet'**
+  String get topupTitle;
+
+  /// No description provided for @topupHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay by PromptPay from a bank account in your own name, then send the slip. Staff check it and add the money to your KaoSure Wallet.'**
+  String get topupHelp;
+
+  /// No description provided for @topupAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount (THB)'**
+  String get topupAmount;
+
+  /// No description provided for @topupAmountHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'From {min} to {max}'**
+  String topupAmountHelp(String min, String max);
+
+  /// No description provided for @topupCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create PromptPay QR'**
+  String get topupCreate;
+
+  /// No description provided for @topupCreatedDone.
+  ///
+  /// In en, this message translates to:
+  /// **'QR ready. Pay the exact amount, then send the slip.'**
+  String get topupCreatedDone;
+
+  /// No description provided for @topupOpenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Current top-up'**
+  String get topupOpenTitle;
+
+  /// No description provided for @topupScanHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan with your banking app and pay the exact amount shown.'**
+  String get topupScanHelp;
+
+  /// No description provided for @topupReceiver.
+  ///
+  /// In en, this message translates to:
+  /// **'Receiver'**
+  String get topupReceiver;
+
+  /// No description provided for @topupUploadBefore.
+  ///
+  /// In en, this message translates to:
+  /// **'Send the slip by'**
+  String get topupUploadBefore;
+
+  /// No description provided for @topupPayerNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'The account you pay from must be in the same name as your Kao ID. Transfers from someone else are declined.'**
+  String get topupPayerNotice;
+
+  /// No description provided for @topupSendSlip.
+  ///
+  /// In en, this message translates to:
+  /// **'Send slip'**
+  String get topupSendSlip;
+
+  /// No description provided for @topupSlipHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'A photo or screenshot of the transfer slip, JPEG or PNG.'**
+  String get topupSlipHelp;
+
+  /// No description provided for @topupCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel top-up'**
+  String get topupCancel;
+
+  /// No description provided for @topupCancelConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the {amount} top-up? Don\'t transfer money for it after cancelling.'**
+  String topupCancelConfirm(String amount);
+
+  /// No description provided for @topupCancelledDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Top-up cancelled'**
+  String get topupCancelledDone;
+
+  /// No description provided for @topupCheckingHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'We got your slip. Staff will check it and add the money to your wallet. You\'ll get a notification.'**
+  String get topupCheckingHelp;
+
+  /// No description provided for @topupSlipSentDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Slip sent for checking'**
+  String get topupSlipSentDone;
+
+  /// No description provided for @topupHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Top-up history'**
+  String get topupHistory;
+
+  /// No description provided for @topupNoHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'No top-ups yet'**
+  String get topupNoHistory;
+
+  /// No description provided for @topupToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today: {today} of {max}'**
+  String topupToday(String today, String max);
+
+  /// No description provided for @topupSlipHours.
+  ///
+  /// In en, this message translates to:
+  /// **'After creating the QR you have {hours} hours to send the slip.'**
+  String topupSlipHours(int hours);
+
+  /// No description provided for @topupRejectReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get topupRejectReason;
+
+  /// No description provided for @topupStatusAwaitingSlip.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for slip'**
+  String get topupStatusAwaitingSlip;
+
+  /// No description provided for @topupStatusPendingReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking slip'**
+  String get topupStatusPendingReview;
+
+  /// No description provided for @topupStatusAwaitingSecond.
+  ///
+  /// In en, this message translates to:
+  /// **'Second check'**
+  String get topupStatusAwaitingSecond;
+
+  /// No description provided for @topupStatusApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to wallet'**
+  String get topupStatusApproved;
+
+  /// No description provided for @topupStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Declined'**
+  String get topupStatusRejected;
+
+  /// No description provided for @topupStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get topupStatusCancelled;
+
+  /// No description provided for @topupStatusExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get topupStatusExpired;
+
+  /// No description provided for @topupBlockUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Top-up isn\'t available yet.'**
+  String get topupBlockUnavailable;
+
+  /// No description provided for @topupBlockKaoId.
+  ///
+  /// In en, this message translates to:
+  /// **'Top-up needs an active Kao ID. Finish verifying your email, phone, bank and identity first.'**
+  String get topupBlockKaoId;
+
+  /// No description provided for @topupBlockWallet.
+  ///
+  /// In en, this message translates to:
+  /// **'This wallet is suspended. Contact support.'**
+  String get topupBlockWallet;
+
+  /// No description provided for @topupBlockDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve reached today\'s top-up limit. Try again tomorrow.'**
+  String get topupBlockDaily;
+
+  /// No description provided for @topupErrorBelowMinimum.
+  ///
+  /// In en, this message translates to:
+  /// **'The amount is below the minimum.'**
+  String get topupErrorBelowMinimum;
+
+  /// No description provided for @topupErrorAboveMaximum.
+  ///
+  /// In en, this message translates to:
+  /// **'The amount is above the limit.'**
+  String get topupErrorAboveMaximum;
+
+  /// No description provided for @topupErrorAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount in baht, with at most 2 decimals.'**
+  String get topupErrorAmount;
+
+  /// No description provided for @topupErrorOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'You already have a top-up in progress. Finish or cancel it first.'**
+  String get topupErrorOpen;
+
+  /// No description provided for @topupErrorSlipFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a clear JPEG or PNG image of the slip.'**
+  String get topupErrorSlipFile;
+
+  /// No description provided for @topupErrorSlipDuplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'This slip was already used. Cancel this top-up and create a new one.'**
+  String get topupErrorSlipDuplicate;
+
+  /// No description provided for @topupErrorExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Time to send the slip ran out. Create a new top-up.'**
+  String get topupErrorExpired;
+
+  /// No description provided for @topupErrorNotOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'This top-up can\'t be changed anymore. Refresh the page.'**
+  String get topupErrorNotOpen;
+
+  /// No description provided for @topupErrorFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t complete this step. Please try again.'**
+  String get topupErrorFailed;
+
+  /// No description provided for @topupsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet top-ups'**
+  String get topupsTitle;
+
+  /// No description provided for @topupsHubHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Check transfer slips and add money to wallets'**
+  String get topupsHubHelp;
+
+  /// No description provided for @topupsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Check that the slip shows the exact amount paid to the company PromptPay, and that the payer is the member named in Kao ID. Amounts from the two-person limit need a second reviewer with the same bank reference.'**
+  String get topupsHelp;
+
+  /// No description provided for @topupReviewVerifiedName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name in Kao ID'**
+  String get topupReviewVerifiedName;
+
+  /// No description provided for @topupReviewKaoIdInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'The member\'s Kao ID isn\'t active, so this top-up can\'t be approved.'**
+  String get topupReviewKaoIdInactive;
+
+  /// No description provided for @topupReviewCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Top-up code'**
+  String get topupReviewCode;
+
+  /// No description provided for @topupReviewStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get topupReviewStatus;
+
+  /// No description provided for @topupReviewSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested from'**
+  String get topupReviewSource;
+
+  /// No description provided for @topupReviewSlipSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Slip sent'**
+  String get topupReviewSlipSent;
+
+  /// No description provided for @topupReviewWallet.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet balance'**
+  String get topupReviewWallet;
+
+  /// No description provided for @topupReviewToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested today'**
+  String get topupReviewToday;
+
+  /// No description provided for @topupReviewDual.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs two reviewers'**
+  String get topupReviewDual;
+
+  /// No description provided for @topupReviewFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'First reviewer'**
+  String get topupReviewFirst;
+
+  /// No description provided for @topupReviewReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank reference'**
+  String get topupReviewReference;
+
+  /// No description provided for @topupReviewReferenceHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'The transaction number on the slip, 3 to 100 characters. Each one can be used once.'**
+  String get topupReviewReferenceHelp;
+
+  /// No description provided for @topupReviewSecondHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the same bank reference the first reviewer recorded.'**
+  String get topupReviewSecondHelp;
+
+  /// No description provided for @topupReviewPayerConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'The payer on the slip is {name}'**
+  String topupReviewPayerConfirm(String name);
+
+  /// No description provided for @topupReviewPayerRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the payer\'s name before approving.'**
+  String get topupReviewPayerRequired;
+
+  /// No description provided for @topupReviewApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve and add to wallet'**
+  String get topupReviewApprove;
+
+  /// No description provided for @topupReviewFirstApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve (first reviewer)'**
+  String get topupReviewFirstApprove;
+
+  /// No description provided for @topupReviewSecondApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve (second reviewer)'**
+  String get topupReviewSecondApprove;
+
+  /// No description provided for @topupReviewApproveConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Add {amount} to {name}\'s wallet? The member will be notified.'**
+  String topupReviewApproveConfirm(String amount, String name);
+
+  /// No description provided for @topupReviewFirstConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Record the first approval for {amount}? A second reviewer must confirm before the money is added.'**
+  String topupReviewFirstConfirm(String amount);
+
+  /// No description provided for @topupReviewReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get topupReviewReject;
+
+  /// No description provided for @topupReviewRejectConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline the {amount} top-up? The member will see your reason.'**
+  String topupReviewRejectConfirm(String amount);
+
+  /// No description provided for @topupReviewApprovedDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved and added to the wallet'**
+  String get topupReviewApprovedDone;
+
+  /// No description provided for @topupReviewFirstDone.
+  ///
+  /// In en, this message translates to:
+  /// **'First approval recorded. Waiting for a second reviewer.'**
+  String get topupReviewFirstDone;
+
+  /// No description provided for @topupReviewRejectedDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Top-up declined'**
+  String get topupReviewRejectedDone;
+
+  /// No description provided for @topupReviewDuplicates.
+  ///
+  /// In en, this message translates to:
+  /// **'The same slip file was also sent with'**
+  String get topupReviewDuplicates;
+
+  /// No description provided for @topupReviewSlip.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer slip'**
+  String get topupReviewSlip;
+
+  /// No description provided for @topupReviewSlipFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the slip. Refresh to try again.'**
+  String get topupReviewSlipFailed;
+
+  /// No description provided for @topupReviewOwn.
+  ///
+  /// In en, this message translates to:
+  /// **'This is your own top-up. Another staff member must review it.'**
+  String get topupReviewOwn;
+
+  /// No description provided for @topupReviewWaitingOther.
+  ///
+  /// In en, this message translates to:
+  /// **'You gave the first approval. Another reviewer must give the second.'**
+  String get topupReviewWaitingOther;
+
+  /// No description provided for @topupReviewSecondRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'A different reviewer must give the second approval.'**
+  String get topupReviewSecondRequired;
+
+  /// No description provided for @topupReviewReferenceUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'This bank reference was already used for another top-up.'**
+  String get topupReviewReferenceUsed;
+
+  /// No description provided for @topupReviewReferenceMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The reference doesn\'t match the one the first reviewer recorded.'**
+  String get topupReviewReferenceMismatch;
+
+  /// No description provided for @topupSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Top-up settings'**
+  String get topupSettingsTitle;
+
+  /// No description provided for @topupSettingsHubHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'PromptPay receiving account and limits'**
+  String get topupSettingsHubHelp;
+
+  /// No description provided for @topupSettingsAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Receiving account'**
+  String get topupSettingsAccount;
+
+  /// No description provided for @topupSettingsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Members pay into this company PromptPay account. Top-up stays off until it\'s set. Changes are logged with the number masked.'**
+  String get topupSettingsHelp;
+
+  /// No description provided for @topupSettingsEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow top-ups'**
+  String get topupSettingsEnabled;
+
+  /// No description provided for @topupSettingsType.
+  ///
+  /// In en, this message translates to:
+  /// **'PromptPay type'**
+  String get topupSettingsType;
+
+  /// No description provided for @topupSettingsTypePhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile number'**
+  String get topupSettingsTypePhone;
+
+  /// No description provided for @topupSettingsTypeNationalId.
+  ///
+  /// In en, this message translates to:
+  /// **'National ID / tax ID'**
+  String get topupSettingsTypeNationalId;
+
+  /// No description provided for @topupSettingsTypeEwallet.
+  ///
+  /// In en, this message translates to:
+  /// **'e-Wallet ID'**
+  String get topupSettingsTypeEwallet;
+
+  /// No description provided for @topupSettingsId.
+  ///
+  /// In en, this message translates to:
+  /// **'PromptPay number'**
+  String get topupSettingsId;
+
+  /// No description provided for @topupSettingsIdHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile 10 digits, ID 13 digits, e-Wallet 15 digits'**
+  String get topupSettingsIdHelp;
+
+  /// No description provided for @topupSettingsReceiver.
+  ///
+  /// In en, this message translates to:
+  /// **'Account name shown to members'**
+  String get topupSettingsReceiver;
+
+  /// No description provided for @topupSettingsLimits.
+  ///
+  /// In en, this message translates to:
+  /// **'Limits'**
+  String get topupSettingsLimits;
+
+  /// No description provided for @topupSettingsMin.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum per top-up (THB)'**
+  String get topupSettingsMin;
+
+  /// No description provided for @topupSettingsMax.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum per top-up (THB)'**
+  String get topupSettingsMax;
+
+  /// No description provided for @topupSettingsDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum per member per day (THB)'**
+  String get topupSettingsDaily;
+
+  /// No description provided for @topupSettingsDual.
+  ///
+  /// In en, this message translates to:
+  /// **'Two reviewers from (THB)'**
+  String get topupSettingsDual;
+
+  /// No description provided for @topupSettingsDualHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Top-ups of this amount or more need two different reviewers.'**
+  String get topupSettingsDualHelp;
+
+  /// No description provided for @topupSettingsHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Hours to send the slip'**
+  String get topupSettingsHours;
+
+  /// No description provided for @topupSettingsHoursHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'1 to 72 hours'**
+  String get topupSettingsHoursHelp;
+
+  /// No description provided for @topupSettingsUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last changed'**
+  String get topupSettingsUpdated;
+
+  /// No description provided for @topupSettingsSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save settings'**
+  String get topupSettingsSave;
+
+  /// No description provided for @topupSettingsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings saved'**
+  String get topupSettingsSaved;
+
+  /// No description provided for @topupSettingsChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone else changed these settings. Reload and try again.'**
+  String get topupSettingsChanged;
+
+  /// No description provided for @topupSettingsInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the limits: maximum at least the minimum, daily at least the maximum, hours 1 to 72.'**
+  String get topupSettingsInvalid;
+
+  /// No description provided for @topupSettingsPromptPayInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'The PromptPay number doesn\'t match the chosen type.'**
+  String get topupSettingsPromptPayInvalid;
+
+  /// No description provided for @topupSettingsReceiverRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the PromptPay number and account name before allowing top-ups.'**
+  String get topupSettingsReceiverRequired;
 }
 
 class _AppLocalizationsDelegate

@@ -3945,6 +3945,344 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get businessOrgEmpty => '您还不是任何已验证公司的成员。';
+
+  @override
+  String get topupTitle => '钱包充值';
+
+  @override
+  String get topupHelp =>
+      '请使用本人名下的银行账户通过 PromptPay 转账，然后提交转账凭证。工作人员核对后会将款项存入您的 KaoSure Wallet。';
+
+  @override
+  String get topupAmount => '金额（泰铢）';
+
+  @override
+  String topupAmountHelp(String min, String max) {
+    return '$min 至 $max';
+  }
+
+  @override
+  String get topupCreate => '生成 PromptPay 二维码';
+
+  @override
+  String get topupCreatedDone => '二维码已生成。请按此金额准确转账，然后提交凭证。';
+
+  @override
+  String get topupOpenTitle => '当前充值申请';
+
+  @override
+  String get topupScanHelp => '请用银行 App 扫码，并按显示金额准确转账。';
+
+  @override
+  String get topupReceiver => '收款人';
+
+  @override
+  String get topupUploadBefore => '凭证提交截止';
+
+  @override
+  String get topupPayerNotice => '转出账户必须与您的 Kao ID 同名。他人账户转入的款项将不予通过。';
+
+  @override
+  String get topupSendSlip => '提交凭证';
+
+  @override
+  String get topupSlipHelp => '转账凭证的照片或截图（JPEG 或 PNG）。';
+
+  @override
+  String get topupCancel => '取消充值';
+
+  @override
+  String topupCancelConfirm(String amount) {
+    return '确定取消 $amount 的充值申请吗？取消后请勿再为此申请转账。';
+  }
+
+  @override
+  String get topupCancelledDone => '充值已取消';
+
+  @override
+  String get topupCheckingHelp => '已收到您的凭证。工作人员核对后会存入您的钱包，并发送通知。';
+
+  @override
+  String get topupSlipSentDone => '凭证已提交审核';
+
+  @override
+  String get topupHistory => '充值记录';
+
+  @override
+  String get topupNoHistory => '暂无充值记录';
+
+  @override
+  String topupToday(String today, String max) {
+    return '今日：$today / $max';
+  }
+
+  @override
+  String topupSlipHours(int hours) {
+    return '生成二维码后，请在 $hours 小时内提交凭证。';
+  }
+
+  @override
+  String get topupRejectReason => '原因';
+
+  @override
+  String get topupStatusAwaitingSlip => '待提交凭证';
+
+  @override
+  String get topupStatusPendingReview => '凭证审核中';
+
+  @override
+  String get topupStatusAwaitingSecond => '待第二次审核';
+
+  @override
+  String get topupStatusApproved => '已入账';
+
+  @override
+  String get topupStatusRejected => '未通过';
+
+  @override
+  String get topupStatusCancelled => '已取消';
+
+  @override
+  String get topupStatusExpired => '已过期';
+
+  @override
+  String get topupBlockUnavailable => '暂未开放充值。';
+
+  @override
+  String get topupBlockKaoId => '充值需要有效的 Kao ID。请先完成邮箱、电话、银行账户和身份验证。';
+
+  @override
+  String get topupBlockWallet => '该钱包已被暂停，请联系客服。';
+
+  @override
+  String get topupBlockDaily => '已达今日充值上限，请明天再试。';
+
+  @override
+  String get topupErrorBelowMinimum => '金额低于最低限额。';
+
+  @override
+  String get topupErrorAboveMaximum => '金额超出上限。';
+
+  @override
+  String get topupErrorAmount => '请输入泰铢金额，最多两位小数。';
+
+  @override
+  String get topupErrorOpen => '您有一笔正在处理的充值，请先完成或取消。';
+
+  @override
+  String get topupErrorSlipFile => '请选择清晰的凭证图片（JPEG 或 PNG）。';
+
+  @override
+  String get topupErrorSlipDuplicate => '该凭证已被使用。请取消此申请并重新创建。';
+
+  @override
+  String get topupErrorExpired => '提交凭证的时间已过，请重新创建充值。';
+
+  @override
+  String get topupErrorNotOpen => '此充值已无法更改，请刷新页面。';
+
+  @override
+  String get topupErrorFailed => '操作未完成，请重试。';
+
+  @override
+  String get topupsTitle => '钱包充值申请';
+
+  @override
+  String get topupsHubHelp => '核对转账凭证并为会员钱包入账';
+
+  @override
+  String get topupsHelp =>
+      '请核对凭证金额与申请一致、收款方为公司 PromptPay，且付款人为 Kao ID 上登记的会员本人。达到双人审核金额的申请需由第二位审核人以相同银行参考号确认。';
+
+  @override
+  String get topupReviewVerifiedName => 'Kao ID 姓名';
+
+  @override
+  String get topupReviewKaoIdInactive => '该会员的 Kao ID 未处于有效状态，无法批准此充值。';
+
+  @override
+  String get topupReviewCode => '充值编号';
+
+  @override
+  String get topupReviewStatus => '状态';
+
+  @override
+  String get topupReviewSource => '申请来源';
+
+  @override
+  String get topupReviewSlipSent => '凭证提交时间';
+
+  @override
+  String get topupReviewWallet => '钱包余额';
+
+  @override
+  String get topupReviewToday => '今日申请总额';
+
+  @override
+  String get topupReviewDual => '需要两人审核';
+
+  @override
+  String get topupReviewFirst => '第一审核人';
+
+  @override
+  String get topupReviewReference => '银行参考号';
+
+  @override
+  String get topupReviewReferenceHelp => '凭证上的交易号，3 至 100 个字符，每个只能使用一次。';
+
+  @override
+  String get topupReviewSecondHelp => '请输入与第一审核人记录相同的银行参考号。';
+
+  @override
+  String topupReviewPayerConfirm(String name) {
+    return '凭证上的付款人为 $name';
+  }
+
+  @override
+  String get topupReviewPayerRequired => '批准前请确认付款人姓名。';
+
+  @override
+  String get topupReviewApprove => '批准并入账';
+
+  @override
+  String get topupReviewFirstApprove => '批准（第一审核人）';
+
+  @override
+  String get topupReviewSecondApprove => '批准（第二审核人）';
+
+  @override
+  String topupReviewApproveConfirm(String amount, String name) {
+    return '确定为 $name 的钱包存入 $amount 吗？会员将收到通知。';
+  }
+
+  @override
+  String topupReviewFirstConfirm(String amount) {
+    return '确定记录 $amount 的第一次批准吗？需第二位审核人确认后才会入账。';
+  }
+
+  @override
+  String get topupReviewReject => '拒绝';
+
+  @override
+  String topupReviewRejectConfirm(String amount) {
+    return '确定拒绝 $amount 的充值吗？会员将看到您的原因。';
+  }
+
+  @override
+  String get topupReviewApprovedDone => '已批准并入账';
+
+  @override
+  String get topupReviewFirstDone => '已记录第一次批准，等待第二位审核人。';
+
+  @override
+  String get topupReviewRejectedDone => '已拒绝充值';
+
+  @override
+  String get topupReviewDuplicates => '此凭证文件也用于以下申请';
+
+  @override
+  String get topupReviewSlip => '转账凭证';
+
+  @override
+  String get topupReviewSlipFailed => '无法加载凭证，请刷新重试。';
+
+  @override
+  String get topupReviewOwn => '这是您本人的充值，需由其他工作人员审核。';
+
+  @override
+  String get topupReviewWaitingOther => '您已完成第一次批准，第二次需由其他审核人完成。';
+
+  @override
+  String get topupReviewSecondRequired => '第二次批准须由其他审核人完成。';
+
+  @override
+  String get topupReviewReferenceUsed => '该银行参考号已用于其他充值。';
+
+  @override
+  String get topupReviewReferenceMismatch => '参考号与第一审核人记录的不一致。';
+
+  @override
+  String get topupSettingsTitle => '充值设置';
+
+  @override
+  String get topupSettingsHubHelp => 'PromptPay 收款账户与限额';
+
+  @override
+  String get topupSettingsAccount => '收款账户';
+
+  @override
+  String get topupSettingsHelp =>
+      '会员将转账至此公司 PromptPay 账户。设置完成前不开放充值。更改将以隐藏号码方式记录。';
+
+  @override
+  String get topupSettingsEnabled => '开放充值';
+
+  @override
+  String get topupSettingsType => 'PromptPay 类型';
+
+  @override
+  String get topupSettingsTypePhone => '手机号码';
+
+  @override
+  String get topupSettingsTypeNationalId => '身份证号 / 税号';
+
+  @override
+  String get topupSettingsTypeEwallet => '电子钱包 ID';
+
+  @override
+  String get topupSettingsId => 'PromptPay 号码';
+
+  @override
+  String get topupSettingsIdHelp => '手机 10 位、证件号 13 位、电子钱包 15 位';
+
+  @override
+  String get topupSettingsReceiver => '向会员显示的账户名';
+
+  @override
+  String get topupSettingsLimits => '限额';
+
+  @override
+  String get topupSettingsMin => '每次最低金额（泰铢）';
+
+  @override
+  String get topupSettingsMax => '每次最高金额（泰铢）';
+
+  @override
+  String get topupSettingsDaily => '每位会员每日上限（泰铢）';
+
+  @override
+  String get topupSettingsDual => '双人审核起始金额（泰铢）';
+
+  @override
+  String get topupSettingsDualHelp => '达到或超过此金额的充值需要两位不同的审核人。';
+
+  @override
+  String get topupSettingsHours => '提交凭证时限（小时）';
+
+  @override
+  String get topupSettingsHoursHelp => '1 至 72 小时';
+
+  @override
+  String get topupSettingsUpdated => '最后修改';
+
+  @override
+  String get topupSettingsSave => '保存设置';
+
+  @override
+  String get topupSettingsSaved => '设置已保存';
+
+  @override
+  String get topupSettingsChanged => '其他人已修改这些设置，请重新加载后再试。';
+
+  @override
+  String get topupSettingsInvalid =>
+      '请检查限额：最高额不低于最低额，每日上限不低于每次上限，时限 1 至 72 小时。';
+
+  @override
+  String get topupSettingsPromptPayInvalid => 'PromptPay 号码与所选类型不符。';
+
+  @override
+  String get topupSettingsReceiverRequired => '开放充值前，请填写 PromptPay 号码和账户名。';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -7888,4 +8226,342 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get businessOrgEmpty => '您还不是任何已验证公司的成员。';
+
+  @override
+  String get topupTitle => '钱包充值';
+
+  @override
+  String get topupHelp =>
+      '请使用本人名下的银行账户通过 PromptPay 转账，然后提交转账凭证。工作人员核对后会将款项存入您的 KaoSure Wallet。';
+
+  @override
+  String get topupAmount => '金额（泰铢）';
+
+  @override
+  String topupAmountHelp(String min, String max) {
+    return '$min 至 $max';
+  }
+
+  @override
+  String get topupCreate => '生成 PromptPay 二维码';
+
+  @override
+  String get topupCreatedDone => '二维码已生成。请按此金额准确转账，然后提交凭证。';
+
+  @override
+  String get topupOpenTitle => '当前充值申请';
+
+  @override
+  String get topupScanHelp => '请用银行 App 扫码，并按显示金额准确转账。';
+
+  @override
+  String get topupReceiver => '收款人';
+
+  @override
+  String get topupUploadBefore => '凭证提交截止';
+
+  @override
+  String get topupPayerNotice => '转出账户必须与您的 Kao ID 同名。他人账户转入的款项将不予通过。';
+
+  @override
+  String get topupSendSlip => '提交凭证';
+
+  @override
+  String get topupSlipHelp => '转账凭证的照片或截图（JPEG 或 PNG）。';
+
+  @override
+  String get topupCancel => '取消充值';
+
+  @override
+  String topupCancelConfirm(String amount) {
+    return '确定取消 $amount 的充值申请吗？取消后请勿再为此申请转账。';
+  }
+
+  @override
+  String get topupCancelledDone => '充值已取消';
+
+  @override
+  String get topupCheckingHelp => '已收到您的凭证。工作人员核对后会存入您的钱包，并发送通知。';
+
+  @override
+  String get topupSlipSentDone => '凭证已提交审核';
+
+  @override
+  String get topupHistory => '充值记录';
+
+  @override
+  String get topupNoHistory => '暂无充值记录';
+
+  @override
+  String topupToday(String today, String max) {
+    return '今日：$today / $max';
+  }
+
+  @override
+  String topupSlipHours(int hours) {
+    return '生成二维码后，请在 $hours 小时内提交凭证。';
+  }
+
+  @override
+  String get topupRejectReason => '原因';
+
+  @override
+  String get topupStatusAwaitingSlip => '待提交凭证';
+
+  @override
+  String get topupStatusPendingReview => '凭证审核中';
+
+  @override
+  String get topupStatusAwaitingSecond => '待第二次审核';
+
+  @override
+  String get topupStatusApproved => '已入账';
+
+  @override
+  String get topupStatusRejected => '未通过';
+
+  @override
+  String get topupStatusCancelled => '已取消';
+
+  @override
+  String get topupStatusExpired => '已过期';
+
+  @override
+  String get topupBlockUnavailable => '暂未开放充值。';
+
+  @override
+  String get topupBlockKaoId => '充值需要有效的 Kao ID。请先完成邮箱、电话、银行账户和身份验证。';
+
+  @override
+  String get topupBlockWallet => '该钱包已被暂停，请联系客服。';
+
+  @override
+  String get topupBlockDaily => '已达今日充值上限，请明天再试。';
+
+  @override
+  String get topupErrorBelowMinimum => '金额低于最低限额。';
+
+  @override
+  String get topupErrorAboveMaximum => '金额超出上限。';
+
+  @override
+  String get topupErrorAmount => '请输入泰铢金额，最多两位小数。';
+
+  @override
+  String get topupErrorOpen => '您有一笔正在处理的充值，请先完成或取消。';
+
+  @override
+  String get topupErrorSlipFile => '请选择清晰的凭证图片（JPEG 或 PNG）。';
+
+  @override
+  String get topupErrorSlipDuplicate => '该凭证已被使用。请取消此申请并重新创建。';
+
+  @override
+  String get topupErrorExpired => '提交凭证的时间已过，请重新创建充值。';
+
+  @override
+  String get topupErrorNotOpen => '此充值已无法更改，请刷新页面。';
+
+  @override
+  String get topupErrorFailed => '操作未完成，请重试。';
+
+  @override
+  String get topupsTitle => '钱包充值申请';
+
+  @override
+  String get topupsHubHelp => '核对转账凭证并为会员钱包入账';
+
+  @override
+  String get topupsHelp =>
+      '请核对凭证金额与申请一致、收款方为公司 PromptPay，且付款人为 Kao ID 上登记的会员本人。达到双人审核金额的申请需由第二位审核人以相同银行参考号确认。';
+
+  @override
+  String get topupReviewVerifiedName => 'Kao ID 姓名';
+
+  @override
+  String get topupReviewKaoIdInactive => '该会员的 Kao ID 未处于有效状态，无法批准此充值。';
+
+  @override
+  String get topupReviewCode => '充值编号';
+
+  @override
+  String get topupReviewStatus => '状态';
+
+  @override
+  String get topupReviewSource => '申请来源';
+
+  @override
+  String get topupReviewSlipSent => '凭证提交时间';
+
+  @override
+  String get topupReviewWallet => '钱包余额';
+
+  @override
+  String get topupReviewToday => '今日申请总额';
+
+  @override
+  String get topupReviewDual => '需要两人审核';
+
+  @override
+  String get topupReviewFirst => '第一审核人';
+
+  @override
+  String get topupReviewReference => '银行参考号';
+
+  @override
+  String get topupReviewReferenceHelp => '凭证上的交易号，3 至 100 个字符，每个只能使用一次。';
+
+  @override
+  String get topupReviewSecondHelp => '请输入与第一审核人记录相同的银行参考号。';
+
+  @override
+  String topupReviewPayerConfirm(String name) {
+    return '凭证上的付款人为 $name';
+  }
+
+  @override
+  String get topupReviewPayerRequired => '批准前请确认付款人姓名。';
+
+  @override
+  String get topupReviewApprove => '批准并入账';
+
+  @override
+  String get topupReviewFirstApprove => '批准（第一审核人）';
+
+  @override
+  String get topupReviewSecondApprove => '批准（第二审核人）';
+
+  @override
+  String topupReviewApproveConfirm(String amount, String name) {
+    return '确定为 $name 的钱包存入 $amount 吗？会员将收到通知。';
+  }
+
+  @override
+  String topupReviewFirstConfirm(String amount) {
+    return '确定记录 $amount 的第一次批准吗？需第二位审核人确认后才会入账。';
+  }
+
+  @override
+  String get topupReviewReject => '拒绝';
+
+  @override
+  String topupReviewRejectConfirm(String amount) {
+    return '确定拒绝 $amount 的充值吗？会员将看到您的原因。';
+  }
+
+  @override
+  String get topupReviewApprovedDone => '已批准并入账';
+
+  @override
+  String get topupReviewFirstDone => '已记录第一次批准，等待第二位审核人。';
+
+  @override
+  String get topupReviewRejectedDone => '已拒绝充值';
+
+  @override
+  String get topupReviewDuplicates => '此凭证文件也用于以下申请';
+
+  @override
+  String get topupReviewSlip => '转账凭证';
+
+  @override
+  String get topupReviewSlipFailed => '无法加载凭证，请刷新重试。';
+
+  @override
+  String get topupReviewOwn => '这是您本人的充值，需由其他工作人员审核。';
+
+  @override
+  String get topupReviewWaitingOther => '您已完成第一次批准，第二次需由其他审核人完成。';
+
+  @override
+  String get topupReviewSecondRequired => '第二次批准须由其他审核人完成。';
+
+  @override
+  String get topupReviewReferenceUsed => '该银行参考号已用于其他充值。';
+
+  @override
+  String get topupReviewReferenceMismatch => '参考号与第一审核人记录的不一致。';
+
+  @override
+  String get topupSettingsTitle => '充值设置';
+
+  @override
+  String get topupSettingsHubHelp => 'PromptPay 收款账户与限额';
+
+  @override
+  String get topupSettingsAccount => '收款账户';
+
+  @override
+  String get topupSettingsHelp =>
+      '会员将转账至此公司 PromptPay 账户。设置完成前不开放充值。更改将以隐藏号码方式记录。';
+
+  @override
+  String get topupSettingsEnabled => '开放充值';
+
+  @override
+  String get topupSettingsType => 'PromptPay 类型';
+
+  @override
+  String get topupSettingsTypePhone => '手机号码';
+
+  @override
+  String get topupSettingsTypeNationalId => '身份证号 / 税号';
+
+  @override
+  String get topupSettingsTypeEwallet => '电子钱包 ID';
+
+  @override
+  String get topupSettingsId => 'PromptPay 号码';
+
+  @override
+  String get topupSettingsIdHelp => '手机 10 位、证件号 13 位、电子钱包 15 位';
+
+  @override
+  String get topupSettingsReceiver => '向会员显示的账户名';
+
+  @override
+  String get topupSettingsLimits => '限额';
+
+  @override
+  String get topupSettingsMin => '每次最低金额（泰铢）';
+
+  @override
+  String get topupSettingsMax => '每次最高金额（泰铢）';
+
+  @override
+  String get topupSettingsDaily => '每位会员每日上限（泰铢）';
+
+  @override
+  String get topupSettingsDual => '双人审核起始金额（泰铢）';
+
+  @override
+  String get topupSettingsDualHelp => '达到或超过此金额的充值需要两位不同的审核人。';
+
+  @override
+  String get topupSettingsHours => '提交凭证时限（小时）';
+
+  @override
+  String get topupSettingsHoursHelp => '1 至 72 小时';
+
+  @override
+  String get topupSettingsUpdated => '最后修改';
+
+  @override
+  String get topupSettingsSave => '保存设置';
+
+  @override
+  String get topupSettingsSaved => '设置已保存';
+
+  @override
+  String get topupSettingsChanged => '其他人已修改这些设置，请重新加载后再试。';
+
+  @override
+  String get topupSettingsInvalid =>
+      '请检查限额：最高额不低于最低额，每日上限不低于每次上限，时限 1 至 72 小时。';
+
+  @override
+  String get topupSettingsPromptPayInvalid => 'PromptPay 号码与所选类型不符。';
+
+  @override
+  String get topupSettingsReceiverRequired => '开放充值前，请填写 PromptPay 号码和账户名。';
 }

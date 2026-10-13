@@ -6,9 +6,12 @@ class StaffTools {
     this.contents = false,
     this.reviews = false,
     this.orderIssues = false,
+    this.topups = false,
+    this.topupSettings = false,
     this.pendingWithdrawals = 0,
     this.pendingReviewReports = 0,
     this.openOrderIssues = 0,
+    this.pendingTopups = 0,
   });
 
   factory StaffTools.fromJson(Map<String, dynamic> json) => StaffTools(
@@ -16,9 +19,12 @@ class StaffTools {
     contents: json['contents'] == true,
     reviews: json['reviews'] == true,
     orderIssues: json['order_issues'] == true,
+    topups: json['topups'] == true,
+    topupSettings: json['topup_settings'] == true,
     pendingWithdrawals: (json['pending_withdrawals'] as num?)?.toInt() ?? 0,
     pendingReviewReports: (json['pending_review_reports'] as num?)?.toInt() ?? 0,
     openOrderIssues: (json['open_order_issues'] as num?)?.toInt() ?? 0,
+    pendingTopups: (json['pending_topups'] as num?)?.toInt() ?? 0,
   );
 
   static const none = StaffTools();
@@ -34,6 +40,12 @@ class StaffTools {
 
   /// `marketplace.orders.resolve`.
   final bool orderIssues;
+
+  /// `wallet.deposit.approve`.
+  final bool topups;
+
+  /// `wallet.deposit.settings`.
+  final bool topupSettings;
   final int pendingWithdrawals;
 
   /// Reviews with at least one waiting report.
@@ -42,7 +54,12 @@ class StaffTools {
   /// Secondhand order problems waiting for a decision.
   final int openOrderIssues;
 
+  /// Top-ups with a slip waiting for the first or second reviewer.
+  final int pendingTopups;
+
   bool get marketplace => reviews || orderIssues;
 
-  bool get any => withdrawals || contents || marketplace;
+  bool get finance => withdrawals || contents || topups || topupSettings;
+
+  bool get any => finance || marketplace;
 }

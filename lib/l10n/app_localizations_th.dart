@@ -4224,4 +4224,363 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get businessOrgEmpty => 'คุณยังไม่ได้เป็นสมาชิกของบริษัทที่ยืนยันแล้ว';
+
+  @override
+  String get topupTitle => 'เติมเงินเข้า Wallet';
+
+  @override
+  String get topupHelp =>
+      'โอนผ่านพร้อมเพย์จากบัญชีธนาคารที่เป็นชื่อของคุณเอง แล้วส่งสลิป เจ้าหน้าที่จะตรวจสอบและเติมเงินเข้า KaoSure Wallet ให้';
+
+  @override
+  String get topupAmount => 'จำนวนเงิน (บาท)';
+
+  @override
+  String topupAmountHelp(String min, String max) {
+    return 'ตั้งแต่ $min ถึง $max';
+  }
+
+  @override
+  String get topupCreate => 'สร้าง QR พร้อมเพย์';
+
+  @override
+  String get topupCreatedDone => 'สร้าง QR แล้ว โอนตามยอดนี้พอดี แล้วส่งสลิป';
+
+  @override
+  String get topupOpenTitle => 'คำขอเติมเงินปัจจุบัน';
+
+  @override
+  String get topupScanHelp => 'สแกนด้วยแอปธนาคารและโอนตามยอดที่แสดงพอดี';
+
+  @override
+  String get topupReceiver => 'ผู้รับเงิน';
+
+  @override
+  String get topupUploadBefore => 'ส่งสลิปภายใน';
+
+  @override
+  String get topupPayerNotice =>
+      'บัญชีที่ใช้โอนต้องเป็นชื่อเดียวกับ Kao ID ของคุณ หากโอนจากบัญชีของผู้อื่นจะไม่ได้รับการอนุมัติ';
+
+  @override
+  String get topupSendSlip => 'ส่งสลิป';
+
+  @override
+  String get topupSlipHelp => 'รูปถ่ายหรือภาพหน้าจอสลิปการโอน (JPEG หรือ PNG)';
+
+  @override
+  String get topupCancel => 'ยกเลิกคำขอเติมเงิน';
+
+  @override
+  String topupCancelConfirm(String amount) {
+    return 'ยกเลิกคำขอเติมเงิน $amount หรือไม่ หลังยกเลิกแล้วห้ามโอนเงินสำหรับคำขอนี้';
+  }
+
+  @override
+  String get topupCancelledDone => 'ยกเลิกคำขอเติมเงินแล้ว';
+
+  @override
+  String get topupCheckingHelp =>
+      'ได้รับสลิปแล้ว เจ้าหน้าที่จะตรวจสอบและเติมเงินเข้า Wallet ให้ คุณจะได้รับการแจ้งเตือน';
+
+  @override
+  String get topupSlipSentDone => 'ส่งสลิปให้ตรวจสอบแล้ว';
+
+  @override
+  String get topupHistory => 'ประวัติการเติมเงิน';
+
+  @override
+  String get topupNoHistory => 'ยังไม่มีการเติมเงิน';
+
+  @override
+  String topupToday(String today, String max) {
+    return 'วันนี้: $today จาก $max';
+  }
+
+  @override
+  String topupSlipHours(int hours) {
+    return 'หลังสร้าง QR มีเวลา $hours ชั่วโมงในการส่งสลิป';
+  }
+
+  @override
+  String get topupRejectReason => 'เหตุผล';
+
+  @override
+  String get topupStatusAwaitingSlip => 'รอส่งสลิป';
+
+  @override
+  String get topupStatusPendingReview => 'กำลังตรวจสลิป';
+
+  @override
+  String get topupStatusAwaitingSecond => 'รอตรวจรอบสอง';
+
+  @override
+  String get topupStatusApproved => 'เติมเข้า Wallet แล้ว';
+
+  @override
+  String get topupStatusRejected => 'ไม่ผ่าน';
+
+  @override
+  String get topupStatusCancelled => 'ยกเลิกแล้ว';
+
+  @override
+  String get topupStatusExpired => 'หมดเวลา';
+
+  @override
+  String get topupBlockUnavailable => 'ยังไม่เปิดให้เติมเงิน';
+
+  @override
+  String get topupBlockKaoId =>
+      'ต้องมี Kao ID ที่ใช้งานได้จึงจะเติมเงินได้ กรุณายืนยันอีเมล เบอร์โทร บัญชีธนาคาร และตัวตนให้ครบก่อน';
+
+  @override
+  String get topupBlockWallet => 'Wallet นี้ถูกระงับ กรุณาติดต่อฝ่ายช่วยเหลือ';
+
+  @override
+  String get topupBlockDaily =>
+      'ครบวงเงินเติมเงินของวันนี้แล้ว ลองใหม่พรุ่งนี้';
+
+  @override
+  String get topupErrorBelowMinimum => 'จำนวนเงินต่ำกว่าขั้นต่ำ';
+
+  @override
+  String get topupErrorAboveMaximum => 'จำนวนเงินเกินวงเงินที่กำหนด';
+
+  @override
+  String get topupErrorAmount => 'กรอกจำนวนเงินเป็นบาท ทศนิยมไม่เกิน 2 ตำแหน่ง';
+
+  @override
+  String get topupErrorOpen =>
+      'คุณมีคำขอเติมเงินที่ยังไม่เสร็จ กรุณาดำเนินการให้เสร็จหรือยกเลิกก่อน';
+
+  @override
+  String get topupErrorSlipFile =>
+      'เลือกรูปสลิปที่ชัดเจน เป็นไฟล์ JPEG หรือ PNG';
+
+  @override
+  String get topupErrorSlipDuplicate =>
+      'สลิปนี้ถูกใช้ไปแล้ว ยกเลิกคำขอนี้แล้วสร้างใหม่';
+
+  @override
+  String get topupErrorExpired => 'หมดเวลาส่งสลิปแล้ว กรุณาสร้างคำขอใหม่';
+
+  @override
+  String get topupErrorNotOpen => 'คำขอนี้เปลี่ยนแปลงไม่ได้แล้ว กรุณารีเฟรช';
+
+  @override
+  String get topupErrorFailed => 'ดำเนินการไม่สำเร็จ กรุณาลองใหม่';
+
+  @override
+  String get topupsTitle => 'คำขอเติมเงิน';
+
+  @override
+  String get topupsHubHelp => 'ตรวจสลิปและเติมเงินเข้า Wallet สมาชิก';
+
+  @override
+  String get topupsHelp =>
+      'ตรวจว่าสลิปแสดงยอดตรงกับคำขอ โอนเข้าพร้อมเพย์ของบริษัท และผู้โอนเป็นสมาชิกตามชื่อใน Kao ID ยอดที่ถึงเกณฑ์ตรวจสองคนต้องมีผู้ตรวจคนที่สองยืนยันด้วยเลขอ้างอิงเดียวกัน';
+
+  @override
+  String get topupReviewVerifiedName => 'ชื่อตาม Kao ID';
+
+  @override
+  String get topupReviewKaoIdInactive =>
+      'Kao ID ของสมาชิกไม่อยู่ในสถานะใช้งาน จึงอนุมัติคำขอนี้ไม่ได้';
+
+  @override
+  String get topupReviewCode => 'รหัสคำขอ';
+
+  @override
+  String get topupReviewStatus => 'สถานะ';
+
+  @override
+  String get topupReviewSource => 'ขอจากแอป';
+
+  @override
+  String get topupReviewSlipSent => 'ส่งสลิปเมื่อ';
+
+  @override
+  String get topupReviewWallet => 'ยอดเงินใน Wallet';
+
+  @override
+  String get topupReviewToday => 'ยอดที่ขอวันนี้';
+
+  @override
+  String get topupReviewDual => 'ต้องตรวจสองคน';
+
+  @override
+  String get topupReviewFirst => 'ผู้ตรวจคนแรก';
+
+  @override
+  String get topupReviewReference => 'เลขอ้างอิงธนาคาร';
+
+  @override
+  String get topupReviewReferenceHelp =>
+      'เลขที่รายการบนสลิป 3 ถึง 100 ตัวอักษร ใช้ได้ครั้งเดียว';
+
+  @override
+  String get topupReviewSecondHelp =>
+      'กรอกเลขอ้างอิงเดียวกับที่ผู้ตรวจคนแรกบันทึกไว้';
+
+  @override
+  String topupReviewPayerConfirm(String name) {
+    return 'ชื่อผู้โอนบนสลิปตรงกับ $name';
+  }
+
+  @override
+  String get topupReviewPayerRequired => 'ยืนยันชื่อผู้โอนก่อนอนุมัติ';
+
+  @override
+  String get topupReviewApprove => 'อนุมัติและเติมเข้า Wallet';
+
+  @override
+  String get topupReviewFirstApprove => 'อนุมัติ (ผู้ตรวจคนแรก)';
+
+  @override
+  String get topupReviewSecondApprove => 'อนุมัติ (ผู้ตรวจคนที่สอง)';
+
+  @override
+  String topupReviewApproveConfirm(String amount, String name) {
+    return 'เติม $amount เข้า Wallet ของ $name หรือไม่ สมาชิกจะได้รับการแจ้งเตือน';
+  }
+
+  @override
+  String topupReviewFirstConfirm(String amount) {
+    return 'บันทึกการอนุมัติครั้งแรกสำหรับ $amount หรือไม่ ต้องมีผู้ตรวจคนที่สองยืนยันก่อนเงินจะเข้า Wallet';
+  }
+
+  @override
+  String get topupReviewReject => 'ไม่อนุมัติ';
+
+  @override
+  String topupReviewRejectConfirm(String amount) {
+    return 'ไม่อนุมัติคำขอเติมเงิน $amount หรือไม่ สมาชิกจะเห็นเหตุผลของคุณ';
+  }
+
+  @override
+  String get topupReviewApprovedDone => 'อนุมัติและเติมเงินเข้า Wallet แล้ว';
+
+  @override
+  String get topupReviewFirstDone =>
+      'บันทึกการอนุมัติครั้งแรกแล้ว รอผู้ตรวจคนที่สอง';
+
+  @override
+  String get topupReviewRejectedDone => 'ไม่อนุมัติคำขอแล้ว';
+
+  @override
+  String get topupReviewDuplicates => 'ไฟล์สลิปนี้ถูกส่งกับคำขออื่นด้วย';
+
+  @override
+  String get topupReviewSlip => 'สลิปการโอน';
+
+  @override
+  String get topupReviewSlipFailed => 'โหลดสลิปไม่สำเร็จ กรุณารีเฟรช';
+
+  @override
+  String get topupReviewOwn =>
+      'นี่คือคำขอของคุณเอง ต้องให้เจ้าหน้าที่คนอื่นตรวจ';
+
+  @override
+  String get topupReviewWaitingOther =>
+      'คุณอนุมัติครั้งแรกแล้ว ต้องให้ผู้ตรวจคนอื่นอนุมัติครั้งที่สอง';
+
+  @override
+  String get topupReviewSecondRequired =>
+      'ต้องให้ผู้ตรวจคนอื่นอนุมัติครั้งที่สอง';
+
+  @override
+  String get topupReviewReferenceUsed => 'เลขอ้างอิงนี้ถูกใช้กับคำขออื่นแล้ว';
+
+  @override
+  String get topupReviewReferenceMismatch =>
+      'เลขอ้างอิงไม่ตรงกับที่ผู้ตรวจคนแรกบันทึกไว้';
+
+  @override
+  String get topupSettingsTitle => 'ตั้งค่าการเติมเงิน';
+
+  @override
+  String get topupSettingsHubHelp => 'บัญชีพร้อมเพย์รับเงินและวงเงิน';
+
+  @override
+  String get topupSettingsAccount => 'บัญชีรับเงิน';
+
+  @override
+  String get topupSettingsHelp =>
+      'สมาชิกจะโอนเข้าบัญชีพร้อมเพย์ของบริษัทนี้ การเติมเงินจะปิดอยู่จนกว่าจะตั้งค่า การเปลี่ยนแปลงจะถูกบันทึกโดยปิดบังหมายเลข';
+
+  @override
+  String get topupSettingsEnabled => 'เปิดให้เติมเงิน';
+
+  @override
+  String get topupSettingsType => 'ประเภทพร้อมเพย์';
+
+  @override
+  String get topupSettingsTypePhone => 'เบอร์โทรศัพท์มือถือ';
+
+  @override
+  String get topupSettingsTypeNationalId =>
+      'เลขประจำตัวประชาชน / เลขผู้เสียภาษี';
+
+  @override
+  String get topupSettingsTypeEwallet => 'เลข e-Wallet';
+
+  @override
+  String get topupSettingsId => 'หมายเลขพร้อมเพย์';
+
+  @override
+  String get topupSettingsIdHelp =>
+      'มือถือ 10 หลัก เลขประจำตัว 13 หลัก e-Wallet 15 หลัก';
+
+  @override
+  String get topupSettingsReceiver => 'ชื่อบัญชีที่แสดงให้สมาชิกเห็น';
+
+  @override
+  String get topupSettingsLimits => 'วงเงิน';
+
+  @override
+  String get topupSettingsMin => 'ขั้นต่ำต่อครั้ง (บาท)';
+
+  @override
+  String get topupSettingsMax => 'สูงสุดต่อครั้ง (บาท)';
+
+  @override
+  String get topupSettingsDaily => 'สูงสุดต่อสมาชิกต่อวัน (บาท)';
+
+  @override
+  String get topupSettingsDual => 'ตรวจสองคนตั้งแต่ (บาท)';
+
+  @override
+  String get topupSettingsDualHelp =>
+      'ยอดตั้งแต่จำนวนนี้ขึ้นไปต้องมีผู้ตรวจสองคนที่ไม่ซ้ำกัน';
+
+  @override
+  String get topupSettingsHours => 'ชั่วโมงสำหรับส่งสลิป';
+
+  @override
+  String get topupSettingsHoursHelp => '1 ถึง 72 ชั่วโมง';
+
+  @override
+  String get topupSettingsUpdated => 'แก้ไขล่าสุด';
+
+  @override
+  String get topupSettingsSave => 'บันทึกการตั้งค่า';
+
+  @override
+  String get topupSettingsSaved => 'บันทึกการตั้งค่าแล้ว';
+
+  @override
+  String get topupSettingsChanged =>
+      'มีผู้อื่นแก้ไขการตั้งค่านี้ไปแล้ว กรุณาโหลดใหม่แล้วลองอีกครั้ง';
+
+  @override
+  String get topupSettingsInvalid =>
+      'ตรวจสอบวงเงิน: สูงสุดต้องไม่น้อยกว่าขั้นต่ำ ต่อวันต้องไม่น้อยกว่าสูงสุดต่อครั้ง และชั่วโมง 1 ถึง 72';
+
+  @override
+  String get topupSettingsPromptPayInvalid =>
+      'หมายเลขพร้อมเพย์ไม่ตรงกับประเภทที่เลือก';
+
+  @override
+  String get topupSettingsReceiverRequired =>
+      'กรอกหมายเลขพร้อมเพย์และชื่อบัญชีก่อนเปิดให้เติมเงิน';
 }

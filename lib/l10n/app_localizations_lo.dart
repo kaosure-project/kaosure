@@ -4182,4 +4182,364 @@ class AppLocalizationsLo extends AppLocalizations {
   @override
   String get businessOrgEmpty =>
       'ທ່ານຍັງບໍ່ໄດ້ເປັນສະມາຊິກຂອງບໍລິສັດທີ່ຢືນຢັນແລ້ວ.';
+
+  @override
+  String get topupTitle => 'ເຕີມເງິນເຂົ້າ Wallet';
+
+  @override
+  String get topupHelp =>
+      'ໂອນຜ່ານ PromptPay ຈາກບັນຊີທະນາຄານທີ່ເປັນຊື່ຂອງທ່ານເອງ ແລ້ວສົ່ງສລິບ. ພະນັກງານຈະກວດສອບ ແລະ ເຕີມເງິນເຂົ້າ KaoSure Wallet ໃຫ້.';
+
+  @override
+  String get topupAmount => 'ຈຳນວນເງິນ (ບາດ)';
+
+  @override
+  String topupAmountHelp(String min, String max) {
+    return 'ຕັ້ງແຕ່ $min ຫາ $max';
+  }
+
+  @override
+  String get topupCreate => 'ສ້າງ QR PromptPay';
+
+  @override
+  String get topupCreatedDone => 'ສ້າງ QR ແລ້ວ. ໂອນຕາມຍອດນີ້ພໍດີ ແລ້ວສົ່ງສລິບ.';
+
+  @override
+  String get topupOpenTitle => 'ຄຳຂໍເຕີມເງິນປັດຈຸບັນ';
+
+  @override
+  String get topupScanHelp => 'ສະແກນດ້ວຍແອັບທະນາຄານ ແລະ ໂອນຕາມຍອດທີ່ສະແດງພໍດີ.';
+
+  @override
+  String get topupReceiver => 'ຜູ້ຮັບເງິນ';
+
+  @override
+  String get topupUploadBefore => 'ສົ່ງສລິບພາຍໃນ';
+
+  @override
+  String get topupPayerNotice =>
+      'ບັນຊີທີ່ໃຊ້ໂອນຕ້ອງເປັນຊື່ດຽວກັບ Kao ID ຂອງທ່ານ. ຖ້າໂອນຈາກບັນຊີຂອງຜູ້ອື່ນຈະບໍ່ໄດ້ຮັບການອະນຸມັດ.';
+
+  @override
+  String get topupSendSlip => 'ສົ່ງສລິບ';
+
+  @override
+  String get topupSlipHelp => 'ຮູບຖ່າຍ ຫຼື ພາບໜ້າຈໍສລິບການໂອນ (JPEG ຫຼື PNG).';
+
+  @override
+  String get topupCancel => 'ຍົກເລີກຄຳຂໍເຕີມເງິນ';
+
+  @override
+  String topupCancelConfirm(String amount) {
+    return 'ຍົກເລີກຄຳຂໍເຕີມເງິນ $amount ບໍ? ຫຼັງຍົກເລີກແລ້ວ ຢ່າໂອນເງິນສຳລັບຄຳຂໍນີ້.';
+  }
+
+  @override
+  String get topupCancelledDone => 'ຍົກເລີກຄຳຂໍເຕີມເງິນແລ້ວ';
+
+  @override
+  String get topupCheckingHelp =>
+      'ໄດ້ຮັບສລິບແລ້ວ. ພະນັກງານຈະກວດສອບ ແລະ ເຕີມເງິນເຂົ້າ Wallet ໃຫ້ ທ່ານຈະໄດ້ຮັບການແຈ້ງເຕືອນ.';
+
+  @override
+  String get topupSlipSentDone => 'ສົ່ງສລິບໃຫ້ກວດສອບແລ້ວ';
+
+  @override
+  String get topupHistory => 'ປະຫວັດການເຕີມເງິນ';
+
+  @override
+  String get topupNoHistory => 'ຍັງບໍ່ມີການເຕີມເງິນ';
+
+  @override
+  String topupToday(String today, String max) {
+    return 'ມື້ນີ້: $today ຈາກ $max';
+  }
+
+  @override
+  String topupSlipHours(int hours) {
+    return 'ຫຼັງສ້າງ QR ມີເວລາ $hours ຊົ່ວໂມງໃນການສົ່ງສລິບ.';
+  }
+
+  @override
+  String get topupRejectReason => 'ເຫດຜົນ';
+
+  @override
+  String get topupStatusAwaitingSlip => 'ລໍຖ້າສົ່ງສລິບ';
+
+  @override
+  String get topupStatusPendingReview => 'ກຳລັງກວດສລິບ';
+
+  @override
+  String get topupStatusAwaitingSecond => 'ລໍຖ້າກວດຮອບສອງ';
+
+  @override
+  String get topupStatusApproved => 'ເຕີມເຂົ້າ Wallet ແລ້ວ';
+
+  @override
+  String get topupStatusRejected => 'ບໍ່ຜ່ານ';
+
+  @override
+  String get topupStatusCancelled => 'ຍົກເລີກແລ້ວ';
+
+  @override
+  String get topupStatusExpired => 'ໝົດເວລາ';
+
+  @override
+  String get topupBlockUnavailable => 'ຍັງບໍ່ເປີດໃຫ້ເຕີມເງິນ.';
+
+  @override
+  String get topupBlockKaoId =>
+      'ຕ້ອງມີ Kao ID ທີ່ໃຊ້ງານໄດ້ຈຶ່ງຈະເຕີມເງິນໄດ້. ກະລຸນາຢືນຢັນອີເມວ, ເບີໂທ, ບັນຊີທະນາຄານ ແລະ ຕົວຕົນໃຫ້ຄົບກ່ອນ.';
+
+  @override
+  String get topupBlockWallet =>
+      'Wallet ນີ້ຖືກລະງັບ ກະລຸນາຕິດຕໍ່ຝ່າຍຊ່ວຍເຫຼືອ.';
+
+  @override
+  String get topupBlockDaily =>
+      'ຄົບວົງເງິນເຕີມເງິນຂອງມື້ນີ້ແລ້ວ ລອງໃໝ່ມື້ອື່ນ.';
+
+  @override
+  String get topupErrorBelowMinimum => 'ຈຳນວນເງິນຕ່ຳກວ່າຂັ້ນຕ່ຳ.';
+
+  @override
+  String get topupErrorAboveMaximum => 'ຈຳນວນເງິນເກີນວົງເງິນທີ່ກຳນົດ.';
+
+  @override
+  String get topupErrorAmount =>
+      'ປ້ອນຈຳນວນເງິນເປັນບາດ ທົດສະນິຍົມບໍ່ເກີນ 2 ຕຳແໜ່ງ.';
+
+  @override
+  String get topupErrorOpen =>
+      'ທ່ານມີຄຳຂໍເຕີມເງິນທີ່ຍັງບໍ່ສຳເລັດ ກະລຸນາດຳເນີນການໃຫ້ສຳເລັດ ຫຼື ຍົກເລີກກ່ອນ.';
+
+  @override
+  String get topupErrorSlipFile =>
+      'ເລືອກຮູບສລິບທີ່ຊັດເຈນ ເປັນໄຟລ໌ JPEG ຫຼື PNG.';
+
+  @override
+  String get topupErrorSlipDuplicate =>
+      'ສລິບນີ້ຖືກໃຊ້ໄປແລ້ວ ຍົກເລີກຄຳຂໍນີ້ແລ້ວສ້າງໃໝ່.';
+
+  @override
+  String get topupErrorExpired => 'ໝົດເວລາສົ່ງສລິບແລ້ວ ກະລຸນາສ້າງຄຳຂໍໃໝ່.';
+
+  @override
+  String get topupErrorNotOpen => 'ຄຳຂໍນີ້ປ່ຽນແປງບໍ່ໄດ້ແລ້ວ ກະລຸນາໂຫຼດໃໝ່.';
+
+  @override
+  String get topupErrorFailed => 'ດຳເນີນການບໍ່ສຳເລັດ ກະລຸນາລອງໃໝ່.';
+
+  @override
+  String get topupsTitle => 'ຄຳຂໍເຕີມເງິນ';
+
+  @override
+  String get topupsHubHelp => 'ກວດສລິບ ແລະ ເຕີມເງິນເຂົ້າ Wallet ສະມາຊິກ';
+
+  @override
+  String get topupsHelp =>
+      'ກວດວ່າສລິບສະແດງຍອດກົງກັບຄຳຂໍ ໂອນເຂົ້າ PromptPay ຂອງບໍລິສັດ ແລະ ຜູ້ໂອນແມ່ນສະມາຊິກຕາມຊື່ໃນ Kao ID. ຍອດທີ່ຮອດເກນກວດສອງຄົນ ຕ້ອງມີຜູ້ກວດຄົນທີສອງຢືນຢັນດ້ວຍເລກອ້າງອີງດຽວກັນ.';
+
+  @override
+  String get topupReviewVerifiedName => 'ຊື່ຕາມ Kao ID';
+
+  @override
+  String get topupReviewKaoIdInactive =>
+      'Kao ID ຂອງສະມາຊິກບໍ່ຢູ່ໃນສະຖານະໃຊ້ງານ ຈຶ່ງອະນຸມັດຄຳຂໍນີ້ບໍ່ໄດ້.';
+
+  @override
+  String get topupReviewCode => 'ລະຫັດຄຳຂໍ';
+
+  @override
+  String get topupReviewStatus => 'ສະຖານະ';
+
+  @override
+  String get topupReviewSource => 'ຂໍຈາກແອັບ';
+
+  @override
+  String get topupReviewSlipSent => 'ສົ່ງສລິບເມື່ອ';
+
+  @override
+  String get topupReviewWallet => 'ຍອດເງິນໃນ Wallet';
+
+  @override
+  String get topupReviewToday => 'ຍອດທີ່ຂໍມື້ນີ້';
+
+  @override
+  String get topupReviewDual => 'ຕ້ອງກວດສອງຄົນ';
+
+  @override
+  String get topupReviewFirst => 'ຜູ້ກວດຄົນທຳອິດ';
+
+  @override
+  String get topupReviewReference => 'ເລກອ້າງອີງທະນາຄານ';
+
+  @override
+  String get topupReviewReferenceHelp =>
+      'ເລກທີລາຍການເທິງສລິບ 3 ຫາ 100 ຕົວອັກສອນ ໃຊ້ໄດ້ຄັ້ງດຽວ.';
+
+  @override
+  String get topupReviewSecondHelp =>
+      'ປ້ອນເລກອ້າງອີງດຽວກັບທີ່ຜູ້ກວດຄົນທຳອິດບັນທຶກໄວ້.';
+
+  @override
+  String topupReviewPayerConfirm(String name) {
+    return 'ຊື່ຜູ້ໂອນເທິງສລິບກົງກັບ $name';
+  }
+
+  @override
+  String get topupReviewPayerRequired => 'ຢືນຢັນຊື່ຜູ້ໂອນກ່ອນອະນຸມັດ.';
+
+  @override
+  String get topupReviewApprove => 'ອະນຸມັດ ແລະ ເຕີມເຂົ້າ Wallet';
+
+  @override
+  String get topupReviewFirstApprove => 'ອະນຸມັດ (ຜູ້ກວດຄົນທຳອິດ)';
+
+  @override
+  String get topupReviewSecondApprove => 'ອະນຸມັດ (ຜູ້ກວດຄົນທີສອງ)';
+
+  @override
+  String topupReviewApproveConfirm(String amount, String name) {
+    return 'ເຕີມ $amount ເຂົ້າ Wallet ຂອງ $name ບໍ? ສະມາຊິກຈະໄດ້ຮັບການແຈ້ງເຕືອນ.';
+  }
+
+  @override
+  String topupReviewFirstConfirm(String amount) {
+    return 'ບັນທຶກການອະນຸມັດຄັ້ງທຳອິດສຳລັບ $amount ບໍ? ຕ້ອງມີຜູ້ກວດຄົນທີສອງຢືນຢັນກ່ອນເງິນຈະເຂົ້າ Wallet.';
+  }
+
+  @override
+  String get topupReviewReject => 'ບໍ່ອະນຸມັດ';
+
+  @override
+  String topupReviewRejectConfirm(String amount) {
+    return 'ບໍ່ອະນຸມັດຄຳຂໍເຕີມເງິນ $amount ບໍ? ສະມາຊິກຈະເຫັນເຫດຜົນຂອງທ່ານ.';
+  }
+
+  @override
+  String get topupReviewApprovedDone => 'ອະນຸມັດ ແລະ ເຕີມເງິນເຂົ້າ Wallet ແລ້ວ';
+
+  @override
+  String get topupReviewFirstDone =>
+      'ບັນທຶກການອະນຸມັດຄັ້ງທຳອິດແລ້ວ ລໍຖ້າຜູ້ກວດຄົນທີສອງ.';
+
+  @override
+  String get topupReviewRejectedDone => 'ບໍ່ອະນຸມັດຄຳຂໍແລ້ວ';
+
+  @override
+  String get topupReviewDuplicates => 'ໄຟລ໌ສລິບນີ້ຖືກສົ່ງກັບຄຳຂໍອື່ນນຳ';
+
+  @override
+  String get topupReviewSlip => 'ສລິບການໂອນ';
+
+  @override
+  String get topupReviewSlipFailed => 'ໂຫຼດສລິບບໍ່ສຳເລັດ ກະລຸນາໂຫຼດໃໝ່.';
+
+  @override
+  String get topupReviewOwn =>
+      'ນີ້ແມ່ນຄຳຂໍຂອງທ່ານເອງ ຕ້ອງໃຫ້ພະນັກງານຄົນອື່ນກວດ.';
+
+  @override
+  String get topupReviewWaitingOther =>
+      'ທ່ານອະນຸມັດຄັ້ງທຳອິດແລ້ວ ຕ້ອງໃຫ້ຜູ້ກວດຄົນອື່ນອະນຸມັດຄັ້ງທີສອງ.';
+
+  @override
+  String get topupReviewSecondRequired =>
+      'ຕ້ອງໃຫ້ຜູ້ກວດຄົນອື່ນອະນຸມັດຄັ້ງທີສອງ.';
+
+  @override
+  String get topupReviewReferenceUsed => 'ເລກອ້າງອີງນີ້ຖືກໃຊ້ກັບຄຳຂໍອື່ນແລ້ວ.';
+
+  @override
+  String get topupReviewReferenceMismatch =>
+      'ເລກອ້າງອີງບໍ່ກົງກັບທີ່ຜູ້ກວດຄົນທຳອິດບັນທຶກໄວ້.';
+
+  @override
+  String get topupSettingsTitle => 'ຕັ້ງຄ່າການເຕີມເງິນ';
+
+  @override
+  String get topupSettingsHubHelp => 'ບັນຊີ PromptPay ຮັບເງິນ ແລະ ວົງເງິນ';
+
+  @override
+  String get topupSettingsAccount => 'ບັນຊີຮັບເງິນ';
+
+  @override
+  String get topupSettingsHelp =>
+      'ສະມາຊິກຈະໂອນເຂົ້າບັນຊີ PromptPay ຂອງບໍລິສັດນີ້. ການເຕີມເງິນຈະປິດຢູ່ຈົນກວ່າຈະຕັ້ງຄ່າ. ການປ່ຽນແປງຈະຖືກບັນທຶກໂດຍປິດບັງໝາຍເລກ.';
+
+  @override
+  String get topupSettingsEnabled => 'ເປີດໃຫ້ເຕີມເງິນ';
+
+  @override
+  String get topupSettingsType => 'ປະເພດ PromptPay';
+
+  @override
+  String get topupSettingsTypePhone => 'ເບີໂທລະສັບມືຖື';
+
+  @override
+  String get topupSettingsTypeNationalId => 'ເລກບັດປະຈຳຕົວ / ເລກຜູ້ເສຍພາສີ';
+
+  @override
+  String get topupSettingsTypeEwallet => 'ເລກ e-Wallet';
+
+  @override
+  String get topupSettingsId => 'ໝາຍເລກ PromptPay';
+
+  @override
+  String get topupSettingsIdHelp =>
+      'ມືຖື 10 ຫຼັກ, ເລກປະຈຳຕົວ 13 ຫຼັກ, e-Wallet 15 ຫຼັກ';
+
+  @override
+  String get topupSettingsReceiver => 'ຊື່ບັນຊີທີ່ສະແດງໃຫ້ສະມາຊິກເຫັນ';
+
+  @override
+  String get topupSettingsLimits => 'ວົງເງິນ';
+
+  @override
+  String get topupSettingsMin => 'ຂັ້ນຕ່ຳຕໍ່ຄັ້ງ (ບາດ)';
+
+  @override
+  String get topupSettingsMax => 'ສູງສຸດຕໍ່ຄັ້ງ (ບາດ)';
+
+  @override
+  String get topupSettingsDaily => 'ສູງສຸດຕໍ່ສະມາຊິກຕໍ່ມື້ (ບາດ)';
+
+  @override
+  String get topupSettingsDual => 'ກວດສອງຄົນຕັ້ງແຕ່ (ບາດ)';
+
+  @override
+  String get topupSettingsDualHelp =>
+      'ຍອດຕັ້ງແຕ່ຈຳນວນນີ້ຂຶ້ນໄປ ຕ້ອງມີຜູ້ກວດສອງຄົນທີ່ບໍ່ຊ້ຳກັນ.';
+
+  @override
+  String get topupSettingsHours => 'ຊົ່ວໂມງສຳລັບສົ່ງສລິບ';
+
+  @override
+  String get topupSettingsHoursHelp => '1 ຫາ 72 ຊົ່ວໂມງ';
+
+  @override
+  String get topupSettingsUpdated => 'ແກ້ໄຂລ່າສຸດ';
+
+  @override
+  String get topupSettingsSave => 'ບັນທຶກການຕັ້ງຄ່າ';
+
+  @override
+  String get topupSettingsSaved => 'ບັນທຶກການຕັ້ງຄ່າແລ້ວ';
+
+  @override
+  String get topupSettingsChanged =>
+      'ມີຜູ້ອື່ນແກ້ໄຂການຕັ້ງຄ່ານີ້ແລ້ວ ກະລຸນາໂຫຼດໃໝ່ແລ້ວລອງອີກຄັ້ງ.';
+
+  @override
+  String get topupSettingsInvalid =>
+      'ກວດສອບວົງເງິນ: ສູງສຸດຕ້ອງບໍ່ໜ້ອຍກວ່າຂັ້ນຕ່ຳ, ຕໍ່ມື້ຕ້ອງບໍ່ໜ້ອຍກວ່າສູງສຸດຕໍ່ຄັ້ງ ແລະ ຊົ່ວໂມງ 1 ຫາ 72.';
+
+  @override
+  String get topupSettingsPromptPayInvalid =>
+      'ໝາຍເລກ PromptPay ບໍ່ກົງກັບປະເພດທີ່ເລືອກ.';
+
+  @override
+  String get topupSettingsReceiverRequired =>
+      'ປ້ອນໝາຍເລກ PromptPay ແລະ ຊື່ບັນຊີກ່ອນເປີດໃຫ້ເຕີມເງິນ.';
 }

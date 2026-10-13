@@ -4249,4 +4249,370 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get businessOrgEmpty =>
       'Bạn chưa là thành viên của công ty nào đã xác minh.';
+
+  @override
+  String get topupTitle => 'Nạp tiền vào ví';
+
+  @override
+  String get topupHelp =>
+      'Chuyển khoản qua PromptPay từ tài khoản ngân hàng đứng tên bạn, rồi gửi biên lai. Nhân viên sẽ kiểm tra và nạp tiền vào KaoSure Wallet của bạn.';
+
+  @override
+  String get topupAmount => 'Số tiền (THB)';
+
+  @override
+  String topupAmountHelp(String min, String max) {
+    return 'Từ $min đến $max';
+  }
+
+  @override
+  String get topupCreate => 'Tạo mã QR PromptPay';
+
+  @override
+  String get topupCreatedDone =>
+      'Đã tạo mã QR. Hãy chuyển đúng số tiền rồi gửi biên lai.';
+
+  @override
+  String get topupOpenTitle => 'Yêu cầu nạp tiền hiện tại';
+
+  @override
+  String get topupScanHelp =>
+      'Quét bằng ứng dụng ngân hàng và chuyển đúng số tiền hiển thị.';
+
+  @override
+  String get topupReceiver => 'Người nhận';
+
+  @override
+  String get topupUploadBefore => 'Gửi biên lai trước';
+
+  @override
+  String get topupPayerNotice =>
+      'Tài khoản chuyển tiền phải cùng tên với Kao ID của bạn. Chuyển từ tài khoản người khác sẽ bị từ chối.';
+
+  @override
+  String get topupSendSlip => 'Gửi biên lai';
+
+  @override
+  String get topupSlipHelp =>
+      'Ảnh chụp hoặc ảnh màn hình biên lai chuyển khoản (JPEG hoặc PNG).';
+
+  @override
+  String get topupCancel => 'Hủy nạp tiền';
+
+  @override
+  String topupCancelConfirm(String amount) {
+    return 'Hủy yêu cầu nạp $amount? Sau khi hủy, đừng chuyển tiền cho yêu cầu này.';
+  }
+
+  @override
+  String get topupCancelledDone => 'Đã hủy yêu cầu nạp tiền';
+
+  @override
+  String get topupCheckingHelp =>
+      'Đã nhận biên lai. Nhân viên sẽ kiểm tra và nạp tiền vào ví, bạn sẽ nhận được thông báo.';
+
+  @override
+  String get topupSlipSentDone => 'Đã gửi biên lai để kiểm tra';
+
+  @override
+  String get topupHistory => 'Lịch sử nạp tiền';
+
+  @override
+  String get topupNoHistory => 'Chưa có lần nạp tiền nào';
+
+  @override
+  String topupToday(String today, String max) {
+    return 'Hôm nay: $today / $max';
+  }
+
+  @override
+  String topupSlipHours(int hours) {
+    return 'Sau khi tạo mã QR, bạn có $hours giờ để gửi biên lai.';
+  }
+
+  @override
+  String get topupRejectReason => 'Lý do';
+
+  @override
+  String get topupStatusAwaitingSlip => 'Chờ biên lai';
+
+  @override
+  String get topupStatusPendingReview => 'Đang kiểm tra biên lai';
+
+  @override
+  String get topupStatusAwaitingSecond => 'Chờ kiểm tra lần hai';
+
+  @override
+  String get topupStatusApproved => 'Đã nạp vào ví';
+
+  @override
+  String get topupStatusRejected => 'Bị từ chối';
+
+  @override
+  String get topupStatusCancelled => 'Đã hủy';
+
+  @override
+  String get topupStatusExpired => 'Đã hết hạn';
+
+  @override
+  String get topupBlockUnavailable => 'Chức năng nạp tiền chưa mở.';
+
+  @override
+  String get topupBlockKaoId =>
+      'Cần Kao ID đang hoạt động để nạp tiền. Hãy hoàn tất xác minh email, điện thoại, ngân hàng và danh tính trước.';
+
+  @override
+  String get topupBlockWallet =>
+      'Ví này đang bị tạm khóa. Vui lòng liên hệ hỗ trợ.';
+
+  @override
+  String get topupBlockDaily =>
+      'Bạn đã đạt hạn mức nạp hôm nay. Hãy thử lại vào ngày mai.';
+
+  @override
+  String get topupErrorBelowMinimum => 'Số tiền thấp hơn mức tối thiểu.';
+
+  @override
+  String get topupErrorAboveMaximum => 'Số tiền vượt quá hạn mức.';
+
+  @override
+  String get topupErrorAmount =>
+      'Nhập số tiền bằng baht, tối đa 2 chữ số thập phân.';
+
+  @override
+  String get topupErrorOpen =>
+      'Bạn đang có một yêu cầu nạp tiền chưa xong. Hãy hoàn tất hoặc hủy trước.';
+
+  @override
+  String get topupErrorSlipFile =>
+      'Chọn ảnh biên lai rõ nét, định dạng JPEG hoặc PNG.';
+
+  @override
+  String get topupErrorSlipDuplicate =>
+      'Biên lai này đã được sử dụng. Hãy hủy yêu cầu này và tạo yêu cầu mới.';
+
+  @override
+  String get topupErrorExpired =>
+      'Đã hết thời gian gửi biên lai. Hãy tạo yêu cầu mới.';
+
+  @override
+  String get topupErrorNotOpen =>
+      'Không thể thay đổi yêu cầu này nữa. Hãy tải lại trang.';
+
+  @override
+  String get topupErrorFailed => 'Không thể hoàn tất. Vui lòng thử lại.';
+
+  @override
+  String get topupsTitle => 'Yêu cầu nạp tiền';
+
+  @override
+  String get topupsHubHelp => 'Kiểm tra biên lai và nạp tiền vào ví';
+
+  @override
+  String get topupsHelp =>
+      'Kiểm tra biên lai đúng số tiền, chuyển vào PromptPay của công ty, và người chuyển là thành viên đứng tên trong Kao ID. Số tiền từ ngưỡng hai người duyệt cần người duyệt thứ hai xác nhận với cùng mã tham chiếu ngân hàng.';
+
+  @override
+  String get topupReviewVerifiedName => 'Tên trong Kao ID';
+
+  @override
+  String get topupReviewKaoIdInactive =>
+      'Kao ID của thành viên không hoạt động nên không thể duyệt yêu cầu này.';
+
+  @override
+  String get topupReviewCode => 'Mã nạp tiền';
+
+  @override
+  String get topupReviewStatus => 'Trạng thái';
+
+  @override
+  String get topupReviewSource => 'Yêu cầu từ';
+
+  @override
+  String get topupReviewSlipSent => 'Gửi biên lai lúc';
+
+  @override
+  String get topupReviewWallet => 'Số dư ví';
+
+  @override
+  String get topupReviewToday => 'Đã yêu cầu hôm nay';
+
+  @override
+  String get topupReviewDual => 'Cần hai người duyệt';
+
+  @override
+  String get topupReviewFirst => 'Người duyệt thứ nhất';
+
+  @override
+  String get topupReviewReference => 'Mã tham chiếu ngân hàng';
+
+  @override
+  String get topupReviewReferenceHelp =>
+      'Mã giao dịch trên biên lai, 3 đến 100 ký tự. Mỗi mã chỉ dùng một lần.';
+
+  @override
+  String get topupReviewSecondHelp =>
+      'Nhập cùng mã tham chiếu mà người duyệt thứ nhất đã ghi.';
+
+  @override
+  String topupReviewPayerConfirm(String name) {
+    return 'Người chuyển trên biên lai là $name';
+  }
+
+  @override
+  String get topupReviewPayerRequired =>
+      'Xác nhận tên người chuyển trước khi duyệt.';
+
+  @override
+  String get topupReviewApprove => 'Duyệt và nạp vào ví';
+
+  @override
+  String get topupReviewFirstApprove => 'Duyệt (người thứ nhất)';
+
+  @override
+  String get topupReviewSecondApprove => 'Duyệt (người thứ hai)';
+
+  @override
+  String topupReviewApproveConfirm(String amount, String name) {
+    return 'Nạp $amount vào ví của $name? Thành viên sẽ được thông báo.';
+  }
+
+  @override
+  String topupReviewFirstConfirm(String amount) {
+    return 'Ghi nhận lần duyệt đầu cho $amount? Cần người duyệt thứ hai xác nhận trước khi nạp tiền.';
+  }
+
+  @override
+  String get topupReviewReject => 'Từ chối';
+
+  @override
+  String topupReviewRejectConfirm(String amount) {
+    return 'Từ chối yêu cầu nạp $amount? Thành viên sẽ thấy lý do của bạn.';
+  }
+
+  @override
+  String get topupReviewApprovedDone => 'Đã duyệt và nạp vào ví';
+
+  @override
+  String get topupReviewFirstDone =>
+      'Đã ghi nhận lần duyệt đầu. Đang chờ người duyệt thứ hai.';
+
+  @override
+  String get topupReviewRejectedDone => 'Đã từ chối yêu cầu nạp tiền';
+
+  @override
+  String get topupReviewDuplicates => 'Biên lai này cũng được gửi kèm';
+
+  @override
+  String get topupReviewSlip => 'Biên lai chuyển khoản';
+
+  @override
+  String get topupReviewSlipFailed => 'Không tải được biên lai. Hãy tải lại.';
+
+  @override
+  String get topupReviewOwn =>
+      'Đây là yêu cầu của chính bạn. Nhân viên khác phải duyệt.';
+
+  @override
+  String get topupReviewWaitingOther =>
+      'Bạn đã duyệt lần đầu. Người duyệt khác phải duyệt lần hai.';
+
+  @override
+  String get topupReviewSecondRequired =>
+      'Lần duyệt thứ hai phải do người khác thực hiện.';
+
+  @override
+  String get topupReviewReferenceUsed =>
+      'Mã tham chiếu này đã được dùng cho yêu cầu khác.';
+
+  @override
+  String get topupReviewReferenceMismatch =>
+      'Mã tham chiếu không khớp với người duyệt thứ nhất.';
+
+  @override
+  String get topupSettingsTitle => 'Cài đặt nạp tiền';
+
+  @override
+  String get topupSettingsHubHelp => 'Tài khoản PromptPay nhận tiền và hạn mức';
+
+  @override
+  String get topupSettingsAccount => 'Tài khoản nhận tiền';
+
+  @override
+  String get topupSettingsHelp =>
+      'Thành viên chuyển tiền vào tài khoản PromptPay này của công ty. Chức năng nạp tiền tắt cho đến khi được thiết lập. Thay đổi được ghi nhật ký với số đã che.';
+
+  @override
+  String get topupSettingsEnabled => 'Cho phép nạp tiền';
+
+  @override
+  String get topupSettingsType => 'Loại PromptPay';
+
+  @override
+  String get topupSettingsTypePhone => 'Số điện thoại di động';
+
+  @override
+  String get topupSettingsTypeNationalId => 'Số CMND / mã số thuế';
+
+  @override
+  String get topupSettingsTypeEwallet => 'Mã ví điện tử';
+
+  @override
+  String get topupSettingsId => 'Số PromptPay';
+
+  @override
+  String get topupSettingsIdHelp => 'Di động 10 số, ID 13 số, ví điện tử 15 số';
+
+  @override
+  String get topupSettingsReceiver => 'Tên tài khoản hiển thị cho thành viên';
+
+  @override
+  String get topupSettingsLimits => 'Hạn mức';
+
+  @override
+  String get topupSettingsMin => 'Tối thiểu mỗi lần (THB)';
+
+  @override
+  String get topupSettingsMax => 'Tối đa mỗi lần (THB)';
+
+  @override
+  String get topupSettingsDaily => 'Tối đa mỗi thành viên mỗi ngày (THB)';
+
+  @override
+  String get topupSettingsDual => 'Hai người duyệt từ (THB)';
+
+  @override
+  String get topupSettingsDualHelp =>
+      'Các khoản nạp từ mức này trở lên cần hai người duyệt khác nhau.';
+
+  @override
+  String get topupSettingsHours => 'Số giờ để gửi biên lai';
+
+  @override
+  String get topupSettingsHoursHelp => 'Từ 1 đến 72 giờ';
+
+  @override
+  String get topupSettingsUpdated => 'Thay đổi gần nhất';
+
+  @override
+  String get topupSettingsSave => 'Lưu cài đặt';
+
+  @override
+  String get topupSettingsSaved => 'Đã lưu cài đặt';
+
+  @override
+  String get topupSettingsChanged =>
+      'Người khác đã thay đổi cài đặt này. Hãy tải lại và thử lại.';
+
+  @override
+  String get topupSettingsInvalid =>
+      'Kiểm tra hạn mức: tối đa không nhỏ hơn tối thiểu, mỗi ngày không nhỏ hơn tối đa mỗi lần, số giờ từ 1 đến 72.';
+
+  @override
+  String get topupSettingsPromptPayInvalid =>
+      'Số PromptPay không khớp với loại đã chọn.';
+
+  @override
+  String get topupSettingsReceiverRequired =>
+      'Nhập số PromptPay và tên tài khoản trước khi cho phép nạp tiền.';
 }

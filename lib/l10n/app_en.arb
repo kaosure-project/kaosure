@@ -1434,5 +1434,176 @@
   "businessOrgBankSubmitted": "Company bank account sent for review",
   "businessOrgTitle": "Your companies",
   "businessOrgSubtitle": "Business Kao ID and the company bank account used for payouts.",
-  "businessOrgEmpty": "You are not a member of a verified company yet."
+  "businessOrgEmpty": "You are not a member of a verified company yet.",
+  "topupTitle": "Top up wallet",
+  "topupHelp": "Pay by PromptPay from a bank account in your own name, then send the slip. Staff check it and add the money to your KaoSure Wallet.",
+  "topupAmount": "Amount (THB)",
+  "topupAmountHelp": "From {min} to {max}",
+  "@topupAmountHelp": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "topupCreate": "Create PromptPay QR",
+  "topupCreatedDone": "QR ready. Pay the exact amount, then send the slip.",
+  "topupOpenTitle": "Current top-up",
+  "topupScanHelp": "Scan with your banking app and pay the exact amount shown.",
+  "topupReceiver": "Receiver",
+  "topupUploadBefore": "Send the slip by",
+  "topupPayerNotice": "The account you pay from must be in the same name as your Kao ID. Transfers from someone else are declined.",
+  "topupSendSlip": "Send slip",
+  "topupSlipHelp": "A photo or screenshot of the transfer slip, JPEG or PNG.",
+  "topupCancel": "Cancel top-up",
+  "topupCancelConfirm": "Cancel the {amount} top-up? Don't transfer money for it after cancelling.",
+  "@topupCancelConfirm": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "topupCancelledDone": "Top-up cancelled",
+  "topupCheckingHelp": "We got your slip. Staff will check it and add the money to your wallet. You'll get a notification.",
+  "topupSlipSentDone": "Slip sent for checking",
+  "topupHistory": "Top-up history",
+  "topupNoHistory": "No top-ups yet",
+  "topupToday": "Today: {today} of {max}",
+  "@topupToday": {
+    "placeholders": {
+      "today": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "topupSlipHours": "After creating the QR you have {hours} hours to send the slip.",
+  "@topupSlipHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "topupRejectReason": "Reason",
+  "topupStatusAwaitingSlip": "Waiting for slip",
+  "topupStatusPendingReview": "Checking slip",
+  "topupStatusAwaitingSecond": "Second check",
+  "topupStatusApproved": "Added to wallet",
+  "topupStatusRejected": "Declined",
+  "topupStatusCancelled": "Cancelled",
+  "topupStatusExpired": "Expired",
+  "topupBlockUnavailable": "Top-up isn't available yet.",
+  "topupBlockKaoId": "Top-up needs an active Kao ID. Finish verifying your email, phone, bank and identity first.",
+  "topupBlockWallet": "This wallet is suspended. Contact support.",
+  "topupBlockDaily": "You've reached today's top-up limit. Try again tomorrow.",
+  "topupErrorBelowMinimum": "The amount is below the minimum.",
+  "topupErrorAboveMaximum": "The amount is above the limit.",
+  "topupErrorAmount": "Enter an amount in baht, with at most 2 decimals.",
+  "topupErrorOpen": "You already have a top-up in progress. Finish or cancel it first.",
+  "topupErrorSlipFile": "Choose a clear JPEG or PNG image of the slip.",
+  "topupErrorSlipDuplicate": "This slip was already used. Cancel this top-up and create a new one.",
+  "topupErrorExpired": "Time to send the slip ran out. Create a new top-up.",
+  "topupErrorNotOpen": "This top-up can't be changed anymore. Refresh the page.",
+  "topupErrorFailed": "Couldn't complete this step. Please try again.",
+  "topupsTitle": "Wallet top-ups",
+  "topupsHubHelp": "Check transfer slips and add money to wallets",
+  "topupsHelp": "Check that the slip shows the exact amount paid to the company PromptPay, and that the payer is the member named in Kao ID. Amounts from the two-person limit need a second reviewer with the same bank reference.",
+  "topupReviewVerifiedName": "Name in Kao ID",
+  "topupReviewKaoIdInactive": "The member's Kao ID isn't active, so this top-up can't be approved.",
+  "topupReviewCode": "Top-up code",
+  "topupReviewStatus": "Status",
+  "topupReviewSource": "Requested from",
+  "topupReviewSlipSent": "Slip sent",
+  "topupReviewWallet": "Wallet balance",
+  "topupReviewToday": "Requested today",
+  "topupReviewDual": "Needs two reviewers",
+  "topupReviewFirst": "First reviewer",
+  "topupReviewReference": "Bank reference",
+  "topupReviewReferenceHelp": "The transaction number on the slip, 3 to 100 characters. Each one can be used once.",
+  "topupReviewSecondHelp": "Enter the same bank reference the first reviewer recorded.",
+  "topupReviewPayerConfirm": "The payer on the slip is {name}",
+  "@topupReviewPayerConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "topupReviewPayerRequired": "Confirm the payer's name before approving.",
+  "topupReviewApprove": "Approve and add to wallet",
+  "topupReviewFirstApprove": "Approve (first reviewer)",
+  "topupReviewSecondApprove": "Approve (second reviewer)",
+  "topupReviewApproveConfirm": "Add {amount} to {name}'s wallet? The member will be notified.",
+  "@topupReviewApproveConfirm": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "topupReviewFirstConfirm": "Record the first approval for {amount}? A second reviewer must confirm before the money is added.",
+  "@topupReviewFirstConfirm": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "topupReviewReject": "Decline",
+  "topupReviewRejectConfirm": "Decline the {amount} top-up? The member will see your reason.",
+  "@topupReviewRejectConfirm": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "topupReviewApprovedDone": "Approved and added to the wallet",
+  "topupReviewFirstDone": "First approval recorded. Waiting for a second reviewer.",
+  "topupReviewRejectedDone": "Top-up declined",
+  "topupReviewDuplicates": "The same slip file was also sent with",
+  "topupReviewSlip": "Transfer slip",
+  "topupReviewSlipFailed": "Couldn't load the slip. Refresh to try again.",
+  "topupReviewOwn": "This is your own top-up. Another staff member must review it.",
+  "topupReviewWaitingOther": "You gave the first approval. Another reviewer must give the second.",
+  "topupReviewSecondRequired": "A different reviewer must give the second approval.",
+  "topupReviewReferenceUsed": "This bank reference was already used for another top-up.",
+  "topupReviewReferenceMismatch": "The reference doesn't match the one the first reviewer recorded.",
+  "topupSettingsTitle": "Top-up settings",
+  "topupSettingsHubHelp": "PromptPay receiving account and limits",
+  "topupSettingsAccount": "Receiving account",
+  "topupSettingsHelp": "Members pay into this company PromptPay account. Top-up stays off until it's set. Changes are logged with the number masked.",
+  "topupSettingsEnabled": "Allow top-ups",
+  "topupSettingsType": "PromptPay type",
+  "topupSettingsTypePhone": "Mobile number",
+  "topupSettingsTypeNationalId": "National ID / tax ID",
+  "topupSettingsTypeEwallet": "e-Wallet ID",
+  "topupSettingsId": "PromptPay number",
+  "topupSettingsIdHelp": "Mobile 10 digits, ID 13 digits, e-Wallet 15 digits",
+  "topupSettingsReceiver": "Account name shown to members",
+  "topupSettingsLimits": "Limits",
+  "topupSettingsMin": "Minimum per top-up (THB)",
+  "topupSettingsMax": "Maximum per top-up (THB)",
+  "topupSettingsDaily": "Maximum per member per day (THB)",
+  "topupSettingsDual": "Two reviewers from (THB)",
+  "topupSettingsDualHelp": "Top-ups of this amount or more need two different reviewers.",
+  "topupSettingsHours": "Hours to send the slip",
+  "topupSettingsHoursHelp": "1 to 72 hours",
+  "topupSettingsUpdated": "Last changed",
+  "topupSettingsSave": "Save settings",
+  "topupSettingsSaved": "Settings saved",
+  "topupSettingsChanged": "Someone else changed these settings. Reload and try again.",
+  "topupSettingsInvalid": "Check the limits: maximum at least the minimum, daily at least the maximum, hours 1 to 72.",
+  "topupSettingsPromptPayInvalid": "The PromptPay number doesn't match the chosen type.",
+  "topupSettingsReceiverRequired": "Enter the PromptPay number and account name before allowing top-ups."
 }

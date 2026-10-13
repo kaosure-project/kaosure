@@ -4269,4 +4269,372 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get businessOrgEmpty =>
       'You are not a member of a verified company yet.';
+
+  @override
+  String get topupTitle => 'Top up wallet';
+
+  @override
+  String get topupHelp =>
+      'Pay by PromptPay from a bank account in your own name, then send the slip. Staff check it and add the money to your KaoSure Wallet.';
+
+  @override
+  String get topupAmount => 'Amount (THB)';
+
+  @override
+  String topupAmountHelp(String min, String max) {
+    return 'From $min to $max';
+  }
+
+  @override
+  String get topupCreate => 'Create PromptPay QR';
+
+  @override
+  String get topupCreatedDone =>
+      'QR ready. Pay the exact amount, then send the slip.';
+
+  @override
+  String get topupOpenTitle => 'Current top-up';
+
+  @override
+  String get topupScanHelp =>
+      'Scan with your banking app and pay the exact amount shown.';
+
+  @override
+  String get topupReceiver => 'Receiver';
+
+  @override
+  String get topupUploadBefore => 'Send the slip by';
+
+  @override
+  String get topupPayerNotice =>
+      'The account you pay from must be in the same name as your Kao ID. Transfers from someone else are declined.';
+
+  @override
+  String get topupSendSlip => 'Send slip';
+
+  @override
+  String get topupSlipHelp =>
+      'A photo or screenshot of the transfer slip, JPEG or PNG.';
+
+  @override
+  String get topupCancel => 'Cancel top-up';
+
+  @override
+  String topupCancelConfirm(String amount) {
+    return 'Cancel the $amount top-up? Don\'t transfer money for it after cancelling.';
+  }
+
+  @override
+  String get topupCancelledDone => 'Top-up cancelled';
+
+  @override
+  String get topupCheckingHelp =>
+      'We got your slip. Staff will check it and add the money to your wallet. You\'ll get a notification.';
+
+  @override
+  String get topupSlipSentDone => 'Slip sent for checking';
+
+  @override
+  String get topupHistory => 'Top-up history';
+
+  @override
+  String get topupNoHistory => 'No top-ups yet';
+
+  @override
+  String topupToday(String today, String max) {
+    return 'Today: $today of $max';
+  }
+
+  @override
+  String topupSlipHours(int hours) {
+    return 'After creating the QR you have $hours hours to send the slip.';
+  }
+
+  @override
+  String get topupRejectReason => 'Reason';
+
+  @override
+  String get topupStatusAwaitingSlip => 'Waiting for slip';
+
+  @override
+  String get topupStatusPendingReview => 'Checking slip';
+
+  @override
+  String get topupStatusAwaitingSecond => 'Second check';
+
+  @override
+  String get topupStatusApproved => 'Added to wallet';
+
+  @override
+  String get topupStatusRejected => 'Declined';
+
+  @override
+  String get topupStatusCancelled => 'Cancelled';
+
+  @override
+  String get topupStatusExpired => 'Expired';
+
+  @override
+  String get topupBlockUnavailable => 'Top-up isn\'t available yet.';
+
+  @override
+  String get topupBlockKaoId =>
+      'Top-up needs an active Kao ID. Finish verifying your email, phone, bank and identity first.';
+
+  @override
+  String get topupBlockWallet => 'This wallet is suspended. Contact support.';
+
+  @override
+  String get topupBlockDaily =>
+      'You\'ve reached today\'s top-up limit. Try again tomorrow.';
+
+  @override
+  String get topupErrorBelowMinimum => 'The amount is below the minimum.';
+
+  @override
+  String get topupErrorAboveMaximum => 'The amount is above the limit.';
+
+  @override
+  String get topupErrorAmount =>
+      'Enter an amount in baht, with at most 2 decimals.';
+
+  @override
+  String get topupErrorOpen =>
+      'You already have a top-up in progress. Finish or cancel it first.';
+
+  @override
+  String get topupErrorSlipFile =>
+      'Choose a clear JPEG or PNG image of the slip.';
+
+  @override
+  String get topupErrorSlipDuplicate =>
+      'This slip was already used. Cancel this top-up and create a new one.';
+
+  @override
+  String get topupErrorExpired =>
+      'Time to send the slip ran out. Create a new top-up.';
+
+  @override
+  String get topupErrorNotOpen =>
+      'This top-up can\'t be changed anymore. Refresh the page.';
+
+  @override
+  String get topupErrorFailed =>
+      'Couldn\'t complete this step. Please try again.';
+
+  @override
+  String get topupsTitle => 'Wallet top-ups';
+
+  @override
+  String get topupsHubHelp => 'Check transfer slips and add money to wallets';
+
+  @override
+  String get topupsHelp =>
+      'Check that the slip shows the exact amount paid to the company PromptPay, and that the payer is the member named in Kao ID. Amounts from the two-person limit need a second reviewer with the same bank reference.';
+
+  @override
+  String get topupReviewVerifiedName => 'Name in Kao ID';
+
+  @override
+  String get topupReviewKaoIdInactive =>
+      'The member\'s Kao ID isn\'t active, so this top-up can\'t be approved.';
+
+  @override
+  String get topupReviewCode => 'Top-up code';
+
+  @override
+  String get topupReviewStatus => 'Status';
+
+  @override
+  String get topupReviewSource => 'Requested from';
+
+  @override
+  String get topupReviewSlipSent => 'Slip sent';
+
+  @override
+  String get topupReviewWallet => 'Wallet balance';
+
+  @override
+  String get topupReviewToday => 'Requested today';
+
+  @override
+  String get topupReviewDual => 'Needs two reviewers';
+
+  @override
+  String get topupReviewFirst => 'First reviewer';
+
+  @override
+  String get topupReviewReference => 'Bank reference';
+
+  @override
+  String get topupReviewReferenceHelp =>
+      'The transaction number on the slip, 3 to 100 characters. Each one can be used once.';
+
+  @override
+  String get topupReviewSecondHelp =>
+      'Enter the same bank reference the first reviewer recorded.';
+
+  @override
+  String topupReviewPayerConfirm(String name) {
+    return 'The payer on the slip is $name';
+  }
+
+  @override
+  String get topupReviewPayerRequired =>
+      'Confirm the payer\'s name before approving.';
+
+  @override
+  String get topupReviewApprove => 'Approve and add to wallet';
+
+  @override
+  String get topupReviewFirstApprove => 'Approve (first reviewer)';
+
+  @override
+  String get topupReviewSecondApprove => 'Approve (second reviewer)';
+
+  @override
+  String topupReviewApproveConfirm(String amount, String name) {
+    return 'Add $amount to $name\'s wallet? The member will be notified.';
+  }
+
+  @override
+  String topupReviewFirstConfirm(String amount) {
+    return 'Record the first approval for $amount? A second reviewer must confirm before the money is added.';
+  }
+
+  @override
+  String get topupReviewReject => 'Decline';
+
+  @override
+  String topupReviewRejectConfirm(String amount) {
+    return 'Decline the $amount top-up? The member will see your reason.';
+  }
+
+  @override
+  String get topupReviewApprovedDone => 'Approved and added to the wallet';
+
+  @override
+  String get topupReviewFirstDone =>
+      'First approval recorded. Waiting for a second reviewer.';
+
+  @override
+  String get topupReviewRejectedDone => 'Top-up declined';
+
+  @override
+  String get topupReviewDuplicates => 'The same slip file was also sent with';
+
+  @override
+  String get topupReviewSlip => 'Transfer slip';
+
+  @override
+  String get topupReviewSlipFailed =>
+      'Couldn\'t load the slip. Refresh to try again.';
+
+  @override
+  String get topupReviewOwn =>
+      'This is your own top-up. Another staff member must review it.';
+
+  @override
+  String get topupReviewWaitingOther =>
+      'You gave the first approval. Another reviewer must give the second.';
+
+  @override
+  String get topupReviewSecondRequired =>
+      'A different reviewer must give the second approval.';
+
+  @override
+  String get topupReviewReferenceUsed =>
+      'This bank reference was already used for another top-up.';
+
+  @override
+  String get topupReviewReferenceMismatch =>
+      'The reference doesn\'t match the one the first reviewer recorded.';
+
+  @override
+  String get topupSettingsTitle => 'Top-up settings';
+
+  @override
+  String get topupSettingsHubHelp => 'PromptPay receiving account and limits';
+
+  @override
+  String get topupSettingsAccount => 'Receiving account';
+
+  @override
+  String get topupSettingsHelp =>
+      'Members pay into this company PromptPay account. Top-up stays off until it\'s set. Changes are logged with the number masked.';
+
+  @override
+  String get topupSettingsEnabled => 'Allow top-ups';
+
+  @override
+  String get topupSettingsType => 'PromptPay type';
+
+  @override
+  String get topupSettingsTypePhone => 'Mobile number';
+
+  @override
+  String get topupSettingsTypeNationalId => 'National ID / tax ID';
+
+  @override
+  String get topupSettingsTypeEwallet => 'e-Wallet ID';
+
+  @override
+  String get topupSettingsId => 'PromptPay number';
+
+  @override
+  String get topupSettingsIdHelp =>
+      'Mobile 10 digits, ID 13 digits, e-Wallet 15 digits';
+
+  @override
+  String get topupSettingsReceiver => 'Account name shown to members';
+
+  @override
+  String get topupSettingsLimits => 'Limits';
+
+  @override
+  String get topupSettingsMin => 'Minimum per top-up (THB)';
+
+  @override
+  String get topupSettingsMax => 'Maximum per top-up (THB)';
+
+  @override
+  String get topupSettingsDaily => 'Maximum per member per day (THB)';
+
+  @override
+  String get topupSettingsDual => 'Two reviewers from (THB)';
+
+  @override
+  String get topupSettingsDualHelp =>
+      'Top-ups of this amount or more need two different reviewers.';
+
+  @override
+  String get topupSettingsHours => 'Hours to send the slip';
+
+  @override
+  String get topupSettingsHoursHelp => '1 to 72 hours';
+
+  @override
+  String get topupSettingsUpdated => 'Last changed';
+
+  @override
+  String get topupSettingsSave => 'Save settings';
+
+  @override
+  String get topupSettingsSaved => 'Settings saved';
+
+  @override
+  String get topupSettingsChanged =>
+      'Someone else changed these settings. Reload and try again.';
+
+  @override
+  String get topupSettingsInvalid =>
+      'Check the limits: maximum at least the minimum, daily at least the maximum, hours 1 to 72.';
+
+  @override
+  String get topupSettingsPromptPayInvalid =>
+      'The PromptPay number doesn\'t match the chosen type.';
+
+  @override
+  String get topupSettingsReceiverRequired =>
+      'Enter the PromptPay number and account name before allowing top-ups.';
 }

@@ -28,6 +28,8 @@ import 'order_issues_page.dart';
 import 'owner_requests_page.dart';
 import 'review_moderation_page.dart';
 import 'system_contents_page.dart';
+import 'topup_settings_page.dart';
+import 'topups_page.dart';
 import 'withdrawals_page.dart';
 
 class AdminHubPage extends ConsumerStatefulWidget {
@@ -207,6 +209,30 @@ class _AdminHubPageState extends ConsumerState<AdminHubPage> with WidgetsBinding
     final finance = MenuPanel(
       title: l.adminGroupFinance,
       children: [
+        if (tools.topups)
+          DashboardMenuTile(
+            icon: Icons.qr_code_2,
+            color: AppColors.kaoGreen,
+            tint: AppColors.kaoGreenSoft,
+            title: l.topupsTitle,
+            subtitle: l.topupsHubHelp,
+            showDivider: tools.topupSettings || tools.withdrawals || tools.contents,
+            trailing: PendingTrailing(
+              count: AsyncData(PendingCount(tools.pendingTopups)),
+              color: AppColors.kaoGreen,
+            ),
+            onTap: () => _open(TopupsPage(canEditSettings: tools.topupSettings)),
+          ),
+        if (tools.topupSettings)
+          DashboardMenuTile(
+            icon: Icons.tune,
+            color: AppColors.kaoGreen,
+            tint: AppColors.kaoGreenSoft,
+            title: l.topupSettingsTitle,
+            subtitle: l.topupSettingsHubHelp,
+            showDivider: tools.withdrawals || tools.contents,
+            onTap: () => _open(const TopupSettingsPage()),
+          ),
         if (tools.withdrawals)
           DashboardMenuTile(
             icon: Icons.savings_outlined,
@@ -290,7 +316,7 @@ class _AdminHubPageState extends ConsumerState<AdminHubPage> with WidgetsBinding
 
     final start = [if (canReview) reviews, if (canManage) people];
     final end = [
-      if (tools.withdrawals || tools.contents) finance,
+      if (tools.finance) finance,
       if (tools.marketplace) marketplace,
       if (canManage) partners,
       security,

@@ -6,6 +6,7 @@ import 'package:kaosure/l10n/app_localizations.dart';
 import '../../../kao_id/account/data/repositories/supabase_account_access_repository.dart';
 import '../../../kao_id/governance/presentation/widgets/admin_display.dart';
 import 'linked_wallets_page.dart';
+import 'topup_page.dart';
 
 class WalletPage extends ConsumerStatefulWidget {
   const WalletPage({super.key});
@@ -64,6 +65,10 @@ class _WalletPageState extends ConsumerState<WalletPage> with WidgetsBindingObse
       if (mounted && generation == _generation) { setState(() => _busy = false); }
     }
   }
+  Future<void> _openTopup() async {
+    await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TopupPage()));
+    if (mounted && _same) { unawaited(_load()); }
+  }
   @override
   void dispose() {
     _generation++; _subscription?.cancel(); WidgetsBinding.instance.removeObserver(this); super.dispose();
@@ -75,6 +80,7 @@ class _WalletPageState extends ConsumerState<WalletPage> with WidgetsBindingObse
       child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 800), child: ListView(
         padding: const EdgeInsets.all(20), children: [
           Text(l.walletReadHelp), const SizedBox(height: 16),
+          if (_same) FilledButton.icon(key: const ValueKey('wallet-topup'), onPressed: _openTopup, icon: const Icon(Icons.add_card), label: Text(l.topupTitle)),
           if (_same) TextButton(onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const LinkedWalletsPage())), child: Text(l.linkedWalletTitle)),
           if (!_same) Text(l.contactSessionChanged)
           else if (_failed) ...[Text(l.walletLoadFailed), OutlinedButton(onPressed: () => _load(), child: Text(l.retry))]

@@ -2482,9 +2482,6 @@ class AppLocalizationsTh extends AppLocalizations {
   String get businessRegStepDocument => 'เอกสารธุรกิจ';
 
   @override
-  String get businessRegStepBank => 'บัญชีธนาคาร';
-
-  @override
   String get businessRegStepReview => 'ตรวจสอบและยืนยัน';
 
   @override
@@ -2579,13 +2576,6 @@ class AppLocalizationsTh extends AppLocalizations {
   String get businessRegDocumentMissing => 'ยังไม่ได้อัปโหลดเอกสาร';
 
   @override
-  String get businessRegBankHeading => 'บัญชีรับเงิน';
-
-  @override
-  String get businessRegBankDescription =>
-      'รายได้ของธุรกิจจะโอนเข้าบัญชีธนาคารที่ยืนยันแล้วใน Kao ID ของคุณ';
-
-  @override
   String get businessRegBankApproved => 'ยืนยันแล้ว';
 
   @override
@@ -2596,16 +2586,6 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get businessRegBankMissing => 'ยังไม่มีบัญชีธนาคารที่ยืนยันแล้ว';
-
-  @override
-  String get businessRegBankRequiredHelp =>
-      'คุณจะส่งคำขอได้เมื่อบัญชีธนาคารผ่านการยืนยันแล้ว';
-
-  @override
-  String get businessRegBankVerifyAction => 'ยืนยันบัญชีธนาคาร';
-
-  @override
-  String get businessRegBankCheckAgain => 'ตรวจสอบอีกครั้ง';
 
   @override
   String get businessRegReviewHeading => 'ตรวจสอบข้อมูลของคุณ';
@@ -2709,10 +2689,6 @@ class AppLocalizationsTh extends AppLocalizations {
   String get businessRegErrorDocumentRequired => 'กรุณาอัปโหลดเอกสารจดทะเบียน';
 
   @override
-  String get businessRegErrorBankRequired =>
-      'ต้องมีบัญชีธนาคารที่ยืนยันแล้วก่อนส่งคำขอ';
-
-  @override
   String get businessRegErrorFile =>
       'ใช้ไฟล์นี้ไม่ได้ กรุณาเลือกไฟล์ JPG, PNG หรือ PDF ขนาดไม่เกิน 10 MB';
 
@@ -2753,20 +2729,6 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get businessReviewDescription => 'รายละเอียดธุรกิจ';
-
-  @override
-  String get businessReviewBankName => 'ธนาคาร';
-
-  @override
-  String get businessReviewBankAccount => 'เลขบัญชี';
-
-  @override
-  String businessReviewBankAccountEnding(String last4) {
-    return 'ลงท้ายด้วย $last4';
-  }
-
-  @override
-  String get businessReviewBankAccountName => 'ชื่อบัญชี';
 
   @override
   String get businessReviewNotAvailable => 'ไม่มีข้อมูล';
@@ -2834,10 +2796,6 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get businessReviewErrorOwnerKaoId =>
       'ผู้ยื่นคำขอไม่มี Kao ID ส่วนบุคคลที่ใช้งานได้แล้ว จึงอนุมัติธุรกิจนี้ไม่ได้';
-
-  @override
-  String get businessReviewErrorOwnerBank =>
-      'บัญชีธนาคารที่ยืนยันแล้วของผู้ยื่นคำขอใช้งานไม่ได้แล้ว จึงอนุมัติธุรกิจนี้ไม่ได้';
 
   @override
   String get businessReviewErrorApplicantInactive =>

@@ -2495,9 +2495,6 @@ class AppLocalizationsMy extends AppLocalizations {
   String get businessRegStepDocument => 'လုပ်ငန်းစာရွက်စာတမ်း';
 
   @override
-  String get businessRegStepBank => 'ဘဏ်အကောင့်';
-
-  @override
   String get businessRegStepReview => 'စစ်ဆေးပြီး တင်သွင်းရန်';
 
   @override
@@ -2594,13 +2591,6 @@ class AppLocalizationsMy extends AppLocalizations {
   String get businessRegDocumentMissing => 'စာရွက်စာတမ်း မတင်ရသေးပါ';
 
   @override
-  String get businessRegBankHeading => 'ငွေလက်ခံမည့် ဘဏ်အကောင့်';
-
-  @override
-  String get businessRegBankDescription =>
-      'လုပ်ငန်းဝင်ငွေများကို သင့် Kao ID တွင် အတည်ပြုထားသော ဘဏ်အကောင့်သို့ လွှဲပေးပါမည်။';
-
-  @override
   String get businessRegBankApproved => 'အတည်ပြုပြီး';
 
   @override
@@ -2611,16 +2601,6 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get businessRegBankMissing => 'အတည်ပြုထားသော ဘဏ်အကောင့် မရှိသေးပါ';
-
-  @override
-  String get businessRegBankRequiredHelp =>
-      'ဘဏ်အကောင့် အတည်ပြုပြီးမှ တင်သွင်းနိုင်ပါမည်။';
-
-  @override
-  String get businessRegBankVerifyAction => 'ဘဏ်အကောင့် အတည်ပြုရန်';
-
-  @override
-  String get businessRegBankCheckAgain => 'ပြန်စစ်ပါ';
 
   @override
   String get businessRegReviewHeading => 'သင့်အချက်အလက်များကို စစ်ဆေးပါ';
@@ -2729,10 +2709,6 @@ class AppLocalizationsMy extends AppLocalizations {
       'မှတ်ပုံတင်စာရွက်စာတမ်း တင်ပါ။';
 
   @override
-  String get businessRegErrorBankRequired =>
-      'မတင်သွင်းမီ အတည်ပြုထားသော ဘဏ်အကောင့် လိုအပ်ပါသည်။';
-
-  @override
   String get businessRegErrorFile =>
       'ဤဖိုင်ကို အသုံးပြု၍ မရပါ။ 10 MB အထိ JPG၊ PNG သို့မဟုတ် PDF ကို ရွေးပါ။';
 
@@ -2775,20 +2751,6 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get businessReviewDescription => 'ဖော်ပြချက်';
-
-  @override
-  String get businessReviewBankName => 'ဘဏ်';
-
-  @override
-  String get businessReviewBankAccount => 'အကောင့်နံပါတ်';
-
-  @override
-  String businessReviewBankAccountEnding(String last4) {
-    return 'နောက်ဆုံး $last4';
-  }
-
-  @override
-  String get businessReviewBankAccountName => 'အကောင့်အမည်';
 
   @override
   String get businessReviewNotAvailable => 'အချက်အလက် မရှိပါ';
@@ -2858,10 +2820,6 @@ class AppLocalizationsMy extends AppLocalizations {
   @override
   String get businessReviewErrorOwnerKaoId =>
       'လျှောက်ထားသူတွင် အသုံးပြုနိုင်သော ကိုယ်ပိုင် Kao ID မရှိတော့သဖြင့် ဤလုပ်ငန်းကို အတည်ပြု၍မရပါ။';
-
-  @override
-  String get businessReviewErrorOwnerBank =>
-      'လျှောက်ထားသူ၏ အတည်ပြုထားသော ဘဏ်အကောင့် မရှိတော့သဖြင့် ဤလုပ်ငန်းကို အတည်ပြု၍မရပါ။';
 
   @override
   String get businessReviewErrorApplicantInactive =>

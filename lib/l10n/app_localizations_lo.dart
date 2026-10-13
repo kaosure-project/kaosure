@@ -2436,9 +2436,6 @@ class AppLocalizationsLo extends AppLocalizations {
   String get businessRegStepDocument => 'ເອກະສານທຸລະກິດ';
 
   @override
-  String get businessRegStepBank => 'ບັນຊີທະນາຄານ';
-
-  @override
   String get businessRegStepReview => 'ກວດສອບ ແລະ ສົ່ງ';
 
   @override
@@ -2533,13 +2530,6 @@ class AppLocalizationsLo extends AppLocalizations {
   String get businessRegDocumentMissing => 'ຍັງບໍ່ໄດ້ອັບໂຫຼດເອກະສານ';
 
   @override
-  String get businessRegBankHeading => 'ບັນຊີຮັບເງິນ';
-
-  @override
-  String get businessRegBankDescription =>
-      'ລາຍຮັບຂອງທຸລະກິດຈະໂອນເຂົ້າບັນຊີທະນາຄານທີ່ຢືນຢັນແລ້ວໃນ Kao ID ຂອງທ່ານ.';
-
-  @override
   String get businessRegBankApproved => 'ຢືນຢັນແລ້ວ';
 
   @override
@@ -2550,16 +2540,6 @@ class AppLocalizationsLo extends AppLocalizations {
 
   @override
   String get businessRegBankMissing => 'ຍັງບໍ່ມີບັນຊີທະນາຄານທີ່ຢືນຢັນແລ້ວ';
-
-  @override
-  String get businessRegBankRequiredHelp =>
-      'ທ່ານຈະສົ່ງຄຳຂໍໄດ້ເມື່ອບັນຊີທະນາຄານຖືກຢືນຢັນແລ້ວ.';
-
-  @override
-  String get businessRegBankVerifyAction => 'ຢືນຢັນບັນຊີທະນາຄານ';
-
-  @override
-  String get businessRegBankCheckAgain => 'ກວດສອບອີກຄັ້ງ';
 
   @override
   String get businessRegReviewHeading => 'ກວດສອບຂໍ້ມູນຂອງທ່ານ';
@@ -2665,10 +2645,6 @@ class AppLocalizationsLo extends AppLocalizations {
       'ກະລຸນາອັບໂຫຼດເອກະສານຈົດທະບຽນ.';
 
   @override
-  String get businessRegErrorBankRequired =>
-      'ຕ້ອງມີບັນຊີທະນາຄານທີ່ຢືນຢັນແລ້ວກ່ອນສົ່ງຄຳຂໍ.';
-
-  @override
   String get businessRegErrorFile =>
       'ໃຊ້ໄຟລ໌ນີ້ບໍ່ໄດ້ ກະລຸນາເລືອກ JPG, PNG ຫຼື PDF ບໍ່ເກີນ 10 MB.';
 
@@ -2709,20 +2685,6 @@ class AppLocalizationsLo extends AppLocalizations {
 
   @override
   String get businessReviewDescription => 'ລາຍລະອຽດທຸລະກິດ';
-
-  @override
-  String get businessReviewBankName => 'ທະນາຄານ';
-
-  @override
-  String get businessReviewBankAccount => 'ເລກບັນຊີ';
-
-  @override
-  String businessReviewBankAccountEnding(String last4) {
-    return 'ລົງທ້າຍດ້ວຍ $last4';
-  }
-
-  @override
-  String get businessReviewBankAccountName => 'ຊື່ບັນຊີ';
 
   @override
   String get businessReviewNotAvailable => 'ບໍ່ມີຂໍ້ມູນ';
@@ -2791,10 +2753,6 @@ class AppLocalizationsLo extends AppLocalizations {
   @override
   String get businessReviewErrorOwnerKaoId =>
       'ຜູ້ຍື່ນຄຳຂໍບໍ່ມີ Kao ID ສ່ວນບຸກຄົນທີ່ໃຊ້ງານໄດ້ແລ້ວ ຈຶ່ງອະນຸມັດທຸລະກິດນີ້ບໍ່ໄດ້.';
-
-  @override
-  String get businessReviewErrorOwnerBank =>
-      'ບັນຊີທະນາຄານທີ່ຢືນຢັນແລ້ວຂອງຜູ້ຍື່ນຄຳຂໍໃຊ້ງານບໍ່ໄດ້ແລ້ວ ຈຶ່ງອະນຸມັດທຸລະກິດນີ້ບໍ່ໄດ້.';
 
   @override
   String get businessReviewErrorApplicantInactive =>

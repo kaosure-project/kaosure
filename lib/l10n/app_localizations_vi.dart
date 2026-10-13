@@ -2484,9 +2484,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String get businessRegStepDocument => 'Giấy tờ doanh nghiệp';
 
   @override
-  String get businessRegStepBank => 'Tài khoản ngân hàng';
-
-  @override
   String get businessRegStepReview => 'Xem lại và gửi';
 
   @override
@@ -2584,13 +2581,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String get businessRegDocumentMissing => 'Chưa tải lên giấy tờ';
 
   @override
-  String get businessRegBankHeading => 'Tài khoản nhận tiền';
-
-  @override
-  String get businessRegBankDescription =>
-      'Doanh thu sẽ được chuyển vào tài khoản ngân hàng đã xác minh trong Kao ID của bạn.';
-
-  @override
   String get businessRegBankApproved => 'Đã xác minh';
 
   @override
@@ -2602,16 +2592,6 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get businessRegBankMissing =>
       'Chưa có tài khoản ngân hàng đã xác minh';
-
-  @override
-  String get businessRegBankRequiredHelp =>
-      'Bạn có thể gửi sau khi tài khoản ngân hàng được xác minh.';
-
-  @override
-  String get businessRegBankVerifyAction => 'Xác minh tài khoản ngân hàng';
-
-  @override
-  String get businessRegBankCheckAgain => 'Kiểm tra lại';
 
   @override
   String get businessRegReviewHeading => 'Xem lại thông tin';
@@ -2719,10 +2699,6 @@ class AppLocalizationsVi extends AppLocalizations {
       'Vui lòng tải lên giấy đăng ký.';
 
   @override
-  String get businessRegErrorBankRequired =>
-      'Cần có tài khoản ngân hàng đã xác minh trước khi gửi.';
-
-  @override
   String get businessRegErrorFile =>
       'Không thể dùng tệp này. Hãy chọn JPG, PNG hoặc PDF tối đa 10 MB.';
 
@@ -2764,20 +2740,6 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get businessReviewDescription => 'Mô tả';
-
-  @override
-  String get businessReviewBankName => 'Ngân hàng';
-
-  @override
-  String get businessReviewBankAccount => 'Số tài khoản';
-
-  @override
-  String businessReviewBankAccountEnding(String last4) {
-    return 'Kết thúc bằng $last4';
-  }
-
-  @override
-  String get businessReviewBankAccountName => 'Tên tài khoản';
 
   @override
   String get businessReviewNotAvailable => 'Không có thông tin';
@@ -2846,10 +2808,6 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get businessReviewErrorOwnerKaoId =>
       'Người đăng ký không còn Kao ID cá nhân hoạt động nên không thể phê duyệt doanh nghiệp này.';
-
-  @override
-  String get businessReviewErrorOwnerBank =>
-      'Tài khoản ngân hàng đã xác minh của người đăng ký không còn khả dụng nên không thể phê duyệt.';
 
   @override
   String get businessReviewErrorApplicantInactive =>

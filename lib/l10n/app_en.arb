@@ -780,7 +780,6 @@
   },
   "businessRegStepDetails": "Business details",
   "businessRegStepDocument": "Business document",
-  "businessRegStepBank": "Bank account",
   "businessRegStepReview": "Review and submit",
   "businessRegSecureNotice": "Your information is encrypted and used only to verify your business.",
   "businessRegDetailsHeading": "Tell us about your business",
@@ -810,15 +809,10 @@
   "businessRegDocumentUploaded": "Document uploaded",
   "businessRegDocumentUploading": "Uploading securely…",
   "businessRegDocumentMissing": "No document uploaded yet",
-  "businessRegBankHeading": "Payout bank account",
-  "businessRegBankDescription": "Business payouts go to the bank account verified with your Kao ID.",
   "businessRegBankApproved": "Verified",
   "businessRegBankPending": "Under review",
   "businessRegBankRejected": "Not approved",
   "businessRegBankMissing": "No verified bank account yet",
-  "businessRegBankRequiredHelp": "You can submit once your bank account is verified.",
-  "businessRegBankVerifyAction": "Verify a bank account",
-  "businessRegBankCheckAgain": "Check again",
   "businessRegReviewHeading": "Review your details",
   "businessRegReviewDescription": "Make sure everything is correct. You can't edit while it's under review.",
   "businessRegEdit": "Edit",
@@ -849,7 +843,6 @@
   "businessRegErrorActiveExists": "You already have a registration in progress.",
   "businessRegErrorNotEditable": "This registration can no longer be changed.",
   "businessRegErrorDocumentRequired": "Please upload your registration document.",
-  "businessRegErrorBankRequired": "A verified bank account is required before you submit.",
   "businessRegErrorFile": "This file can't be used. Choose a JPG, PNG or PDF up to 10 MB.",
   "businessRegErrorDuplicate": "This registration number is already registered.",
   "businessRegHubDescription": "Verify your business to open a store and receive payouts.",
@@ -869,17 +862,6 @@
   "businessReviewOwnerKaoId": "Personal Kao ID",
   "businessReviewOwnerName": "Verified name",
   "businessReviewDescription": "Description",
-  "businessReviewBankName": "Bank",
-  "businessReviewBankAccount": "Account number",
-  "businessReviewBankAccountEnding": "Ending in {last4}",
-  "@businessReviewBankAccountEnding": {
-    "placeholders": {
-      "last4": {
-        "type": "String"
-      }
-    }
-  },
-  "businessReviewBankAccountName": "Account name",
   "businessReviewNotAvailable": "Not available",
   "businessReviewOpenDocument": "Open",
   "businessReviewDocumentViewed": "Viewed",
@@ -899,7 +881,6 @@
   "businessReviewErrorDocumentMissing": "The registration document is missing. Reject so the applicant can upload it again.",
   "businessReviewErrorDocumentOpen": "Couldn't open the document. Check your permission and try again.",
   "businessReviewErrorOwnerKaoId": "The applicant no longer has an active personal Kao ID, so this business can't be approved.",
-  "businessReviewErrorOwnerBank": "The applicant's verified bank account is no longer available, so this business can't be approved.",
   "businessReviewErrorApplicantInactive": "The applicant's account isn't active, so this business can't be approved.",
   "noticeBusinessReviewNew": "New business registration to review",
   "noticeBusinessReviewSecond": "Business registration awaiting a second reviewer",

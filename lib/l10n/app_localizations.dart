@@ -4645,12 +4645,6 @@ abstract class AppLocalizations {
   /// **'Business document'**
   String get businessRegStepDocument;
 
-  /// No description provided for @businessRegStepBank.
-  ///
-  /// In en, this message translates to:
-  /// **'Bank account'**
-  String get businessRegStepBank;
-
   /// No description provided for @businessRegStepReview.
   ///
   /// In en, this message translates to:
@@ -4825,18 +4819,6 @@ abstract class AppLocalizations {
   /// **'No document uploaded yet'**
   String get businessRegDocumentMissing;
 
-  /// No description provided for @businessRegBankHeading.
-  ///
-  /// In en, this message translates to:
-  /// **'Payout bank account'**
-  String get businessRegBankHeading;
-
-  /// No description provided for @businessRegBankDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Business payouts go to the bank account verified with your Kao ID.'**
-  String get businessRegBankDescription;
-
   /// No description provided for @businessRegBankApproved.
   ///
   /// In en, this message translates to:
@@ -4860,24 +4842,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No verified bank account yet'**
   String get businessRegBankMissing;
-
-  /// No description provided for @businessRegBankRequiredHelp.
-  ///
-  /// In en, this message translates to:
-  /// **'You can submit once your bank account is verified.'**
-  String get businessRegBankRequiredHelp;
-
-  /// No description provided for @businessRegBankVerifyAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Verify a bank account'**
-  String get businessRegBankVerifyAction;
-
-  /// No description provided for @businessRegBankCheckAgain.
-  ///
-  /// In en, this message translates to:
-  /// **'Check again'**
-  String get businessRegBankCheckAgain;
 
   /// No description provided for @businessRegReviewHeading.
   ///
@@ -5059,12 +5023,6 @@ abstract class AppLocalizations {
   /// **'Please upload your registration document.'**
   String get businessRegErrorDocumentRequired;
 
-  /// No description provided for @businessRegErrorBankRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'A verified bank account is required before you submit.'**
-  String get businessRegErrorBankRequired;
-
   /// No description provided for @businessRegErrorFile.
   ///
   /// In en, this message translates to:
@@ -5136,30 +5094,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Description'**
   String get businessReviewDescription;
-
-  /// No description provided for @businessReviewBankName.
-  ///
-  /// In en, this message translates to:
-  /// **'Bank'**
-  String get businessReviewBankName;
-
-  /// No description provided for @businessReviewBankAccount.
-  ///
-  /// In en, this message translates to:
-  /// **'Account number'**
-  String get businessReviewBankAccount;
-
-  /// No description provided for @businessReviewBankAccountEnding.
-  ///
-  /// In en, this message translates to:
-  /// **'Ending in {last4}'**
-  String businessReviewBankAccountEnding(String last4);
-
-  /// No description provided for @businessReviewBankAccountName.
-  ///
-  /// In en, this message translates to:
-  /// **'Account name'**
-  String get businessReviewBankAccountName;
 
   /// No description provided for @businessReviewNotAvailable.
   ///
@@ -5274,12 +5208,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The applicant no longer has an active personal Kao ID, so this business can\'t be approved.'**
   String get businessReviewErrorOwnerKaoId;
-
-  /// No description provided for @businessReviewErrorOwnerBank.
-  ///
-  /// In en, this message translates to:
-  /// **'The applicant\'s verified bank account is no longer available, so this business can\'t be approved.'**
-  String get businessReviewErrorOwnerBank;
 
   /// No description provided for @businessReviewErrorApplicantInactive.
   ///

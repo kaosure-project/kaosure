@@ -2307,9 +2307,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get businessRegStepDocument => '企业文件';
 
   @override
-  String get businessRegStepBank => '银行账户';
-
-  @override
   String get businessRegStepReview => '核对并提交';
 
   @override
@@ -2399,12 +2396,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get businessRegDocumentMissing => '尚未上传文件';
 
   @override
-  String get businessRegBankHeading => '收款银行账户';
-
-  @override
-  String get businessRegBankDescription => '企业收入将转入您 Kao ID 中已验证的银行账户。';
-
-  @override
   String get businessRegBankApproved => '已验证';
 
   @override
@@ -2415,15 +2406,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get businessRegBankMissing => '尚无已验证的银行账户';
-
-  @override
-  String get businessRegBankRequiredHelp => '银行账户验证通过后即可提交。';
-
-  @override
-  String get businessRegBankVerifyAction => '验证银行账户';
-
-  @override
-  String get businessRegBankCheckAgain => '重新检查';
 
   @override
   String get businessRegReviewHeading => '核对您的信息';
@@ -2517,9 +2499,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get businessRegErrorDocumentRequired => '请上传注册文件。';
 
   @override
-  String get businessRegErrorBankRequired => '提交前需要一个已验证的银行账户。';
-
-  @override
   String get businessRegErrorFile => '无法使用此文件。请选择不超过 10 MB 的 JPG、PNG 或 PDF。';
 
   @override
@@ -2556,20 +2535,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get businessReviewDescription => '企业简介';
-
-  @override
-  String get businessReviewBankName => '银行';
-
-  @override
-  String get businessReviewBankAccount => '账号';
-
-  @override
-  String businessReviewBankAccountEnding(String last4) {
-    return '尾号 $last4';
-  }
-
-  @override
-  String get businessReviewBankAccountName => '账户名';
 
   @override
   String get businessReviewNotAvailable => '无信息';
@@ -2628,9 +2593,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get businessReviewErrorOwnerKaoId => '申请人已无有效的个人 Kao ID，无法批准此企业。';
-
-  @override
-  String get businessReviewErrorOwnerBank => '申请人已验证的银行账户不再可用，无法批准此企业。';
 
   @override
   String get businessReviewErrorApplicantInactive => '申请人的账户未处于活跃状态，无法批准此企业。';
@@ -6288,9 +6250,6 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
   String get businessRegStepDocument => '企业文件';
 
   @override
-  String get businessRegStepBank => '银行账户';
-
-  @override
   String get businessRegStepReview => '核对并提交';
 
   @override
@@ -6380,12 +6339,6 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
   String get businessRegDocumentMissing => '尚未上传文件';
 
   @override
-  String get businessRegBankHeading => '收款银行账户';
-
-  @override
-  String get businessRegBankDescription => '企业收入将转入您 Kao ID 中已验证的银行账户。';
-
-  @override
   String get businessRegBankApproved => '已验证';
 
   @override
@@ -6396,15 +6349,6 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get businessRegBankMissing => '尚无已验证的银行账户';
-
-  @override
-  String get businessRegBankRequiredHelp => '银行账户验证通过后即可提交。';
-
-  @override
-  String get businessRegBankVerifyAction => '验证银行账户';
-
-  @override
-  String get businessRegBankCheckAgain => '重新检查';
 
   @override
   String get businessRegReviewHeading => '核对您的信息';
@@ -6498,9 +6442,6 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
   String get businessRegErrorDocumentRequired => '请上传注册文件。';
 
   @override
-  String get businessRegErrorBankRequired => '提交前需要一个已验证的银行账户。';
-
-  @override
   String get businessRegErrorFile => '无法使用此文件。请选择不超过 10 MB 的 JPG、PNG 或 PDF。';
 
   @override
@@ -6537,20 +6478,6 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get businessReviewDescription => '企业简介';
-
-  @override
-  String get businessReviewBankName => '银行';
-
-  @override
-  String get businessReviewBankAccount => '账号';
-
-  @override
-  String businessReviewBankAccountEnding(String last4) {
-    return '尾号 $last4';
-  }
-
-  @override
-  String get businessReviewBankAccountName => '账户名';
 
   @override
   String get businessReviewNotAvailable => '无信息';
@@ -6609,9 +6536,6 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get businessReviewErrorOwnerKaoId => '申请人已无有效的个人 Kao ID，无法批准此企业。';
-
-  @override
-  String get businessReviewErrorOwnerBank => '申请人已验证的银行账户不再可用，无法批准此企业。';
 
   @override
   String get businessReviewErrorApplicantInactive => '申请人的账户未处于活跃状态，无法批准此企业。';

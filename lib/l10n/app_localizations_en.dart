@@ -2507,9 +2507,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get businessRegStepDocument => 'Business document';
 
   @override
-  String get businessRegStepBank => 'Bank account';
-
-  @override
   String get businessRegStepReview => 'Review and submit';
 
   @override
@@ -2605,13 +2602,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get businessRegDocumentMissing => 'No document uploaded yet';
 
   @override
-  String get businessRegBankHeading => 'Payout bank account';
-
-  @override
-  String get businessRegBankDescription =>
-      'Business payouts go to the bank account verified with your Kao ID.';
-
-  @override
   String get businessRegBankApproved => 'Verified';
 
   @override
@@ -2622,16 +2612,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get businessRegBankMissing => 'No verified bank account yet';
-
-  @override
-  String get businessRegBankRequiredHelp =>
-      'You can submit once your bank account is verified.';
-
-  @override
-  String get businessRegBankVerifyAction => 'Verify a bank account';
-
-  @override
-  String get businessRegBankCheckAgain => 'Check again';
 
   @override
   String get businessRegReviewHeading => 'Review your details';
@@ -2738,10 +2718,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Please upload your registration document.';
 
   @override
-  String get businessRegErrorBankRequired =>
-      'A verified bank account is required before you submit.';
-
-  @override
   String get businessRegErrorFile =>
       'This file can\'t be used. Choose a JPG, PNG or PDF up to 10 MB.';
 
@@ -2784,20 +2760,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get businessReviewDescription => 'Description';
-
-  @override
-  String get businessReviewBankName => 'Bank';
-
-  @override
-  String get businessReviewBankAccount => 'Account number';
-
-  @override
-  String businessReviewBankAccountEnding(String last4) {
-    return 'Ending in $last4';
-  }
-
-  @override
-  String get businessReviewBankAccountName => 'Account name';
 
   @override
   String get businessReviewNotAvailable => 'Not available';
@@ -2865,10 +2827,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get businessReviewErrorOwnerKaoId =>
       'The applicant no longer has an active personal Kao ID, so this business can\'t be approved.';
-
-  @override
-  String get businessReviewErrorOwnerBank =>
-      'The applicant\'s verified bank account is no longer available, so this business can\'t be approved.';
 
   @override
   String get businessReviewErrorApplicantInactive =>

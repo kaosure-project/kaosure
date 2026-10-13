@@ -2353,9 +2353,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get businessRegStepDocument => '登記書類';
 
   @override
-  String get businessRegStepBank => '銀行口座';
-
-  @override
   String get businessRegStepReview => '確認して送信';
 
   @override
@@ -2445,12 +2442,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get businessRegDocumentMissing => 'まだ書類がアップロードされていません';
 
   @override
-  String get businessRegBankHeading => '受取用の銀行口座';
-
-  @override
-  String get businessRegBankDescription => '事業の売上は、Kao ID で確認済みの銀行口座に振り込まれます。';
-
-  @override
   String get businessRegBankApproved => '確認済み';
 
   @override
@@ -2461,15 +2452,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get businessRegBankMissing => '確認済みの銀行口座がまだありません';
-
-  @override
-  String get businessRegBankRequiredHelp => '銀行口座の確認が完了すると送信できます。';
-
-  @override
-  String get businessRegBankVerifyAction => '銀行口座を確認する';
-
-  @override
-  String get businessRegBankCheckAgain => '再確認';
 
   @override
   String get businessRegReviewHeading => '内容を確認してください';
@@ -2563,9 +2545,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get businessRegErrorDocumentRequired => '登記書類をアップロードしてください。';
 
   @override
-  String get businessRegErrorBankRequired => '送信する前に、確認済みの銀行口座が必要です。';
-
-  @override
   String get businessRegErrorFile =>
       'このファイルは使用できません。10 MB 以下の JPG、PNG、PDF を選択してください。';
 
@@ -2604,20 +2583,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get businessReviewDescription => '事業内容';
-
-  @override
-  String get businessReviewBankName => '銀行';
-
-  @override
-  String get businessReviewBankAccount => '口座番号';
-
-  @override
-  String businessReviewBankAccountEnding(String last4) {
-    return '末尾 $last4';
-  }
-
-  @override
-  String get businessReviewBankAccountName => '口座名義';
 
   @override
   String get businessReviewNotAvailable => '情報なし';
@@ -2679,10 +2644,6 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get businessReviewErrorOwnerKaoId =>
       '申請者の個人 Kao ID が有効でないため、このビジネスは承認できません。';
-
-  @override
-  String get businessReviewErrorOwnerBank =>
-      '申請者の確認済み銀行口座が利用できないため、このビジネスは承認できません。';
 
   @override
   String get businessReviewErrorApplicantInactive =>

@@ -40,11 +40,13 @@ void main() {
   late FakeAppClientRegistryRepository registry;
   late List<Uri> redirects;
   late _SignOutAuthNotifier auth;
+  String? launchedBy;
 
   setUp(() {
     consent = FakeOAuthConsentRepository();
     registry = FakeAppClientRegistryRepository();
     redirects = [];
+    launchedBy = null;
   });
 
   Future<AppLocalizations> pump(
@@ -67,6 +69,7 @@ void main() {
             redirects.add(target);
             return true;
           }),
+          serviceLaunchCheckProvider.overrideWithValue((userId) async => userId != null && userId == launchedBy),
         ],
         child: MaterialApp(
           locale: Locale(language),
@@ -139,6 +142,30 @@ void main() {
       await tap(tester, find.byKey(const Key('sso-continue-as')), settle: false);
       expect(redirects.single.queryParameters['code'], 'again');
       expect(auth.signOuts, 0);
+    });
+
+    testWidgets('pressing Open in Kao ID continues an earlier consent as the same member', (tester) async {
+      launchedBy = 'test-user';
+      consent.request = ConsentAlreadyGiven(redirectUrl: Uri.parse('http://localhost:5000/auth/callback?code=again'));
+      await pump(tester, consentPage, settle: false);
+      expect(redirects.single.queryParameters['code'], 'again');
+      expect(auth.signOuts, 0);
+    });
+
+    testWidgets('a launch by another member still asks which account to use', (tester) async {
+      launchedBy = 'someone-else';
+      consent.request = ConsentAlreadyGiven(redirectUrl: Uri.parse('http://localhost:5000/auth/callback?code=again'));
+      await pump(tester, consentPage);
+      expect(find.byKey(const Key('sso-continue-as')), findsOneWidget);
+      expect(redirects, isEmpty);
+    });
+
+    testWidgets('a launch never skips a first-time consent', (tester) async {
+      launchedBy = 'test-user';
+      await pump(tester, consentPage);
+      expect(find.byKey(const Key('sso-consent-allow')), findsOneWidget);
+      expect(redirects, isEmpty);
+      expect(consent.calls, ['load:auth_request_0001']);
     });
 
     testWidgets('another account after an earlier consent signs out and asks the app to log in again', (tester) async {

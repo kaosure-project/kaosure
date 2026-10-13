@@ -28,11 +28,27 @@ class OAuthConsentPage extends ConsumerStatefulWidget {
 }
 
 class _OAuthConsentPageState extends ConsumerState<OAuthConsentPage> {
+  late final Future<bool> _openedFromKaoId;
+  var _launchHandled = false;
+
   @override
   void initState() {
     super.initState();
     // The request is on screen now; a stale copy must not reopen after a later login.
     unawaited(KaoIdSsoHandoff.takePendingConsent());
+    _openedFromKaoId = ref.read(serviceLaunchCheckProvider)(ref.read(oauthConsentUseCasesProvider).currentUserId());
+    ref.listenManual(authorizationRequestProvider(widget.authorizationId), (_, next) {
+      if (next.asData?.value case final ConsentAlreadyGiven request) unawaited(_continueLaunch(request));
+    }, fireImmediately: true);
+  }
+
+  /// The member pressed "Open" in Kao ID as this same account moments ago, so
+  /// the account was already chosen.
+  Future<void> _continueLaunch(ConsentAlreadyGiven request) async {
+    if (_launchHandled) return;
+    _launchHandled = true;
+    if (!await _openedFromKaoId || !mounted) return;
+    unawaited(ref.read(consentControllerProvider(widget.authorizationId).notifier).continueApproved(request));
   }
 
   void _goToKaoId() => Navigator.of(context).pushNamedAndRemoveUntil(KaoIdRoutes.dashboard, (_) => false);

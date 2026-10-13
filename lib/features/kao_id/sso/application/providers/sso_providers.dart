@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../auth/application/kao_id_sso_handoff.dart';
 import '../../../auth/application/providers/auth_provider.dart';
 import '../../data/providers/sso_repository_providers.dart';
 import '../../domain/entities/app_client.dart';
@@ -27,8 +28,10 @@ String _requireMember(Ref ref) {
   return userId;
 }
 
-final authorizationRequestProvider =
-    FutureProvider.autoDispose.family<AuthorizationRequest, String>((ref, authorizationId) {
+final authorizationRequestProvider = FutureProvider.autoDispose.family<AuthorizationRequest, String>((
+  ref,
+  authorizationId,
+) {
   _requireMember(ref);
   return ref.watch(oauthConsentUseCasesProvider).load(authorizationId);
 });
@@ -47,10 +50,12 @@ final ssoRedirectProvider = Provider<SsoRedirect>((ref) {
   return (target) => launchUrl(target, webOnlyWindowName: '_self');
 });
 
-final consentControllerProvider =
-    StateNotifierProvider.autoDispose.family<ConsentController, ConsentState, String>(
-  (ref, authorizationId) => ConsentController(
-    useCases: ref.watch(oauthConsentUseCasesProvider),
-    redirect: ref.watch(ssoRedirectProvider),
-  ),
+/// One-shot: whether this member pressed "Open" on a service a moment ago.
+final serviceLaunchCheckProvider = Provider<Future<bool> Function(String? userId)>(
+  (ref) => KaoIdSsoHandoff.takeServiceLaunch,
+);
+
+final consentControllerProvider = StateNotifierProvider.autoDispose.family<ConsentController, ConsentState, String>(
+  (ref, authorizationId) =>
+      ConsentController(useCases: ref.watch(oauthConsentUseCasesProvider), redirect: ref.watch(ssoRedirectProvider)),
 );

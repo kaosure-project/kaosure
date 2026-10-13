@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -14,6 +16,54 @@ final class KaoIdSsoHandoff {
 
   static const String _pendingReturnKey = 'kao_id.pending_service_return_to';
   static const String _pendingConsentKey = 'kao_id.pending_oauth_authorization_id';
+  static const String _serviceLaunchKey = 'kao_id.service_launch';
+
+  /// Query flag on a service entry URL: the service must drop any account it
+  /// stored and ask Kao ID who is signed in.
+  static const String serviceLaunchParameter = 'kao_id_launch';
+  static const Duration serviceLaunchWindow = Duration(minutes: 2);
+
+  /// Remembers that [userId] pressed "Open" on a service, so the consent page
+  /// the service's sign-in brings up can continue as that same member.
+  static Future<void> markServiceLaunch(String userId) async {
+    try {
+      await SharedPreferencesAsync().setString(
+        _serviceLaunchKey,
+        jsonEncode({'uid': userId, 'at': DateTime.now().millisecondsSinceEpoch}),
+      );
+    } catch (error, stackTrace) {
+      debugPrint('Unable to store service launch: $error');
+      debugPrintStack(stackTrace: stackTrace);
+    }
+  }
+
+  /// One-shot: the stored launch is cleared once read.
+  static Future<bool> takeServiceLaunch(String? userId) async {
+    try {
+      final storage = SharedPreferencesAsync();
+      final raw = await storage.getString(_serviceLaunchKey);
+      if (raw == null) return false;
+      await storage.remove(_serviceLaunchKey);
+      return isRecentServiceLaunch(raw, userId: userId, now: DateTime.now());
+    } catch (error, stackTrace) {
+      debugPrint('Unable to read service launch: $error');
+      debugPrintStack(stackTrace: stackTrace);
+      return false;
+    }
+  }
+
+  static bool isRecentServiceLaunch(String raw, {required String? userId, required DateTime now}) {
+    try {
+      final launch = jsonDecode(raw);
+      if (userId == null || launch is! Map || launch['uid'] != userId) return false;
+      final at = launch['at'];
+      if (at is! int) return false;
+      final age = now.difference(DateTime.fromMillisecondsSinceEpoch(at));
+      return !age.isNegative && age <= serviceLaunchWindow;
+    } on FormatException {
+      return false;
+    }
+  }
 
   /// Keeps an OAuth consent request opened before sign-in, so the member lands
   /// back on the consent screen after login or profile completion.
@@ -55,10 +105,14 @@ final class KaoIdSsoHandoff {
   }) {
     final appUri = Uri.tryParse(appUrl.trim());
     final target = Uri.tryParse(rawReturnTo.trim());
-    if (appUri == null || target == null ||
-        !_isAllowedWebUri(appUri) || !_isAllowedWebUri(target) ||
+    if (appUri == null ||
+        target == null ||
+        !_isAllowedWebUri(appUri) ||
+        !_isAllowedWebUri(target) ||
         appUri.origin != target.origin ||
-        target.userInfo.isNotEmpty || target.hasQuery || target.hasFragment ||
+        target.userInfo.isNotEmpty ||
+        target.hasQuery ||
+        target.hasFragment ||
         target.pathSegments.any((segment) => segment == '.' || segment == '..')) {
       return null;
     }
@@ -68,8 +122,7 @@ final class KaoIdSsoHandoff {
         .map((path) => path.trim())
         .where((path) => path.startsWith('/') && path != '/')
         .toList(growable: false);
-    if (!allowedPrefixes.any((prefix) =>
-        target.path == prefix || target.path.startsWith('$prefix/'))) {
+    if (!allowedPrefixes.any((prefix) => target.path == prefix || target.path.startsWith('$prefix/'))) {
       return null;
     }
     return target;
@@ -83,8 +136,7 @@ final class KaoIdSsoHandoff {
     try {
       final storage = SharedPreferencesAsync();
       final appUri = Uri.tryParse(Env.appUrl.trim());
-      if (rawReturnTo == null || appUri == null ||
-          currentUri.origin != appUri.origin) {
+      if (rawReturnTo == null || appUri == null || currentUri.origin != appUri.origin) {
         await storage.remove(_pendingReturnKey);
         return;
       }
@@ -106,8 +158,7 @@ final class KaoIdSsoHandoff {
 
   static Future<bool> hasPendingLoginReturn() async {
     if (!kIsWeb) return false;
-    final rawReturnTo =
-        await SharedPreferencesAsync().getString(_pendingReturnKey);
+    final rawReturnTo = await SharedPreferencesAsync().getString(_pendingReturnKey);
     if (rawReturnTo == null) return false;
     return validateReturnTo(
           rawReturnTo: rawReturnTo,
@@ -132,8 +183,7 @@ final class KaoIdSsoHandoff {
         allowedServicePaths: Env.kaoIdAllowedServicePaths,
       );
       final appUri = Uri.tryParse(Env.appUrl.trim());
-      if (!kIsWeb || target == null || appUri == null ||
-          Uri.base.origin != appUri.origin) {
+      if (!kIsWeb || target == null || appUri == null || Uri.base.origin != appUri.origin) {
         return false;
       }
 
@@ -157,9 +207,6 @@ final class KaoIdSsoHandoff {
       return false;
     }
     if (uri.scheme == 'https') return true;
-    return uri.scheme == 'http' &&
-        (uri.host == 'localhost' ||
-            uri.host == '127.0.0.1' ||
-            uri.host == '::1');
+    return uri.scheme == 'http' && (uri.host == 'localhost' || uri.host == '127.0.0.1' || uri.host == '::1');
   }
 }

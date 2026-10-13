@@ -32,8 +32,7 @@ final dashboardBankProvider = FutureProvider.autoDispose<PayoutBankAccount>((ref
   return ref.watch(payoutBankReaderProvider)();
 });
 
-final dashboardBusinessProvider =
-    FutureProvider.autoDispose<BusinessRegistration?>((ref) async {
+final dashboardBusinessProvider = FutureProvider.autoDispose<BusinessRegistration?>((ref) async {
   final userId = ref.watch(authProvider.select((s) => s.asData?.value?.id));
   if (userId == null) return null;
   return ref.watch(businessRegistrationUseCasesProvider).getCurrent(userId);
@@ -41,13 +40,18 @@ final dashboardBusinessProvider =
 
 typedef ServiceLauncher = Future<bool> Function(Uri target);
 
-/// Service apps share the Kao ID origin, so they open in the same tab to reuse
-/// the session.
+/// Opens a service in the same tab and remembers which member opened it.
 final serviceLauncherProvider = Provider<ServiceLauncher>(
-  (ref) => (target) => launchUrl(target, webOnlyWindowName: '_self'),
+  (ref) => (target) async {
+    final userId = ref.read(authProvider).asData?.value?.id;
+    if (userId != null) await KaoIdSsoHandoff.markServiceLaunch(userId);
+    return launchUrl(target, webOnlyWindowName: '_self');
+  },
 );
 
 /// Secondhand entry point, or null when the deployment does not allow it.
+/// Secondhand keeps its own login, which may be another account's, so the
+/// entry tells it to sign in again as whoever is signed in to Kao ID.
 final secondhandEntryProvider = Provider<Uri?>((ref) {
   final appUrl = Env.appUrl.trim();
   if (appUrl.isEmpty) return null;
@@ -56,5 +60,5 @@ final secondhandEntryProvider = Provider<Uri?>((ref) {
     rawReturnTo: '$base/secondhand/',
     appUrl: appUrl,
     allowedServicePaths: Env.kaoIdAllowedServicePaths,
-  );
+  )?.replace(queryParameters: const {KaoIdSsoHandoff.serviceLaunchParameter: '1'});
 });

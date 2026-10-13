@@ -1,0 +1,25 @@
+{
+  "hosting": {
+    "public": "build/hosting",
+    "ignore": ["firebase.json", "**/.*"],
+    "redirects": [{ "source": "/secondhand", "destination": "/secondhand/", "type": 301 }],
+    "rewrites": [
+      { "source": "/secondhand/**", "destination": "/secondhand/index.html" },
+      { "source": "**", "destination": "/index.html" }
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" },
+          { "key": "X-Content-Type-Options", "value": "nosniff" },
+          { "key": "X-Frame-Options", "value": "DENY" },
+          { "key": "Content-Security-Policy", "value": "frame-ancestors 'none'" },
+          { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+          { "key": "Permissions-Policy", "value": "geolocation=(), payment=(), usb=()" },
+          { "key": "Cache-Control", "value": "no-cache" }
+        ]
+      }
+    ]
+  }
+}

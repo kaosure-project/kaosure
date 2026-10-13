@@ -52,3 +52,8 @@ kao_id_audit.ps1
 kao_id_audit.txt
 kao_id_tree.txt
 lib_tree.txt
+
+# Web hosting (docs/DEPLOY_WEB.md)
+deploy/web.env
+.firebase/
+firebase-debug.log

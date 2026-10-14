@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kaosure/features/admin/presentation/admin_finance_dashboard_screen.dart';
 import 'package:kaosure/features/wallet/presentation/pages/partner_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:kaosure/shared/design_system/colors/app_colors.dart';
@@ -210,6 +211,24 @@ class _AdminHubPageState extends ConsumerState<AdminHubPage> with WidgetsBinding
     final finance = MenuPanel(
       title: l.adminGroupFinance,
       children: [
+        if (tools.withdrawals || tools.orderIssues)
+          DashboardMenuTile(
+            icon: Icons.account_balance_wallet_outlined,
+            color: AppColors.kaoGreen,
+            tint: AppColors.kaoGreenSoft,
+            title: tools.withdrawals && tools.orderIssues
+                ? '${l.orderIssuesTitle} / ${l.withdrawalsTitle}'
+                : tools.withdrawals
+                ? l.withdrawalsTitle
+                : l.orderIssuesTitle,
+            subtitle: tools.withdrawals && tools.orderIssues
+                ? '${l.withdrawalsHubHelp} • ${l.orderIssuesHubHelp}'
+                : tools.withdrawals
+                ? l.withdrawalsHubHelp
+                : l.orderIssuesHubHelp,
+            showDivider: tools.topups || tools.topupSettings || tools.withdrawals || tools.contents,
+            onTap: () => _openNamed('/admin/finance'),
+          ),
         if (tools.topups)
           DashboardMenuTile(
             icon: Icons.qr_code_2,
@@ -331,7 +350,7 @@ class _AdminHubPageState extends ConsumerState<AdminHubPage> with WidgetsBinding
 
     final start = [if (canReview) reviews, if (canManage) people];
     final end = [
-      if (tools.finance) finance,
+      if (tools.finance || tools.orderIssues) finance,
       if (tools.marketplace) marketplace,
       if (canManage) partners,
       security,

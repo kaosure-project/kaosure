@@ -2,6 +2,7 @@ import '../features/admin/presentation/admin_finance_dashboard_screen.dart';
 import '../features/kao_id/governance/presentation/pages/admin_hub_page.dart';
 import '../features/kao_id/governance/presentation/pages/staff_page.dart';
 import '../features/kao_id/governance/presentation/pages/member_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../features/kao_id/account/domain/entities/profile.dart';
@@ -145,6 +146,10 @@ final class AppRouter {
             : Uri.base.path == KaoIdRoutes.oauthConsent
             ? Uri.base.queryParameters['authorization_id'] ?? ''
             : '';
+        debugPrint(
+          '[OAuthFlow][Route] resolve=/oauth/consent '
+          'authorization_id_present=${authorizationId.trim().isNotEmpty}',
+        );
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => AuthGuard(authenticatedChild: OAuthConsentPage(authorizationId: authorizationId)),

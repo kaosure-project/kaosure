@@ -39,11 +39,17 @@ final class _KaoIdBootstrapScreenState
       (_, status) {
         switch (status) {
           case BootstrapStatus.landing:
-            _replaceWith(KaoIdRoutes.kaoIdLanding);
+            _replaceWith(
+              KaoIdRoutes.kaoIdLanding,
+              reason: 'bootstrap_landing',
+            );
             break;
 
           case BootstrapStatus.completeProfile:
-            _replaceWith(KaoIdRoutes.completeProfile);
+            _replaceWith(
+              KaoIdRoutes.completeProfile,
+              reason: 'profile_required',
+            );
             break;
 
           case BootstrapStatus.dashboard:
@@ -95,19 +101,43 @@ final class _KaoIdBootstrapScreenState
 
   Future<void> _finishDashboardBootstrap() async {
     final consent = await KaoIdSsoHandoff.takePendingConsent();
+    debugPrint(
+      '[OAuthFlow][Bootstrap] status=dashboard '
+      'pending_consent=${consent != null}',
+    );
     if (consent != null) {
-      _replaceWith(KaoIdRoutes.oauthConsent, arguments: consent);
+      _replaceWith(
+        KaoIdRoutes.oauthConsent,
+        arguments: consent,
+        reason: 'pending_consent',
+      );
       return;
     }
-    if (await KaoIdSsoHandoff.tryReturnToService()) return;
-    _replaceWith(KaoIdRoutes.dashboard);
+    if (await KaoIdSsoHandoff.tryReturnToService()) {
+      debugPrint(
+        '[OAuthFlow][Route] from=/bootstrap to=service_return '
+        'reason=validated_service_handoff',
+      );
+      return;
+    }
+    _replaceWith(
+      KaoIdRoutes.dashboard,
+      reason: 'no_pending_consent_or_service_return',
+    );
   }
 
-  void _replaceWith(String route, {Object? arguments}) {
+  void _replaceWith(
+    String route, {
+    Object? arguments,
+    required String reason,
+  }) {
     if (!mounted) {
       return;
     }
 
+    debugPrint(
+      '[OAuthFlow][Route] from=/bootstrap to=$route reason=$reason',
+    );
     Navigator.of(context).pushReplacementNamed(route, arguments: arguments);
   }
 }

@@ -3643,6 +3643,24 @@ abstract class AppLocalizations {
   /// **'Someone other than the requester must decide.'**
   String get staffSecondPersonRequired;
 
+  /// No description provided for @grantApprovalsHubHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve or reject admin roles the Owner asked to give'**
+  String get grantApprovalsHubHelp;
+
+  /// No description provided for @grantApprovalsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Approving needs a two-factor sign-in. You can\'t decide on a request you made or one that gives you a role. Check every permission before you approve.'**
+  String get grantApprovalsHelp;
+
+  /// No description provided for @staffGrantRequester.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested by'**
+  String get staffGrantRequester;
+
   /// No description provided for @staffRolesTitle.
   ///
   /// In en, this message translates to:

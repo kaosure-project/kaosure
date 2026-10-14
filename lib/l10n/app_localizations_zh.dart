@@ -1793,6 +1793,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get staffSecondPersonRequired => '必须由申请人以外的人做出决定。';
 
   @override
+  String get grantApprovalsHubHelp => '批准或拒绝 Owner 申请授予的管理员角色';
+
+  @override
+  String get grantApprovalsHelp =>
+      '批准需要使用双重验证登录。您不能处理自己提交的申请，也不能处理授予您本人角色的申请。批准前请逐项检查权限。';
+
+  @override
+  String get staffGrantRequester => '申请人';
+
+  @override
   String get staffRolesTitle => '角色与权限';
 
   @override
@@ -6223,6 +6233,16 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get staffSecondPersonRequired => '必须由申请人以外的人做出决定。';
+
+  @override
+  String get grantApprovalsHubHelp => '批准或拒绝 Owner 申请授予的管理员角色';
+
+  @override
+  String get grantApprovalsHelp =>
+      '批准需要使用双重验证登录。您不能处理自己提交的申请，也不能处理授予您本人角色的申请。批准前请逐项检查权限。';
+
+  @override
+  String get staffGrantRequester => '申请人';
 
   @override
   String get staffRolesTitle => '角色与权限';

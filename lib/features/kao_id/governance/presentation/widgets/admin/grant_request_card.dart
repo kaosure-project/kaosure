@@ -36,6 +36,17 @@ class GrantRequestCard extends StatelessWidget {
             AdminValue(label: l.adminAccountCode, value: grant.targetCode, copyable: true),
             Text(staffRoleLabel(l, grant.roleCode, grant.roleName)),
             Text(status),
+            if (grant.requesterName != null || grant.requesterCode != null)
+              AdminValue(
+                label: l.staffGrantRequester,
+                value: '${realValue(grant.requesterName)}\n${realValue(grant.requesterCode)}',
+              ),
+            if (grant.permissions.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              Text(l.staffPermissions, style: Theme.of(context).textTheme.labelMedium),
+              for (final permission in grant.permissions.entries)
+                Text(permission.value ? '${permission.key} · ${l.staffPermissionDangerous}' : permission.key),
+            ],
             if (grant.pending && grant.mode == StaffGrantMode.coolingOff && grant.activateAt != null)
               AdminValue(label: l.staffStartsAt, value: adminDate(context, grant.activateAt)),
             if (grant.pending && grant.mode == StaffGrantMode.twoPerson && grant.decideBefore != null)

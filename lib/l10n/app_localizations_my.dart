@@ -1934,6 +1934,17 @@ class AppLocalizationsMy extends AppLocalizations {
       'တောင်းဆိုသူမဟုတ်သော အခြားသူက ဆုံးဖြတ်ရမည်။';
 
   @override
+  String get grantApprovalsHubHelp =>
+      'Owner တောင်းဆိုထားသော စီမံခန့်ခွဲသူ role များကို အတည်ပြုရန် သို့မဟုတ် ငြင်းပယ်ရန်';
+
+  @override
+  String get grantApprovalsHelp =>
+      'အတည်ပြုရန် နှစ်ဆင့်အတည်ပြုခြင်းဖြင့် ဝင်ရောက်ရန် လိုအပ်သည်။ သင်ကိုယ်တိုင် တောင်းဆိုထားသော သို့မဟုတ် သင့်အား role ပေးမည့် တောင်းဆိုချက်ကို ဆုံးဖြတ်၍ မရပါ။ အတည်မပြုမီ ခွင့်ပြုချက်တစ်ခုချင်းကို စစ်ဆေးပါ။';
+
+  @override
+  String get staffGrantRequester => 'တောင်းဆိုသူ';
+
+  @override
   String get staffRolesTitle => 'တာဝန်များနှင့် ခွင့်ပြုချက်များ';
 
   @override

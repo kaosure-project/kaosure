@@ -8,4 +8,7 @@ abstract interface class StaffRepository {
   Future<void> setPermission(String role, String permission, bool enabled);
   Future<void> cancelGrant(String id);
   Future<void> decideGrant(String id, bool approve, String? reason);
+
+  /// Role requests waiting for a second approver; needs `admin.assignments.approve`.
+  Future<List<Map<String, dynamic>>> grantQueue();
 }

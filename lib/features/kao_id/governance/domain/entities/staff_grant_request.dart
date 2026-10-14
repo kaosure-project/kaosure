@@ -10,7 +10,8 @@ enum StaffGrantMode {
 enum StaffGrantStatus { pending, activated, rejected, cancelled, expired }
 
 /// An Owner's request to give a member an admin role, from `staff_snapshot_r9b().grants`
-/// or `staff_grant_queue_r47()`.
+/// or `staff_grant_queue_r47()`. Queue rows leave out mode and status: they are always
+/// pending two-person requests.
 class StaffGrantRequest {
   const StaffGrantRequest({
     required this.id,
@@ -27,6 +28,9 @@ class StaffGrantRequest {
     this.decidedAt,
     this.decideBefore,
     this.decisionReason,
+    this.requesterName,
+    this.requesterCode,
+    this.permissions = const {},
     this.canDecide = false,
   });
 
@@ -48,6 +52,12 @@ class StaffGrantRequest {
     decidedAt: _date(json['decided_at']),
     decideBefore: _date(json['decide_before']),
     decisionReason: json['decision_reason'] as String?,
+    requesterName: json['requester_name'] as String?,
+    requesterCode: json['requester_code'] as String?,
+    permissions: {
+      for (final item in json['permissions'] as List? ?? const [])
+        if (item is Map) item['code'] as String: item['dangerous'] == true,
+    },
     canDecide: json['can_decide'] == true,
   );
 
@@ -65,6 +75,11 @@ class StaffGrantRequest {
   final DateTime? decidedAt;
   final DateTime? decideBefore;
   final String? decisionReason;
+  final String? requesterName;
+  final String? requesterCode;
+
+  /// Permission code to whether it is dangerous; only the approver queue sends them.
+  final Map<String, bool> permissions;
 
   /// The signed-in person may approve or reject: they are neither the requester nor the member.
   final bool canDecide;

@@ -56,4 +56,8 @@ class SupabaseStaffRepository implements StaffRepository {
   Future<void> decideGrant(String id, bool approve, String? reason) async {
     await _call('staff_grant_decide_r47', {'p_grant': id, 'p_approve': approve, 'p_reason': reason});
   }
+  @override
+  Future<List<Map<String, dynamic>>> grantQueue() async => [
+    for (final row in await _call('staff_grant_queue_r47') as List? ?? const []) Map<String, dynamic>.from(row as Map),
+  ];
 }

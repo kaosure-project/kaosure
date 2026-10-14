@@ -1885,6 +1885,17 @@ class AppLocalizationsLo extends AppLocalizations {
       'ຕ້ອງໃຫ້ຄົນອື່ນທີ່ບໍ່ແມ່ນຜູ້ສົ່ງຄຳຂໍເປັນຜູ້ຕັດສິນ';
 
   @override
+  String get grantApprovalsHubHelp =>
+      'ອະນຸມັດ ຫຼື ປະຕິເສດ role ຜູ້ດູແລທີ່ Owner ຂໍມອບ';
+
+  @override
+  String get grantApprovalsHelp =>
+      'ການອະນຸມັດຕ້ອງເຂົ້າສູ່ລະບົບດ້ວຍການຢືນຢັນຕົວຕົນສອງຊັ້ນ ທ່ານຕັດສິນຄຳຂໍທີ່ຕົນເອງສົ່ງ ຫຼື ຄຳຂໍທີ່ມອບ role ໃຫ້ຕົນເອງບໍ່ໄດ້ ກະລຸນາກວດສິດທຸກຂໍ້ກ່ອນອະນຸມັດ';
+
+  @override
+  String get staffGrantRequester => 'ຜູ້ຂໍ';
+
+  @override
   String get staffRolesTitle => 'ບົດບາດ ແລະ ສິດ';
 
   @override

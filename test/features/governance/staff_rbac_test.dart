@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kaosure/features/kao_id/auth/application/providers/auth_provider.dart';
+import 'package:kaosure/features/kao_id/governance/application/providers/member_access_provider.dart';
+import 'package:kaosure/features/kao_id/governance/application/providers/staff_tools_providers.dart';
 import 'package:kaosure/features/kao_id/governance/data/repositories/supabase_staff_repository.dart';
 import 'package:kaosure/features/kao_id/governance/domain/entities/staff_grant_request.dart';
 import 'package:kaosure/features/kao_id/governance/domain/entities/staff_role.dart';
+import 'package:kaosure/features/kao_id/governance/domain/entities/staff_tools.dart';
 import 'package:kaosure/features/kao_id/governance/domain/repositories/staff_repository.dart';
+import 'package:kaosure/features/kao_id/governance/presentation/pages/admin_hub_page.dart';
+import 'package:kaosure/features/kao_id/governance/presentation/pages/grant_approvals_page.dart';
 import 'package:kaosure/features/kao_id/governance/presentation/pages/role_editor_page.dart';
 import 'package:kaosure/features/kao_id/governance/presentation/pages/staff_page.dart';
 import 'package:kaosure/features/kao_id/governance/presentation/widgets/admin_display.dart';
+import 'package:kaosure/features/kao_id/kyc/application/providers/kyc_review_providers.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -94,6 +100,21 @@ final class _FakeStaff implements StaffRepository {
   @override
   Future<void> decideGrant(String id, bool approve, String? reason) =>
       _record('decide:$id:$approve:${reason ?? ''}');
+
+  List<Map<String, dynamic>> queue = [
+    {'id': 'g1', 'target_profile_id': 'p-new', 'target_name': 'สมชาย', 'target_code': 'KAO-0003',
+      'code': 'finance_admin', 'role_name': 'Finance admin', 'requested_by': 'p-owner',
+      'requester_name': 'เจ้าของ', 'requester_code': 'KAO-0001', 'created_at': '2026-10-14T03:00:00Z',
+      'decide_before': '2026-10-17T03:00:00Z', 'can_decide': true,
+      'permissions': [{'code': 'admin.dashboard.view', 'dangerous': false},
+        {'code': 'wallet.withdraw.approve', 'dangerous': true}]},
+  ];
+
+  @override
+  Future<List<Map<String, dynamic>>> grantQueue() async {
+    calls.add('queue');
+    return queue;
+  }
 }
 
 void main() {
@@ -101,7 +122,7 @@ void main() {
 
   setUp(() => staff = _FakeStaff());
 
-  Future<void> pump(WidgetTester tester, Widget home) async {
+  Future<void> pump(WidgetTester tester, Widget home, {StaffTools tools = StaffTools.none}) async {
     tester.view.physicalSize = const Size(1280, 5000);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
@@ -109,6 +130,9 @@ void main() {
       overrides: [
         authProvider.overrideWith((ref) => TestAuthNotifier(ref)),
         staffRepositoryProvider.overrideWithValue(staff),
+        memberAccessProvider.overrideWith((ref) async => false),
+        kycReviewerAccessProvider.overrideWith((ref) async => false),
+        staffToolsProvider.overrideWith((ref) async => tools),
       ],
       child: MaterialApp(
         locale: const Locale('th'),
@@ -207,6 +231,55 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('permission-marketing.coupons.manage')));
     await tester.pumpAndSettle();
     expect(find.text(l.staffRoleInUseDangerous), findsOneWidget);
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
+
+  test('admin hub tools read the grant approval flag and count', () {
+    final tools = StaffTools.fromJson({'grant_approvals': true, 'pending_grants': 2});
+    expect(tools.grantApprovals, isTrue);
+    expect(tools.pendingGrants, 2);
+    expect(tools.any, isTrue);
+    expect(tools.finance, isFalse);
+  });
+
+  testWidgets('a second approver without member access opens the queue from the hub', (tester) async {
+    await pump(tester, const AdminHubPage(), tools: const StaffTools(grantApprovals: true, pendingGrants: 1));
+    expect(find.text(l.adminAccessDenied), findsNothing);
+    expect(find.text(l.grantApprovalsHubHelp), findsOneWidget);
+    expect(find.text('1'), findsOneWidget);
+
+    await tester.tap(find.text(l.grantApprovalsHubHelp));
+    await tester.pumpAndSettle();
+    expect(find.byType(GrantApprovalsPage), findsOneWidget);
+    expect(find.byKey(const ValueKey('grant-g1')), findsOneWidget);
+    expect(find.textContaining('เจ้าของ'), findsOneWidget);
+    expect(find.text('wallet.withdraw.approve · ${l.staffPermissionDangerous}'), findsOneWidget);
+    expect(find.text('admin.dashboard.view'), findsOneWidget);
+    expect(find.byKey(const ValueKey('grant-cancel-g1')), findsNothing);
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
+
+  testWidgets('approving needs a two-factor session and a decided request leaves the queue', (tester) async {
+    await pump(tester, const GrantApprovalsPage());
+    staff.failure = const PostgrestException(message: 'mfa_required', code: '42501');
+    await tester.tap(find.byKey(const ValueKey('grant-approve-g1')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, l.continueLabel));
+    await tester.pumpAndSettle();
+    expect(staff.calls, ['queue', 'decide:g1:true:']);
+    expect(find.text(l.mfaSessionRequired), findsOneWidget);
+    expect(find.byKey(const ValueKey('grant-g1')), findsOneWidget);
+
+    staff.failure = null;
+    await tester.tap(find.byKey(const ValueKey('grant-approve-g1')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('grant-reason')), 'ตรวจประวัติแล้ว');
+    staff.queue = [];
+    await tester.tap(find.widgetWithText(FilledButton, l.continueLabel));
+    await tester.pumpAndSettle();
+    expect(staff.calls.skip(2), ['decide:g1:true:ตรวจประวัติแล้ว', 'queue']);
+    expect(find.byKey(const ValueKey('grant-g1')), findsNothing);
+    expect(find.text(l.staffEmpty), findsOneWidget);
     await tester.pumpWidget(const SizedBox.shrink());
   });
 

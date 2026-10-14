@@ -1930,6 +1930,17 @@ class AppLocalizationsVi extends AppLocalizations {
       'Người khác với người gửi yêu cầu phải quyết định.';
 
   @override
+  String get grantApprovalsHubHelp =>
+      'Phê duyệt hoặc từ chối vai trò quản trị mà Owner yêu cầu cấp';
+
+  @override
+  String get grantApprovalsHelp =>
+      'Phê duyệt cần đăng nhập bằng xác thực hai lớp. Bạn không thể quyết định yêu cầu do chính mình gửi hoặc yêu cầu cấp vai trò cho chính mình. Hãy kiểm tra từng quyền trước khi phê duyệt.';
+
+  @override
+  String get staffGrantRequester => 'Người yêu cầu';
+
+  @override
   String get staffRolesTitle => 'Vai trò và quyền';
 
   @override

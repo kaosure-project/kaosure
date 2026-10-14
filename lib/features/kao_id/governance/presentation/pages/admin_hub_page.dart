@@ -24,6 +24,7 @@ import '../../domain/entities/staff_tools.dart';
 import '../widgets/admin/admin_scaffold.dart';
 import '../widgets/admin/admin_stat_card.dart';
 import '../widgets/admin/pending_badge.dart';
+import 'grant_approvals_page.dart';
 import 'order_issues_page.dart';
 import 'owner_requests_page.dart';
 import 'review_moderation_page.dart';
@@ -298,9 +299,23 @@ class _AdminHubPageState extends ConsumerState<AdminHubPage> with WidgetsBinding
           tint: AppColors.kaoSlateSoft,
           title: l.twoFactorAuthentication,
           subtitle: l.adminMfaHelp,
-          showDivider: canManage,
+          showDivider: canManage || tools.grantApprovals,
           onTap: () => _open(const MfaPage()),
         ),
+        if (tools.grantApprovals)
+          DashboardMenuTile(
+            icon: Icons.how_to_reg_outlined,
+            color: AppColors.kaoSlate,
+            tint: AppColors.kaoSlateSoft,
+            title: l.staffGrantsTitle,
+            subtitle: l.grantApprovalsHubHelp,
+            showDivider: canManage,
+            trailing: PendingTrailing(
+              count: AsyncData(PendingCount(tools.pendingGrants)),
+              color: AppColors.kaoSlate,
+            ),
+            onTap: () => _open(const GrantApprovalsPage()),
+          ),
         if (canManage)
           DashboardMenuTile(
             icon: Icons.monitor_heart_outlined,

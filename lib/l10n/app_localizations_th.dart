@@ -1930,6 +1930,17 @@ class AppLocalizationsTh extends AppLocalizations {
       'ต้องให้คนอื่นที่ไม่ใช่ผู้ส่งคำขอเป็นผู้ตัดสิน';
 
   @override
+  String get grantApprovalsHubHelp =>
+      'อนุมัติหรือปฏิเสธ role ผู้ดูแลที่ Owner ขอมอบ';
+
+  @override
+  String get grantApprovalsHelp =>
+      'การอนุมัติต้องเข้าสู่ระบบด้วยการยืนยันตัวตนสองชั้น คุณตัดสินคำขอที่ตัวเองส่ง หรือคำขอที่มอบ role ให้ตัวเองไม่ได้ โปรดตรวจสิทธิ์ทุกข้อก่อนอนุมัติ';
+
+  @override
+  String get staffGrantRequester => 'ผู้ขอ';
+
+  @override
   String get staffRolesTitle => 'บทบาทและสิทธิ์';
 
   @override

@@ -1825,6 +1825,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get staffSecondPersonRequired => '申請者以外の人が判断する必要があります。';
 
   @override
+  String get grantApprovalsHubHelp => 'Ownerが申請した管理者ロールを承認または却下します';
+
+  @override
+  String get grantApprovalsHelp =>
+      '承認には二要素認証でのサインインが必要です。自分が申請した依頼や、自分にロールを付与する依頼は判断できません。承認前にすべての権限を確認してください。';
+
+  @override
+  String get staffGrantRequester => '申請者';
+
+  @override
   String get staffRolesTitle => 'ロールと権限';
 
   @override

@@ -1952,6 +1952,17 @@ class AppLocalizationsEn extends AppLocalizations {
       'Someone other than the requester must decide.';
 
   @override
+  String get grantApprovalsHubHelp =>
+      'Approve or reject admin roles the Owner asked to give';
+
+  @override
+  String get grantApprovalsHelp =>
+      'Approving needs a two-factor sign-in. You can\'t decide on a request you made or one that gives you a role. Check every permission before you approve.';
+
+  @override
+  String get staffGrantRequester => 'Requested by';
+
+  @override
   String get staffRolesTitle => 'Roles and permissions';
 
   @override

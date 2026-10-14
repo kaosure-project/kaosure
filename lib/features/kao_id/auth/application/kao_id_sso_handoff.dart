@@ -126,13 +126,18 @@ final class KaoIdSsoHandoff {
 
       if (fallbackIsValid) {
         final matchesCapturedRequest = authorizationId == memoryFallback;
+        final source = matchesCapturedRequest ? 'local_storage' : 'memory_fallback';
+        final storedValueState = authorizationId == null
+            ? 'missing'
+            : matchesCapturedRequest
+            ? 'matched'
+            : 'different';
         final cleared = authorizationId == null
             ? true
             : await _clearPendingConsent(storage);
         debugPrint(
           '[OAuthFlow][Consent] read=found '
-          'source=${matchesCapturedRequest ? 'local_storage' : 'memory_fallback'} '
-          'storage_value=${authorizationId == null ? 'missing' : matchesCapturedRequest ? 'matched' : 'different'} '
+          'source=$source storage_value=$storedValueState '
           'valid=true cleared=$cleared',
         );
         return memoryFallback;

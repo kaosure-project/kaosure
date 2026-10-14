@@ -74,9 +74,18 @@ final class KaoIdSsoHandoff {
       final storage = SharedPreferencesAsync();
       if (!OAuthConsentUseCases.isValidAuthorizationId(authorizationId)) {
         await storage.remove(_pendingConsentKey);
+        debugPrint(
+          '[OAuthFlow][Consent] saved=false '
+          'reason=missing_or_invalid_authorization_id '
+          'source_path=${currentUri.path} storage_key=$_pendingConsentKey',
+        );
         return;
       }
       await storage.setString(_pendingConsentKey, authorizationId!);
+      debugPrint(
+        '[OAuthFlow][Consent] saved=true '
+        'source_path=${currentUri.path} storage_key=$_pendingConsentKey',
+      );
     } catch (error, stackTrace) {
       debugPrint('Unable to store OAuth consent request: $error');
       debugPrintStack(stackTrace: stackTrace);

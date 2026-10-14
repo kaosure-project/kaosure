@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kaosure/features/admin/presentation/admin_finance_dashboard_screen.dart';
 import 'package:kaosure/features/wallet/presentation/pages/partner_page.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
 import 'package:kaosure/shared/design_system/colors/app_colors.dart';

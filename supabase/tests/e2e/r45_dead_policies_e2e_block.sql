@@ -76,7 +76,7 @@ begin
         when 'guest_legacy_table' then
           perform set_config('request.jwt.claims', json_build_object('role', 'anon')::text, true);
           perform set_config('role', 'anon', true);
-          select count(*) into n from public.brands;
+          select count(*) into n from public.disputes;
           report := report || 'UNEXPECTED_OK';
       end case;
       perform set_config('role', 'postgres', true);

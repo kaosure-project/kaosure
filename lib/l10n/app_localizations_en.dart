@@ -1805,7 +1805,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get staffHelp =>
-      'Only the Owner can assign or revoke roles. New assignments have no expiry; revoke them when no longer needed.';
+      'Only the Owner can request or revoke roles. A new role needs a second approver or waits 24 hours. Roles have no expiry; revoke them when no longer needed.';
 
   @override
   String get staffHistory => 'Assignment history';
@@ -1851,6 +1851,164 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get staffTitle => 'Staff management';
+
+  @override
+  String get staffRoleCatalogAdmin => 'Catalog admin';
+
+  @override
+  String get staffRoleListingAuditAdmin => 'Listing audit admin';
+
+  @override
+  String get staffRoleKaoidAdmin => 'Kao ID admin';
+
+  @override
+  String get staffRoleDisputeAdmin => 'Dispute admin';
+
+  @override
+  String get staffRoleFinanceAdmin => 'Finance admin';
+
+  @override
+  String get staffRoleLogisticsAdmin => 'Logistics admin';
+
+  @override
+  String get staffRoleCsOperator => 'Customer support';
+
+  @override
+  String get staffRoleMarketingAdmin => 'Marketing admin';
+
+  @override
+  String get staffRoleI18nAdmin => 'Localization admin';
+
+  @override
+  String get staffRoleLegalSecurityAdmin => 'Legal & security admin';
+
+  @override
+  String get staffRoleTechSupportAdmin => 'Tech support admin';
+
+  @override
+  String get staffRetiredRole => 'Retired role';
+
+  @override
+  String get staffKaoidMfaScope =>
+      'Reviews Kao ID verifications. KYC is not required for this role, but it works only from a session signed in with two-factor authentication.';
+
+  @override
+  String get staffNeedsMfa =>
+      'Two-factor authentication is not set up, so this role is not active yet.';
+
+  @override
+  String get staffStartsAt => 'Starts';
+
+  @override
+  String get staffGrantsTitle => 'Role requests';
+
+  @override
+  String get staffGrantHelp =>
+      'New roles need a second approver: another Owner or a Legal & security admin. While nobody can approve, a new role starts 24 hours after the request and you can cancel it before then.';
+
+  @override
+  String get staffGrantWaitingSecond => 'Waiting for a second approver';
+
+  @override
+  String get staffGrantCoolingOff =>
+      'Starts automatically after the 24-hour waiting period';
+
+  @override
+  String get staffGrantActivated => 'Active';
+
+  @override
+  String get staffGrantRejected => 'Rejected';
+
+  @override
+  String get staffGrantCancelled => 'Cancelled';
+
+  @override
+  String get staffGrantExpired => 'Expired';
+
+  @override
+  String get staffGrantCancel => 'Cancel request';
+
+  @override
+  String get staffGrantApprove => 'Approve';
+
+  @override
+  String get staffGrantReject => 'Reject';
+
+  @override
+  String get staffGrantReason => 'Reason';
+
+  @override
+  String get staffGrantDecideBefore => 'Decide before';
+
+  @override
+  String get staffGrantPendingError =>
+      'A request for this role is already waiting.';
+
+  @override
+  String get staffRoleAlreadyAssigned => 'This member already has this role.';
+
+  @override
+  String get staffSecondPersonRequired =>
+      'Someone other than the requester must decide.';
+
+  @override
+  String get staffRolesTitle => 'Roles and permissions';
+
+  @override
+  String get staffRolesHelp =>
+      'Only the Owner can change roles. High-risk permissions work only from a two-factor session and can\'t be added to a role somebody holds.';
+
+  @override
+  String get staffRoleCreate => 'New role';
+
+  @override
+  String get staffRoleCode => 'Role code (custom_…)';
+
+  @override
+  String get staffRoleName => 'Role name';
+
+  @override
+  String get staffRoleDescription => 'Description';
+
+  @override
+  String get staffRoleInUse => 'Role is in use';
+
+  @override
+  String get staffRoleSave => 'Save role';
+
+  @override
+  String get staffSystemRole => 'System role';
+
+  @override
+  String get staffCustomRole => 'Custom role';
+
+  @override
+  String get staffHolders => 'Holders';
+
+  @override
+  String get staffPermissionDangerous => 'High risk';
+
+  @override
+  String get staffRoleInUseDangerous =>
+      'Revoke this role from its holders before adding a high-risk permission.';
+
+  @override
+  String get staffRoleCodeInvalid =>
+      'Use custom_ followed by 2–40 lowercase letters, numbers or _.';
+
+  @override
+  String get staffRoleNameInvalid => 'Enter a name of 2–60 characters.';
+
+  @override
+  String get staffRoleNameTaken => 'This role name is already used.';
+
+  @override
+  String get staffRoleProtected =>
+      'System and retired roles can\'t be changed here.';
+
+  @override
+  String get staffPermissionOwnerOnly =>
+      'Only the Owner can use this permission.';
 
   @override
   String get reviewIdentityName => 'Verified identity name';

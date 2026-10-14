@@ -1651,7 +1651,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get staffEmpty => '暂无记录';
 
   @override
-  String get staffHelp => '只有 Owner 可以授予或撤销角色。新权限不设到期日，请在不再需要时撤销。';
+  String get staffHelp =>
+      '只有 Owner 可以申请授予或撤销角色。新角色需要第二位审批人或等待 24 小时。角色不设到期日，请在不再需要时撤销。';
 
   @override
   String get staffHistory => '权限变更记录';
@@ -1695,6 +1696,156 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get staffTitle => '工作人员管理';
+
+  @override
+  String get staffRoleCatalogAdmin => '商品目录管理员';
+
+  @override
+  String get staffRoleListingAuditAdmin => '商品审核管理员';
+
+  @override
+  String get staffRoleKaoidAdmin => 'Kao ID 管理员';
+
+  @override
+  String get staffRoleDisputeAdmin => '纠纷处理管理员';
+
+  @override
+  String get staffRoleFinanceAdmin => '财务管理员';
+
+  @override
+  String get staffRoleLogisticsAdmin => '物流管理员';
+
+  @override
+  String get staffRoleCsOperator => '客户服务';
+
+  @override
+  String get staffRoleMarketingAdmin => '营销管理员';
+
+  @override
+  String get staffRoleI18nAdmin => '多语言管理员';
+
+  @override
+  String get staffRoleLegalSecurityAdmin => '法务与安全管理员';
+
+  @override
+  String get staffRoleTechSupportAdmin => '技术支持管理员';
+
+  @override
+  String get staffRetiredRole => '已停用的角色';
+
+  @override
+  String get staffKaoidMfaScope =>
+      '可审核 Kao ID 身份验证。此角色无需 KYC，但只能在使用双重验证登录的会话中使用。';
+
+  @override
+  String get staffNeedsMfa => '尚未设置双重验证，此角色暂未生效。';
+
+  @override
+  String get staffStartsAt => '生效时间';
+
+  @override
+  String get staffGrantsTitle => '角色授予申请';
+
+  @override
+  String get staffGrantHelp =>
+      '授予新角色需要第二位审批人（另一位 Owner 或法务与安全管理员）。在没有审批人期间，新角色将在申请 24 小时后生效，生效前可以取消。';
+
+  @override
+  String get staffGrantWaitingSecond => '等待第二位审批人';
+
+  @override
+  String get staffGrantCoolingOff => '24 小时等待期结束后自动生效';
+
+  @override
+  String get staffGrantActivated => '已生效';
+
+  @override
+  String get staffGrantRejected => '已拒绝';
+
+  @override
+  String get staffGrantCancelled => '已取消';
+
+  @override
+  String get staffGrantExpired => '已过期';
+
+  @override
+  String get staffGrantCancel => '取消申请';
+
+  @override
+  String get staffGrantApprove => '批准';
+
+  @override
+  String get staffGrantReject => '拒绝';
+
+  @override
+  String get staffGrantReason => '原因';
+
+  @override
+  String get staffGrantDecideBefore => '截止时间';
+
+  @override
+  String get staffGrantPendingError => '此角色已有等待处理的申请。';
+
+  @override
+  String get staffRoleAlreadyAssigned => '该成员已拥有此角色。';
+
+  @override
+  String get staffSecondPersonRequired => '必须由申请人以外的人做出决定。';
+
+  @override
+  String get staffRolesTitle => '角色与权限';
+
+  @override
+  String get staffRolesHelp =>
+      '只有 Owner 可以修改角色。高风险权限只能在双重验证会话中使用，且不能添加到已有持有人的角色。';
+
+  @override
+  String get staffRoleCreate => '新建角色';
+
+  @override
+  String get staffRoleCode => '角色代码 (custom_…)';
+
+  @override
+  String get staffRoleName => '角色名称';
+
+  @override
+  String get staffRoleDescription => '说明';
+
+  @override
+  String get staffRoleInUse => '启用此角色';
+
+  @override
+  String get staffRoleSave => '保存角色';
+
+  @override
+  String get staffSystemRole => '系统角色';
+
+  @override
+  String get staffCustomRole => '自定义角色';
+
+  @override
+  String get staffHolders => '持有人';
+
+  @override
+  String get staffPermissionDangerous => '高风险';
+
+  @override
+  String get staffRoleInUseDangerous => '添加高风险权限前，请先撤销所有持有人的此角色。';
+
+  @override
+  String get staffRoleCodeInvalid => '请使用 custom_ 加 2–40 个小写字母、数字或 _。';
+
+  @override
+  String get staffRoleNameInvalid => '请输入 2–60 个字符的名称。';
+
+  @override
+  String get staffRoleNameTaken => '该角色名称已被使用。';
+
+  @override
+  String get staffRoleProtected => '系统角色和已停用的角色无法在此修改。';
+
+  @override
+  String get staffPermissionOwnerOnly => '此权限仅限 Owner 使用。';
 
   @override
   String get reviewIdentityName => '已核实的身份姓名';
@@ -5932,7 +6083,8 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
   String get staffEmpty => '暂无记录';
 
   @override
-  String get staffHelp => '只有 Owner 可以授予或撤销角色。新权限不设到期日，请在不再需要时撤销。';
+  String get staffHelp =>
+      '只有 Owner 可以申请授予或撤销角色。新角色需要第二位审批人或等待 24 小时。角色不设到期日，请在不再需要时撤销。';
 
   @override
   String get staffHistory => '权限变更记录';
@@ -5976,6 +6128,156 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
 
   @override
   String get staffTitle => '工作人员管理';
+
+  @override
+  String get staffRoleCatalogAdmin => '商品目录管理员';
+
+  @override
+  String get staffRoleListingAuditAdmin => '商品审核管理员';
+
+  @override
+  String get staffRoleKaoidAdmin => 'Kao ID 管理员';
+
+  @override
+  String get staffRoleDisputeAdmin => '纠纷处理管理员';
+
+  @override
+  String get staffRoleFinanceAdmin => '财务管理员';
+
+  @override
+  String get staffRoleLogisticsAdmin => '物流管理员';
+
+  @override
+  String get staffRoleCsOperator => '客户服务';
+
+  @override
+  String get staffRoleMarketingAdmin => '营销管理员';
+
+  @override
+  String get staffRoleI18nAdmin => '多语言管理员';
+
+  @override
+  String get staffRoleLegalSecurityAdmin => '法务与安全管理员';
+
+  @override
+  String get staffRoleTechSupportAdmin => '技术支持管理员';
+
+  @override
+  String get staffRetiredRole => '已停用的角色';
+
+  @override
+  String get staffKaoidMfaScope =>
+      '可审核 Kao ID 身份验证。此角色无需 KYC，但只能在使用双重验证登录的会话中使用。';
+
+  @override
+  String get staffNeedsMfa => '尚未设置双重验证，此角色暂未生效。';
+
+  @override
+  String get staffStartsAt => '生效时间';
+
+  @override
+  String get staffGrantsTitle => '角色授予申请';
+
+  @override
+  String get staffGrantHelp =>
+      '授予新角色需要第二位审批人（另一位 Owner 或法务与安全管理员）。在没有审批人期间，新角色将在申请 24 小时后生效，生效前可以取消。';
+
+  @override
+  String get staffGrantWaitingSecond => '等待第二位审批人';
+
+  @override
+  String get staffGrantCoolingOff => '24 小时等待期结束后自动生效';
+
+  @override
+  String get staffGrantActivated => '已生效';
+
+  @override
+  String get staffGrantRejected => '已拒绝';
+
+  @override
+  String get staffGrantCancelled => '已取消';
+
+  @override
+  String get staffGrantExpired => '已过期';
+
+  @override
+  String get staffGrantCancel => '取消申请';
+
+  @override
+  String get staffGrantApprove => '批准';
+
+  @override
+  String get staffGrantReject => '拒绝';
+
+  @override
+  String get staffGrantReason => '原因';
+
+  @override
+  String get staffGrantDecideBefore => '截止时间';
+
+  @override
+  String get staffGrantPendingError => '此角色已有等待处理的申请。';
+
+  @override
+  String get staffRoleAlreadyAssigned => '该成员已拥有此角色。';
+
+  @override
+  String get staffSecondPersonRequired => '必须由申请人以外的人做出决定。';
+
+  @override
+  String get staffRolesTitle => '角色与权限';
+
+  @override
+  String get staffRolesHelp =>
+      '只有 Owner 可以修改角色。高风险权限只能在双重验证会话中使用，且不能添加到已有持有人的角色。';
+
+  @override
+  String get staffRoleCreate => '新建角色';
+
+  @override
+  String get staffRoleCode => '角色代码 (custom_…)';
+
+  @override
+  String get staffRoleName => '角色名称';
+
+  @override
+  String get staffRoleDescription => '说明';
+
+  @override
+  String get staffRoleInUse => '启用此角色';
+
+  @override
+  String get staffRoleSave => '保存角色';
+
+  @override
+  String get staffSystemRole => '系统角色';
+
+  @override
+  String get staffCustomRole => '自定义角色';
+
+  @override
+  String get staffHolders => '持有人';
+
+  @override
+  String get staffPermissionDangerous => '高风险';
+
+  @override
+  String get staffRoleInUseDangerous => '添加高风险权限前，请先撤销所有持有人的此角色。';
+
+  @override
+  String get staffRoleCodeInvalid => '请使用 custom_ 加 2–40 个小写字母、数字或 _。';
+
+  @override
+  String get staffRoleNameInvalid => '请输入 2–60 个字符的名称。';
+
+  @override
+  String get staffRoleNameTaken => '该角色名称已被使用。';
+
+  @override
+  String get staffRoleProtected => '系统角色和已停用的角色无法在此修改。';
+
+  @override
+  String get staffPermissionOwnerOnly => '此权限仅限 Owner 使用。';
 
   @override
   String get reviewIdentityName => '已核实的身份姓名';

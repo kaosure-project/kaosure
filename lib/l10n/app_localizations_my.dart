@@ -1787,7 +1787,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get staffHelp =>
-      'Owner သာ တာဝန်ပေးခြင်းနှင့် ရုပ်သိမ်းခြင်း ပြုလုပ်နိုင်သည်။ ခွင့်ပြုချက်အသစ်များတွင် သက်တမ်းမရှိပါ။ မလိုအပ်တော့ပါက ရုပ်သိမ်းပါ။';
+      'Owner သာ တာဝန်ပေးရန် တောင်းဆိုခြင်းနှင့် ရုပ်သိမ်းခြင်း ပြုလုပ်နိုင်သည်။ တာဝန်အသစ်အတွက် ဒုတိယအတည်ပြုသူ သို့မဟုတ် ၂၄ နာရီ စောင့်ဆိုင်းရန် လိုအပ်သည်။ တာဝန်များတွင် သက်တမ်းမရှိပါ။ မလိုအပ်တော့ပါက ရုပ်သိမ်းပါ။';
 
   @override
   String get staffHistory => 'တာဝန်ပေးမှုမှတ်တမ်း';
@@ -1833,6 +1833,164 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get staffTitle => 'ဝန်ထမ်းစီမံခန့်ခွဲမှု';
+
+  @override
+  String get staffRoleCatalogAdmin => 'ကုန်ပစ္စည်းအမျိုးအစား စီမံသူ';
+
+  @override
+  String get staffRoleListingAuditAdmin => 'ရောင်းချမှုကြော်ငြာ စစ်ဆေးသူ';
+
+  @override
+  String get staffRoleKaoidAdmin => 'Kao ID စီမံသူ';
+
+  @override
+  String get staffRoleDisputeAdmin => 'အငြင်းပွားမှု စီမံသူ';
+
+  @override
+  String get staffRoleFinanceAdmin => 'ငွေကြေး စီမံသူ';
+
+  @override
+  String get staffRoleLogisticsAdmin => 'ပို့ဆောင်ရေး စီမံသူ';
+
+  @override
+  String get staffRoleCsOperator => 'ဖောက်သည်ဝန်ဆောင်မှု';
+
+  @override
+  String get staffRoleMarketingAdmin => 'စျေးကွက်ရှာဖွေရေး စီမံသူ';
+
+  @override
+  String get staffRoleI18nAdmin => 'ဘာသာစကား စီမံသူ';
+
+  @override
+  String get staffRoleLegalSecurityAdmin => 'ဥပဒေနှင့် လုံခြုံရေး စီမံသူ';
+
+  @override
+  String get staffRoleTechSupportAdmin => 'နည်းပညာပံ့ပိုးမှု စီမံသူ';
+
+  @override
+  String get staffRetiredRole => 'အသုံးမပြုတော့သော တာဝန်';
+
+  @override
+  String get staffKaoidMfaScope =>
+      'Kao ID အထောက်အထား အတည်ပြုချက်များကို စစ်ဆေးနိုင်သည်။ ဤတာဝန်အတွက် KYC မလိုအပ်သော်လည်း နှစ်ဆင့်အတည်ပြုခြင်းဖြင့် ဝင်ရောက်ထားသော ဆက်ရှင်တွင်သာ အသုံးပြုနိုင်သည်။';
+
+  @override
+  String get staffNeedsMfa =>
+      'နှစ်ဆင့်အတည်ပြုခြင်း မသတ်မှတ်ရသေးသဖြင့် ဤတာဝန်သည် အသက်မဝင်သေးပါ။';
+
+  @override
+  String get staffStartsAt => 'စတင်ချိန်';
+
+  @override
+  String get staffGrantsTitle => 'တာဝန်ပေးရန် တောင်းဆိုချက်များ';
+
+  @override
+  String get staffGrantHelp =>
+      'တာဝန်အသစ်ပေးရန် ဒုတိယအတည်ပြုသူ (အခြား Owner သို့မဟုတ် ဥပဒေနှင့် လုံခြုံရေး စီမံသူ) လိုအပ်သည်။ အတည်ပြုနိုင်သူ မရှိသေးချိန်တွင် တောင်းဆိုပြီး ၂၄ နာရီအကြာတွင် အသက်ဝင်မည်ဖြစ်ပြီး ထိုမတိုင်မီ ပယ်ဖျက်နိုင်သည်။';
+
+  @override
+  String get staffGrantWaitingSecond => 'ဒုတိယအတည်ပြုသူကို စောင့်နေသည်';
+
+  @override
+  String get staffGrantCoolingOff =>
+      '၂၄ နာရီ စောင့်ဆိုင်းချိန် ပြီးဆုံးပါက အလိုအလျောက် အသက်ဝင်မည်';
+
+  @override
+  String get staffGrantActivated => 'အသက်ဝင်နေသည်';
+
+  @override
+  String get staffGrantRejected => 'ငြင်းပယ်ထားသည်';
+
+  @override
+  String get staffGrantCancelled => 'ပယ်ဖျက်ထားသည်';
+
+  @override
+  String get staffGrantExpired => 'သက်တမ်းကုန်သွားသည်';
+
+  @override
+  String get staffGrantCancel => 'တောင်းဆိုချက် ပယ်ဖျက်ရန်';
+
+  @override
+  String get staffGrantApprove => 'အတည်ပြုရန်';
+
+  @override
+  String get staffGrantReject => 'ငြင်းပယ်ရန်';
+
+  @override
+  String get staffGrantReason => 'အကြောင်းပြချက်';
+
+  @override
+  String get staffGrantDecideBefore => 'ဆုံးဖြတ်ရမည့် နောက်ဆုံးအချိန်';
+
+  @override
+  String get staffGrantPendingError =>
+      'ဤတာဝန်အတွက် တောင်းဆိုချက်တစ်ခု စောင့်ဆိုင်းနေပြီဖြစ်သည်။';
+
+  @override
+  String get staffRoleAlreadyAssigned => 'ဤအဖွဲ့ဝင်တွင် ဤတာဝန်ရှိပြီးဖြစ်သည်။';
+
+  @override
+  String get staffSecondPersonRequired =>
+      'တောင်းဆိုသူမဟုတ်သော အခြားသူက ဆုံးဖြတ်ရမည်။';
+
+  @override
+  String get staffRolesTitle => 'တာဝန်များနှင့် ခွင့်ပြုချက်များ';
+
+  @override
+  String get staffRolesHelp =>
+      'Owner သာ တာဝန်များကို ပြောင်းလဲနိုင်သည်။ အန္တရာယ်မြင့် ခွင့်ပြုချက်များကို နှစ်ဆင့်အတည်ပြုထားသော ဆက်ရှင်တွင်သာ အသုံးပြုနိုင်ပြီး ကိုင်ဆောင်သူရှိသော တာဝန်သို့ ထည့်၍မရပါ။';
+
+  @override
+  String get staffRoleCreate => 'တာဝန်အသစ်';
+
+  @override
+  String get staffRoleCode => 'တာဝန်ကုဒ် (custom_…)';
+
+  @override
+  String get staffRoleName => 'တာဝန်အမည်';
+
+  @override
+  String get staffRoleDescription => 'ဖော်ပြချက်';
+
+  @override
+  String get staffRoleInUse => 'ဤတာဝန်ကို အသုံးပြုနေသည်';
+
+  @override
+  String get staffRoleSave => 'တာဝန်ကို သိမ်းရန်';
+
+  @override
+  String get staffSystemRole => 'စနစ်တာဝန်';
+
+  @override
+  String get staffCustomRole => 'ကိုယ်တိုင်ဖန်တီးသော တာဝန်';
+
+  @override
+  String get staffHolders => 'ကိုင်ဆောင်သူများ';
+
+  @override
+  String get staffPermissionDangerous => 'အန္တရာယ်မြင့်';
+
+  @override
+  String get staffRoleInUseDangerous =>
+      'အန္တရာယ်မြင့် ခွင့်ပြုချက် မထည့်မီ ကိုင်ဆောင်သူအားလုံးထံမှ ဤတာဝန်ကို ရုပ်သိမ်းပါ။';
+
+  @override
+  String get staffRoleCodeInvalid =>
+      'custom_ နောက်တွင် အင်္ဂလိပ်စာလုံးအသေး၊ ဂဏန်း သို့မဟုတ် _ ၂–၄၀ လုံး သုံးပါ။';
+
+  @override
+  String get staffRoleNameInvalid => 'စာလုံး ၂–၆၀ ရှိသော အမည်ထည့်ပါ။';
+
+  @override
+  String get staffRoleNameTaken => 'ဤတာဝန်အမည်ကို အသုံးပြုပြီးဖြစ်သည်။';
+
+  @override
+  String get staffRoleProtected =>
+      'စနစ်တာဝန်နှင့် အသုံးမပြုတော့သော တာဝန်များကို ဤနေရာတွင် ပြောင်းလဲ၍မရပါ။';
+
+  @override
+  String get staffPermissionOwnerOnly =>
+      'ဤခွင့်ပြုချက်ကို Owner သာ အသုံးပြုနိုင်သည်။';
 
   @override
   String get reviewIdentityName => 'အတည်ပြုပြီးသော အမည်';

@@ -83,7 +83,8 @@ begin
           'aal', 'aal1', 'is_anonymous', false, 'client_id', cid)::text, true);
       else
         perform set_config('request.jwt.claims', json_build_object(
-          'sub', who, 'role', 'authenticated', 'session_id', sess, 'aal', 'aal1', 'is_anonymous', false)::text, true);
+          'sub', who, 'role', 'authenticated', 'session_id', sess,
+          'aal', case when who = st2 then 'aal2' else 'aal1' end, 'is_anonymous', false)::text, true);
       end if;
       perform set_config('request.headers', '{"content-profile":"public"}', true);
       perform set_config('request.method', 'POST', true);
@@ -102,10 +103,13 @@ begin
             insert into public.verifications(profile_id, status) values (st2, 'approved');
           end if;
           insert into public.admin_assignments(profile_id, role_id, assigned_by)
-          select st2, id, st1 from public.admin_roles where code = 'admin';
+          select st2, id, st1 from public.admin_roles where code = 'finance_admin';
           insert into auth.mfa_factors(id, user_id, friendly_name, factor_type, status, created_at, updated_at)
           values (gen_random_uuid(), st1, 'e2e', 'totp', 'verified', now(), now()),
                  (gen_random_uuid(), st2, 'e2e', 'totp', 'verified', now(), now());
+          -- Finance permissions are dangerous, so staff use them only from an MFA session.
+          update auth.sessions set aal = 'aal2', factor_id = (select id from auth.mfa_factors where user_id = st2)
+           where id = st2_s;
           expected := '00020101021229370016A000000677010111011300668123456785303764540'
                       || '6500.005802TH6304';
           expected_qr := expected || kaoid_private.crc16_ccitt_r28(expected);

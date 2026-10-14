@@ -3370,7 +3370,7 @@ abstract class AppLocalizations {
   /// No description provided for @staffHelp.
   ///
   /// In en, this message translates to:
-  /// **'Only the Owner can assign or revoke roles. New assignments have no expiry; revoke them when no longer needed.'**
+  /// **'Only the Owner can request or revoke roles. A new role needs a second approver or waits 24 hours. Roles have no expiry; revoke them when no longer needed.'**
   String get staffHelp;
 
   /// No description provided for @staffHistory.
@@ -3456,6 +3456,300 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Staff management'**
   String get staffTitle;
+
+  /// No description provided for @staffRoleCatalogAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalog admin'**
+  String get staffRoleCatalogAdmin;
+
+  /// No description provided for @staffRoleListingAuditAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Listing audit admin'**
+  String get staffRoleListingAuditAdmin;
+
+  /// No description provided for @staffRoleKaoidAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Kao ID admin'**
+  String get staffRoleKaoidAdmin;
+
+  /// No description provided for @staffRoleDisputeAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Dispute admin'**
+  String get staffRoleDisputeAdmin;
+
+  /// No description provided for @staffRoleFinanceAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance admin'**
+  String get staffRoleFinanceAdmin;
+
+  /// No description provided for @staffRoleLogisticsAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Logistics admin'**
+  String get staffRoleLogisticsAdmin;
+
+  /// No description provided for @staffRoleCsOperator.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer support'**
+  String get staffRoleCsOperator;
+
+  /// No description provided for @staffRoleMarketingAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Marketing admin'**
+  String get staffRoleMarketingAdmin;
+
+  /// No description provided for @staffRoleI18nAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Localization admin'**
+  String get staffRoleI18nAdmin;
+
+  /// No description provided for @staffRoleLegalSecurityAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal & security admin'**
+  String get staffRoleLegalSecurityAdmin;
+
+  /// No description provided for @staffRoleTechSupportAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Tech support admin'**
+  String get staffRoleTechSupportAdmin;
+
+  /// No description provided for @staffRetiredRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Retired role'**
+  String get staffRetiredRole;
+
+  /// No description provided for @staffKaoidMfaScope.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews Kao ID verifications. KYC is not required for this role, but it works only from a session signed in with two-factor authentication.'**
+  String get staffKaoidMfaScope;
+
+  /// No description provided for @staffNeedsMfa.
+  ///
+  /// In en, this message translates to:
+  /// **'Two-factor authentication is not set up, so this role is not active yet.'**
+  String get staffNeedsMfa;
+
+  /// No description provided for @staffStartsAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts'**
+  String get staffStartsAt;
+
+  /// No description provided for @staffGrantsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Role requests'**
+  String get staffGrantsTitle;
+
+  /// No description provided for @staffGrantHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'New roles need a second approver: another Owner or a Legal & security admin. While nobody can approve, a new role starts 24 hours after the request and you can cancel it before then.'**
+  String get staffGrantHelp;
+
+  /// No description provided for @staffGrantWaitingSecond.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a second approver'**
+  String get staffGrantWaitingSecond;
+
+  /// No description provided for @staffGrantCoolingOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts automatically after the 24-hour waiting period'**
+  String get staffGrantCoolingOff;
+
+  /// No description provided for @staffGrantActivated.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get staffGrantActivated;
+
+  /// No description provided for @staffGrantRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get staffGrantRejected;
+
+  /// No description provided for @staffGrantCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get staffGrantCancelled;
+
+  /// No description provided for @staffGrantExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get staffGrantExpired;
+
+  /// No description provided for @staffGrantCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel request'**
+  String get staffGrantCancel;
+
+  /// No description provided for @staffGrantApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get staffGrantApprove;
+
+  /// No description provided for @staffGrantReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get staffGrantReject;
+
+  /// No description provided for @staffGrantReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get staffGrantReason;
+
+  /// No description provided for @staffGrantDecideBefore.
+  ///
+  /// In en, this message translates to:
+  /// **'Decide before'**
+  String get staffGrantDecideBefore;
+
+  /// No description provided for @staffGrantPendingError.
+  ///
+  /// In en, this message translates to:
+  /// **'A request for this role is already waiting.'**
+  String get staffGrantPendingError;
+
+  /// No description provided for @staffRoleAlreadyAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'This member already has this role.'**
+  String get staffRoleAlreadyAssigned;
+
+  /// No description provided for @staffSecondPersonRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone other than the requester must decide.'**
+  String get staffSecondPersonRequired;
+
+  /// No description provided for @staffRolesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Roles and permissions'**
+  String get staffRolesTitle;
+
+  /// No description provided for @staffRolesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the Owner can change roles. High-risk permissions work only from a two-factor session and can\'t be added to a role somebody holds.'**
+  String get staffRolesHelp;
+
+  /// No description provided for @staffRoleCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'New role'**
+  String get staffRoleCreate;
+
+  /// No description provided for @staffRoleCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Role code (custom_…)'**
+  String get staffRoleCode;
+
+  /// No description provided for @staffRoleName.
+  ///
+  /// In en, this message translates to:
+  /// **'Role name'**
+  String get staffRoleName;
+
+  /// No description provided for @staffRoleDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get staffRoleDescription;
+
+  /// No description provided for @staffRoleInUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Role is in use'**
+  String get staffRoleInUse;
+
+  /// No description provided for @staffRoleSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save role'**
+  String get staffRoleSave;
+
+  /// No description provided for @staffSystemRole.
+  ///
+  /// In en, this message translates to:
+  /// **'System role'**
+  String get staffSystemRole;
+
+  /// No description provided for @staffCustomRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom role'**
+  String get staffCustomRole;
+
+  /// No description provided for @staffHolders.
+  ///
+  /// In en, this message translates to:
+  /// **'Holders'**
+  String get staffHolders;
+
+  /// No description provided for @staffPermissionDangerous.
+  ///
+  /// In en, this message translates to:
+  /// **'High risk'**
+  String get staffPermissionDangerous;
+
+  /// No description provided for @staffRoleInUseDangerous.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke this role from its holders before adding a high-risk permission.'**
+  String get staffRoleInUseDangerous;
+
+  /// No description provided for @staffRoleCodeInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Use custom_ followed by 2–40 lowercase letters, numbers or _.'**
+  String get staffRoleCodeInvalid;
+
+  /// No description provided for @staffRoleNameInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name of 2–60 characters.'**
+  String get staffRoleNameInvalid;
+
+  /// No description provided for @staffRoleNameTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'This role name is already used.'**
+  String get staffRoleNameTaken;
+
+  /// No description provided for @staffRoleProtected.
+  ///
+  /// In en, this message translates to:
+  /// **'System and retired roles can\'t be changed here.'**
+  String get staffRoleProtected;
+
+  /// No description provided for @staffPermissionOwnerOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the Owner can use this permission.'**
+  String get staffPermissionOwnerOnly;
 
   /// No description provided for @reviewIdentityName.
   ///

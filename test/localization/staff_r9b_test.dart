@@ -17,15 +17,21 @@ class StaffFixture implements StaffRepository {
   @override
   Future<Map<String, dynamic>> load() async {
     if (denied) { throw const PostgrestException(message: 'owner_required'); }
-    return {'roles': [{'code': 'kyc_officer', 'permissions': ['admin.dashboard.view']}],
-      'assignments': [], 'history': []};
+    return {'roles': [
+        {'code': 'kaoid_admin', 'name': 'Kao ID admin', 'is_system': true, 'is_active': true,
+          'permissions': ['admin.dashboard.view', 'kaoid.kyc.review']},
+        {'code': 'kyc_officer', 'is_system': true, 'is_active': false, 'legacy': true, 'permissions': []},
+      ],
+      'assignments': [], 'grants': [], 'history': []};
   }
   @override
   Future<void> assign(String target, String role) async {
-    expect(target, 'test-member'); expect(role, 'kyc_officer'); assignments++;
+    expect(target, 'test-member'); expect(role, 'kaoid_admin'); assignments++;
   }
   @override
   Future<void> revoke(String id) async {}
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 void main() {
   for (final locale in AppLocalizations.supportedLocales) {
@@ -64,8 +70,10 @@ void main() {
       scrollable: find.byType(Scrollable).first);
     await tester.tap(find.byType(DropdownButton<String>));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(l.staffReviewer).last);
+    expect(find.text(l.staffReviewer), findsNothing);
+    await tester.tap(find.text(l.staffRoleKaoidAdmin).last);
     await tester.pumpAndSettle();
+    expect(find.text(l.staffKaoidMfaScope), findsOneWidget);
     final assign = find.widgetWithText(FilledButton, l.staffAssign);
     await tester.scrollUntilVisible(assign, 150, scrollable: find.byType(Scrollable).first);
     await tester.tap(assign);

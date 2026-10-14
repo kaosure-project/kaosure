@@ -1785,7 +1785,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get staffHelp =>
-      'Owner เท่านั้นที่มอบหมายหรือถอนสิทธิ์ได้ สิทธิ์ใหม่ไม่กำหนดวันหมดอายุ ให้ถอนเมื่อไม่ต้องใช้งาน';
+      'Owner เท่านั้นที่ขอมอบหรือถอนบทบาทได้ บทบาทใหม่ต้องมีผู้อนุมัติคนที่สองหรือรอ 24 ชั่วโมง บทบาทไม่มีวันหมดอายุ ให้ถอนเมื่อไม่ต้องใช้งาน';
 
   @override
   String get staffHistory => 'ประวัติการมอบหมายสิทธิ์';
@@ -1831,6 +1831,161 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get staffTitle => 'จัดการเจ้าหน้าที่';
+
+  @override
+  String get staffRoleCatalogAdmin => 'ผู้ดูแลหมวดหมู่สินค้า';
+
+  @override
+  String get staffRoleListingAuditAdmin => 'ผู้ตรวจสอบประกาศขาย';
+
+  @override
+  String get staffRoleKaoidAdmin => 'ผู้ดูแล Kao ID';
+
+  @override
+  String get staffRoleDisputeAdmin => 'ผู้ดูแลข้อพิพาท';
+
+  @override
+  String get staffRoleFinanceAdmin => 'ผู้ดูแลการเงิน';
+
+  @override
+  String get staffRoleLogisticsAdmin => 'ผู้ดูแลขนส่ง';
+
+  @override
+  String get staffRoleCsOperator => 'ฝ่ายบริการลูกค้า';
+
+  @override
+  String get staffRoleMarketingAdmin => 'ผู้ดูแลการตลาด';
+
+  @override
+  String get staffRoleI18nAdmin => 'ผู้ดูแลภาษา';
+
+  @override
+  String get staffRoleLegalSecurityAdmin => 'ผู้ดูแลกฎหมายและความปลอดภัย';
+
+  @override
+  String get staffRoleTechSupportAdmin => 'ผู้ดูแลระบบเทคนิค';
+
+  @override
+  String get staffRetiredRole => 'บทบาทที่เลิกใช้แล้ว';
+
+  @override
+  String get staffKaoidMfaScope =>
+      'ตรวจคำขอยืนยันตัวตนของ Kao ID ได้ บทบาทนี้ไม่ต้องผ่าน KYC แต่ใช้งานได้เฉพาะเมื่อเข้าสู่ระบบด้วยการยืนยันสองขั้นตอน';
+
+  @override
+  String get staffNeedsMfa =>
+      'ยังไม่ได้ตั้งค่าการยืนยันสองขั้นตอน บทบาทนี้จึงยังไม่มีผล';
+
+  @override
+  String get staffStartsAt => 'เริ่มมีผล';
+
+  @override
+  String get staffGrantsTitle => 'คำขอมอบบทบาท';
+
+  @override
+  String get staffGrantHelp =>
+      'การมอบบทบาทใหม่ต้องมีผู้อนุมัติคนที่สอง คือ Owner อีกคนหรือผู้ดูแลกฎหมายและความปลอดภัย ระหว่างที่ยังไม่มีผู้อนุมัติ บทบาทใหม่จะเริ่มมีผลหลังส่งคำขอ 24 ชั่วโมง และยกเลิกได้ก่อนถึงเวลานั้น';
+
+  @override
+  String get staffGrantWaitingSecond => 'รอผู้อนุมัติคนที่สอง';
+
+  @override
+  String get staffGrantCoolingOff => 'จะเริ่มมีผลเองเมื่อครบช่วงรอ 24 ชั่วโมง';
+
+  @override
+  String get staffGrantActivated => 'มีผลแล้ว';
+
+  @override
+  String get staffGrantRejected => 'ไม่อนุมัติ';
+
+  @override
+  String get staffGrantCancelled => 'ยกเลิกแล้ว';
+
+  @override
+  String get staffGrantExpired => 'หมดเวลา';
+
+  @override
+  String get staffGrantCancel => 'ยกเลิกคำขอ';
+
+  @override
+  String get staffGrantApprove => 'อนุมัติ';
+
+  @override
+  String get staffGrantReject => 'ไม่อนุมัติ';
+
+  @override
+  String get staffGrantReason => 'เหตุผล';
+
+  @override
+  String get staffGrantDecideBefore => 'ตัดสินใจภายใน';
+
+  @override
+  String get staffGrantPendingError => 'มีคำขอบทบาทนี้รออยู่แล้ว';
+
+  @override
+  String get staffRoleAlreadyAssigned => 'สมาชิกคนนี้มีบทบาทนี้อยู่แล้ว';
+
+  @override
+  String get staffSecondPersonRequired =>
+      'ต้องให้คนอื่นที่ไม่ใช่ผู้ส่งคำขอเป็นผู้ตัดสิน';
+
+  @override
+  String get staffRolesTitle => 'บทบาทและสิทธิ์';
+
+  @override
+  String get staffRolesHelp =>
+      'Owner เท่านั้นที่แก้ไขบทบาทได้ สิทธิ์ความเสี่ยงสูงใช้ได้เฉพาะเซสชันที่ยืนยันสองขั้นตอน และเพิ่มให้บทบาทที่มีคนถืออยู่ไม่ได้';
+
+  @override
+  String get staffRoleCreate => 'สร้างบทบาทใหม่';
+
+  @override
+  String get staffRoleCode => 'รหัสบทบาท (custom_…)';
+
+  @override
+  String get staffRoleName => 'ชื่อบทบาท';
+
+  @override
+  String get staffRoleDescription => 'คำอธิบาย';
+
+  @override
+  String get staffRoleInUse => 'เปิดใช้บทบาทนี้';
+
+  @override
+  String get staffRoleSave => 'บันทึกบทบาท';
+
+  @override
+  String get staffSystemRole => 'บทบาทของระบบ';
+
+  @override
+  String get staffCustomRole => 'บทบาทที่สร้างเอง';
+
+  @override
+  String get staffHolders => 'ผู้ถือบทบาท';
+
+  @override
+  String get staffPermissionDangerous => 'ความเสี่ยงสูง';
+
+  @override
+  String get staffRoleInUseDangerous =>
+      'ถอนบทบาทนี้จากผู้ถือทุกคนก่อน จึงจะเพิ่มสิทธิ์ความเสี่ยงสูงได้';
+
+  @override
+  String get staffRoleCodeInvalid =>
+      'ใช้ custom_ ตามด้วยตัวอักษรภาษาอังกฤษตัวเล็ก ตัวเลข หรือ _ 2–40 ตัว';
+
+  @override
+  String get staffRoleNameInvalid => 'กรอกชื่อ 2–60 ตัวอักษร';
+
+  @override
+  String get staffRoleNameTaken => 'ชื่อบทบาทนี้ถูกใช้แล้ว';
+
+  @override
+  String get staffRoleProtected =>
+      'บทบาทของระบบและบทบาทที่เลิกใช้แล้วแก้ไขที่นี่ไม่ได้';
+
+  @override
+  String get staffPermissionOwnerOnly => 'สิทธิ์นี้ใช้ได้เฉพาะ Owner';
 
   @override
   String get reviewIdentityName => 'ชื่อจากเอกสารที่ยืนยันแล้ว';

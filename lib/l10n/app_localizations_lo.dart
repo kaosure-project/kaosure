@@ -1740,7 +1740,7 @@ class AppLocalizationsLo extends AppLocalizations {
 
   @override
   String get staffHelp =>
-      'ມີພຽງ Owner ທີ່ມອບໝາຍຫຼືຖອນສິດໄດ້ ສິດໃໝ່ບໍ່ມີວັນໝົດອາຍຸ ກະລຸນາຖອນເມື່ອບໍ່ຕ້ອງການ';
+      'ມີພຽງ Owner ທີ່ຂໍມອບ ຫຼື ຖອນບົດບາດໄດ້ ບົດບາດໃໝ່ຕ້ອງມີຜູ້ອະນຸມັດຄົນທີສອງ ຫຼື ລໍຖ້າ 24 ຊົ່ວໂມງ ບົດບາດບໍ່ມີວັນໝົດອາຍຸ ກະລຸນາຖອນເມື່ອບໍ່ຕ້ອງການ';
 
   @override
   String get staffHistory => 'ປະຫວັດການມອບໝາຍສິດ';
@@ -1786,6 +1786,161 @@ class AppLocalizationsLo extends AppLocalizations {
 
   @override
   String get staffTitle => 'ຈັດການເຈົ້າໜ້າທີ່';
+
+  @override
+  String get staffRoleCatalogAdmin => 'ຜູ້ດູແລໝວດໝູ່ສິນຄ້າ';
+
+  @override
+  String get staffRoleListingAuditAdmin => 'ຜູ້ກວດສອບປະກາດຂາຍ';
+
+  @override
+  String get staffRoleKaoidAdmin => 'ຜູ້ດູແລ Kao ID';
+
+  @override
+  String get staffRoleDisputeAdmin => 'ຜູ້ດູແລຂໍ້ຂັດແຍ່ງ';
+
+  @override
+  String get staffRoleFinanceAdmin => 'ຜູ້ດູແລການເງິນ';
+
+  @override
+  String get staffRoleLogisticsAdmin => 'ຜູ້ດູແລການຂົນສົ່ງ';
+
+  @override
+  String get staffRoleCsOperator => 'ຝ່າຍບໍລິການລູກຄ້າ';
+
+  @override
+  String get staffRoleMarketingAdmin => 'ຜູ້ດູແລການຕະຫຼາດ';
+
+  @override
+  String get staffRoleI18nAdmin => 'ຜູ້ດູແລພາສາ';
+
+  @override
+  String get staffRoleLegalSecurityAdmin => 'ຜູ້ດູແລກົດໝາຍ ແລະ ຄວາມປອດໄພ';
+
+  @override
+  String get staffRoleTechSupportAdmin => 'ຜູ້ດູແລລະບົບເຕັກນິກ';
+
+  @override
+  String get staffRetiredRole => 'ບົດບາດທີ່ເຊົາໃຊ້ແລ້ວ';
+
+  @override
+  String get staffKaoidMfaScope =>
+      'ກວດຄຳຂໍຢືນຢັນຕົວຕົນ Kao ID ໄດ້ ບົດບາດນີ້ບໍ່ຕ້ອງຜ່ານ KYC ແຕ່ໃຊ້ໄດ້ສະເພາະເມື່ອເຂົ້າສູ່ລະບົບດ້ວຍການຢືນຢັນສອງຂັ້ນຕອນ';
+
+  @override
+  String get staffNeedsMfa =>
+      'ຍັງບໍ່ໄດ້ຕັ້ງຄ່າການຢືນຢັນສອງຂັ້ນຕອນ ບົດບາດນີ້ຈຶ່ງຍັງບໍ່ມີຜົນ';
+
+  @override
+  String get staffStartsAt => 'ເລີ່ມມີຜົນ';
+
+  @override
+  String get staffGrantsTitle => 'ຄຳຂໍມອບບົດບາດ';
+
+  @override
+  String get staffGrantHelp =>
+      'ການມອບບົດບາດໃໝ່ຕ້ອງມີຜູ້ອະນຸມັດຄົນທີສອງ ຄື Owner ອີກຄົນ ຫຼື ຜູ້ດູແລກົດໝາຍ ແລະ ຄວາມປອດໄພ ໃນຂະນະທີ່ຍັງບໍ່ມີຜູ້ອະນຸມັດ ບົດບາດໃໝ່ຈະມີຜົນຫຼັງສົ່ງຄຳຂໍ 24 ຊົ່ວໂມງ ແລະ ຍົກເລີກໄດ້ກ່ອນເວລານັ້ນ';
+
+  @override
+  String get staffGrantWaitingSecond => 'ລໍຖ້າຜູ້ອະນຸມັດຄົນທີສອງ';
+
+  @override
+  String get staffGrantCoolingOff => 'ຈະມີຜົນເອງເມື່ອຄົບໄລຍະລໍຖ້າ 24 ຊົ່ວໂມງ';
+
+  @override
+  String get staffGrantActivated => 'ມີຜົນແລ້ວ';
+
+  @override
+  String get staffGrantRejected => 'ບໍ່ອະນຸມັດ';
+
+  @override
+  String get staffGrantCancelled => 'ຍົກເລີກແລ້ວ';
+
+  @override
+  String get staffGrantExpired => 'ໝົດເວລາ';
+
+  @override
+  String get staffGrantCancel => 'ຍົກເລີກຄຳຂໍ';
+
+  @override
+  String get staffGrantApprove => 'ອະນຸມັດ';
+
+  @override
+  String get staffGrantReject => 'ບໍ່ອະນຸມັດ';
+
+  @override
+  String get staffGrantReason => 'ເຫດຜົນ';
+
+  @override
+  String get staffGrantDecideBefore => 'ຕັດສິນພາຍໃນ';
+
+  @override
+  String get staffGrantPendingError => 'ມີຄຳຂໍບົດບາດນີ້ລໍຖ້າຢູ່ແລ້ວ';
+
+  @override
+  String get staffRoleAlreadyAssigned => 'ສະມາຊິກຄົນນີ້ມີບົດບາດນີ້ຢູ່ແລ້ວ';
+
+  @override
+  String get staffSecondPersonRequired =>
+      'ຕ້ອງໃຫ້ຄົນອື່ນທີ່ບໍ່ແມ່ນຜູ້ສົ່ງຄຳຂໍເປັນຜູ້ຕັດສິນ';
+
+  @override
+  String get staffRolesTitle => 'ບົດບາດ ແລະ ສິດ';
+
+  @override
+  String get staffRolesHelp =>
+      'ມີພຽງ Owner ທີ່ແກ້ໄຂບົດບາດໄດ້ ສິດຄວາມສ່ຽງສູງໃຊ້ໄດ້ສະເພາະເຊດຊັນທີ່ຢືນຢັນສອງຂັ້ນຕອນ ແລະ ເພີ່ມໃຫ້ບົດບາດທີ່ມີຄົນຖືຢູ່ບໍ່ໄດ້';
+
+  @override
+  String get staffRoleCreate => 'ສ້າງບົດບາດໃໝ່';
+
+  @override
+  String get staffRoleCode => 'ລະຫັດບົດບາດ (custom_…)';
+
+  @override
+  String get staffRoleName => 'ຊື່ບົດບາດ';
+
+  @override
+  String get staffRoleDescription => 'ຄຳອະທິບາຍ';
+
+  @override
+  String get staffRoleInUse => 'ເປີດໃຊ້ບົດບາດນີ້';
+
+  @override
+  String get staffRoleSave => 'ບັນທຶກບົດບາດ';
+
+  @override
+  String get staffSystemRole => 'ບົດບາດຂອງລະບົບ';
+
+  @override
+  String get staffCustomRole => 'ບົດບາດທີ່ສ້າງເອງ';
+
+  @override
+  String get staffHolders => 'ຜູ້ຖືບົດບາດ';
+
+  @override
+  String get staffPermissionDangerous => 'ຄວາມສ່ຽງສູງ';
+
+  @override
+  String get staffRoleInUseDangerous =>
+      'ຖອນບົດບາດນີ້ຈາກຜູ້ຖືທຸກຄົນກ່ອນ ຈຶ່ງຈະເພີ່ມສິດຄວາມສ່ຽງສູງໄດ້';
+
+  @override
+  String get staffRoleCodeInvalid =>
+      'ໃຊ້ custom_ ຕາມດ້ວຍຕົວອັກສອນອັງກິດໂຕນ້ອຍ ຕົວເລກ ຫຼື _ 2–40 ຕົວ';
+
+  @override
+  String get staffRoleNameInvalid => 'ປ້ອນຊື່ 2–60 ຕົວອັກສອນ';
+
+  @override
+  String get staffRoleNameTaken => 'ຊື່ບົດບາດນີ້ຖືກໃຊ້ແລ້ວ';
+
+  @override
+  String get staffRoleProtected =>
+      'ບົດບາດຂອງລະບົບ ແລະ ບົດບາດທີ່ເຊົາໃຊ້ແລ້ວ ແກ້ໄຂຢູ່ນີ້ບໍ່ໄດ້';
+
+  @override
+  String get staffPermissionOwnerOnly => 'ສິດນີ້ໃຊ້ໄດ້ສະເພາະ Owner';
 
   @override
   String get reviewIdentityName => 'ຊື່ຈາກເອກະສານທີ່ຢືນຢັນແລ້ວ';

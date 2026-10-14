@@ -1683,7 +1683,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get staffHelp =>
-      '権限の付与・取り消しはOwnerのみ可能です。新しい権限に有効期限はありません。不要になったら取り消してください。';
+      'ロールの付与申請と取り消しはOwnerのみ可能です。新しいロールには2人目の承認か24時間の待機が必要です。有効期限はないため、不要になったら取り消してください。';
 
   @override
   String get staffHistory => '権限変更履歴';
@@ -1728,6 +1728,157 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get staffTitle => '担当者管理';
+
+  @override
+  String get staffRoleCatalogAdmin => 'カタログ管理者';
+
+  @override
+  String get staffRoleListingAuditAdmin => '出品審査管理者';
+
+  @override
+  String get staffRoleKaoidAdmin => 'Kao ID管理者';
+
+  @override
+  String get staffRoleDisputeAdmin => 'トラブル対応管理者';
+
+  @override
+  String get staffRoleFinanceAdmin => '財務管理者';
+
+  @override
+  String get staffRoleLogisticsAdmin => '配送管理者';
+
+  @override
+  String get staffRoleCsOperator => 'カスタマーサポート';
+
+  @override
+  String get staffRoleMarketingAdmin => 'マーケティング管理者';
+
+  @override
+  String get staffRoleI18nAdmin => '多言語管理者';
+
+  @override
+  String get staffRoleLegalSecurityAdmin => '法務・セキュリティ管理者';
+
+  @override
+  String get staffRoleTechSupportAdmin => '技術サポート管理者';
+
+  @override
+  String get staffRetiredRole => '廃止されたロール';
+
+  @override
+  String get staffKaoidMfaScope =>
+      'Kao IDの本人確認を審査できます。このロールにKYCは不要ですが、二段階認証でサインインしたセッションでのみ使えます。';
+
+  @override
+  String get staffNeedsMfa => '二段階認証が未設定のため、このロールはまだ有効ではありません。';
+
+  @override
+  String get staffStartsAt => '開始';
+
+  @override
+  String get staffGrantsTitle => 'ロール付与の申請';
+
+  @override
+  String get staffGrantHelp =>
+      '新しいロールの付与には2人目の承認者（別のOwnerまたは法務・セキュリティ管理者）が必要です。承認できる人がいない間は、申請から24時間後に有効になり、それまでは取り消せます。';
+
+  @override
+  String get staffGrantWaitingSecond => '2人目の承認待ち';
+
+  @override
+  String get staffGrantCoolingOff => '24時間の待機期間が終わると自動で有効になります';
+
+  @override
+  String get staffGrantActivated => '有効';
+
+  @override
+  String get staffGrantRejected => '却下';
+
+  @override
+  String get staffGrantCancelled => '取り消し済み';
+
+  @override
+  String get staffGrantExpired => '期限切れ';
+
+  @override
+  String get staffGrantCancel => '申請を取り消す';
+
+  @override
+  String get staffGrantApprove => '承認';
+
+  @override
+  String get staffGrantReject => '却下';
+
+  @override
+  String get staffGrantReason => '理由';
+
+  @override
+  String get staffGrantDecideBefore => '判断期限';
+
+  @override
+  String get staffGrantPendingError => 'このロールの申請はすでに待機中です。';
+
+  @override
+  String get staffRoleAlreadyAssigned => 'このメンバーはすでにこのロールを持っています。';
+
+  @override
+  String get staffSecondPersonRequired => '申請者以外の人が判断する必要があります。';
+
+  @override
+  String get staffRolesTitle => 'ロールと権限';
+
+  @override
+  String get staffRolesHelp =>
+      'ロールを変更できるのはOwnerのみです。高リスクの権限は二段階認証のセッションでのみ使え、保持者がいるロールには追加できません。';
+
+  @override
+  String get staffRoleCreate => '新しいロール';
+
+  @override
+  String get staffRoleCode => 'ロールコード (custom_…)';
+
+  @override
+  String get staffRoleName => 'ロール名';
+
+  @override
+  String get staffRoleDescription => '説明';
+
+  @override
+  String get staffRoleInUse => 'このロールを使用する';
+
+  @override
+  String get staffRoleSave => 'ロールを保存';
+
+  @override
+  String get staffSystemRole => 'システムロール';
+
+  @override
+  String get staffCustomRole => 'カスタムロール';
+
+  @override
+  String get staffHolders => '保持者';
+
+  @override
+  String get staffPermissionDangerous => '高リスク';
+
+  @override
+  String get staffRoleInUseDangerous =>
+      '高リスクの権限を追加する前に、保持者全員からこのロールを取り消してください。';
+
+  @override
+  String get staffRoleCodeInvalid => 'custom_ の後に小文字英字・数字・_ を2〜40文字で入力してください。';
+
+  @override
+  String get staffRoleNameInvalid => '2〜60文字で名前を入力してください。';
+
+  @override
+  String get staffRoleNameTaken => 'このロール名はすでに使われています。';
+
+  @override
+  String get staffRoleProtected => 'システムロールと廃止されたロールはここでは変更できません。';
+
+  @override
+  String get staffPermissionOwnerOnly => 'この権限はOwnerのみ使用できます。';
 
   @override
   String get reviewIdentityName => '確認済み本人名';

@@ -9,11 +9,15 @@ final staffRepositoryProvider = Provider<StaffRepository>((ref) =>
 class SupabaseStaffRepository implements StaffRepository {
   SupabaseStaffRepository(this.client);
   final SupabaseClient client;
+  static const _sessionBound = {
+    'staff_assign_r13a', 'staff_revoke_r13a', 'staff_role_create_r47', 'staff_role_update_r47',
+    'staff_role_permission_r47', 'staff_grant_cancel_r47', 'staff_grant_decide_r47',
+  };
   Future<dynamic> _call(String name, [Map<String, dynamic>? params]) async {
     final owner = client.auth.currentUser?.id;
     if (owner == null) { throw StateError('session'); }
     final arguments = {...?params};
-    if (name == 'staff_assign_r13a' || name == 'staff_revoke_r13a') {
+    if (_sessionBound.contains(name)) {
       arguments['p_expected_user'] = owner;
     }
     final result = await client.rpc(name, params: arguments);
@@ -30,5 +34,26 @@ class SupabaseStaffRepository implements StaffRepository {
   @override
   Future<void> revoke(String id) async {
     await _call('staff_revoke_r13a', {'p_assignment': id});
+  }
+  @override
+  Future<void> createRole(String code, String name, String? description) async {
+    await _call('staff_role_create_r47', {'p_code': code, 'p_name': name, 'p_description': description});
+  }
+  @override
+  Future<void> updateRole(String code, String name, String? description, bool active) async {
+    await _call('staff_role_update_r47',
+      {'p_role': code, 'p_name': name, 'p_description': description, 'p_active': active});
+  }
+  @override
+  Future<void> setPermission(String role, String permission, bool enabled) async {
+    await _call('staff_role_permission_r47', {'p_role': role, 'p_permission': permission, 'p_enabled': enabled});
+  }
+  @override
+  Future<void> cancelGrant(String id) async {
+    await _call('staff_grant_cancel_r47', {'p_grant': id});
+  }
+  @override
+  Future<void> decideGrant(String id, bool approve, String? reason) async {
+    await _call('staff_grant_decide_r47', {'p_grant': id, 'p_approve': approve, 'p_reason': reason});
   }
 }

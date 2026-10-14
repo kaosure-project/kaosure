@@ -1783,7 +1783,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get staffHelp =>
-      'Chỉ Owner được gán hoặc thu hồi vai trò. Quyền mới không có ngày hết hạn; hãy thu hồi khi không còn cần.';
+      'Chỉ Owner được yêu cầu cấp hoặc thu hồi vai trò. Vai trò mới cần người duyệt thứ hai hoặc chờ 24 giờ. Vai trò không có ngày hết hạn; hãy thu hồi khi không còn cần.';
 
   @override
   String get staffHistory => 'Lịch sử phân quyền';
@@ -1829,6 +1829,163 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get staffTitle => 'Quản lý nhân viên';
+
+  @override
+  String get staffRoleCatalogAdmin => 'Quản trị danh mục';
+
+  @override
+  String get staffRoleListingAuditAdmin => 'Quản trị kiểm duyệt tin đăng';
+
+  @override
+  String get staffRoleKaoidAdmin => 'Quản trị Kao ID';
+
+  @override
+  String get staffRoleDisputeAdmin => 'Quản trị tranh chấp';
+
+  @override
+  String get staffRoleFinanceAdmin => 'Quản trị tài chính';
+
+  @override
+  String get staffRoleLogisticsAdmin => 'Quản trị vận chuyển';
+
+  @override
+  String get staffRoleCsOperator => 'Chăm sóc khách hàng';
+
+  @override
+  String get staffRoleMarketingAdmin => 'Quản trị marketing';
+
+  @override
+  String get staffRoleI18nAdmin => 'Quản trị ngôn ngữ';
+
+  @override
+  String get staffRoleLegalSecurityAdmin => 'Quản trị pháp lý & bảo mật';
+
+  @override
+  String get staffRoleTechSupportAdmin => 'Quản trị hỗ trợ kỹ thuật';
+
+  @override
+  String get staffRetiredRole => 'Vai trò đã ngừng dùng';
+
+  @override
+  String get staffKaoidMfaScope =>
+      'Có thể duyệt xác minh danh tính Kao ID. Vai trò này không cần KYC nhưng chỉ dùng được trong phiên đăng nhập bằng xác thực hai lớp.';
+
+  @override
+  String get staffNeedsMfa =>
+      'Chưa thiết lập xác thực hai lớp nên vai trò này chưa có hiệu lực.';
+
+  @override
+  String get staffStartsAt => 'Bắt đầu';
+
+  @override
+  String get staffGrantsTitle => 'Yêu cầu cấp vai trò';
+
+  @override
+  String get staffGrantHelp =>
+      'Cấp vai trò mới cần người duyệt thứ hai: một Owner khác hoặc Quản trị pháp lý & bảo mật. Khi chưa có ai duyệt được, vai trò mới có hiệu lực 24 giờ sau khi yêu cầu và có thể hủy trước thời điểm đó.';
+
+  @override
+  String get staffGrantWaitingSecond => 'Đang chờ người duyệt thứ hai';
+
+  @override
+  String get staffGrantCoolingOff =>
+      'Tự động có hiệu lực sau thời gian chờ 24 giờ';
+
+  @override
+  String get staffGrantActivated => 'Đang hiệu lực';
+
+  @override
+  String get staffGrantRejected => 'Đã từ chối';
+
+  @override
+  String get staffGrantCancelled => 'Đã hủy';
+
+  @override
+  String get staffGrantExpired => 'Đã hết hạn';
+
+  @override
+  String get staffGrantCancel => 'Hủy yêu cầu';
+
+  @override
+  String get staffGrantApprove => 'Duyệt';
+
+  @override
+  String get staffGrantReject => 'Từ chối';
+
+  @override
+  String get staffGrantReason => 'Lý do';
+
+  @override
+  String get staffGrantDecideBefore => 'Hạn quyết định';
+
+  @override
+  String get staffGrantPendingError =>
+      'Đã có yêu cầu cho vai trò này đang chờ.';
+
+  @override
+  String get staffRoleAlreadyAssigned => 'Thành viên này đã có vai trò này.';
+
+  @override
+  String get staffSecondPersonRequired =>
+      'Người khác với người gửi yêu cầu phải quyết định.';
+
+  @override
+  String get staffRolesTitle => 'Vai trò và quyền';
+
+  @override
+  String get staffRolesHelp =>
+      'Chỉ Owner được thay đổi vai trò. Quyền rủi ro cao chỉ dùng được trong phiên xác thực hai lớp và không thể thêm vào vai trò đang có người giữ.';
+
+  @override
+  String get staffRoleCreate => 'Vai trò mới';
+
+  @override
+  String get staffRoleCode => 'Mã vai trò (custom_…)';
+
+  @override
+  String get staffRoleName => 'Tên vai trò';
+
+  @override
+  String get staffRoleDescription => 'Mô tả';
+
+  @override
+  String get staffRoleInUse => 'Đang dùng vai trò này';
+
+  @override
+  String get staffRoleSave => 'Lưu vai trò';
+
+  @override
+  String get staffSystemRole => 'Vai trò hệ thống';
+
+  @override
+  String get staffCustomRole => 'Vai trò tự tạo';
+
+  @override
+  String get staffHolders => 'Người giữ';
+
+  @override
+  String get staffPermissionDangerous => 'Rủi ro cao';
+
+  @override
+  String get staffRoleInUseDangerous =>
+      'Hãy thu hồi vai trò này khỏi mọi người giữ trước khi thêm quyền rủi ro cao.';
+
+  @override
+  String get staffRoleCodeInvalid =>
+      'Dùng custom_ và 2–40 chữ thường, số hoặc _.';
+
+  @override
+  String get staffRoleNameInvalid => 'Nhập tên dài 2–60 ký tự.';
+
+  @override
+  String get staffRoleNameTaken => 'Tên vai trò này đã được dùng.';
+
+  @override
+  String get staffRoleProtected =>
+      'Không thể thay đổi vai trò hệ thống và vai trò đã ngừng dùng tại đây.';
+
+  @override
+  String get staffPermissionOwnerOnly => 'Chỉ Owner được dùng quyền này.';
 
   @override
   String get reviewIdentityName => 'Tên trên giấy tờ đã xác minh';

@@ -99,7 +99,8 @@ begin
         perform set_config('request.headers', '{"content-profile":"secondhand"}', true);
       else
         perform set_config('request.jwt.claims', json_build_object(
-          'sub', who, 'role', 'authenticated', 'session_id', sess, 'aal', 'aal1', 'is_anonymous', false)::text, true);
+          'sub', who, 'role', 'authenticated', 'session_id', sess,
+          'aal', case when who = rev2 then 'aal2' else 'aal1' end, 'is_anonymous', false)::text, true);
         perform set_config('request.headers', '{"content-profile":"public"}', true);
       end if;
       perform set_config('request.method', 'POST', true);
@@ -256,9 +257,13 @@ begin
           insert into public.organization_members(organization_id, profile_id, role)
           values (org, fin, 'finance'), (org, rev2, 'staff');
           insert into public.admin_assignments(profile_id, role_id, assigned_by)
-          select rev2, id, rev1 from public.admin_roles where code = 'kyc_officer';
+          select rev2, id, rev1 from public.admin_roles where code = 'kaoid_admin';
           insert into auth.mfa_factors(id, user_id, friendly_name, factor_type, status, created_at, updated_at)
-          values (gen_random_uuid(), rev1, 'e2e', 'totp', 'verified', now(), now());
+          values (gen_random_uuid(), rev1, 'e2e', 'totp', 'verified', now(), now()),
+                 (gen_random_uuid(), rev2, 'e2e', 'totp', 'verified', now(), now());
+          -- kaoid_admin only reviews from an MFA session.
+          update auth.sessions set aal = 'aal2', factor_id = (select id from auth.mfa_factors where user_id = rev2)
+           where id = rev2_s;
           update kaoid_private.security_policy_r14a set dual_review = true where id;
           report := concat(report, 'dual=', (select dual_review from kaoid_private.security_policy_r14a));
         when 'f_bank_denied' then

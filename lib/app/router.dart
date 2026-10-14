@@ -1,3 +1,4 @@
+import '../features/admin/presentation/admin_finance_dashboard_screen.dart';
 import '../features/kao_id/governance/presentation/pages/admin_hub_page.dart';
 import '../features/kao_id/governance/presentation/pages/staff_page.dart';
 import '../features/kao_id/governance/presentation/pages/member_page.dart';
@@ -33,6 +34,13 @@ final class AppRouter {
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case '/admin/finance':
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const AuthGuard(
+            authenticatedChild: AdminFinanceDashboardScreen(),
+          ),
+        );
       case '/admin':
         return MaterialPageRoute(
           settings: settings,

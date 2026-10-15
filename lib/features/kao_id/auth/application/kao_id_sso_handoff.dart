@@ -16,6 +16,8 @@ final class KaoIdSsoHandoff {
 
   static const String _pendingReturnKey = 'kao_id.pending_service_return_to';
   static const String _pendingConsentKey = 'kao_id.pending_oauth_authorization_id';
+  // Same-navigation fallback if browser storage is unavailable or misses a read.
+  static String? _pendingConsentMemoryFallback;
   static const String _serviceLaunchKey = 'kao_id.service_launch';
 
   /// Query flag on a service entry URL: the service must drop any account it
@@ -70,31 +72,133 @@ final class KaoIdSsoHandoff {
   static Future<void> captureConsentRequest(Uri currentUri) async {
     if (currentUri.path != KaoIdRoutes.oauthConsent) return;
     final authorizationId = currentUri.queryParameters['authorization_id'];
-    try {
-      final storage = SharedPreferencesAsync();
-      if (!OAuthConsentUseCases.isValidAuthorizationId(authorizationId)) {
-        await storage.remove(_pendingConsentKey);
-        return;
+
+    if (!OAuthConsentUseCases.isValidAuthorizationId(authorizationId)) {
+      _pendingConsentMemoryFallback = null;
+      try {
+        final cleared = await _clearPendingConsent(SharedPreferencesAsync());
+        debugPrint(
+          '[OAuthFlow][Consent] saved=false '
+          'reason=missing_or_invalid_authorization_id '
+          'source_path=${currentUri.path} stale_key_cleared=$cleared',
+        );
+      } catch (error, stackTrace) {
+        debugPrint(
+          '[OAuthFlow][Consent] capture_error '
+          'error_type=${error.runtimeType} source_path=${currentUri.path}',
+        );
+        debugPrintStack(stackTrace: stackTrace);
       }
-      await storage.setString(_pendingConsentKey, authorizationId!);
+      return;
+    }
+
+    // Keep a per-page-lifecycle copy before writing LocalStorage. This allows
+    // the same OAuth navigation to continue if a browser storage read/write fails.
+    _pendingConsentMemoryFallback = authorizationId;
+    try {
+      await SharedPreferencesAsync().setString(_pendingConsentKey, authorizationId!);
+      debugPrint(
+        '[OAuthFlow][Consent] saved=true '
+        'source_path=${currentUri.path} storage_key=$_pendingConsentKey '
+        'memory_fallback=ready',
+      );
     } catch (error, stackTrace) {
-      debugPrint('Unable to store OAuth consent request: $error');
+      debugPrint(
+        '[OAuthFlow][Consent] save_error '
+        'error_type=${error.runtimeType} source_path=${currentUri.path} '
+        'memory_fallback=ready',
+      );
       debugPrintStack(stackTrace: stackTrace);
     }
   }
 
-  /// One-shot: the stored request is cleared once read.
+  /// One-shot: prefer the request captured for this page lifecycle, then use
+  /// the persisted request when restoring a page after a reload.
   static Future<String?> takePendingConsent() async {
+    final memoryFallback = _pendingConsentMemoryFallback;
+    _pendingConsentMemoryFallback = null;
+    final fallbackIsValid =
+        OAuthConsentUseCases.isValidAuthorizationId(memoryFallback);
+
     try {
       final storage = SharedPreferencesAsync();
       final authorizationId = await storage.getString(_pendingConsentKey);
-      if (authorizationId == null) return null;
-      await storage.remove(_pendingConsentKey);
-      return OAuthConsentUseCases.isValidAuthorizationId(authorizationId) ? authorizationId : null;
+
+      if (fallbackIsValid) {
+        final matchesCapturedRequest = authorizationId == memoryFallback;
+        final source = matchesCapturedRequest ? 'local_storage' : 'memory_fallback';
+        final storedValueState = authorizationId == null
+            ? 'missing'
+            : matchesCapturedRequest
+            ? 'matched'
+            : 'different';
+        final cleared = authorizationId == null
+            ? true
+            : await _clearPendingConsent(storage);
+        debugPrint(
+          '[OAuthFlow][Consent] read=found '
+          'source=$source storage_value=$storedValueState '
+          'valid=true cleared=$cleared',
+        );
+        return memoryFallback;
+      }
+
+      if (authorizationId == null) {
+        debugPrint(
+          '[OAuthFlow][Consent] read=missing '
+          'source=local_storage fallback_available=false',
+        );
+        return null;
+      }
+
+      final isValid = OAuthConsentUseCases.isValidAuthorizationId(authorizationId);
+      final cleared = await _clearPendingConsent(storage);
+      if (!isValid) {
+        debugPrint(
+          '[OAuthFlow][Consent] read=invalid '
+          'source=local_storage cleared=$cleared',
+        );
+        return null;
+      }
+
+      debugPrint(
+        '[OAuthFlow][Consent] read=found '
+        'source=local_storage fallback_available=false '
+        'valid=true cleared=$cleared',
+      );
+      return authorizationId;
     } catch (error, stackTrace) {
-      debugPrint('Unable to read OAuth consent request: $error');
+      if (fallbackIsValid) {
+        debugPrint(
+          '[OAuthFlow][Consent] read_error '
+          'error_type=${error.runtimeType} fallback_used=true',
+        );
+        debugPrintStack(stackTrace: stackTrace);
+        return memoryFallback;
+      }
+
+      debugPrint(
+        '[OAuthFlow][Consent] read_error '
+        'error_type=${error.runtimeType} fallback_used=false',
+      );
       debugPrintStack(stackTrace: stackTrace);
       return null;
+    }
+  }
+
+  static Future<bool> _clearPendingConsent(
+    SharedPreferencesAsync storage,
+  ) async {
+    try {
+      await storage.remove(_pendingConsentKey);
+      return true;
+    } catch (error, stackTrace) {
+      debugPrint(
+        '[OAuthFlow][Consent] clear_error '
+        'error_type=${error.runtimeType} storage_key=$_pendingConsentKey',
+      );
+      debugPrintStack(stackTrace: stackTrace);
+      return false;
     }
   }
 

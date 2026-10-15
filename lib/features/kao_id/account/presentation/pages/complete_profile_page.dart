@@ -109,6 +109,10 @@ final class _CompleteProfilePageState
     final consent = await KaoIdSsoHandoff.takePendingConsent();
     if (!mounted) return;
     if (consent != null) {
+      debugPrint(
+        '[OAuthFlow][Route] from=/complete-profile '
+        'to=/oauth/consent reason=pending_consent',
+      );
       Navigator.of(context).pushNamedAndRemoveUntil(
         KaoIdRoutes.oauthConsent,
         (_) => false,
@@ -123,6 +127,10 @@ final class _CompleteProfilePageState
       return;
     }
 
+    debugPrint(
+      '[OAuthFlow][Route] from=/complete-profile '
+      'to=/dashboard reason=no_pending_consent_or_service_return',
+    );
     Navigator.of(context).pushNamedAndRemoveUntil(
       KaoIdRoutes.dashboard,
       (_) => false,

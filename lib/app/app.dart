@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../core/config/supabase_config.dart';
 import '../core/localization/locale_controller.dart';
+import '../features/kao_id/auth/application/providers/auth_provider.dart';
+import '../features/kao_id/auth/data/datasources/browser_session_events.dart';
 import 'routes/kao_id_routes.dart';
 import '../l10n/app_localizations.dart';
 import '../features/kao_id/account/presentation/widgets/account_access_gate.dart';
@@ -25,6 +28,7 @@ class _AppState extends ConsumerState<App> {
   final _restrictedNavigatorKey = GlobalKey<NavigatorState>();
 
   StreamSubscription<AuthState>? _authStateSubscription;
+  StreamSubscription<void>? _signedOutElsewhere;
 
   bool _passwordRecoveryPending = false;
 
@@ -36,6 +40,21 @@ class _AppState extends ConsumerState<App> {
         Supabase.instance.client.auth.onAuthStateChange.listen(
       _handleAuthStateChange,
     );
+    _signedOutElsewhere = kaoIdSignedOutElsewhere(Uri.parse(SupabaseConfig.url))
+        .listen((_) => unawaited(_followSignOut()));
+  }
+
+  /// Single sign-out: another tab (Kao ID itself, or Secondhand through
+  /// /logout) signed out, so this tab leaves the account too.
+  Future<void> _followSignOut() async {
+    if (ref.read(authProvider).value == null) return;
+    try {
+      await ref.read(authProvider.notifier).logout();
+    } catch (_) {
+      // The session is already gone; the screens follow the cleared state.
+    }
+    final navigator = _navigatorKey.currentState ?? _restrictedNavigatorKey.currentState;
+    navigator?.pushNamedAndRemoveUntil(AppRouter.initialRoute, (route) => false);
   }
 
   void _handleAuthStateChange(AuthState state) {
@@ -79,6 +98,7 @@ class _AppState extends ConsumerState<App> {
   @override
   void dispose() {
     _authStateSubscription?.cancel();
+    _signedOutElsewhere?.cancel();
     super.dispose();
   }
 

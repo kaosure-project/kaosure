@@ -125,10 +125,7 @@ void _cleanPasswordRecoveryUrl() {
   }
 
   SystemNavigator.routeInformationUpdated(
-    uri: Uri(
-      path: '/',
-      fragment: KaoIdRoutes.resetPassword,
-    ),
+    uri: Uri(path: KaoIdRoutes.resetPassword),
     replace: true,
   );
 }

@@ -33,7 +33,10 @@ final class _EmptyKyc implements KycReviewRepository {
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-WithdrawalRequest _request({WithdrawalStatus status = WithdrawalStatus.pending, String? reference}) =>
+WithdrawalRequest _request({
+  WithdrawalStatus status = WithdrawalStatus.pending,
+  String? reference,
+}) =>
     WithdrawalRequest(
       id: 'w1',
       profileId: 'member-1',
@@ -57,26 +60,36 @@ final class _FakeWithdrawals implements WithdrawalReviewRepository {
   final calls = <String>[];
 
   @override
-  Future<StaffTools> tools() async => const StaffTools(withdrawals: true, contents: true, pendingWithdrawals: 3);
+  Future<StaffTools> tools() async => const StaffTools(
+        withdrawals: true,
+        contents: true,
+        pendingWithdrawals: 3,
+      );
 
   @override
-  Future<List<WithdrawalRequest>> queue(WithdrawalStatus status, {DateTime? before}) async =>
+  Future<List<WithdrawalRequest>> queue(
+    WithdrawalStatus status, {
+    DateTime? before,
+  }) async =>
       current.status == status ? [current] : [];
 
   @override
   Future<WithdrawalTransfer> detail(String id) async => WithdrawalTransfer(
-    request: current,
-    accountNumber: '1234567890',
-    bankStillVerified: bankStillVerified,
-    walletBalance: 200,
-    walletHold: 1500,
-  );
+        request: current,
+        accountNumber: '1234567890',
+        bankStillVerified: bankStillVerified,
+        walletBalance: 200,
+        walletHold: 1500,
+      );
 
   @override
   Future<WithdrawalRequest> markPaid(String id, String reference) async {
     calls.add('paid:$id:$reference');
     if (failure case final error?) throw error;
-    return current = _request(status: WithdrawalStatus.paid, reference: reference);
+    return current = _request(
+      status: WithdrawalStatus.paid,
+      reference: reference,
+    );
   }
 
   @override
@@ -87,7 +100,11 @@ final class _FakeWithdrawals implements WithdrawalReviewRepository {
   }
 }
 
-SystemContentItem _content({String id = 'c1', String key = 'secondhand.help.buying', int version = 2}) =>
+SystemContentItem _content({
+  String id = 'c1',
+  String key = 'secondhand.help.buying',
+  int version = 2,
+}) =>
     SystemContentItem(
       id: id,
       key: key,
@@ -107,9 +124,9 @@ final class _FakeContents implements SystemContentRepository {
 
   @override
   Future<List<SystemContentItem>> list({String? app}) async => [
-    for (final item in items)
-      if (app == null || item.app == app) item,
-  ];
+        for (final item in items)
+          if (app == null || item.app == app) item,
+      ];
 
   @override
   Future<SystemContentItem> save(SystemContentItem item) async {
@@ -150,7 +167,11 @@ void main() {
     contents = _FakeContents();
   });
 
-  Future<void> pump(WidgetTester tester, Widget home, {bool admin = false}) async {
+  Future<void> pump(
+    WidgetTester tester,
+    Widget home, {
+    bool admin = false,
+  }) async {
     tester.view.physicalSize = const Size(1280, 2400);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
@@ -160,7 +181,9 @@ void main() {
           authProvider.overrideWith((ref) => TestAuthNotifier(ref)),
           memberAccessProvider.overrideWith((ref) async => admin),
           kycReviewerAccessProvider.overrideWith((ref) async => admin),
-          businessReviewRepositoryProvider.overrideWithValue(FakeBusinessReviewRepository()),
+          businessReviewRepositoryProvider.overrideWithValue(
+            FakeBusinessReviewRepository(),
+          ),
           kycReviewRepositoryProvider.overrideWithValue(_EmptyKyc()),
           withdrawalReviewRepositoryProvider.overrideWithValue(withdrawals),
           systemContentRepositoryProvider.overrideWithValue(contents),
@@ -181,116 +204,190 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('finance staff without member roles see withdrawals and contents in the hub', (tester) async {
-    await pump(tester, const AdminHubPage());
-    expect(find.text(l.adminGroupFinance), findsOneWidget);
-    expect(find.text(l.contentsTitle), findsOneWidget);
-    expect(find.text('3'), findsOneWidget);
-    expect(find.text(l.adminAccessDenied), findsNothing);
+  testWidgets(
+    'finance staff without member roles see withdrawals and contents in the hub',
+    (tester) async {
+      await pump(tester, const AdminHubPage());
+      expect(find.text(l.adminGroupFinance), findsOneWidget);
+      expect(find.text(l.contentsTitle), findsOneWidget);
+      expect(find.text('3'), findsOneWidget);
+      expect(find.text(l.adminAccessDenied), findsNothing);
 
-    await tester.tap(find.text(l.withdrawalsTitle));
-    await tester.pumpAndSettle();
-    expect(find.byType(WithdrawalsPage), findsOneWidget);
-    expect(find.byKey(const ValueKey('withdrawal-w1')), findsOneWidget);
-    expect(find.textContaining('••••7890'), findsOneWidget);
-    await tester.pumpWidget(const SizedBox.shrink());
-  });
+      expect(find.byIcon(Icons.savings_outlined), findsOneWidget);
+await tester.tap(find.byIcon(Icons.savings_outlined));
+      await tester.pumpAndSettle();
+      expect(find.byType(WithdrawalsPage), findsOneWidget);
+      expect(find.byKey(const ValueKey('withdrawal-w1')), findsOneWidget);
+      expect(find.textContaining('••••7890'), findsOneWidget);
+      await tester.pumpWidget(const SizedBox.shrink());
+    },
+  );
 
-  testWidgets('marking paid needs a reference and confirms the full account number', (tester) async {
-    await pump(tester, const WithdrawalDetailPage(id: 'w1'));
-    expect(find.text('1234567890'), findsOneWidget);
-    final markPaid = find.byKey(const ValueKey('withdrawal-mark-paid'));
-    expect(tester.widget<ButtonStyleButton>(markPaid).onPressed, isNull);
+  testWidgets(
+    'marking paid needs a reference and confirms the full account number',
+    (tester) async {
+      await pump(tester, const WithdrawalDetailPage(id: 'w1'));
+      expect(find.text('1234567890'), findsOneWidget);
+      final markPaid = find.byKey(const ValueKey('withdrawal-mark-paid'));
+      expect(tester.widget<ButtonStyleButton>(markPaid).onPressed, isNull);
 
-    await tester.enterText(find.byKey(const ValueKey('withdrawal-reference')), ' TRX-889 ');
-    await tester.pump();
-    await tester.tap(markPaid);
-    await tester.pumpAndSettle();
-    expect(find.text(l.withdrawalPaidConfirm('฿1,500.00', 'ธนาคารกสิกรไทย', '1234567890')), findsOneWidget);
-    await confirm(tester);
+      await tester.enterText(
+        find.byKey(const ValueKey('withdrawal-reference')),
+        ' TRX-889 ',
+      );
+      await tester.pump();
+      await tester.tap(markPaid);
+      await tester.pumpAndSettle();
+      expect(
+        find.text(
+          l.withdrawalPaidConfirm(
+            '฿1,500.00',
+            'ธนาคารกสิกรไทย',
+            '1234567890',
+          ),
+        ),
+        findsOneWidget,
+      );
+      await confirm(tester);
 
-    expect(withdrawals.calls, ['paid:w1:TRX-889']);
-    expect(find.text(l.withdrawalPaidDone), findsOneWidget);
-    expect(find.text(l.withdrawalStatusPaid), findsOneWidget);
-    expect(find.text('TRX-889'), findsOneWidget);
-    expect(find.byKey(const ValueKey('withdrawal-reference')), findsNothing);
-    await tester.pumpWidget(const SizedBox.shrink());
-  });
+      expect(withdrawals.calls, ['paid:w1:TRX-889']);
+      expect(find.text(l.withdrawalPaidDone), findsOneWidget);
+      expect(find.text(l.withdrawalStatusPaid), findsOneWidget);
+      expect(find.text('TRX-889'), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('withdrawal-reference')),
+        findsNothing,
+      );
+      await tester.pumpWidget(const SizedBox.shrink());
+    },
+  );
 
-  testWidgets('a changed bank allows only rejecting, and server errors are translated', (tester) async {
-    withdrawals = _FakeWithdrawals(bankStillVerified: false)
-      ..failure = const PostgrestException(message: 'withdrawal_not_pending', code: 'P0001');
-    await pump(tester, const WithdrawalDetailPage(id: 'w1'));
-    expect(find.byKey(const ValueKey('withdrawal-bank-changed')), findsOneWidget);
-    final markPaid = find.byKey(const ValueKey('withdrawal-mark-paid'));
-    expect(tester.widget<ButtonStyleButton>(markPaid).onPressed, isNull);
+  testWidgets(
+    'a changed bank allows only rejecting, and server errors are translated',
+    (tester) async {
+      withdrawals = _FakeWithdrawals(bankStillVerified: false)
+        ..failure = const PostgrestException(
+          message: 'withdrawal_not_pending',
+          code: 'P0001',
+        );
+      await pump(tester, const WithdrawalDetailPage(id: 'w1'));
+      expect(
+        find.byKey(const ValueKey('withdrawal-bank-changed')),
+        findsOneWidget,
+      );
+      final markPaid = find.byKey(const ValueKey('withdrawal-mark-paid'));
+      expect(tester.widget<ButtonStyleButton>(markPaid).onPressed, isNull);
 
-    await tester.enterText(find.byKey(const ValueKey('withdrawal-reason')), 'บัญชีปลายทางเปลี่ยน');
-    await tester.pump();
-    await tester.tap(find.byKey(const ValueKey('withdrawal-reject')));
-    await tester.pumpAndSettle();
-    expect(find.text(l.withdrawalRejectConfirm('฿1,500.00')), findsOneWidget);
-    await confirm(tester);
+      await tester.enterText(
+        find.byKey(const ValueKey('withdrawal-reason')),
+        'บัญชีปลายทางเปลี่ยน',
+      );
+      await tester.pump();
+      await tester.tap(find.byKey(const ValueKey('withdrawal-reject')));
+      await tester.pumpAndSettle();
+      expect(
+        find.text(l.withdrawalRejectConfirm('฿1,500.00')),
+        findsOneWidget,
+      );
+      await confirm(tester);
 
-    expect(withdrawals.calls, ['reject:w1:บัญชีปลายทางเปลี่ยน']);
-    expect(find.text(l.withdrawalErrorNotPending), findsOneWidget);
-    expect(find.byKey(const ValueKey('withdrawal-done')), findsNothing);
-    await tester.pumpWidget(const SizedBox.shrink());
-  });
+      expect(withdrawals.calls, ['reject:w1:บัญชีปลายทางเปลี่ยน']);
+      expect(find.text(l.withdrawalErrorNotPending), findsOneWidget);
+      expect(find.byKey(const ValueKey('withdrawal-done')), findsNothing);
+      await tester.pumpWidget(const SizedBox.shrink());
+    },
+  );
 
-  testWidgets('staff add a content with Thai text and see it in the list', (tester) async {
-    await pump(tester, const SystemContentsPage());
-    expect(find.byKey(const ValueKey('content-secondhand.help.buying')), findsOneWidget);
+  testWidgets(
+    'staff add a content with Thai text and see it in the list',
+    (tester) async {
+      await pump(tester, const SystemContentsPage());
+      expect(
+        find.byKey(const ValueKey('content-secondhand.help.buying')),
+        findsOneWidget,
+      );
 
-    await tester.tap(find.byKey(const ValueKey('contents-add')));
-    await tester.pumpAndSettle();
-    final save = find.byKey(const ValueKey('content-save'));
-    expect(tester.widget<ButtonStyleButton>(save).onPressed, isNull);
-    await tester.enterText(find.byKey(const ValueKey('content-key')), 'secondhand.rule.Listing-1');
-    await tester.enterText(find.byKey(const ValueKey('content-title-th')), 'กฎการลงขาย');
-    await tester.enterText(find.byKey(const ValueKey('content-body-th')), 'ห้ามขายสินค้าผิดกฎหมาย');
-    await tester.enterText(find.byKey(const ValueKey('content-icon')), 'gavel');
-    await tester.pump();
-    await tester.tap(save);
-    await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('contents-add')));
+      await tester.pumpAndSettle();
+      final save = find.byKey(const ValueKey('content-save'));
+      expect(tester.widget<ButtonStyleButton>(save).onPressed, isNull);
+      await tester.enterText(
+        find.byKey(const ValueKey('content-key')),
+        'secondhand.rule.Listing-1',
+      );
+      await tester.enterText(
+        find.byKey(const ValueKey('content-title-th')),
+        'กฎการลงขาย',
+      );
+      await tester.enterText(
+        find.byKey(const ValueKey('content-body-th')),
+        'ห้ามขายสินค้าผิดกฎหมาย',
+      );
+      await tester.enterText(
+        find.byKey(const ValueKey('content-icon')),
+        'gavel',
+      );
+      await tester.pump();
+      await tester.tap(save);
+      await tester.pumpAndSettle();
 
-    final item = contents.saved.single;
-    expect(item.id, isNull);
-    expect(item.key, 'secondhand.rule.isting1');
-    expect(item.app, 'secondhand');
-    expect(item.title, {'th': 'กฎการลงขาย'});
-    expect(item.body, {'th': 'ห้ามขายสินค้าผิดกฎหมาย'});
-    expect(item.icon, 'gavel');
-    expect(find.byType(SystemContentsPage), findsOneWidget);
-    expect(find.text('กฎการลงขาย'), findsOneWidget);
-    expect(find.text(l.contentsSaved), findsOneWidget);
-    await tester.pumpWidget(const SizedBox.shrink());
-  });
+      final item = contents.saved.single;
+      expect(item.id, isNull);
+      expect(item.key, 'secondhand.rule.isting1');
+      expect(item.app, 'secondhand');
+      expect(item.title, {'th': 'กฎการลงขาย'});
+      expect(item.body, {'th': 'ห้ามขายสินค้าผิดกฎหมาย'});
+      expect(item.icon, 'gavel');
+      expect(find.byType(SystemContentsPage), findsOneWidget);
+      expect(find.text('กฎการลงขาย'), findsOneWidget);
+      expect(find.text(l.contentsSaved), findsOneWidget);
+      await tester.pumpWidget(const SizedBox.shrink());
+    },
+  );
 
-  testWidgets('editing keeps the key and sends the version; stale copies are refused', (tester) async {
-    await pump(tester, const SystemContentsPage());
-    await tester.tap(find.byKey(const ValueKey('content-secondhand.help.buying')));
-    await tester.pumpAndSettle();
-    expect(tester.widget<TextField>(find.byKey(const ValueKey('content-key'))).enabled, isFalse);
+  testWidgets(
+    'editing keeps the key and sends the version; stale copies are refused',
+    (tester) async {
+      await pump(tester, const SystemContentsPage());
+      await tester.tap(
+        find.byKey(const ValueKey('content-secondhand.help.buying')),
+      );
+      await tester.pumpAndSettle();
+      expect(
+        tester.widget<TextField>(
+          find.byKey(const ValueKey('content-key')),
+        ).enabled,
+        isFalse,
+      );
 
-    contents.failure = const PostgrestException(message: 'content_changed', code: 'P0001');
-    await tester.enterText(find.byKey(const ValueKey('content-title-th')), 'วิธีซื้อ (ใหม่)');
-    await tester.pump();
-    await tester.tap(find.byKey(const ValueKey('content-save')));
-    await tester.pumpAndSettle();
-    expect(find.text(l.contentsErrorChanged), findsOneWidget);
+      contents.failure = const PostgrestException(
+        message: 'content_changed',
+        code: 'P0001',
+      );
+      await tester.enterText(
+        find.byKey(const ValueKey('content-title-th')),
+        'วิธีซื้อ (ใหม่)',
+      );
+      await tester.pump();
+      await tester.tap(find.byKey(const ValueKey('content-save')));
+      await tester.pumpAndSettle();
+      expect(find.text(l.contentsErrorChanged), findsOneWidget);
 
-    contents.failure = null;
-    await tester.tap(find.byKey(const ValueKey('content-delete')));
-    await tester.pumpAndSettle();
-    expect(find.text(l.contentsDeleteConfirm('secondhand.help.buying')), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('content-delete-confirm')));
-    await tester.pumpAndSettle();
+      contents.failure = null;
+      await tester.tap(find.byKey(const ValueKey('content-delete')));
+      await tester.pumpAndSettle();
+      expect(
+        find.text(l.contentsDeleteConfirm('secondhand.help.buying')),
+        findsOneWidget,
+      );
+      await tester.tap(find.byKey(const ValueKey('content-delete-confirm')));
+      await tester.pumpAndSettle();
 
-    expect(contents.deleted, ['c1@2']);
-    expect(find.byType(SystemContentsPage), findsOneWidget);
-    expect(find.text(l.staffEmpty), findsOneWidget);
-    expect(find.text(l.contentsDeleted), findsOneWidget);
-    await tester.pumpWidget(const SizedBox.shrink());
-  });
+      expect(contents.deleted, ['c1@2']);
+      expect(find.byType(SystemContentsPage), findsOneWidget);
+      expect(find.text(l.staffEmpty), findsOneWidget);
+      expect(find.text(l.contentsDeleted), findsOneWidget);
+      await tester.pumpWidget(const SizedBox.shrink());
+    },
+  );
 }

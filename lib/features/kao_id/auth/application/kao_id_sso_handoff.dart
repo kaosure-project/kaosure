@@ -234,14 +234,34 @@ final class KaoIdSsoHandoff {
 
   /// Captures the service return target only when entering Kao ID Login.
   static Future<void> captureLoginReturnTarget(Uri currentUri) async {
-    if (currentUri.path != '/login') return;
-    final rawReturnTo = currentUri.queryParameters['return_to'];
+    final fragment = Uri.tryParse(currentUri.fragment);
+    // Secondhand's current link is /register?return_to=...#/login. Some
+    // deployed builds omit the hash route, so a validated return_to on the
+    // legacy /register URL must also be captured before App routes to /login.
+    final hasServiceReturn =
+        currentUri.queryParameters['return_to']?.trim().isNotEmpty == true ||
+        fragment?.queryParameters['return_to']?.trim().isNotEmpty == true;
+    final isLoginRoute =
+        currentUri.path == '/login' ||
+        (currentUri.path == '/register' &&
+            (fragment?.path == KaoIdRoutes.login || hasServiceReturn));
+    if (!isLoginRoute) return;
+    const route = '/login';
+    final rawReturnTo = currentUri.queryParameters['return_to'] ??
+        fragment?.queryParameters['return_to'];
 
     try {
       final storage = SharedPreferencesAsync();
       final appUri = Uri.tryParse(Env.appUrl.trim());
       if (rawReturnTo == null || appUri == null || currentUri.origin != appUri.origin) {
         await storage.remove(_pendingReturnKey);
+        final reason = rawReturnTo == null
+            ? 'return_target_missing'
+            : 'issuer_origin_mismatch';
+        debugPrint(
+          '[OAuthFlow][Handoff] captured=false '
+          'reason=$reason',
+        );
         return;
       }
       final target = validateReturnTo(
@@ -251,11 +271,20 @@ final class KaoIdSsoHandoff {
       );
       if (target == null) {
         await storage.remove(_pendingReturnKey);
+        debugPrint('[OAuthFlow][Handoff] captured=false '
+            'reason=return_target_rejected');
         return;
       }
       await storage.setString(_pendingReturnKey, target.toString());
+      debugPrint(
+        '[OAuthFlow][Handoff] captured=true route=$route '
+        'target_path=${target.path}',
+      );
     } catch (error, stackTrace) {
-      debugPrint('Unable to store Kao ID service return target: $error');
+      debugPrint(
+        '[OAuthFlow][Handoff] captured=false '
+        'reason=storage_error error_type=${error.runtimeType}',
+      );
       debugPrintStack(stackTrace: stackTrace);
     }
   }
@@ -272,14 +301,23 @@ final class KaoIdSsoHandoff {
         null;
   }
 
-  /// Returns only after Supabase confirms the current account is active.
-  /// The stored URL is one-shot to prevent replay after refresh or back.
+  /// Returns to the service after a successful Kao ID sign-in.
+  ///
+  /// This is navigation only. The service still performs its own OAuth code
+  /// exchange and applies its own account and row-level access checks. Requiring
+  /// `account_access_r10d` here made a missing or temporarily failing RPC strand
+  /// a successfully signed-in member on Kao ID, before the service could handle
+  /// the session itself.
   static Future<bool> tryReturnToService() async {
+    final storage = SharedPreferencesAsync();
+    String? targetToRestore;
     try {
-      final storage = SharedPreferencesAsync();
       final rawReturnTo = await storage.getString(_pendingReturnKey);
-      if (rawReturnTo == null) return false;
-      await storage.remove(_pendingReturnKey);
+      if (rawReturnTo == null) {
+        debugPrint('[OAuthFlow][Handoff] returned=false '
+            'reason=no_pending_target');
+        return false;
+      }
 
       final target = validateReturnTo(
         rawReturnTo: rawReturnTo,
@@ -287,20 +325,61 @@ final class KaoIdSsoHandoff {
         allowedServicePaths: Env.kaoIdAllowedServicePaths,
       );
       final appUri = Uri.tryParse(Env.appUrl.trim());
-      if (!kIsWeb || target == null || appUri == null || Uri.base.origin != appUri.origin) {
+      if (target == null) {
+        await storage.remove(_pendingReturnKey);
+        debugPrint('[OAuthFlow][Handoff] returned=false '
+            'reason=stored_target_rejected');
+        return false;
+      }
+      targetToRestore = target.toString();
+      if (!kIsWeb || appUri == null || Uri.base.origin != appUri.origin) {
+        debugPrint('[OAuthFlow][Handoff] returned=false '
+            'reason=deployment_origin_mismatch');
         return false;
       }
 
       final client = Supabase.instance.client;
       final user = client.auth.currentUser;
-      if (user == null || user.isAnonymous) return false;
+      if (user == null || user.isAnonymous) {
+        debugPrint('[OAuthFlow][Handoff] returned=false '
+            'reason=no_authenticated_user');
+        return false;
+      }
 
-      final access = await client.rpc('account_access_r10d');
-      if (access is! Map || access['state'] != 'active') return false;
-
-      return launchUrl(target, webOnlyWindowName: '_self');
+      await markServiceLaunch(user.id);
+      final launchTarget = target.replace(
+        queryParameters: const {serviceLaunchParameter: '1'},
+      );
+      // Clear immediately before same-tab navigation. Restore the target when
+      // the browser refuses to navigate so the user can retry without signing
+      // in again.
+      await storage.remove(_pendingReturnKey);
+      final launched = await launchUrl(
+        launchTarget,
+        webOnlyWindowName: '_self',
+      );
+      if (!launched) {
+        await storage.setString(_pendingReturnKey, target.toString());
+        debugPrint('[OAuthFlow][Handoff] returned=false '
+            'reason=browser_navigation_failed');
+        return false;
+      }
+      debugPrint(
+        '[OAuthFlow][Handoff] returned=true target_path=${target.path}',
+      );
+      return true;
     } catch (error, stackTrace) {
-      debugPrint('Kao ID service handoff failed: $error');
+      if (targetToRestore != null) {
+        try {
+          await storage.setString(_pendingReturnKey, targetToRestore);
+        } catch (_) {
+          // Keep the original handoff error as the useful diagnostic.
+        }
+      }
+      debugPrint(
+        '[OAuthFlow][Handoff] returned=false '
+        'reason=handoff_error error_type=${error.runtimeType}',
+      );
       debugPrintStack(stackTrace: stackTrace);
       return false;
     }

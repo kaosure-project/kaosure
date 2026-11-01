@@ -33,53 +33,74 @@ final class _EmptyKyc implements KycReviewRepository {
 
 final class _IssuesOnly implements WithdrawalReviewRepository {
   @override
-  Future<StaffTools> tools() async => const StaffTools(orderIssues: true, openOrderIssues: 3);
+  Future<StaffTools> tools() async =>
+      const StaffTools(orderIssues: true, openOrderIssues: 3);
 
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-Map<String, dynamic> _issueJson({String status = 'open', String orderStatus = 'shipped'}) => {
-  'id': 'i1',
-  'kind': 'not_as_described',
-  'detail': 'จอแตกมาจากกล่อง',
-  'status': status,
-  'resolution_note': status == 'open' ? null : 'รูปยืนยันว่าชำรุด',
-  'resolved_by_name': status == 'open' ? null : 'แอดมิน',
-  'created_at': '2026-10-13T03:00:00Z',
-  'resolved_at': status == 'open' ? null : '2026-10-13T05:00:00Z',
-  'sort_at': '2026-10-13T03:00:00Z',
-  'order': {
-    'id': 'o1',
-    'order_number': 'SH261013-AB12CD34',
-    'status': orderStatus,
-    'total': 4900,
-    'payment_method': 'wallet',
-    'escrow_status': status == 'open' ? 'disputed' : 'refunded',
-    'paid_at': '2026-10-12T03:00:00Z',
-    'shipped_at': '2026-10-12T09:00:00Z',
-    'receive_by': null,
-    'carrier': 'Flash Express',
-    'tracking_number': 'TH0001',
-    'product_title': 'กล้องฟิล์ม Olympus',
-  },
-  'buyer': {'id': 'p1', 'display_name': 'ผู้ซื้อ A', 'account_code': 'KAO-0001'},
-  'seller': {'id': 'p2', 'display_name': 'ร้าน B', 'account_code': 'KAO-0002'},
-  'events': [
-    {'event': 'shipped', 'note': 'ผู้ขายแจ้งจัดส่ง', 'created_at': '2026-10-12T09:00:00Z'},
-    {'event': 'dispute_opened', 'note': 'not_as_described', 'created_at': '2026-10-13T03:00:00Z'},
-  ],
-  'history': [
+Map<String, dynamic> _issueJson({
+  String status = 'open',
+  String orderStatus = 'shipped',
+}) =>
     {
-      'id': 'i0',
-      'kind': 'not_arrived',
-      'status': 'withdrawn',
-      'detail': null,
-      'created_at': '2026-10-12T20:00:00Z',
-      'resolved_at': '2026-10-12T21:00:00Z',
-    },
-  ],
-};
+      'id': 'i1',
+      'kind': 'not_as_described',
+      'detail': 'จอแตกมาจากกล่อง',
+      'status': status,
+      'resolution_note': status == 'open' ? null : 'รูปยืนยันว่าชำรุด',
+      'resolved_by_name': status == 'open' ? null : 'แอดมิน',
+      'created_at': '2026-10-13T03:00:00Z',
+      'resolved_at': status == 'open' ? null : '2026-10-13T05:00:00Z',
+      'sort_at': '2026-10-13T03:00:00Z',
+      'order': {
+        'id': 'o1',
+        'order_number': 'SH261013-AB12CD34',
+        'status': orderStatus,
+        'total': 4900,
+        'payment_method': 'wallet',
+        'escrow_status': status == 'open' ? 'disputed' : 'refunded',
+        'paid_at': '2026-10-12T03:00:00Z',
+        'shipped_at': '2026-10-12T09:00:00Z',
+        'receive_by': null,
+        'carrier': 'Flash Express',
+        'tracking_number': 'TH0001',
+        'product_title': 'กล้องฟิล์ม Olympus',
+      },
+      'buyer': {
+        'id': 'p1',
+        'display_name': 'ผู้ซื้อ A',
+        'account_code': 'KAO-0001',
+      },
+      'seller': {
+        'id': 'p2',
+        'display_name': 'ร้าน B',
+        'account_code': 'KAO-0002',
+      },
+      'events': [
+        {
+          'event': 'shipped',
+          'note': 'ผู้ขายแจ้งจัดส่ง',
+          'created_at': '2026-10-12T09:00:00Z',
+        },
+        {
+          'event': 'dispute_opened',
+          'note': 'not_as_described',
+          'created_at': '2026-10-13T03:00:00Z',
+        },
+      ],
+      'history': [
+        {
+          'id': 'i0',
+          'kind': 'not_arrived',
+          'status': 'withdrawn',
+          'detail': null,
+          'created_at': '2026-10-12T20:00:00Z',
+          'resolved_at': '2026-10-12T21:00:00Z',
+        },
+      ],
+    };
 
 final class _FakeIssues implements OrderIssueRepository {
   Map<String, dynamic> current = _issueJson();
@@ -87,17 +108,27 @@ final class _FakeIssues implements OrderIssueRepository {
   final calls = <String>[];
 
   @override
-  Future<List<OrderIssueCase>> queue(OrderIssueQueueFilter filter, {DateTime? before}) async {
+  Future<List<OrderIssueCase>> queue(
+    OrderIssueQueueFilter filter, {
+    DateTime? before,
+  }) async {
     calls.add('queue:${filter.name}');
     final issue = OrderIssueCase.fromJson(current);
-    return issue.isOpen == (filter == OrderIssueQueueFilter.open) ? [issue] : [];
+    return issue.isOpen == (filter == OrderIssueQueueFilter.open)
+        ? [issue]
+        : [];
   }
 
   @override
-  Future<OrderIssueCase> detail(String id) async => OrderIssueCase.fromJson(current);
+  Future<OrderIssueCase> detail(String id) async =>
+      OrderIssueCase.fromJson(current);
 
   @override
-  Future<OrderIssueCase> resolve(String id, OrderIssueDecision decision, String note) async {
+  Future<OrderIssueCase> resolve(
+    String id,
+    OrderIssueDecision decision,
+    String note,
+  ) async {
     calls.add('${decision.name}:$id:$note');
     if (failure case final error?) throw error;
     current = _issueJson(status: 'refunded', orderStatus: 'refunded');
@@ -120,7 +151,8 @@ void main() {
           authProvider.overrideWith((ref) => TestAuthNotifier(ref)),
           memberAccessProvider.overrideWith((ref) async => false),
           kycReviewerAccessProvider.overrideWith((ref) async => false),
-          businessReviewRepositoryProvider.overrideWithValue(FakeBusinessReviewRepository()),
+          businessReviewRepositoryProvider
+              .overrideWithValue(FakeBusinessReviewRepository()),
           kycReviewRepositoryProvider.overrideWithValue(_EmptyKyc()),
           withdrawalReviewRepositoryProvider.overrideWithValue(_IssuesOnly()),
           orderIssueRepositoryProvider.overrideWithValue(issues),
@@ -137,7 +169,10 @@ void main() {
   }
 
   test('staff tools read the order issue permission and count', () {
-    final tools = StaffTools.fromJson({'order_issues': true, 'open_order_issues': 4});
+    final tools = StaffTools.fromJson({
+      'order_issues': true,
+      'open_order_issues': 4,
+    });
     expect(tools.orderIssues, isTrue);
     expect(tools.openOrderIssues, 4);
     expect(tools.marketplace, isTrue);
@@ -145,28 +180,37 @@ void main() {
     expect(StaffTools.fromJson({}).marketplace, isFalse);
   });
 
-  testWidgets('order resolvers see the marketplace group with open problems, and the queue', (tester) async {
-    await pump(tester, const AdminHubPage());
-    expect(find.text(l.adminGroupMarketplace), findsOneWidget);
-    expect(find.text(l.moderationTitle), findsNothing);
-    expect(find.text('3'), findsOneWidget);
+  testWidgets(
+    'order resolvers see the marketplace group with open problems, and the queue',
+    (tester) async {
+      await pump(tester, const AdminHubPage());
+      expect(find.text(l.adminGroupMarketplace), findsOneWidget);
+      expect(find.text(l.moderationTitle), findsNothing);
+      expect(find.text('3'), findsOneWidget);
 
-    await tester.tap(find.text(l.orderIssuesTitle));
-    await tester.pumpAndSettle();
-    expect(find.byType(OrderIssuesPage), findsOneWidget);
-    expect(find.byKey(const ValueKey('order-issue-i1')), findsOneWidget);
-    expect(find.textContaining(l.orderIssueKindNotAsDescribed), findsOneWidget);
-    expect(find.textContaining('จอแตกมาจากกล่อง'), findsOneWidget);
+      expect(find.byIcon(Icons.report_problem_outlined), findsOneWidget);
+await tester.tap(find.byIcon(Icons.report_problem_outlined));
+      await tester.pumpAndSettle();
+      expect(find.byType(OrderIssuesPage), findsOneWidget);
+      expect(find.byKey(const ValueKey('order-issue-i1')), findsOneWidget);
+      expect(
+        find.textContaining(l.orderIssueKindNotAsDescribed),
+        findsOneWidget,
+      );
+      expect(find.textContaining('จอแตกมาจากกล่อง'), findsOneWidget);
 
-    await tester.tap(find.byKey(const ValueKey('order-issues-closed')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('order-issue-i1')), findsNothing);
-    expect(find.text(l.staffEmpty), findsOneWidget);
-    expect(issues.calls, ['queue:open', 'queue:closed']);
-    await tester.pumpWidget(const SizedBox.shrink());
-  });
+      await tester.tap(find.byKey(const ValueKey('order-issues-closed')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('order-issue-i1')), findsNothing);
+      expect(find.text(l.staffEmpty), findsOneWidget);
+      expect(issues.calls, ['queue:open', 'queue:closed']);
+      await tester.pumpWidget(const SizedBox.shrink());
+    },
+  );
 
-  testWidgets('a decision needs a note; refunding closes the report', (tester) async {
+  testWidgets('a decision needs a note; refunding closes the report', (
+    tester,
+  ) async {
     await pump(tester, const OrderIssueDetailPage(id: 'i1'));
     expect(find.text('กล้องฟิล์ม Olympus'), findsOneWidget);
     expect(find.text(l.orderIssueEscrowDisputed), findsOneWidget);
@@ -174,14 +218,26 @@ void main() {
     expect(find.textContaining(l.orderIssueStatusWithdrawn), findsOneWidget);
     final refund = find.byKey(const ValueKey('order-issue-refund'));
     expect(tester.widget<ButtonStyleButton>(refund).onPressed, isNull);
-    expect(tester.widget<ButtonStyleButton>(find.byKey(const ValueKey('order-issue-dismiss'))).onPressed, isNull);
+    expect(
+      tester
+          .widget<ButtonStyleButton>(
+            find.byKey(const ValueKey('order-issue-dismiss')),
+          )
+          .onPressed,
+      isNull,
+    );
 
-    await tester.enterText(find.byKey(const ValueKey('order-issue-note')), ' รูปยืนยันว่าชำรุด ');
+    await tester.enterText(
+      find.byKey(const ValueKey('order-issue-note')),
+      ' รูปยืนยันว่าชำรุด ',
+    );
     await tester.pump();
     await tester.tap(refund);
     await tester.pumpAndSettle();
     expect(find.text(l.orderIssueRefundConfirm), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('order-issue-decision-confirm')));
+    await tester.tap(
+      find.byKey(const ValueKey('order-issue-decision-confirm')),
+    );
     await tester.pumpAndSettle();
 
     expect(issues.calls, ['refund:i1:รูปยืนยันว่าชำรุด']);
@@ -193,21 +249,37 @@ void main() {
     await tester.pumpWidget(const SizedBox.shrink());
   });
 
-  testWidgets('refusals are translated and nothing is marked done', (tester) async {
-    issues.failure = const PostgrestException(message: 'mfa_required', code: '42501');
+  testWidgets('refusals are translated and nothing is marked done', (
+    tester,
+  ) async {
+    issues.failure = const PostgrestException(
+      message: 'mfa_required',
+      code: '42501',
+    );
     await pump(tester, const OrderIssueDetailPage(id: 'i1'));
-    await tester.enterText(find.byKey(const ValueKey('order-issue-note')), 'ส่งช้าแต่ถึงแล้ว');
+    await tester.enterText(
+      find.byKey(const ValueKey('order-issue-note')),
+      'ส่งช้าแต่ถึงแล้ว',
+    );
     await tester.pump();
     await tester.tap(find.byKey(const ValueKey('order-issue-release')));
     await tester.pumpAndSettle();
     expect(find.text(l.orderIssueReleaseConfirm), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('order-issue-decision-confirm')));
+    await tester.tap(
+      find.byKey(const ValueKey('order-issue-decision-confirm')),
+    );
     await tester.pumpAndSettle();
     expect(issues.calls, ['release:i1:ส่งช้าแต่ถึงแล้ว']);
     expect(find.text(l.mfaSessionRequired), findsOneWidget);
     expect(find.byKey(const ValueKey('order-issue-done')), findsNothing);
-    expect(orderIssueErrorText(l, Exception('own_order')), l.orderIssueErrorOwn);
-    expect(orderIssueErrorText(l, Exception('order_issue_closed')), l.orderIssueErrorClosed);
+    expect(
+      orderIssueErrorText(l, Exception('own_order')),
+      l.orderIssueErrorOwn,
+    );
+    expect(
+      orderIssueErrorText(l, Exception('order_issue_closed')),
+      l.orderIssueErrorClosed,
+    );
     await tester.pumpWidget(const SizedBox.shrink());
   });
 }

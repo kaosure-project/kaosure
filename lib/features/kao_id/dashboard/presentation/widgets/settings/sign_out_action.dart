@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaosure/l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../../core/config/env.dart';
 import '../../../../account/application/providers/profile_controller_provider.dart';
+import '../../../../auth/application/kao_id_sso_handoff.dart';
 import '../../../../auth/application/providers/auth_provider.dart';
 import '../../../../auth/application/providers/password_recovery_provider.dart';
 import '../../../../business/application/providers/business_registration_provider.dart';
@@ -34,14 +37,32 @@ Future<bool> confirmSignOut(BuildContext context) async {
   return confirmed == true;
 }
 
-/// Signs out, clears account state and returns to the Kao ID landing page.
-/// Throws when sign-out fails.
+/// Signs out, clears account state and leaves for the marketplace (see
+/// [leaveAfterSignOut]). Throws when sign-out fails.
 Future<void> signOutAndLeave(BuildContext context) async {
   // AuthGuard may remove the caller when logout completes. Keep the root
   // navigator and container so cleanup does not depend on a disposed WidgetRef.
   final navigator = Navigator.of(context, rootNavigator: true);
   await clearKaoIdSession(ProviderScope.containerOf(context, listen: false));
-  if (navigator.mounted) {
+  await leaveAfterSignOut(navigator);
+}
+
+/// After signing out the member lands on the KaoSure Secondhand home page
+/// when this deployment serves it, otherwise on the Kao ID landing page.
+Future<void> leaveAfterSignOut(NavigatorState? navigator) async {
+  final appUrl = Env.appUrl.trim();
+  final base = appUrl.endsWith('/') ? appUrl.substring(0, appUrl.length - 1) : appUrl;
+  final marketplace = appUrl.isEmpty
+      ? null
+      : KaoIdSsoHandoff.validateReturnTo(
+          rawReturnTo: '$base/secondhand/',
+          appUrl: appUrl,
+          allowedServicePaths: Env.kaoIdAllowedServicePaths,
+        );
+  if (marketplace != null && await launchUrl(marketplace, webOnlyWindowName: '_self')) {
+    return;
+  }
+  if (navigator != null && navigator.mounted) {
     navigator.pushNamedAndRemoveUntil(KaoIdRoutes.kaoIdLanding, (_) => false);
   }
 }

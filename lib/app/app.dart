@@ -8,6 +8,7 @@ import '../core/config/supabase_config.dart';
 import '../core/localization/locale_controller.dart';
 import '../features/kao_id/auth/application/providers/auth_provider.dart';
 import '../features/kao_id/auth/data/datasources/browser_session_events.dart';
+import '../features/kao_id/dashboard/presentation/widgets/settings/sign_out_action.dart';
 import 'routes/kao_id_routes.dart';
 import '../l10n/app_localizations.dart';
 import '../features/kao_id/account/presentation/widgets/account_access_gate.dart';
@@ -53,8 +54,7 @@ class _AppState extends ConsumerState<App> {
     } catch (_) {
       // The session is already gone; the screens follow the cleared state.
     }
-    final navigator = _navigatorKey.currentState ?? _restrictedNavigatorKey.currentState;
-    navigator?.pushNamedAndRemoveUntil(AppRouter.initialRoute, (route) => false);
+    await leaveAfterSignOut(_navigatorKey.currentState ?? _restrictedNavigatorKey.currentState);
   }
 
   void _handleAuthStateChange(AuthState state) {

@@ -42,6 +42,7 @@ The script refuses a `SECONDHAND_SUPABASE_URL` equal to `SUPABASE_URL`, because 
 | Kao ID | `KAO_ID_ALLOWED_SERVICE_PATHS` | `/secondhand` |
 | Secondhand | `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` | the `SECONDHAND_*` values |
 | Secondhand | `KAO_ID_ISSUER_URL` | the Kao ID `SUPABASE_URL` |
+| Secondhand | `KAO_ID_PUBLISHABLE_KEY` | the Kao ID `SUPABASE_PUBLISHABLE_KEY` (for Kao ID sign-out) |
 | Secondhand | `KAO_ID_REDIRECT_URI` | `https://<project-id>.web.app/secondhand/auth/callback` |
 | Secondhand | `KAO_ID_WEB_URL` | `https://<project-id>.web.app` |
 

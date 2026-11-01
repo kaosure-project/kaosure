@@ -139,6 +139,7 @@ Invoke-WebBuild $SecondhandDir @(
   "--dart-define=SUPABASE_URL=$($values['SECONDHAND_SUPABASE_URL'])",
   "--dart-define=SUPABASE_PUBLISHABLE_KEY=$($values['SECONDHAND_SUPABASE_PUBLISHABLE_KEY'])",
   "--dart-define=KAO_ID_ISSUER_URL=$($values['SUPABASE_URL'])",
+  "--dart-define=KAO_ID_PUBLISHABLE_KEY=$($values['SUPABASE_PUBLISHABLE_KEY'])",
   "--dart-define=KAO_ID_CLIENT_ID=$($values['KAO_ID_CLIENT_ID'])",
   "--dart-define=KAO_ID_REDIRECT_URI=$site/secondhand/auth/callback",
   "--dart-define=KAO_ID_WEB_URL=$site"

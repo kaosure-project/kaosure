@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../core/config/supabase_config.dart';
 import '../core/localization/locale_controller.dart';
@@ -45,16 +46,19 @@ class _AppState extends ConsumerState<App> {
         .listen((_) => unawaited(_followSignOut()));
   }
 
-  /// Single sign-out: another tab (Kao ID itself, or Secondhand through
-  /// /logout) signed out, so this tab leaves the account too.
+  /// Single sign-out: another tab (Kao ID itself or Secondhand) ended the
+  /// session, so this tab leaves the account too.
   Future<void> _followSignOut() async {
     if (ref.read(authProvider).value == null) return;
+    final marketplace = marketplaceHome();
+    if (marketplace != null && await launchUrl(marketplace, webOnlyWindowName: '_self')) return;
     try {
       await ref.read(authProvider.notifier).logout();
     } catch (_) {
       // The session is already gone; the screens follow the cleared state.
     }
-    await leaveAfterSignOut(_navigatorKey.currentState ?? _restrictedNavigatorKey.currentState);
+    (_navigatorKey.currentState ?? _restrictedNavigatorKey.currentState)
+        ?.pushNamedAndRemoveUntil(KaoIdRoutes.kaoIdLanding, (route) => false);
   }
 
   void _handleAuthStateChange(AuthState state) {

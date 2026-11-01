@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../../../core/config/env.dart';
 import '../../../../account/application/providers/profile_controller_provider.dart';
 import '../../../../auth/application/kao_id_sso_handoff.dart';
+import '../../../../auth/application/providers/auth_dependencies.dart';
 import '../../../../auth/application/providers/auth_provider.dart';
 import '../../../../auth/application/providers/password_recovery_provider.dart';
 import '../../../../business/application/providers/business_registration_provider.dart';
@@ -37,34 +38,38 @@ Future<bool> confirmSignOut(BuildContext context) async {
   return confirmed == true;
 }
 
-/// Signs out, clears account state and leaves for the marketplace (see
-/// [leaveAfterSignOut]). Throws when sign-out fails.
+/// Signs out and lands on the KaoSure Secondhand home page when this
+/// deployment serves it, otherwise on the Kao ID landing page. Throws when
+/// sign-out fails.
 Future<void> signOutAndLeave(BuildContext context) async {
   // AuthGuard may remove the caller when logout completes. Keep the root
   // navigator and container so cleanup does not depend on a disposed WidgetRef.
   final navigator = Navigator.of(context, rootNavigator: true);
-  await clearKaoIdSession(ProviderScope.containerOf(context, listen: false));
-  await leaveAfterSignOut(navigator);
-}
-
-/// After signing out the member lands on the KaoSure Secondhand home page
-/// when this deployment serves it, otherwise on the Kao ID landing page.
-Future<void> leaveAfterSignOut(NavigatorState? navigator) async {
-  final appUrl = Env.appUrl.trim();
-  final base = appUrl.endsWith('/') ? appUrl.substring(0, appUrl.length - 1) : appUrl;
-  final marketplace = appUrl.isEmpty
-      ? null
-      : KaoIdSsoHandoff.validateReturnTo(
-          rawReturnTo: '$base/secondhand/',
-          appUrl: appUrl,
-          allowedServicePaths: Env.kaoIdAllowedServicePaths,
-        );
-  if (marketplace != null && await launchUrl(marketplace, webOnlyWindowName: '_self')) {
-    return;
+  final container = ProviderScope.containerOf(context, listen: false);
+  final marketplace = marketplaceHome();
+  if (marketplace != null) {
+    // Leaving for the marketplace unloads this app, so the account state is
+    // not cleared screen by screen first (that refetches and flashes them).
+    await container.read(logoutUseCaseProvider)();
+    if (await launchUrl(marketplace, webOnlyWindowName: '_self')) return;
   }
-  if (navigator != null && navigator.mounted) {
+  await clearKaoIdSession(container);
+  if (navigator.mounted) {
     navigator.pushNamedAndRemoveUntil(KaoIdRoutes.kaoIdLanding, (_) => false);
   }
+}
+
+/// The KaoSure Secondhand home page of this deployment, or `null` when it is
+/// not served next to Kao ID.
+Uri? marketplaceHome() {
+  final appUrl = Env.appUrl.trim();
+  if (appUrl.isEmpty) return null;
+  final base = appUrl.endsWith('/') ? appUrl.substring(0, appUrl.length - 1) : appUrl;
+  return KaoIdSsoHandoff.validateReturnTo(
+    rawReturnTo: '$base/secondhand/',
+    appUrl: appUrl,
+    allowedServicePaths: Env.kaoIdAllowedServicePaths,
+  );
 }
 
 /// Signs out of Kao ID on this browser and forgets every account's state.

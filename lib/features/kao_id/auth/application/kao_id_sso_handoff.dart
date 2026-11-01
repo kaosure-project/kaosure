@@ -16,6 +16,8 @@ final class KaoIdSsoHandoff {
 
   static const String _pendingReturnKey = 'kao_id.pending_service_return_to';
   static const String _pendingConsentKey = 'kao_id.pending_oauth_authorization_id';
+  // Same-navigation fallback if browser storage is unavailable or misses a read.
+  static String? _pendingConsentMemoryFallback;
   static const String _serviceLaunchKey = 'kao_id.service_launch';
 
   /// Query flag on a service entry URL: the service must drop any account it
@@ -70,31 +72,133 @@ final class KaoIdSsoHandoff {
   static Future<void> captureConsentRequest(Uri currentUri) async {
     if (currentUri.path != KaoIdRoutes.oauthConsent) return;
     final authorizationId = currentUri.queryParameters['authorization_id'];
-    try {
-      final storage = SharedPreferencesAsync();
-      if (!OAuthConsentUseCases.isValidAuthorizationId(authorizationId)) {
-        await storage.remove(_pendingConsentKey);
-        return;
+
+    if (!OAuthConsentUseCases.isValidAuthorizationId(authorizationId)) {
+      _pendingConsentMemoryFallback = null;
+      try {
+        final cleared = await _clearPendingConsent(SharedPreferencesAsync());
+        debugPrint(
+          '[OAuthFlow][Consent] saved=false '
+          'reason=missing_or_invalid_authorization_id '
+          'source_path=${currentUri.path} stale_key_cleared=$cleared',
+        );
+      } catch (error, stackTrace) {
+        debugPrint(
+          '[OAuthFlow][Consent] capture_error '
+          'error_type=${error.runtimeType} source_path=${currentUri.path}',
+        );
+        debugPrintStack(stackTrace: stackTrace);
       }
-      await storage.setString(_pendingConsentKey, authorizationId!);
+      return;
+    }
+
+    // Keep a per-page-lifecycle copy before writing LocalStorage. This allows
+    // the same OAuth navigation to continue if a browser storage read/write fails.
+    _pendingConsentMemoryFallback = authorizationId;
+    try {
+      await SharedPreferencesAsync().setString(_pendingConsentKey, authorizationId!);
+      debugPrint(
+        '[OAuthFlow][Consent] saved=true '
+        'source_path=${currentUri.path} storage_key=$_pendingConsentKey '
+        'memory_fallback=ready',
+      );
     } catch (error, stackTrace) {
-      debugPrint('Unable to store OAuth consent request: $error');
+      debugPrint(
+        '[OAuthFlow][Consent] save_error '
+        'error_type=${error.runtimeType} source_path=${currentUri.path} '
+        'memory_fallback=ready',
+      );
       debugPrintStack(stackTrace: stackTrace);
     }
   }
 
-  /// One-shot: the stored request is cleared once read.
+  /// One-shot: prefer the request captured for this page lifecycle, then use
+  /// the persisted request when restoring a page after a reload.
   static Future<String?> takePendingConsent() async {
+    final memoryFallback = _pendingConsentMemoryFallback;
+    _pendingConsentMemoryFallback = null;
+    final fallbackIsValid =
+        OAuthConsentUseCases.isValidAuthorizationId(memoryFallback);
+
     try {
       final storage = SharedPreferencesAsync();
       final authorizationId = await storage.getString(_pendingConsentKey);
-      if (authorizationId == null) return null;
-      await storage.remove(_pendingConsentKey);
-      return OAuthConsentUseCases.isValidAuthorizationId(authorizationId) ? authorizationId : null;
+
+      if (fallbackIsValid) {
+        final matchesCapturedRequest = authorizationId == memoryFallback;
+        final source = matchesCapturedRequest ? 'local_storage' : 'memory_fallback';
+        final storedValueState = authorizationId == null
+            ? 'missing'
+            : matchesCapturedRequest
+            ? 'matched'
+            : 'different';
+        final cleared = authorizationId == null
+            ? true
+            : await _clearPendingConsent(storage);
+        debugPrint(
+          '[OAuthFlow][Consent] read=found '
+          'source=$source storage_value=$storedValueState '
+          'valid=true cleared=$cleared',
+        );
+        return memoryFallback;
+      }
+
+      if (authorizationId == null) {
+        debugPrint(
+          '[OAuthFlow][Consent] read=missing '
+          'source=local_storage fallback_available=false',
+        );
+        return null;
+      }
+
+      final isValid = OAuthConsentUseCases.isValidAuthorizationId(authorizationId);
+      final cleared = await _clearPendingConsent(storage);
+      if (!isValid) {
+        debugPrint(
+          '[OAuthFlow][Consent] read=invalid '
+          'source=local_storage cleared=$cleared',
+        );
+        return null;
+      }
+
+      debugPrint(
+        '[OAuthFlow][Consent] read=found '
+        'source=local_storage fallback_available=false '
+        'valid=true cleared=$cleared',
+      );
+      return authorizationId;
     } catch (error, stackTrace) {
-      debugPrint('Unable to read OAuth consent request: $error');
+      if (fallbackIsValid) {
+        debugPrint(
+          '[OAuthFlow][Consent] read_error '
+          'error_type=${error.runtimeType} fallback_used=true',
+        );
+        debugPrintStack(stackTrace: stackTrace);
+        return memoryFallback;
+      }
+
+      debugPrint(
+        '[OAuthFlow][Consent] read_error '
+        'error_type=${error.runtimeType} fallback_used=false',
+      );
       debugPrintStack(stackTrace: stackTrace);
       return null;
+    }
+  }
+
+  static Future<bool> _clearPendingConsent(
+    SharedPreferencesAsync storage,
+  ) async {
+    try {
+      await storage.remove(_pendingConsentKey);
+      return true;
+    } catch (error, stackTrace) {
+      debugPrint(
+        '[OAuthFlow][Consent] clear_error '
+        'error_type=${error.runtimeType} storage_key=$_pendingConsentKey',
+      );
+      debugPrintStack(stackTrace: stackTrace);
+      return false;
     }
   }
 
@@ -130,14 +234,34 @@ final class KaoIdSsoHandoff {
 
   /// Captures the service return target only when entering Kao ID Login.
   static Future<void> captureLoginReturnTarget(Uri currentUri) async {
-    if (currentUri.path != '/login') return;
-    final rawReturnTo = currentUri.queryParameters['return_to'];
+    final fragment = Uri.tryParse(currentUri.fragment);
+    // Secondhand's current link is /register?return_to=...#/login. Some
+    // deployed builds omit the hash route, so a validated return_to on the
+    // legacy /register URL must also be captured before App routes to /login.
+    final hasServiceReturn =
+        currentUri.queryParameters['return_to']?.trim().isNotEmpty == true ||
+        fragment?.queryParameters['return_to']?.trim().isNotEmpty == true;
+    final isLoginRoute =
+        currentUri.path == '/login' ||
+        (currentUri.path == '/register' &&
+            (fragment?.path == KaoIdRoutes.login || hasServiceReturn));
+    if (!isLoginRoute) return;
+    const route = '/login';
+    final rawReturnTo = currentUri.queryParameters['return_to'] ??
+        fragment?.queryParameters['return_to'];
 
     try {
       final storage = SharedPreferencesAsync();
       final appUri = Uri.tryParse(Env.appUrl.trim());
       if (rawReturnTo == null || appUri == null || currentUri.origin != appUri.origin) {
         await storage.remove(_pendingReturnKey);
+        final reason = rawReturnTo == null
+            ? 'return_target_missing'
+            : 'issuer_origin_mismatch';
+        debugPrint(
+          '[OAuthFlow][Handoff] captured=false '
+          'reason=$reason',
+        );
         return;
       }
       final target = validateReturnTo(
@@ -147,11 +271,20 @@ final class KaoIdSsoHandoff {
       );
       if (target == null) {
         await storage.remove(_pendingReturnKey);
+        debugPrint('[OAuthFlow][Handoff] captured=false '
+            'reason=return_target_rejected');
         return;
       }
       await storage.setString(_pendingReturnKey, target.toString());
+      debugPrint(
+        '[OAuthFlow][Handoff] captured=true route=$route '
+        'target_path=${target.path}',
+      );
     } catch (error, stackTrace) {
-      debugPrint('Unable to store Kao ID service return target: $error');
+      debugPrint(
+        '[OAuthFlow][Handoff] captured=false '
+        'reason=storage_error error_type=${error.runtimeType}',
+      );
       debugPrintStack(stackTrace: stackTrace);
     }
   }
@@ -168,14 +301,23 @@ final class KaoIdSsoHandoff {
         null;
   }
 
-  /// Returns only after Supabase confirms the current account is active.
-  /// The stored URL is one-shot to prevent replay after refresh or back.
+  /// Returns to the service after a successful Kao ID sign-in.
+  ///
+  /// This is navigation only. The service still performs its own OAuth code
+  /// exchange and applies its own account and row-level access checks. Requiring
+  /// `account_access_r10d` here made a missing or temporarily failing RPC strand
+  /// a successfully signed-in member on Kao ID, before the service could handle
+  /// the session itself.
   static Future<bool> tryReturnToService() async {
+    final storage = SharedPreferencesAsync();
+    String? targetToRestore;
     try {
-      final storage = SharedPreferencesAsync();
       final rawReturnTo = await storage.getString(_pendingReturnKey);
-      if (rawReturnTo == null) return false;
-      await storage.remove(_pendingReturnKey);
+      if (rawReturnTo == null) {
+        debugPrint('[OAuthFlow][Handoff] returned=false '
+            'reason=no_pending_target');
+        return false;
+      }
 
       final target = validateReturnTo(
         rawReturnTo: rawReturnTo,
@@ -183,20 +325,61 @@ final class KaoIdSsoHandoff {
         allowedServicePaths: Env.kaoIdAllowedServicePaths,
       );
       final appUri = Uri.tryParse(Env.appUrl.trim());
-      if (!kIsWeb || target == null || appUri == null || Uri.base.origin != appUri.origin) {
+      if (target == null) {
+        await storage.remove(_pendingReturnKey);
+        debugPrint('[OAuthFlow][Handoff] returned=false '
+            'reason=stored_target_rejected');
+        return false;
+      }
+      targetToRestore = target.toString();
+      if (!kIsWeb || appUri == null || Uri.base.origin != appUri.origin) {
+        debugPrint('[OAuthFlow][Handoff] returned=false '
+            'reason=deployment_origin_mismatch');
         return false;
       }
 
       final client = Supabase.instance.client;
       final user = client.auth.currentUser;
-      if (user == null || user.isAnonymous) return false;
+      if (user == null || user.isAnonymous) {
+        debugPrint('[OAuthFlow][Handoff] returned=false '
+            'reason=no_authenticated_user');
+        return false;
+      }
 
-      final access = await client.rpc('account_access_r10d');
-      if (access is! Map || access['state'] != 'active') return false;
-
-      return launchUrl(target, webOnlyWindowName: '_self');
+      await markServiceLaunch(user.id);
+      final launchTarget = target.replace(
+        queryParameters: const {serviceLaunchParameter: '1'},
+      );
+      // Clear immediately before same-tab navigation. Restore the target when
+      // the browser refuses to navigate so the user can retry without signing
+      // in again.
+      await storage.remove(_pendingReturnKey);
+      final launched = await launchUrl(
+        launchTarget,
+        webOnlyWindowName: '_self',
+      );
+      if (!launched) {
+        await storage.setString(_pendingReturnKey, target.toString());
+        debugPrint('[OAuthFlow][Handoff] returned=false '
+            'reason=browser_navigation_failed');
+        return false;
+      }
+      debugPrint(
+        '[OAuthFlow][Handoff] returned=true target_path=${target.path}',
+      );
+      return true;
     } catch (error, stackTrace) {
-      debugPrint('Kao ID service handoff failed: $error');
+      if (targetToRestore != null) {
+        try {
+          await storage.setString(_pendingReturnKey, targetToRestore);
+        } catch (_) {
+          // Keep the original handoff error as the useful diagnostic.
+        }
+      }
+      debugPrint(
+        '[OAuthFlow][Handoff] returned=false '
+        'reason=handoff_error error_type=${error.runtimeType}',
+      );
       debugPrintStack(stackTrace: stackTrace);
       return false;
     }

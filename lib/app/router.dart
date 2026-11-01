@@ -33,6 +33,21 @@ final class AppRouter {
   static const String initialRoute = '/';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+    final uri = Uri.base;
+    final fragmentUri = uri.hasFragment ? Uri.tryParse(uri.fragment) : null;
+    
+    // ตรวจสอบว่ามี return_to หรือไม่ (รองรับทั้ง query parameters และ fragment)
+    final hasReturnTo = uri.queryParameters['return_to']?.trim().isNotEmpty == true ||
+        fragmentUri?.queryParameters['return_to']?.trim().isNotEmpty == true;
+
+    // ถ้ามีการขอเข้าใช้งานระบบจาก Secondhand หรือมี return_to แต่เข้ามาที่หน้าแรก/Landing ให้บังคับเปิดหน้า Login ทันที
+    if (hasReturnTo && (settings.name == initialRoute || settings.name == KaoIdRoutes.kaoIdLanding || settings.name == '/register')) {
+      return MaterialPageRoute(
+        settings: const RouteSettings(name: '/login'),
+        builder: (_) => const LoginPage(),
+      );
+    }
+
     switch (settings.name) {
       case '/admin/finance':
         return MaterialPageRoute(
@@ -51,6 +66,13 @@ final class AppRouter {
       // -----------------------------------------------------------------------
       case initialRoute:
       case KaoIdRoutes.kaoIdLanding:
+        // ถ้ามี return_to แม้จะเปิดหน้าแรกตรงๆ ก็ให้วิ่งไปหน้า LoginPage แทน LandingPage
+        if (hasReturnTo) {
+          return MaterialPageRoute(
+            settings: const RouteSettings(name: '/login'),
+            builder: (_) => const LoginPage(),
+          );
+        }
         return MaterialPageRoute(settings: settings, builder: (_) => const LandingPage());
 
       case '/login':
@@ -145,6 +167,10 @@ final class AppRouter {
             : Uri.base.path == KaoIdRoutes.oauthConsent
             ? Uri.base.queryParameters['authorization_id'] ?? ''
             : '';
+        debugPrint(
+          '[OAuthFlow][Route] resolve=/oauth/consent '
+          'authorization_id_present=${authorizationId.trim().isNotEmpty}',
+        );
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => AuthGuard(authenticatedChild: OAuthConsentPage(authorizationId: authorizationId)),
@@ -171,8 +197,6 @@ final class AppRouter {
       // -----------------------------------------------------------------------
       // Kao ID Business Registration
       // -----------------------------------------------------------------------
-      // The stepper resumes from the server draft, so every legacy step URL
-      // lands on the same page.
       case KaoIdRoutes.businessRegistration:
       case KaoIdRoutes.businessInformation:
       case KaoIdRoutes.businessDocument:
@@ -221,6 +245,13 @@ final class AppRouter {
       // Unknown Route
       // -----------------------------------------------------------------------
       default:
+        // หากมี return_to แต่หลุดมาเร้าต์ที่ไม่รู้จัก ให้พาไปหน้า Login ป้องกันการติดหน้า Landing
+        if (hasReturnTo) {
+          return MaterialPageRoute(
+            settings: const RouteSettings(name: '/login'),
+            builder: (_) => const LoginPage(),
+          );
+        }
         return MaterialPageRoute(settings: settings, builder: (_) => const LandingPage());
     }
   }

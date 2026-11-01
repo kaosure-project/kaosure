@@ -87,6 +87,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
       if (!mounted) return;
 
+      debugPrint(
+        '[OAuthFlow][Route] from=/login to=/bootstrap reason=login_success',
+      );
       Navigator.pushReplacementNamed(
         context,
         KaoIdRoutes.bootstrap,

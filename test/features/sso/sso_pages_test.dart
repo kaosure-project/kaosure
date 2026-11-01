@@ -1,3 +1,5 @@
+import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
+import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -36,6 +38,8 @@ Future<void> frames(WidgetTester tester) async {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   late FakeOAuthConsentRepository consent;
   late FakeAppClientRegistryRepository registry;
   late List<Uri> redirects;
@@ -43,6 +47,10 @@ void main() {
   String? launchedBy;
 
   setUp(() {
+    // OAuthConsentPage uses SharedPreferencesAsync; install a fresh in-memory
+    // platform for each test so widget tests do not require a native plugin.
+    SharedPreferencesAsyncPlatform.instance =
+        InMemorySharedPreferencesAsync.empty();
     consent = FakeOAuthConsentRepository();
     registry = FakeAppClientRegistryRepository();
     redirects = [];

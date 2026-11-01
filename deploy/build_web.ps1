@@ -10,7 +10,8 @@
 
 .PARAMETER EnvFile
   Public build values (deploy/web.env). Only SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY and KAO_ID_CLIENT_ID are allowed.
+  SUPABASE_PUBLISHABLE_KEY, KAO_ID_CLIENT_ID, SECONDHAND_SUPABASE_URL and
+  SECONDHAND_SUPABASE_PUBLISHABLE_KEY are allowed.
 
 .PARAMETER SecondhandDir
   Checkout of kaosure_secondhand.
@@ -23,7 +24,10 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
-$allowedKeys = @('SUPABASE_URL', 'SUPABASE_PUBLISHABLE_KEY', 'KAO_ID_CLIENT_ID')
+$allowedKeys = @(
+  'SUPABASE_URL', 'SUPABASE_PUBLISHABLE_KEY', 'KAO_ID_CLIENT_ID',
+  'SECONDHAND_SUPABASE_URL', 'SECONDHAND_SUPABASE_PUBLISHABLE_KEY'
+)
 
 function Fail([string]$message) {
   Write-Host "build_web: $message" -ForegroundColor Red
@@ -79,7 +83,14 @@ function Assert-EnvFile([string]$path) {
   foreach ($key in $allowedKeys) {
     if (-not $seen[$key]) { Fail "$key is empty in $path" }
   }
-  if (-not $seen['SUPABASE_URL'].StartsWith('https://')) { Fail 'SUPABASE_URL must be https' }
+  foreach ($key in @('SUPABASE_URL', 'SECONDHAND_SUPABASE_URL')) {
+    if (-not $seen[$key].StartsWith('https://')) { Fail "$key must be https" }
+  }
+  # Secondhand data lives in its own Supabase project; Kao ID is only its issuer.
+  if ($seen['SECONDHAND_SUPABASE_URL'].TrimEnd('/') -eq $seen['SUPABASE_URL'].TrimEnd('/')) {
+    Fail 'SECONDHAND_SUPABASE_URL must be the Secondhand project, not the Kao ID project'
+  }
+  return $seen
 }
 
 function Invoke-WebBuild([string]$dir, [string[]]$arguments) {
@@ -93,21 +104,24 @@ function Invoke-WebBuild([string]$dir, [string[]]$arguments) {
 }
 
 $site = Resolve-SiteUrl $SiteUrl
-Assert-EnvFile $EnvFile
-$EnvFile = (Resolve-Path $EnvFile).Path
+$values = Assert-EnvFile $EnvFile
 if (-not (Test-Path (Join-Path $SecondhandDir 'pubspec.yaml'))) { Fail "Secondhand not found at $SecondhandDir" }
 $SecondhandDir = (Resolve-Path $SecondhandDir).Path
 
 Write-Host "Building for $site"
 Invoke-WebBuild $root @(
   '--base-href', '/',
-  "--dart-define-from-file=$EnvFile",
+  "--dart-define=SUPABASE_URL=$($values['SUPABASE_URL'])",
+  "--dart-define=SUPABASE_PUBLISHABLE_KEY=$($values['SUPABASE_PUBLISHABLE_KEY'])",
   "--dart-define=APP_URL=$site",
   '--dart-define=KAO_ID_ALLOWED_SERVICE_PATHS=/secondhand'
 )
 Invoke-WebBuild $SecondhandDir @(
   '--base-href', '/secondhand/',
-  "--dart-define-from-file=$EnvFile",
+  "--dart-define=SUPABASE_URL=$($values['SECONDHAND_SUPABASE_URL'])",
+  "--dart-define=SUPABASE_PUBLISHABLE_KEY=$($values['SECONDHAND_SUPABASE_PUBLISHABLE_KEY'])",
+  "--dart-define=KAO_ID_ISSUER_URL=$($values['SUPABASE_URL'])",
+  "--dart-define=KAO_ID_CLIENT_ID=$($values['KAO_ID_CLIENT_ID'])",
   "--dart-define=KAO_ID_REDIRECT_URI=$site/secondhand/auth/callback",
   "--dart-define=KAO_ID_WEB_URL=$site"
 )
@@ -124,6 +138,6 @@ if (-not (Select-String -Path (Join-Path $hosting 'secondhand\index.html') -Patt
 Write-Host ''
 Write-Host "Ready in build\hosting for $site" -ForegroundColor Green
 Write-Host "  Kao ID:     $site/"
-Write-Host "  Secondhand: $site/secondhand/"
+Write-Host "  Secondhand: $site/secondhand/ (data: $($values['SECONDHAND_SUPABASE_URL']))"
 Write-Host "  Redirect:   $site/secondhand/auth/callback (must be registered on the OAuth client)"
 Write-Host 'Deploy with: npx firebase-tools deploy --only hosting'

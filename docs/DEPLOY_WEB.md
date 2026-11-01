@@ -28,16 +28,20 @@ Everything passed to a web build is compiled into public JavaScript. `deploy/web
 
 | Key | Value |
 |---|---|
-| `SUPABASE_URL` | `https://<project-ref>.supabase.co` |
-| `SUPABASE_PUBLISHABLE_KEY` | Publishable (or legacy anon) key |
+| `SUPABASE_URL` | Kao ID project, `https://<kao-id-ref>.supabase.co` (also the OAuth issuer) |
+| `SUPABASE_PUBLISHABLE_KEY` | Kao ID publishable (or legacy anon) key |
 | `KAO_ID_CLIENT_ID` | Public OAuth client of Secondhand |
+| `SECONDHAND_SUPABASE_URL` | Secondhand project, `https://<secondhand-ref>.supabase.co` |
+| `SECONDHAND_SUPABASE_PUBLISHABLE_KEY` | Secondhand publishable key |
 
-The script derives the rest from the site URL:
+The script refuses a `SECONDHAND_SUPABASE_URL` equal to `SUPABASE_URL`, because Secondhand data lives in its own project. It derives the rest:
 
 | App | Key | Value |
 |---|---|---|
 | Kao ID | `APP_URL` | `https://<project-id>.web.app` |
 | Kao ID | `KAO_ID_ALLOWED_SERVICE_PATHS` | `/secondhand` |
+| Secondhand | `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` | the `SECONDHAND_*` values |
+| Secondhand | `KAO_ID_ISSUER_URL` | the Kao ID `SUPABASE_URL` |
 | Secondhand | `KAO_ID_REDIRECT_URI` | `https://<project-id>.web.app/secondhand/auth/callback` |
 | Secondhand | `KAO_ID_WEB_URL` | `https://<project-id>.web.app` |
 
@@ -52,7 +56,7 @@ The owner does these steps with their own accounts.
 3. **Supabase Dashboard › Authentication › URL Configuration:**
    - Site URL: `https://<project-id>.web.app`. The OAuth consent page (`/oauth/consent`) is opened on the Site URL, so while it points here, Secondhand sign-in from local development also uses the deployed Kao ID consent page.
    - Redirect URLs: add `https://<project-id>.web.app/**` (password recovery and email links).
-4. **Supabase Dashboard › Authentication › OAuth Apps › Kao Secondhand:** add the redirect URI `https://<project-id>.web.app/secondhand/auth/callback`. Keep `http://localhost:7357/auth/callback` for development.
+4. **Supabase Dashboard › Authentication › OAuth Apps › Kao Secondhand:** add the redirect URI `https://<project-id>.web.app/secondhand/auth/callback`. Add `http://localhost:3000/` for local Secondhand development (`kaosure_secondhand/README.md`).
 5. **Email and SMS:** the built-in Supabase mailer only reaches project team members and is rate limited. Testing with other people needs your own SMTP (Authentication › Emails › SMTP) and an SMS provider for phone verification (Authentication › Providers › Phone).
 6. **Kao ID notification email (optional for testing):** set the `kaoid-mail-worker` secrets (`RESEND_API_KEY`, `KAOID_MAIL_FROM`, `KAOID_PUBLIC_URL=https://<project-id>.web.app`, `KAOID_WORKER_SECRET`, then `KAOID_MAIL_ENABLED=true`) and schedule it (`docs/README_R10A.md`).
 

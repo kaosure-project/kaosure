@@ -66,6 +66,16 @@ function Test-SecretValue([string]$value) {
   return $false
 }
 
+function Get-JwtRef([string]$value) {
+  $parts = $value.Split('.')
+  if ($parts.Count -ne 3 -or -not $parts[0].StartsWith('eyJ')) { return $null }
+  $payload = $parts[1].Replace('-', '+').Replace('_', '/')
+  $payload += '=' * ((4 - $payload.Length % 4) % 4)
+  try {
+    return ([Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($payload)) | ConvertFrom-Json).ref
+  } catch { return $null }
+}
+
 function Assert-EnvFile([string]$path) {
   if (-not (Test-Path $path)) { Fail "missing $path (copy deploy/web.env.example)" }
   $seen = @{}
@@ -77,6 +87,7 @@ function Assert-EnvFile([string]$path) {
     $key = $text.Substring(0, $at).Trim()
     $value = $text.Substring($at + 1).Trim().Trim('"', "'")
     if ($key -notin $allowedKeys) { Fail "$key is not allowed in $path; only $($allowedKeys -join ', ')" }
+    if ($value -match '[<>]') { Fail "$key still has the <placeholder> from web.env.example" }
     if (Test-SecretValue $value) { Fail "$key looks like a secret key; use the publishable key" }
     $seen[$key] = $value
   }
@@ -89,6 +100,13 @@ function Assert-EnvFile([string]$path) {
   # Secondhand data lives in its own Supabase project; Kao ID is only its issuer.
   if ($seen['SECONDHAND_SUPABASE_URL'].TrimEnd('/') -eq $seen['SUPABASE_URL'].TrimEnd('/')) {
     Fail 'SECONDHAND_SUPABASE_URL must be the Secondhand project, not the Kao ID project'
+  }
+  foreach ($pair in @(@('SUPABASE_URL', 'SUPABASE_PUBLISHABLE_KEY'),
+                      @('SECONDHAND_SUPABASE_URL', 'SECONDHAND_SUPABASE_PUBLISHABLE_KEY'))) {
+    $ref = Get-JwtRef $seen[$pair[1]]
+    if ($ref -and ([Uri]$seen[$pair[0]]).Host -ne "$ref.supabase.co") {
+      Fail "$($pair[1]) belongs to project $ref, not $($pair[0])"
+    }
   }
   return $seen
 }

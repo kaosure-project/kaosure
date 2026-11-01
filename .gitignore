@@ -55,5 +55,6 @@ lib_tree.txt
 
 # Web hosting (docs/DEPLOY_WEB.md)
 deploy/web.env
+firebase-build-defines.json
 .firebase/
 firebase-debug.log

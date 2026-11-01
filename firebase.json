@@ -2,7 +2,6 @@
   "hosting": {
     "public": "build/hosting",
     "ignore": ["firebase.json", "**/.*"],
-    "redirects": [{ "source": "/secondhand", "destination": "/secondhand/", "type": 301 }],
     "rewrites": [
       { "source": "/secondhand/**", "destination": "/secondhand/index.html" },
       { "source": "**", "destination": "/index.html" }

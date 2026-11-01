@@ -33,6 +33,9 @@ final class AppRouter {
   static const String initialRoute = '/';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+    // With the path URL strategy the browser's initial route arrives with its
+    // query, e.g. /oauth/consent?authorization_id=..., so match on the path.
+    final routeName = Uri.tryParse(settings.name ?? '')?.path ?? settings.name;
     final uri = Uri.base;
     final fragmentUri = uri.hasFragment ? Uri.tryParse(uri.fragment) : null;
     
@@ -41,14 +44,14 @@ final class AppRouter {
         fragmentUri?.queryParameters['return_to']?.trim().isNotEmpty == true;
 
     // ถ้ามีการขอเข้าใช้งานระบบจาก Secondhand หรือมี return_to แต่เข้ามาที่หน้าแรก/Landing ให้บังคับเปิดหน้า Login ทันที
-    if (hasReturnTo && (settings.name == initialRoute || settings.name == KaoIdRoutes.kaoIdLanding || settings.name == '/register')) {
+    if (hasReturnTo && (routeName == initialRoute || routeName == KaoIdRoutes.kaoIdLanding || routeName == '/register')) {
       return MaterialPageRoute(
         settings: const RouteSettings(name: '/login'),
         builder: (_) => const LoginPage(),
       );
     }
 
-    switch (settings.name) {
+    switch (routeName) {
       case '/admin/finance':
         return MaterialPageRoute(
           settings: settings,
